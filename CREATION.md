@@ -6,8 +6,8 @@
 - Followed most instructions at https://gorails.com/setup/osx/10.11-el-capitan
     - Installed Ruby 2.2.3
     - Installed Rails 4.2.5
-
-
+- Created the Rails app
+    - Created the dev and test databases `rake db:create`
 
 ### Tools
 
