@@ -8,6 +8,15 @@
     - Installed Rails 4.2.5
 - Created the Rails app
     - Created the dev and test databases `rake db:create`
+- Declared gem dependencies for Solidus https://github.com/solidusio/solidus#getting-started
+    - `gem 'solidus'`
+    - `gem 'solidus_auth_devise'`
+- Installed the gems with `bundle`
+- Generated the config files and migrations
+    - `rails generate spree:install`
+    - `rake railties:install:migrations`
+    - `rake generate devise:install`
+- Applied the migrations `rake db:migrate`
 
 ### Tools
 
