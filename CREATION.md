@@ -22,4 +22,4 @@
 
 ### Tools
 
-- Installed `rbenv`, `ruby-build`, and `postgresql` using `brew`
+- Installed `rbenv`, `ruby-build`, `postgresql`, and  `imagemagick` using `brew`
