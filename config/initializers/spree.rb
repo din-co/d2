@@ -12,6 +12,9 @@ Spree.config do |config|
   # Default currency for new sites
   config.currency = "USD"
 
+  # Default to US
+  config.default_country_id = 214
+
   # from address for transactional emails
   config.mails_from = "cook@din.co"
 
