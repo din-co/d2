@@ -17,6 +17,8 @@
     - `rake railties:install:migrations`
     - `rake generate devise:install`
 - Applied the migrations `rake db:migrate`
+- Provisioned a Heroku app `d2-staging`
+- Provisioned a free Postgres DB `heroku addons:create heroku-postgresql:hobby-dev`
 
 ### Tools
 
