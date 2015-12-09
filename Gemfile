@@ -37,6 +37,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'solidus'
 gem 'solidus_auth_devise'
 gem 'aws-sdk', '< 2.0'
+gem 'rails_12factor'
 # END Non-Rails additions
 
 
