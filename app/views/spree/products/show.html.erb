@@ -9,14 +9,14 @@
       <% if taxon.taxonomy_id == @restaurants_taxonomy_id %>
         <div><%= link_to taxon.name, seo_url(taxon) %></div>
         <div><%= taxon.name %></div>
-        <div>/images/restaurant/<%= taxon.name.parameterize %>-logo.png</div>
-        <div>/images/restaurant/<%= taxon.name.parameterize %>-photo.png</div>
+        <div><%= restaurant_logo_url(taxon) %></div>
+        <div><%= restaurant_photo_url(taxon) %></div>
         <%= render(:partial => "restaurant_data", :locals => {:restaurant => taxon.name.parameterize})%>
       <% end -%>
       <% if taxon.taxonomy_id == @chefs_taxonomy_id %>
         <div><%= link_to taxon.name, seo_url(taxon) %></div>
         <div><%= taxon.name %></div>
-        <div>/images/chef/<%= taxon.name.parameterize %>-photo.png</div>
+        <div><%= chef_photo_url(taxon) %></div>
       <% end -%>
       <%
         if taxon.taxonomy_id == @pantry_taxonomy_id

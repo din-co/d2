@@ -13,4 +13,16 @@ module ApplicationHelper
     end
   end
 
+  def restaurant_logo_url(taxon)
+    image_url("restaurants/#{taxon.name.parameterize}-logo.png")
+  end
+
+  def restaurant_photo_url(taxon)
+    image_url("restaurants/#{taxon.name.parameterize}-photo.png")
+  end
+
+  def chef_photo_url(taxon)
+    image_url("chefs/#{taxon.name.parameterize}-photo.png")
+  end
+
 end
