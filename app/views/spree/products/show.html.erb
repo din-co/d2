@@ -1,4 +1,36 @@
 <% cache [I18n.locale, current_currency, @product] do %>
+
+<%
+  pantry_list = []
+  diets_list = []
+%>
+  <% if !@product.taxons.blank? %>
+    <% @product.taxons.each do |taxon| %>
+      <% if taxon.taxonomy_id == @restaurants_taxonomy_id %>
+        <div><%= link_to taxon.name, seo_url(taxon) %></div>
+        <div><%= taxon.name %></div>
+        <div>/images/restaurant/<%= taxon.name.parameterize %>-logo.png</div>
+        <div>/images/restaurant/<%= taxon.name.parameterize %>-photo.png</div>
+        <%= render(:partial => "restaurant_data", :locals => {:restaurant => taxon.name.parameterize})%>
+      <% end -%>
+      <% if taxon.taxonomy_id == @chefs_taxonomy_id %>
+        <div><%= link_to taxon.name, seo_url(taxon) %></div>
+        <div><%= taxon.name %></div>
+        <div>/images/chef/<%= taxon.name.parameterize %>-photo.png</div>
+      <% end -%>
+      <%
+        if taxon.taxonomy_id == @pantry_taxonomy_id
+          pantry_list.push(taxon.name)
+        end
+        if taxon.taxonomy_id == @diets_taxonomy_id
+          diets_list.push(taxon.name)
+        end
+      -%>
+    <% end %>
+  <% end %>
+  <div>pantry_list: <%= pantry_list %></div>
+  <div>diets_list: <%= diets_list %></div>
+
   <div data-hook="product_show" itemscope itemtype="http://schema.org/Product">
     <% @body_id = 'product-details' %>
 

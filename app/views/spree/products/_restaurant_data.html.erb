@@ -1,0 +1,13 @@
+<%
+restaurant_data = {
+  "kin-khao" => {
+    "bio" => "Kin Khao bio here."
+  },
+  "souvla" => {
+    "bio" => "Souvla bio here."
+  }
+}
+%>
+<% if restaurant_data[restaurant]["bio"] %>
+  <div>bio: <%= restaurant_data[restaurant]["bio"] %></div>
+<% end -%>

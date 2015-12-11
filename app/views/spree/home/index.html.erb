@@ -5,6 +5,17 @@
 <% end %>
 
 <div data-hook="homepage_products">
+
+
+  <div>
+
+    <h3>
+      <%= @restaurants_taxonomy.name %>
+    </h3>
+    <%= my_taxons_tree(@restaurants_taxonomy.root, @taxon, Spree::Config[:max_level_in_taxons_menu] || 1) %>
+
+  </div>
+
   <% cache(cache_key_for_products) do %>
     <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
   <% end %>
