@@ -74,6 +74,7 @@ test:
 #   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
 #
 production:
+  pool: 10
   url: <%= ENV['DATABASE_URL'] %>
 #
 # production:
