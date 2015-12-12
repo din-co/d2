@@ -1,3 +1,5 @@
+<%= @product.property('directions').html_safe %>
+
 <% cache [I18n.locale, current_currency, @product] do %>
 
   <% if restaurant = @product.restaurant %>
