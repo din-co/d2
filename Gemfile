@@ -38,6 +38,8 @@ gem 'solidus'
 gem 'solidus_auth_devise'
 gem 'aws-sdk', '< 2.0'
 gem 'rails_12factor'
+gem 'puma'
+gem 'rack-timeout'
 # END Non-Rails additions
 
 
