@@ -35,6 +35,9 @@ Spree.config do |config|
   # Template to use when rendering layout
   # config.layout = "spree/layouts/spree_application"
 
+  # Show shipping instructions in checkout
+  config.shipping_instructions = true
+
 
   # Admin:
 
