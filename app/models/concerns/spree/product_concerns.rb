@@ -8,11 +8,11 @@ module Spree
 
     module InstanceMethods
       def restaurant
-        taxons.find_by!(taxonomy: Spree::Taxonomy.restaurant)
+        taxons.find_by(taxonomy: Spree::Taxonomy.restaurant)
       end
 
       def chef
-        taxons.find_by!(taxonomy: Spree::Taxonomy.chef)
+        taxons.find_by(taxonomy: Spree::Taxonomy.chef)
       end
 
       def diets
