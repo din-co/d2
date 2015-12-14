@@ -2,7 +2,7 @@ module Spree
   module TaxonomyConcerns
     extend ActiveSupport::Concern
 
-    module ClassMethods
+    class_methods do
       def restaurant
         find_by!(name: 'Restaurants')
       end

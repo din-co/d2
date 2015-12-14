@@ -8,11 +8,10 @@
 
 
   <div>
-
     <h3>
-      <%= @restaurants_taxonomy.name %>
+      <%= Spree::Taxonomy.restaurant.name %>
     </h3>
-    <%= my_taxons_tree(@restaurants_taxonomy.root, @taxon, Spree::Config[:max_level_in_taxons_menu] || 1) %>
+    <%= my_taxons_tree(Spree::Taxonomy.restaurant.root, @taxon, Spree::Config[:max_level_in_taxons_menu] || 1) %>
 
   </div>
 
