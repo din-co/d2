@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215182421) do
+ActiveRecord::Schema.define(version: 20151215193511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,11 +44,13 @@ ActiveRecord::Schema.define(version: 20151215182421) do
     t.integer  "country_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "postal_code_id"
   end
 
   add_index "spree_addresses", ["country_id"], name: "index_spree_addresses_on_country_id", using: :btree
   add_index "spree_addresses", ["firstname"], name: "index_addresses_on_firstname", using: :btree
   add_index "spree_addresses", ["lastname"], name: "index_addresses_on_lastname", using: :btree
+  add_index "spree_addresses", ["postal_code_id"], name: "index_spree_addresses_on_postal_code_id", using: :btree
   add_index "spree_addresses", ["state_id"], name: "index_spree_addresses_on_state_id", using: :btree
 
   create_table "spree_adjustment_reasons", force: :cascade do |t|
