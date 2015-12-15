@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214193652) do
+ActiveRecord::Schema.define(version: 20151215182421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -384,6 +384,18 @@ ActiveRecord::Schema.define(version: 20151214193652) do
   add_index "spree_payments", ["order_id"], name: "index_spree_payments_on_order_id", using: :btree
   add_index "spree_payments", ["payment_method_id"], name: "index_spree_payments_on_payment_method_id", using: :btree
   add_index "spree_payments", ["source_id", "source_type"], name: "index_spree_payments_on_source_id_and_source_type", using: :btree
+
+  create_table "spree_postal_codes", force: :cascade do |t|
+    t.string   "value",      null: false
+    t.integer  "state_id"
+    t.integer  "country_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "spree_postal_codes", ["country_id"], name: "index_spree_postal_codes_on_country_id", using: :btree
+  add_index "spree_postal_codes", ["state_id"], name: "index_spree_postal_codes_on_state_id", using: :btree
+  add_index "spree_postal_codes", ["value"], name: "index_spree_postal_codes_on_value", using: :btree
 
   create_table "spree_preferences", force: :cascade do |t|
     t.text     "value"
