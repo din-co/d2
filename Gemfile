@@ -59,5 +59,8 @@ group :development, :test do
 
   # Mailcatcher sets up an SMTP server to receive and display emails, but it recommends NOT adding it to the Gemfile
   # gem 'mailcatcher'
+
+  # Let's use rspec
+  gem 'rspec-rails', '~> 3.0'
 end
 
