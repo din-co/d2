@@ -43,6 +43,7 @@ gem 'rack-timeout'
 gem 'solidus_gateway'
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 gem 'intercom-rails'
+gem 'mysql2', '~> 0.3.20'
 # END Non-Rails additions
 
 
