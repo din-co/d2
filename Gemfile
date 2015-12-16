@@ -41,7 +41,7 @@ gem 'rails_12factor'
 gem 'puma'
 gem 'rack-timeout'
 gem 'solidus_gateway'
-gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 # END Non-Rails additions
 
 
