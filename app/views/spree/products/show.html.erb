@@ -1,4 +1,6 @@
-<%= @product.property('directions').html_safe %>
+<% if @product.property('directions') %>
+  <%= @product.property('directions').html_safe %>
+<% end -%>
 
 <% cache [I18n.locale, current_currency, @product] do %>
 
