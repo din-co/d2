@@ -8,19 +8,19 @@ module Spree
 
     module InstanceMethods
       def restaurant
-        taxons.find_by(taxonomy: Spree::Taxonomy.restaurant)
+        taxons.where('parent_id IS NOT NULL').find_by(taxonomy: Spree::Taxonomy.restaurant)
       end
 
       def chef
-        taxons.find_by(taxonomy: Spree::Taxonomy.chef)
+        taxons.where('parent_id IS NOT NULL').find_by(taxonomy: Spree::Taxonomy.chef)
       end
 
       def diets
-        taxons.where(taxonomy: Spree::Taxonomy.diets)
+        taxons.where('parent_id IS NOT NULL').where(taxonomy: Spree::Taxonomy.diets)
       end
 
       def pantry
-        taxons.where(taxonomy: Spree::Taxonomy.pantry)
+        taxons.where('parent_id IS NOT NULL').where(taxonomy: Spree::Taxonomy.pantry)
       end
     end
   end
