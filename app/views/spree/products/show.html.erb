@@ -9,6 +9,7 @@
     <div>restaurant.name: <%= restaurant.name %></div>
     <div>restaurant.description: <%= restaurant.description.html_safe if restaurant.description %></div>
     <div>restaurant.permalink: <%= restaurant.permalink %></div>
+    <div>restaurant.icon: <%= restaurant.icon %></div>
     <div>restaurant_logo_url: <%= restaurant_logo_url(restaurant) %></div>
     <div>restaurant_photo_url: <%= restaurant_photo_url(restaurant) %></div>
   <% end %>
@@ -18,6 +19,7 @@
     <div>chef.name: <%= chef.name %></div>
     <div>chef.description: <%= chef.description.html_safe if chef.description %></div>
     <div>chef.permalink: <%= chef.permalink %></div>
+    <div>chef.icon: <%= chef.icon %></div>
     <div>chef_photo_url: <%= chef_photo_url(chef) %></div>
   <% end %>
 
