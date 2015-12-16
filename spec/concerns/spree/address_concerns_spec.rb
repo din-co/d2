@@ -12,7 +12,8 @@ shared_examples_for "spree address concerns" do
   end
 
   describe "callbacks" do
-    pending "it runs associate_postal_code after validation"
+    pending "it runs associate_postal_code after validation if valid"
+    pending "it does not run associate_postal_code if not valid"
   end
 
   describe "private methods" do
