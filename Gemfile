@@ -62,5 +62,8 @@ group :development, :test do
 
   # Let's use rspec
   gem 'rspec-rails', '~> 3.0'
+
+  # Pry is better
+  gem 'pry-rails'
 end
 
