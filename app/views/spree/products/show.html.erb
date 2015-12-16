@@ -6,19 +6,19 @@
 
   <% if restaurant = @product.restaurant %>
     <div><%= link_to restaurant.name, seo_url(restaurant) %></div>
-    <div><%= restaurant.name %></div>
-    <div><%= restaurant.description.html_safe %></div>
-    <div><%= restaurant.permalink %></div>
-    <div><%= restaurant_logo_url(restaurant) %></div>
-    <div><%= restaurant_photo_url(restaurant) %></div>
+    <div>restaurant.name: <%= restaurant.name %></div>
+    <div>restaurant.description: <%= restaurant.description.html_safe if restaurant.description %></div>
+    <div>restaurant.permalink: <%= restaurant.permalink %></div>
+    <div>restaurant_logo_url: <%= restaurant_logo_url(restaurant) %></div>
+    <div>restaurant_photo_url: <%= restaurant_photo_url(restaurant) %></div>
   <% end %>
 
   <% if chef = @product.chef %>
     <div><%= link_to chef.name, seo_url(chef) %></div>
-    <div><%= chef.name %></div>
-    <div><%= chef.description.html_safe %></div>
-    <div><%= chef.permalink %></div>
-    <div><%= chef_photo_url(chef) %></div>
+    <div>chef.name: <%= chef.name %></div>
+    <div>chef.description: <%= chef.description.html_safe if chef.description %></div>
+    <div>chef.permalink: <%= chef.permalink %></div>
+    <div>chef_photo_url: <%= chef_photo_url(chef) %></div>
   <% end %>
 
   <div>pantry_list: <%= @product.pantry.map(&:name).join(", ") %></div>
