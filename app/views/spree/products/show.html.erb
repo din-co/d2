@@ -7,16 +7,16 @@
   <% if restaurant = @product.restaurant %>
     <div><%= link_to restaurant.name, seo_url(restaurant) %></div>
     <div><%= restaurant.name %></div>
+    <div><%= restaurant.description.html_safe %></div>
     <div><%= restaurant_logo_url(restaurant) %></div>
     <div><%= restaurant_photo_url(restaurant) %></div>
-    <%= render(:partial => "restaurant_data", :locals => {:restaurant => restaurant.name.parameterize})%>
   <% end %>
 
   <% if chef = @product.chef %>
     <div><%= link_to chef.name, seo_url(chef) %></div>
     <div><%= chef.name %></div>
+    <div><%= chef.description.html_safe %></div>
     <div><%= chef_photo_url(chef) %></div>
-    <%# render(:partial => "chef_data", :locals => {:chef => chef.name.parameterize})%>
   <% end %>
 
   <div>pantry_list: <%= @product.pantry.map(&:name).join(", ") %></div>
