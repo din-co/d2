@@ -1,30 +1,4 @@
-<% if @product.property('directions') %>
-  <%= @product.property('directions').html_safe %>
-<% end -%>
-
 <% cache [I18n.locale, current_currency, @product] do %>
-
-  <% if restaurant = @product.restaurant %>
-    <div><%= link_to restaurant.name, seo_url(restaurant) %></div>
-    <div>restaurant.name: <%= restaurant.name %></div>
-    <div>restaurant.description: <%= restaurant.description.html_safe if restaurant.description %></div>
-    <div>restaurant.permalink: <%= restaurant.permalink %></div>
-    <div>restaurant.icon: <%= restaurant.icon %></div>
-    <div>restaurant_logo_url: <%= restaurant_logo_url(restaurant) %></div>
-    <div>restaurant_photo_url: <%= restaurant_photo_url(restaurant) %></div>
-  <% end %>
-
-  <% if chef = @product.chef %>
-    <div><%= link_to chef.name, seo_url(chef) %></div>
-    <div>chef.name: <%= chef.name %></div>
-    <div>chef.description: <%= chef.description.html_safe if chef.description %></div>
-    <div>chef.permalink: <%= chef.permalink %></div>
-    <div>chef.icon: <%= chef.icon %></div>
-    <div>chef_photo_url: <%= chef_photo_url(chef) %></div>
-  <% end %>
-
-  <div>pantry_list: <%= @product.pantry.map(&:name).join(", ") %></div>
-  <div>diets: <%= @product.diets.map(&:name).join(", ") %></div>
 
   <div data-hook="product_show" itemscope itemtype="http://schema.org/Product">
     <% @body_id = 'product-details' %>
@@ -61,6 +35,36 @@
 
           <div itemprop="description" data-hook="description">
             <%= product_description(@product) rescue Spree.t(:product_has_no_description) %>
+          </div>
+
+          <div>
+
+            <% if @product.property('directions') %>
+              <%= @product.property('directions').html_safe %>
+            <% end -%>
+
+            <% if restaurant = @product.restaurant %>
+              <div><%= link_to restaurant.name, seo_url(restaurant) %></div>
+              <div>restaurant.name: <%= restaurant.name %></div>
+              <div>restaurant.description: <%= restaurant.description.html_safe if restaurant.description %></div>
+              <div>restaurant.permalink: <%= restaurant.permalink %></div>
+              <div>restaurant.icon: <%= restaurant.icon %></div>
+              <div>restaurant_logo_url: <%= restaurant_logo_url(restaurant) %></div>
+              <div>restaurant_photo_url: <%= restaurant_photo_url(restaurant) %></div>
+            <% end %>
+
+            <% if chef = @product.chef %>
+              <div><%= link_to chef.name, seo_url(chef) %></div>
+              <div>chef.name: <%= chef.name %></div>
+              <div>chef.description: <%= chef.description.html_safe if chef.description %></div>
+              <div>chef.permalink: <%= chef.permalink %></div>
+              <div>chef.icon: <%= chef.icon %></div>
+              <div>chef_photo_url: <%= chef_photo_url(chef) %></div>
+            <% end %>
+
+            <div>pantry_list: <%= @product.pantry.map(&:name).join(", ") %></div>
+            <div>diets: <%= @product.diets.map(&:name).join(", ") %></div>
+
           </div>
 
           <div id="cart-form" data-hook="cart_form">
