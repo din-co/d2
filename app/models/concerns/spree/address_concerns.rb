@@ -29,7 +29,7 @@ module Spree
 
         postal_obj = Spree::PostalCode.where(value: code, country: country).first_or_create
         # Need to use assign_attributes when in callback
-        assign_attributes(postal_code_id: postal_obj.id) and true
+        assign_attributes(postal_code_id: postal_obj.id)
       end
   end
 end
