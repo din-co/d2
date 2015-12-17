@@ -30,17 +30,17 @@ module Legacy
           next # skip to next user
         end
 
-        state = states[user.state.try(:value)]
+        state = states[user.state]
         spree_user_address = spree_user.addresses.build({
           firstname: user.first_name,
           lastname: user.last_name,
-          address1: user.address.try(:value),
-          address2: user.apt_suite.try(:value),
-          city: user.city.try(:value),
+          address1: user.address,
+          address2: user.apt_suite,
+          city: user.city,
           state: state,
           country: usa,
-          zipcode: user.zip.try(:value),
-          phone: user.phone.try(:value),
+          zipcode: user.zip,
+          phone: user.phone,
         })
         if spree_user_address.save
           addresses_imported += 1
@@ -51,8 +51,8 @@ module Legacy
         if user.stripe_id.present?
           spree_credit_card = spree_user.credit_cards.build({
             gateway_customer_profile_id: user.stripe_id,
-            cc_type: user.card_type.try(:value),
-            last_digits: user.last4.try(:value),
+            cc_type: user.card_type,
+            last_digits: user.last4,
             name: "#{spree_user_address.firstname} #{spree_user_address.lastname}",
             default: true,
             payment_method: stripe_payment_method,
