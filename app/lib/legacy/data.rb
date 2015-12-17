@@ -1,6 +1,6 @@
 module Legacy
-	class Data
-		def self.load!
+  class Data
+    def self.load!
       puts "== Importing legacy Users =================================="
 
       usa = Spree::Country.find_by(iso: 'US') || Spree::Country.first
@@ -68,6 +68,6 @@ module Legacy
 
       puts "== Imported: ==============================================="
       puts ["#{users_imported} users", "#{addresses_imported} addresses", "#{stripe_ids_imported} Stripe IDs"]
-		end
-	end
+    end
+  end
 end
