@@ -1,15 +1,15 @@
 module Spree
-	module AddressConcerns
-		extend ActiveSupport::Concern
+  module AddressConcerns
+    extend ActiveSupport::Concern
 
-		included do
-			prepend(InstanceMethods)
-		end
+    included do
+      prepend(InstanceMethods)
+    end
 
-		module InstanceMethods
-			def require_phone?
-			  false
-			end
-		end
-	end
+    module InstanceMethods
+      def require_phone?
+        false
+      end
+    end
+  end
 end
