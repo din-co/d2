@@ -39,9 +39,48 @@
 
           <div>
 
-            <% if @product.property('directions') %>
-              <%= @product.property('directions').html_safe %>
-            <% end -%>
+            <div>
+              <% if @product.property('time') %>
+                time:
+                <%= @product.property('time').html_safe %>
+              <% end -%>
+            </div>
+            <div>
+              <% if @product.property('in-the-bag') %>
+                in-the-bag:
+                <%= @product.property('in-the-bag').html_safe %>
+              <% end -%>
+            </div>
+            <div>
+              <% if @product.property('ingredients') %>
+                ingredients:
+                <%= @product.property('ingredients').html_safe %>
+              <% end -%>
+            </div>
+            <div>
+              <% if @product.property('callout-1') %>
+                callout-1:
+                <%= @product.property('callout-1').html_safe %>
+              <% end -%>
+            </div>
+            <div>
+              <% if @product.property('callout-2') %>
+                callout-2:
+                <%= @product.property('callout-2').html_safe %>
+              <% end -%>
+            </div>
+            <div>
+              <% if @product.property('sidebar') %>
+                sidebar:
+                <%= @product.property('sidebar').html_safe %>
+              <% end -%>
+            </div>
+            <div>
+              <% if @product.property('directions') %>
+                directions:
+                <%= @product.property('directions').html_safe %>
+              <% end -%>
+            </div>
 
             <% if restaurant = @product.restaurant %>
               <div><%= link_to restaurant.name, seo_url(restaurant) %></div>
