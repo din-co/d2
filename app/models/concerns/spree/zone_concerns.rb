@@ -18,7 +18,7 @@ module Spree
           ", address.country_id, address.state_id, address.postal_code_id).
           references(:zones)
 
-        ['state', 'country', 'postal_code'].each do |zone_kind|
+        ['postal_code', 'state', 'country'].each do |zone_kind|
           if match = matches.detect { |zone| zone_kind == zone.kind }
             return match
           end
