@@ -27,12 +27,10 @@ module Spree
       end
     end
 
-    included do
-      # Override default instance methods with define_method
-      # http://stackoverflow.com/a/28755604
-
+    # Override default instance methods by prepending the below module
+    module InstanceMethods
       # Override to include Spree::PostalCode as option
-      define_method :include? do |address|
+      def include?(address)
         return false unless address
 
         members.any? do |zone_member|
@@ -50,7 +48,7 @@ module Spree
       end
 
       # Override to include 'postal_code' zoneable types
-      define_method :country_list do
+      def country_list
         @countries ||= case kind
                        when 'country' then zoneables
                        when 'state', 'postal_code' then zoneables.collect(&:country)
@@ -71,7 +69,7 @@ module Spree
       # postal_code    | country       | false
       # postal_code    | state         | false
       # postal_code    | postal_code   | true if equal, false otherwise
-      define_method :contains? do |target|
+      def contains?(target)
         return false if kind == 'state' && target.kind == 'country'
         return false if kind == 'postal_code' && target.kind == 'country'
         return false if kind == 'postal_code' && target.kind == 'state'
@@ -96,6 +94,12 @@ module Spree
         true
       end
     end
+
+    included do
+      prepend(InstanceMethods)
+    end
+
+    # New (non-overidden) instance methods
 
     def postal_code_ids
       if kind == 'postal_code'
