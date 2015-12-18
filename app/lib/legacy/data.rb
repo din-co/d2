@@ -14,24 +14,26 @@ module Legacy
       addresses_imported = 0
       stripe_ids_imported = 0
       Legacy::User.find_each do |user|
-        spree_user = Spree::User.create({
-          email: user.email,
-          login: user.email,
-          last_sign_in_ip: user.creation_ip,
-          created_at: user.created,
-          updated_at: user.last_updated,
-          password: SecureRandom.hex(12), # imported users must reset their password
-        })
+        spree_user = Spree::User.find_or_create_by(email: user.email) do |spree_user|
+          spree_user.login = user.email
+          spree_user.last_sign_in_ip = user.creation_ip
+          spree_user.created_at = user.created
+          spree_user.updated_at = user.last_updated
+          spree_user.password = SecureRandom.hex(12) # imported users must set a new password
+        end
 
         if spree_user.persisted?
           users_imported += 1
         else
           puts "-- user errors: #{spree_user.errors.messages}"
-          next # skip to next user
+          next unless spree_user.errors[:email] = ["has already been taken"] # skip to next user unless we are re-importing
         end
 
+        # skip to next user if we already imported an address
+        next if spree_user.user_addresses.present?
+
         state = states[user.state]
-        spree_user_address = spree_user.addresses.build({
+        address = Spree::Address.new({
           firstname: user.first_name,
           lastname: user.last_name,
           address1: user.address,
@@ -42,10 +44,12 @@ module Legacy
           zipcode: user.zip,
           phone: user.phone,
         })
-        if spree_user_address.save
+        spree_user.default_address = address
+        address = spree_user.default_address
+        if address.persisted?
           addresses_imported += 1
         else
-          puts "  -> address errors: #{spree_user_address.errors.messages}", true if spree_user_address.errors.present?
+          puts "  -> address errors: #{address.errors.messages}", true if address.errors.present?
         end
 
         if user.stripe_id.present?
@@ -53,10 +57,10 @@ module Legacy
             gateway_customer_profile_id: user.stripe_id,
             cc_type: user.card_type,
             last_digits: user.last4,
-            name: "#{spree_user_address.firstname} #{spree_user_address.lastname}",
+            name: "#{address.firstname} #{address.lastname}",
             default: true,
             payment_method: stripe_payment_method,
-            address: spree_user_address,
+            address: address,
           })
           if spree_credit_card.save
             stripe_ids_imported += 1
