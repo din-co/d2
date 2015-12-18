@@ -39,6 +39,32 @@
 
           <div>
 
+            <%# link_to image_tag(variant.product.display_image.attachment(:small)), variant.product %>
+            <ul>
+              <li>attachment.url(:mini): <%= @product.display_image.attachment.url(:mini) %></li>
+              <li>attachment.url(:small): <%= @product.display_image.attachment.url(:small) %></li>
+              <li>attachment.url(:product): <%= @product.display_image.attachment.url(:product) %></li>
+              <li>attachment.url(:large): <%= @product.display_image.attachment.url(:large) %></li>
+              <li>attachment.url(:original): <%= @product.display_image.attachment.url(:original) %></li>
+              <li>attachment_width: <%= @product.display_image.attachment_width %></li>
+              <li>attachment_height: <%= @product.display_image.attachment_height %></li>
+              <li>attachment_file_size: <%= @product.display_image.attachment_file_size %></li>
+              <li>position: <%= @product.display_image.position %></li>
+              <li>attachment_content_type: <%= @product.display_image.attachment_content_type %></li>
+              <li>attachment_file_name: <%= @product.display_image.attachment_file_name %></li>
+              <li>alt: <%= @product.display_image.alt %></li>
+              <li>images:
+                <div>large: <%= image_tag(@product.display_image.attachment.url(:product)) %></div>
+                <ul>
+                  <% @product.images.each do |image| %>
+                    <li>
+                      <%= image_tag(image.attachment.url(:mini)) %>
+                    </li>
+                  <% end %>
+                </ul>
+              </li>
+            </ul>
+
             <div>
               <% if @product.property('time') %>
                 time:
