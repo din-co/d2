@@ -175,3 +175,16 @@ shipping_method = Spree::ShippingMethod.find_or_create_by!(name: "4-hour Window"
 end
 # FIXME: Add zip codes as members of this shipping zone:
 # shipping_zone.members += []
+
+# Stripe Payment Gateway
+Spree::Gateway::StripeGateway.find_or_create_by({
+  name: "Stripe",
+  description: "Credit card payments via Stripe",
+  active: true,
+  auto_capture: true,
+}) do |g|
+  g.preferred_server = "test"
+  g.preferred_test_mode = true
+  g.preferred_secret_key = "sk_test_0wqvetWX3zDayzZc8KSggjhO"
+  g.preferred_publishable_key = "pk_test_RtnEyAHZVnP5lTdheh6UuR9W"
+end
