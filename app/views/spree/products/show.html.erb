@@ -72,9 +72,9 @@
               <% end -%>
             </div>
             <div>
-              <% if @product.property('in-the-bag') %>
-                in-the-bag:
-                <%= @product.property('in-the-bag').html_safe %>
+              <% if @product.property('components') %>
+                components:
+                <%= @product.property('components').html_safe %>
               <% end -%>
             </div>
             <div>
