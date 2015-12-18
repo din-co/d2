@@ -1,0 +1,2 @@
+web: bundle exec puma -C config/puma.rb
+helper: mailcatcher -f --http-port $PORT

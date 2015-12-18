@@ -1,6 +1,11 @@
 # d2
 Solidus-based commerce application
 
+### Development server:
+Your choice: `heroku local --port 3000 --procfile Procfile.dev` to see the website at http://localhost:3000 (which also launches `mailcatcher` on http://localhost:3100) or if you can't be bothered, `rails server` will run just the website.
+
+#### Seeing email in development:
+`gem install mailcatcher -- --with-cppflags=-I/usr/local/opt/openssl/include`  (flags necessary on OS X El Capitan) and then run `mailcatcher` from the command line.
 
 ## How to Override Templates (FAQ)
 
