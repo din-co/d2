@@ -165,3 +165,11 @@ dish.properties += [
   Spree::Property.find_or_create_by!(name: 'callout-2', presentation: 'Callout-2'),
   Spree::Property.find_or_create_by!(name: 'sidebar', presentation: 'Sidebar'),
 ]
+
+# Shipping Categories required to create products
+shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Standard Dish")
+shipping_method = Spree::ShippingMethod.find_or_create_by!(name: "Same-day Delivery", admin_name: "courier")
+shipping_category.shipping_methods += [shipping_method]
+shipping_zone = Spree::Zone.find_or_create_by!(name: "San Francisco", description: "The 7x7", default_tax: false)
+# FIXME: Add zip codes as members of this shipping zone:
+# shipping_zone.members += []
