@@ -21,7 +21,7 @@ module Spree
       def associate_postal_code
         return true if zipcode.blank?
 
-        code = if country.iso && country.iso.downcase.to_sym == :us
+        code = if country.iso && country.iso.downcase == "us"
                  zipcode.first(5)
                else
                  zipcode
