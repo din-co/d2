@@ -15,6 +15,10 @@ module Spree
         find_by!(name: 'Diets')
       end
 
+      def allergens
+        find_by!(name: 'Allergens')
+      end
+
       def pantry
         find_by!(name: 'Pantry')
       end

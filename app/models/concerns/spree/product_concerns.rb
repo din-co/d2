@@ -19,6 +19,10 @@ module Spree
         taxons.where('parent_id IS NOT NULL').where(taxonomy: Spree::Taxonomy.diets)
       end
 
+      def allergens
+        taxons.where('parent_id IS NOT NULL').where(taxonomy: Spree::Taxonomy.allergens)
+      end
+
       def pantry
         taxons.where('parent_id IS NOT NULL').where(taxonomy: Spree::Taxonomy.pantry)
       end

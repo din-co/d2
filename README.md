@@ -100,6 +100,7 @@ $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/vie
     - **restaurant**: select *one* restaurant.
     - **chef**: select *one* chef.
     - **diets**: select all associated diets.
+    - **allergens**: select all allergens contained in the dish.
     - **pantry**: select all pantry items.
     - **equipment**: select all needed equipment.
 
@@ -125,5 +126,6 @@ $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/vie
     - **restaurants**: restaurant bio.
     - **chefs**: chef bio.
     - **diets**: add further clarification about this diet to describe what use of this tag means.
+    - **allergens**: no description is necessary.
     - **equipment**: add further clarification about the equipment, substitute equipment, etc.
     - **pantry**: add further clarification about the pantry item, substitution ingredients, etc.
