@@ -42,6 +42,7 @@ gem 'puma'
 gem 'rack-timeout'
 gem 'solidus_gateway'
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
+gem 'intercom-rails'
 # END Non-Rails additions
 
 
