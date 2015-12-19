@@ -166,10 +166,12 @@ dish.properties += [
   Spree::Property.find_or_create_by!(name: 'sidebar', presentation: 'Sidebar'),
 ]
 
-# Shipping Categories required to create products
-shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Standard Dish")
-shipping_method = Spree::ShippingMethod.find_or_create_by!(name: "Same-day Delivery", admin_name: "courier")
-shipping_category.shipping_methods += [shipping_method]
+# Shipping Zones, Categories and Methods required to create products
 shipping_zone = Spree::Zone.find_or_create_by!(name: "San Francisco", description: "The 7x7", default_tax: false)
+shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Standard Dish")
+shipping_method = Spree::ShippingMethod.find_or_create_by!(name: "4-hour Window", admin_name: "4-hour window") do |sm|
+  sm.shipping_categories += [shipping_category]
+  sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 4.99, preferred_currency: "USD")
+end
 # FIXME: Add zip codes as members of this shipping zone:
 # shipping_zone.members += []
