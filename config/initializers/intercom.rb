@@ -34,13 +34,13 @@ IntercomRails.config do |config|
   # == User model class
   # The class which defines your user model
   #
-  # config.user.model = Proc.new { User }
+  config.user.model = Proc.new { Spree::User }
 
   # == Exclude users
   # A Proc that given a user returns true if the user should be excluded
   # from imports and Javascript inclusion, false otherwise.
   #
-  # config.user.exclude_if = Proc.new { |user| user.deleted? }
+  config.user.exclude_if = Proc.new { |user| user.deleted? }
 
   # == User Custom Data
   # A hash of additional data you wish to send about your users.
