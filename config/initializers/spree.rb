@@ -72,10 +72,8 @@ Spree.config do |config|
       url:            ":s3_domain_url",
 
       styles: {
-          mini:     "48x48>",
-          small:    "100x100>",
-          product:  "240x240>",
-          large:    "600x600>"
+        detail:   "1920x1080",
+        menu:     "960x540"
       },
 
       path:           "/spree/:class/:id/:style/:basename.:extension",
