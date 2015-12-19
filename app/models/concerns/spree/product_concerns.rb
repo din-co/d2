@@ -22,6 +22,10 @@ module Spree
       def pantry
         taxons.where('parent_id IS NOT NULL').where(taxonomy: Spree::Taxonomy.pantry)
       end
+
+      def equipment
+        taxons.where('parent_id IS NOT NULL').where(taxonomy: Spree::Taxonomy.equipment)
+      end
     end
   end
 end

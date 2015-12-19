@@ -18,6 +18,10 @@ module Spree
       def pantry
         find_by!(name: 'Pantry')
       end
+
+      def equipment
+        find_by!(name: 'Equipment')
+      end
     end
   end
 end
