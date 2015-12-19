@@ -82,3 +82,17 @@ production:
 #   database: d2_production
 #   username: d2
 #   password: <%= ENV['D2_DATABASE_PASSWORD'] %>
+
+# Legacy database for importing Users and accompanying data
+legacy:
+  legacy_default: &legacy_default
+    pool: 5
+    adapter: mysql2
+    encoding: utf8
+    reconnect: true
+    # <CREDENTIALS REDACTED>
+
+  development:
+    <<: *legacy_default
+  production:
+    <<: *legacy_default

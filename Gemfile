@@ -43,6 +43,7 @@ gem 'rack-timeout'
 gem 'solidus_gateway'
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 gem 'intercom-rails'
+gem 'mysql2', '~> 0.3.20'
 # END Non-Rails additions
 
 
@@ -55,5 +56,8 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  # Mailcatcher sets up an SMTP server to receive and display emails, but it recommends NOT adding it to the Gemfile
+  # gem 'mailcatcher'
 end
 
