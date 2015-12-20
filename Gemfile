@@ -44,6 +44,9 @@ gem 'solidus_gateway'
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 gem 'intercom-rails'
 gem 'mysql2', '~> 0.3.20'
+
+# Twitter Common Locale Data Repository
+gem 'twitter_cldr'
 # END Non-Rails additions
 
 
