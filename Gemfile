@@ -44,6 +44,9 @@ gem 'solidus_gateway'
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 gem 'intercom-rails'
 gem 'mysql2', '~> 0.3.20'
+
+# Twitter Common Locale Data Repository
+gem 'twitter_cldr'
 # END Non-Rails additions
 
 
@@ -59,5 +62,11 @@ group :development, :test do
 
   # Mailcatcher sets up an SMTP server to receive and display emails, but it recommends NOT adding it to the Gemfile
   # gem 'mailcatcher'
+
+  # Let's use rspec
+  gem 'rspec-rails', '~> 3.0'
+
+  # Pry is better
+  gem 'pry-rails'
 end
 
