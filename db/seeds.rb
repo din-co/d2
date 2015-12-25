@@ -61,6 +61,17 @@ Spree::Taxon.find_or_create_by!(name: "gluten-free", parent_id: taxon_diets.id, 
   t.description = "gluten-free description here."
 end
 
+taxonomy_allergens = Spree::Taxonomy.find_or_create_by!(name: 'Allergens')
+taxon_allergens = Spree::Taxon.find_or_create_by!(name: 'Allergens', taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "milk", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "eggs", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "fish", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "shellfish", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "tree nuts", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "peanuts", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "wheat", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "soybeans", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+
 taxonomy_pantry = Spree::Taxonomy.find_or_create_by!(name: 'Pantry')
 taxon_pantry = Spree::Taxon.find_or_create_by!(name: 'Pantry', taxonomy_id: taxonomy_pantry.id)
 Spree::Taxon.find_or_create_by!(name: "high-heat oil", parent_id: taxon_pantry.id, taxonomy_id: taxonomy_pantry.id) do |t|

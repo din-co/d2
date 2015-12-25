@@ -128,7 +128,9 @@
             <% end %>
 
             <div>pantry_list: <%= @product.pantry.map(&:name).join(", ") %></div>
+            <div>equipment_list: <%= @product.equipment.map(&:name).join(", ") %></div>
             <div>diets: <%= @product.diets.map(&:name).join(", ") %></div>
+            <div>allergens: Contains <%= @product.allergens.map(&:name).join(", ") %>.</div>
 
           </div>
 
