@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215230839) do
+ActiveRecord::Schema.define(version: 20151230211637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,14 @@ ActiveRecord::Schema.define(version: 20151215230839) do
     t.integer  "stock_location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "spree_delivery_windows", force: :cascade do |t|
+    t.integer  "start_hour",         null: false
+    t.integer  "duration",           null: false
+    t.integer  "lead_time_duration", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "spree_inventory_units", force: :cascade do |t|
@@ -1189,6 +1197,16 @@ ActiveRecord::Schema.define(version: 20151215230839) do
   add_index "spree_variants", ["sku"], name: "index_spree_variants_on_sku", using: :btree
   add_index "spree_variants", ["tax_category_id"], name: "index_spree_variants_on_tax_category_id", using: :btree
   add_index "spree_variants", ["track_inventory"], name: "index_spree_variants_on_track_inventory", using: :btree
+
+  create_table "spree_zone_delivery_windows", force: :cascade do |t|
+    t.integer  "delivery_window_id", null: false
+    t.integer  "zone_id",            null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "spree_zone_delivery_windows", ["delivery_window_id"], name: "index_spree_zone_delivery_windows_on_delivery_window_id", using: :btree
+  add_index "spree_zone_delivery_windows", ["zone_id"], name: "index_spree_zone_delivery_windows_on_zone_id", using: :btree
 
   create_table "spree_zone_members", force: :cascade do |t|
     t.integer  "zoneable_id"

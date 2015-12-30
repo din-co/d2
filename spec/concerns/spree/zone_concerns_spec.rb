@@ -37,5 +37,9 @@ shared_examples_for "spree zone concerns" do
     describe "contains?" do
       pending "test the crap out of this one, nine permutations"
     end
+
+    describe "available_delivery_windows" do
+      pending "returns available delivery windows based on the current time"
+    end
   end
 end

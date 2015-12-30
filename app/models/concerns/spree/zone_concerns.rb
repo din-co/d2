@@ -68,10 +68,20 @@ module Spree
         end
         true
       end
+
+      def available_delivery_windows
+        current_hour = Time.now.hour
+
+        delivery_windows.
+          where("start_hour - lead_time_duration > ?", current_hour)
+      end
     end
 
     included do
       prepend(InstanceMethods)
+
+      has_many :zone_delivery_windows, class_name: "Spree::ZoneDeliveryWindow"
+      has_many :delivery_windows, through: :zone_delivery_windows 
 
       # Override Spree::Zone.match to return PostalCode zone types if found.
       # Returns the matching zone with the highest priority zone type (PostalCode, State, Country, Zone.)
