@@ -1,0 +1,9 @@
+<div class="omega six columns">
+  <fieldset class="no-border-bottom">
+    <legend align="center"><%= Spree.t(:delivery_windows) %></legend>
+    <%= zone_form.field_container :delivery_window_ids do %>
+      <%= zone_form.label :delivery_window_ids, Spree.t(:delivery_windows) %><br>
+      <%= zone_form.collection_select :delivery_window_ids, Spree::DeliveryWindow.all, :id, :to_s, {}, { :multiple => true, :class => "select2 fullwidth" } %>
+    <% end %>
+  </fieldset>
+</div>

@@ -1,11 +1,19 @@
 module Spree
   class DeliveryWindow < Spree::Base
-    HOUR_OFFSET = 12
-
     def to_s
-      range_start = start_hour - HOUR_OFFSET
-      range_end = range_start + duration
-      "#{range_start} to #{range_end}" 
+      "#{format_offset(start_hour)} - #{format_offset(start_hour + duration)}"
+    end
+
+    def lead_time_in_hours
+      "#{lead_time_duration} hours"
+    end
+
+    private
+
+    def format_offset(offset)
+      datetime = Time.now.beginning_of_day
+
+      (datetime + offset.hours).strftime("%l%P")
     end
   end
 end

@@ -33,16 +33,5 @@
   </fieldset>
 </div>
 
-
-<% if @zone.persisted? %>
-  <div class="omega six columns">
-    <fieldset class="no-border-bottom">
-      <legend align="center"><%= Spree.t(:delivery_windows) %></legend>
-      <div data-hook="default" class="field">
-        <%= render partial: 'delivery_window', collection: @zone.delivery_windows %>
-      </div>
-    </fieldset>
-  </div>
-<% end %>
-
-<%= render :partial => 'state_members', :locals => { :zone_form => zone_form }%>
+<%= render partial: 'delivery_windows', locals: {zone_form: zone_form} %>
+<%= render partial: 'state_members', locals: {zone_form: zone_form} %>
