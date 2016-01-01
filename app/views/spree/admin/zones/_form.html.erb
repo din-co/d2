@@ -28,6 +28,10 @@
           <%= zone_form.radio_button('kind', 'state', { :id => 'state_based' }) %>
           <%= label_tag :state_based, Spree.t(:state_based) %>
         </li>
+        <li>
+          <%= zone_form.radio_button('kind', 'postal_code', { :id => 'postal_code_based' }) %>
+          <%= label_tag :postal_code_based, Spree.t(:postal_code_based) %>
+        </li>
       </ul>
     </div>
   </fieldset>
@@ -36,3 +40,4 @@
 <%= render partial: 'delivery_windows', locals: {zone_form: zone_form} %>
 <%= render partial: 'state_members', locals: {zone_form: zone_form} %>
 <%= render partial: 'country_members', locals: {zone_form: zone_form} %>
+<%= render partial: 'postal_code_members', locals: {zone_form: zone_form} %>
