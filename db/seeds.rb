@@ -188,16 +188,29 @@ end
 # shipping_zone.members += []
 
 # Delivery Windows - 1pm (13) through 8pm (20)
-delivery_windows = (13..19).map{ |i|
-  Spree::DeliveryWindow.find_or_create_by({
-    start_hour: i,
-    duration: 1,
-    lead_time_duration: 2
-  })
-}
+Spree::DeliveryWindow.find_or_create_by({
+  start_hour: 13,
+  duration: 4,
+  lead_time_duration: 2
+})
+Spree::DeliveryWindow.find_or_create_by({
+  start_hour: 18,
+  duration: 2,
+  lead_time_duration: 2
+})
+Spree::DeliveryWindow.find_or_create_by({
+  start_hour: 18,
+  duration: 1,
+  lead_time_duration: 2
+})
+Spree::DeliveryWindow.find_or_create_by({
+  start_hour: 19,
+  duration: 1,
+  lead_time_duration: 2
+})
 
 # Add delivery windows to our shipping zone
-shipping_zone.delivery_windows = delivery_windows
+shipping_zone.delivery_windows = Spree::DeliveryWindow.all
 
 # Stripe Payment Gateway
 Spree::Gateway::StripeGateway.find_or_create_by({
