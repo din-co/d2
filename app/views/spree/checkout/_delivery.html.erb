@@ -35,25 +35,19 @@
             </tbody>
           </table>
 
-          <h5 class="stock-shipping-method-title"><%= Spree.t(:shipping_method) %></h5>
-          <ul class="field radios shipping-methods">
-            <% ship_form.object.shipping_rates.each do |rate| %>
-              <li class="shipping-method">
-                <label>
-                  <%= ship_form.radio_button :selected_shipping_rate_id, rate.id %>
-                  <span class="rate-name"><%= rate.name %></span>
-                  <span class="rate-cost"><%= rate.display_cost %></span>
-                </label>
-              </li>
-            <% end %>
-          </ul>
+          <% # removed shipping-methods %>
+
           <h5 class="stock-shipping-method-title"><%= Spree.t(:delivery_window) %></h5>
           <ul class="field radios shipping-methods">
-            <% ship_form.object.shipping_method.zones.first.available_delivery_windows.each do |delivery_window| %>
-              <li class="shipping-method">
+            <% # TODO: delivery_windows should be available_delivery_windows %>
+            <% ship_form.object.shipping_method.zones.first.delivery_windows.each do |delivery_window| %>
+              <li class="shipping-method" style="display:block;">
                 <label>
                   <%= ship_form.radio_button :delivery_window_id, delivery_window.id %>
                   <span class="rate-name"><%= delivery_window %></span>
+                  <% # TODO: Make less terrible %>
+                  <% m = Spree::ShippingMethod.where("name like '%#{delivery_window.duration}%'").first %>
+                  <strong><%= "(#{m.shipping_rates.first.display_cost})" %></strong>
                 </label>
               </li>
             <% end %>
