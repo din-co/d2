@@ -180,12 +180,33 @@ dish.properties += [
 # Shipping Zones, Categories and Methods required to create products
 shipping_zone = Spree::Zone.find_or_create_by!(name: "San Francisco", description: "The 7x7", default_tax: false)
 shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Standard Dish")
-shipping_method = Spree::ShippingMethod.find_or_create_by!(name: "4-hour Window", admin_name: "4-hour window") do |sm|
+
+# 4-Hour Shipping Method
+Spree::ShippingMethod.find_or_create_by!(name: "4-Hour Window", admin_name: "4-Hour Window") do |sm|
+  sm.zones += [shipping_zone] 
   sm.shipping_categories += [shipping_category]
   sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 4.99, preferred_currency: "USD")
 end
-# FIXME: Add zip codes as members of this shipping zone:
-# shipping_zone.members += []
+# 2-Hour Shipping Method
+Spree::ShippingMethod.find_or_create_by!(name: "2-Hour Window", admin_name: "2-Hour Window") do |sm|
+  sm.zones += [shipping_zone] 
+  sm.shipping_categories += [shipping_category]
+  sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 6.99, preferred_currency: "USD")
+end
+# 1-Hour Shipping Method
+Spree::ShippingMethod.find_or_create_by!(name: "1-Hour Window", admin_name: "1-Hour Window") do |sm|
+  sm.zones += [shipping_zone] 
+  sm.shipping_categories += [shipping_category]
+  sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 8.99, preferred_currency: "USD")
+end
+
+#Creating postal codes
+postal_codes = %w(94102 94105).map { |postal_code|
+  Spree::PostalCode.find_or_create_by!(value: postal_code, country_id: 232)
+}
+#Add zip codes as members of this shipping zone
+shipping_zone.postal_code_ids = postal_codes.map(&:id)
+
 
 # Delivery Windows - 1pm (13) through 8pm (20)
 Spree::DeliveryWindow.find_or_create_by({
