@@ -17,7 +17,7 @@ module Spree
 
     private
 
-      # Some code here borrowed from Spree::Address
+      # Method borrowed from Spree::Address
       def postal_code_validate
         return if country.blank? || country.iso.blank?
         return if !TwitterCldr::Shared::PostalCodes.territories.include?(country.iso.downcase.to_sym)

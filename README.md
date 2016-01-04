@@ -24,26 +24,25 @@ $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/vie
 
 ## Dev Env Setup
 
-1. Setup and seed the database, and create the root user.
-
-    You will be prompted to create an admin account.
+1. Setup and seed the database
 
     ```
     git pull
     bundle
-    rake db:drop db:create db:migrate db:seed
+    bin/rake db:create db:schema:load db:seed
     ```
 
-2. Start server.
+2. Start server (also starts mailcatcher).
 
     ```
-    bundle exec rails server
+    heroku local --port 3000 --procfile Procfile.dev
     ```
 
-3. [Login to the Admin](http://localhost:3000/admin)
+3. [Login to the Admin](http://localhost:3000/admin) using `admin@din.co`/`password` (only created in development)
 
-4. You may now add new dishes!
+4. Add new dishes!
 
+**Note:** to reset your DB to the starting state, make sure no users are connected to the DB in Postgres, then run `bin/rake db:reset`. This does not create the `StoreCreditType` or `ReimbursementType` from migrations. See `20150506181611_create_spree_store_credit_payment_method.rb` and the next two migrations for details.
 
 ## Add a New Dish
 
@@ -111,7 +110,8 @@ $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/vie
         - **compression:** in Photoshop start with "Preset: JPEG High". Compress the image as low as possible until the quality of the image starts to degrade.
     - Do not add "Alternative Text", we will use the Dish Name as the "alt text".
     - Click "Update"
-
+7. In development mode, add stock to enable ordering
+    - 
 
 ## Adding Taxons
 

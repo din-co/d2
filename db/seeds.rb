@@ -1,11 +1,9 @@
 # This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# The data can then be loaded with bin/rake db:seed
 
+# Loads data from each gem's db/default/spree/*.rb files, unless overridden by files of
+# the same name in #{Rails.root}/db/default/spree.
+# FIXME: override countries.rb and states.rb to reduce long lists
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 
@@ -177,6 +175,13 @@ dish.properties += [
   Spree::Property.find_or_create_by!(name: 'sidebar', presentation: 'Sidebar'),
 ]
 
+usa = Spree::Country.find_by(iso: 'US') || Spree::Country.first
+
+# Default stock location to hold stocks of products
+Spree::StockLocation.find_or_create_by!(name: 'default') do |s|
+  s.country = usa
+end
+
 # Shipping Zones, Categories and Methods required to create products
 shipping_zone = Spree::Zone.find_or_create_by!(name: "San Francisco", description: "The 7x7", default_tax: false)
 shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Dish - standard")
@@ -187,12 +192,14 @@ Spree::ShippingMethod.find_or_create_by!(name: "4-Hour Window", admin_name: "4-H
   sm.shipping_categories += [shipping_category]
   sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 4.99, preferred_currency: "USD")
 end
+
 # 2-Hour Shipping Method
 Spree::ShippingMethod.find_or_create_by!(name: "2-Hour Window", admin_name: "2-Hour Window") do |sm|
   sm.zones += [shipping_zone]
   sm.shipping_categories += [shipping_category]
   sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 6.99, preferred_currency: "USD")
 end
+
 # 1-Hour Shipping Method
 Spree::ShippingMethod.find_or_create_by!(name: "1-Hour Window", admin_name: "1-Hour Window") do |sm|
   sm.zones += [shipping_zone]
@@ -201,8 +208,9 @@ Spree::ShippingMethod.find_or_create_by!(name: "1-Hour Window", admin_name: "1-H
 end
 
 # Create postal codes
-postal_codes = %w(94102 94105).map { |postal_code|
-  Spree::PostalCode.find_or_create_by!(value: postal_code, country_id: 232)
+postal_codes = %w(94102 94103 94107 94108 94109 94110 94112 94114 94115 94116 94117 94118
+    94121 94122 94123 94124 94127 94131 94132 94133 94134).map { |postal_code|
+  Spree::PostalCode.find_or_create_by!(value: postal_code, country_id: usa.id)
 }
 # Add zip codes as members of this shipping zone
 shipping_zone.postal_code_ids = postal_codes.map(&:id)
