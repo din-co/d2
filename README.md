@@ -52,7 +52,7 @@ $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/vie
     - **Name**: name of the dish.
     - **Master Price**: retail price of the dish.
     - **Shipping Categories**: select "default"
-    - **Prototype**: select "Dish"
+    - **Prototype**: select "Dish - standard"
     - Click "Create"
 3. Add product **description** (you may use html)
 4. Choose "Product Properties"

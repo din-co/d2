@@ -166,7 +166,7 @@ Spree::Taxon.find_or_create_by!(name: "plate", parent_id: taxon_equipment.id, ta
 end
 
 # Dish Prototype and Product Properties
-dish = Spree::Prototype.find_or_create_by!(name: 'Dish')
+dish = Spree::Prototype.find_or_create_by!(name: 'Dish - standard')
 dish.properties += [
   Spree::Property.find_or_create_by!(name: 'time', presentation: 'Time'),
   Spree::Property.find_or_create_by!(name: 'components', presentation: 'Components'),
@@ -179,7 +179,7 @@ dish.properties += [
 
 # Shipping Zones, Categories and Methods required to create products
 shipping_zone = Spree::Zone.find_or_create_by!(name: "San Francisco", description: "The 7x7", default_tax: false)
-shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Standard Dish")
+shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Dish - standard")
 
 # 4-Hour Shipping Method
 Spree::ShippingMethod.find_or_create_by!(name: "4-Hour Window", admin_name: "4-Hour Window") do |sm|
