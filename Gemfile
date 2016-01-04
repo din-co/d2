@@ -38,7 +38,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'solidus'
 gem 'solidus_auth_devise'
 gem 'aws-sdk', '< 2.0'
-gem 'rails_12factor'
 gem 'puma'
 gem 'rack-timeout'
 gem 'solidus_gateway'
@@ -48,6 +47,10 @@ gem 'mysql2', '~> 0.3.20'
 
 # Twitter Common Locale Data Repository
 gem 'twitter_cldr'
+
+group :production do
+  gem 'rails_12factor'
+end
 # END Non-Rails additions
 
 
