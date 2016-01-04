@@ -200,11 +200,11 @@ Spree::ShippingMethod.find_or_create_by!(name: "1-Hour Window", admin_name: "1-H
   sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 8.99, preferred_currency: "USD")
 end
 
-#Creating postal codes
+# Create postal codes
 postal_codes = %w(94102 94105).map { |postal_code|
   Spree::PostalCode.find_or_create_by!(value: postal_code, country_id: 232)
 }
-#Add zip codes as members of this shipping zone
+# Add zip codes as members of this shipping zone
 shipping_zone.postal_code_ids = postal_codes.map(&:id)
 
 
