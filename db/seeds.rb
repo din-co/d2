@@ -183,19 +183,19 @@ shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Dish - sta
 
 # 4-Hour Shipping Method
 Spree::ShippingMethod.find_or_create_by!(name: "4-Hour Window", admin_name: "4-Hour Window") do |sm|
-  sm.zones += [shipping_zone] 
+  sm.zones += [shipping_zone]
   sm.shipping_categories += [shipping_category]
   sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 4.99, preferred_currency: "USD")
 end
 # 2-Hour Shipping Method
 Spree::ShippingMethod.find_or_create_by!(name: "2-Hour Window", admin_name: "2-Hour Window") do |sm|
-  sm.zones += [shipping_zone] 
+  sm.zones += [shipping_zone]
   sm.shipping_categories += [shipping_category]
   sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 6.99, preferred_currency: "USD")
 end
 # 1-Hour Shipping Method
 Spree::ShippingMethod.find_or_create_by!(name: "1-Hour Window", admin_name: "1-Hour Window") do |sm|
-  sm.zones += [shipping_zone] 
+  sm.zones += [shipping_zone]
   sm.shipping_categories += [shipping_category]
   sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 8.99, preferred_currency: "USD")
 end
