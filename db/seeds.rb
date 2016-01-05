@@ -207,14 +207,13 @@ delivery_windows = [
   {start: 18, duration: 1, lead_time: 2}, # 6pm - 7pm
   {start: 19, duration: 1, lead_time: 2}, # 7pm - 8pm
 ].map do |d|
-  Spree::DeliveryWindow.find_or_create_by({
+  dw = Spree::DeliveryWindow.find_or_create_by({
     start_hour: d[:start],
     duration: d[:duration],
     lead_time_duration: d[:lead_time],
   })
+  shipping_zone.delivery_window_zones.create!(delivery_window: dw)
 end
-# Add delivery windows to our shipping zone
-shipping_zone.delivery_windows = delivery_windows
 
 # Stripe Payment Gateway
 Spree::Gateway::StripeGateway.find_or_create_by({

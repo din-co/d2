@@ -80,8 +80,8 @@ module Spree
     included do
       prepend(InstanceMethods)
 
-      has_many :zone_delivery_windows, class_name: "Spree::ZoneDeliveryWindow"
-      has_many :delivery_windows, through: :zone_delivery_windows 
+      has_many :delivery_window_zones, class_name: "Spree::DeliveryWindowZone"
+      has_many :delivery_windows, through: :delivery_window_zones
 
       # Override Spree::Zone.match to return PostalCode zone types if found.
       # Returns the matching zone with the highest priority zone type (PostalCode, State, Country, Zone.)

@@ -1,6 +1,6 @@
-class CreateSpreeZoneDeliveryWindows < ActiveRecord::Migration
+class CreateSpreeDeliveryWindowZones < ActiveRecord::Migration
   def change
-    create_table :spree_zone_delivery_windows do |t|
+    create_table :spree_delivery_window_zones do |t|
       t.references :delivery_window, index: true, null: false
       t.references :zone, index: true, null: false
 
