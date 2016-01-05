@@ -190,9 +190,8 @@ shipping_methods = [
   {hours: 2, price: 6.99},
   {hours: 1, price: 8.99},
 ].map do |m|
-  name = "#{m[:hours]}-Hour Window"
-  Spree::ShippingMethod.find_or_create_by!(name: name) do |sm|
-    sm.admin_name = name
+  Spree::ShippingMethod.find_or_create_by!(name: "#{m[:hours]}-Hour Window") do |sm|
+    sm.admin_name = "#{m[:hours]}_hours"
     sm.zones += [shipping_zone]
     sm.shipping_categories += [shipping_category]
     sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: m[:price], preferred_currency: "USD")
