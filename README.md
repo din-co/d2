@@ -22,7 +22,6 @@ $ mkdir -p app/views/spree/home
 $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/views/spree/home
 ```
 
-
 ## Dev Env Setup
 
 1. Setup and seed the database, and create the root user.
@@ -129,3 +128,13 @@ $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/vie
     - **allergens**: no description is necessary.
     - **equipment**: add further clarification about the equipment, substitute equipment, etc.
     - **pantry**: add further clarification about the pantry item, substitution ingredients, etc.
+
+## Dev Template Editing
+
+Templates for editing can be found by viewing these bundles:
+
+```
+bundle show solidus_core
+bundle show solidus
+bundle show solidus_frontend
+```
