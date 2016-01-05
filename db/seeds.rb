@@ -2,8 +2,7 @@
 # The data can then be loaded with bin/rake db:seed
 
 # Loads data from each gem's db/default/spree/*.rb files, unless overridden by files of
-# the same name in #{Rails.root}/db/default/spree.
-# FIXME: override countries.rb and states.rb to reduce long lists
+# the same name in #{Rails.root}/db/default/spree/ (which we do).
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 

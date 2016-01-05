@@ -35,22 +35,21 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 # Non-Rails additions
+gem 'mysql2', '~> 0.3.20'
 gem 'solidus'
 gem 'solidus_auth_devise'
-gem 'aws-sdk', '< 2.0'
-gem 'puma'
-gem 'rack-timeout'
 gem 'solidus_gateway'
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
-gem 'intercom-rails'
-gem 'mysql2', '~> 0.3.20'
+gem 'puma'
+gem 'rack-timeout'
 
 # Twitter Common Locale Data Repository
 gem 'twitter_cldr'
 
-group :production do
-  gem 'rails_12factor'
-end
+gem 'aws-sdk', '< 2.0'
+gem 'intercom-rails'
+
+gem 'rails_12factor'
 # END Non-Rails additions
 
 
