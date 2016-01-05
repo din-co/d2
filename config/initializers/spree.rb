@@ -13,7 +13,7 @@ Spree.config do |config|
   config.currency = "USD"
 
   # Default to US
-  config.default_country_id = 1
+  config.default_country_id = (Spree::Country.find_by(iso: 'US') || Spree::Country.first).id
 
   # from address for transactional emails
   config.mails_from = "cook@din.co"
