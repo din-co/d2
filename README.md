@@ -11,38 +11,42 @@ Your choice: `heroku local --port 3000 --procfile Procfile.dev` to see the websi
 
 - Where are the templates to copy?
 
-`bundle show solidus_frontend`
+    ```console
+    $ bundle show solidus_frontend
+    ```
 
 - Where do I copy them to?
 
-Into your local copy, under `app/views/...` in the same place as they are in the `solidus_frontend` gem, _e.g._:
+    Into your local copy, under `app/views/...` in the same place as they are in the `solidus_frontend` gem, _e.g._:
 
-``` console
-$ mkdir -p app/views/spree/home
-$ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/views/spree/home
-```
+    ``` console
+    $ mkdir -p app/views/spree/home
+    $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/views/spree/home
+    ```
 
 ## Dev Env Setup
 
-1. Setup and seed the database
+1. Create and seed the database
 
+    ```console
+    $ git pull
+    $ bundle
+    $ bin/rake db:create db:schema:load db:seed
     ```
-    git pull
-    bundle
-    bin/rake db:create db:schema:load db:seed
-    ```
+
+    Reset your DB to the starting state with `bin/rake db:reset`.
+
+    **Note:** This does not create the two `StoreCreditType`s or default `ReimbursementType` from migrations: `20150506181611_create_spree_store_credit_payment_method.rb` and the next two in sequence. That's OK.
 
 2. Start server (also starts mailcatcher).
 
-    ```
-    heroku local --port 3000 --procfile Procfile.dev
+    ```console
+    $ heroku local --port 3000 --procfile Procfile.dev
     ```
 
 3. [Login to the Admin](http://localhost:3000/admin) using `admin@din.co`/`password` (only created in development)
 
 4. Add new dishes!
-
-**Note:** to reset your DB to the starting state, make sure no users are connected to the DB in Postgres, then run `bin/rake db:reset`. This does not create the `StoreCreditType` or `ReimbursementType` from migrations. See `20150506181611_create_spree_store_credit_payment_method.rb` and the next two migrations for details.
 
 ## Add a New Dish
 
@@ -110,8 +114,9 @@ $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/vie
         - **compression:** in Photoshop start with "Preset: JPEG High". Compress the image as low as possible until the quality of the image starts to degrade.
     - Do not add "Alternative Text", we will use the Dish Name as the "alt text".
     - Click "Update"
-7. In development mode, add stock to enable ordering
-    - 
+7. Add stock to enable ordering
+    - Click "Stock Management"
+    - Click the Edit (pencil) button next to your item and set the count on hand
 
 ## Adding Taxons
 
