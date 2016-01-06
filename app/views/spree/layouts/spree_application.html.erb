@@ -1,37 +1,28 @@
-<!doctype html>
-<!--[if lt IE 7 ]> <html class="ie ie6" lang="<%= I18n.locale %>"> <![endif]-->
-<!--[if IE 7 ]>    <html class="ie ie7" lang="<%= I18n.locale %>"> <![endif]-->
-<!--[if IE 8 ]>    <html class="ie ie8" lang="<%= I18n.locale %>"> <![endif]-->
-<!--[if IE 9 ]>    <html class="ie ie9" lang="<%= I18n.locale %>"> <![endif]-->
-<!--[if gt IE 9]><!--><html lang="<%= I18n.locale %>"><!--<![endif]-->
-  <head data-hook="inside_head">
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= render :partial => 'spree/shared/head' %>
   </head>
-  <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
+  <body class="<%= body_class %>" id="<%= @body_id %>">
 
-    <div class="container">
+    <%= render :partial => 'spree/shared/header' %>
 
-      <%= render :partial => 'spree/shared/header' %>
+    <%#= breadcrumbs(@taxon) %>
 
-      <div id="wrapper" class="row" data-hook>
+    <%#= render :partial => 'spree/shared/sidebar' if content_for? :sidebar %>
 
-        <%= breadcrumbs(@taxon) %>
+    <%#= flash_messages %>
 
-        <%= render :partial => 'spree/shared/sidebar' if content_for? :sidebar %>
+    <%= yield %>
 
-        <div id="content" class="columns <%= !content_for?(:sidebar) ? "sixteen" : "twelve omega" %>" data-hook>
-          <%= flash_messages %>
-          <%= yield %>
-        </div>
+    <%= yield :templates %>
 
-        <%= yield :templates %>
-
-      </div>
-
-      <%= render :partial => 'spree/shared/footer' %>
-
-    </div>
+    <%= render :partial => 'spree/shared/footer' %>
 
     <%= render :partial => 'spree/shared/google_analytics' %>
+
   </body>
 </html>
