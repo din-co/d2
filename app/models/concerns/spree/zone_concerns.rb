@@ -2,6 +2,36 @@ module Spree
   module ZoneConcerns
     extend ActiveSupport::Concern
 
+    included do
+      prepend(InstanceMethods)
+
+      has_many :delivery_window_zones, class_name: "Spree::DeliveryWindowZone", inverse_of: :zone
+      has_many :delivery_windows, through: :delivery_window_zones
+
+      # Override Spree::Zone.match to return PostalCode zone types if found.
+      # Returns the matching zone with the highest priority zone type (PostalCode, State, Country, Zone.)
+      # Returns nil in the case of no matches.
+      def self.match(address)
+        return unless address and matches = self.includes(:zone_members).
+          order(:zone_members_count, :created_at, :id).
+          where("
+            (spree_zone_members.zoneable_type = 'Spree::Country' AND spree_zone_members.zoneable_id = ?)
+            OR
+            (spree_zone_members.zoneable_type = 'Spree::State' AND spree_zone_members.zoneable_id = ?)
+            OR
+            (spree_zone_members.zoneable_type = 'Spree::PostalCode' AND spree_zone_members.zoneable_id = ?)
+          ", address.country_id, address.state_id, address.postal_code_id).
+          references(:zones)
+
+        ['postal_code', 'state', 'country'].each do |zone_kind|
+          if match = matches.detect { |zone| zone_kind == zone.kind }
+            return match
+          end
+        end
+        matches.first
+      end
+    end
+
     # Override default instance methods by prepending the below module
     module InstanceMethods
       # Override to include Spree::PostalCode as option
@@ -10,12 +40,12 @@ module Spree
 
         members.any? do |zone_member|
           case zone_member.zoneable_type
+          when 'Spree::PostalCode'
+            zone_member.zoneable_id == address.postal_code_id
           when 'Spree::Country'
             zone_member.zoneable_id == address.country_id
           when 'Spree::State'
             zone_member.zoneable_id == address.state_id
-          when 'Spree::PostalCode'
-            zone_member.zoneable_id == address.postal_code_id
           else
             false
           end
@@ -67,43 +97,6 @@ module Spree
           end
         end
         true
-      end
-
-      def available_delivery_windows
-        current_hour = Time.now.hour
-
-        delivery_windows.
-          where("start_hour - lead_time_duration > ?", current_hour)
-      end
-    end
-
-    included do
-      prepend(InstanceMethods)
-
-      has_many :delivery_window_zones, class_name: "Spree::DeliveryWindowZone"
-      has_many :delivery_windows, through: :delivery_window_zones
-
-      # Override Spree::Zone.match to return PostalCode zone types if found.
-      # Returns the matching zone with the highest priority zone type (PostalCode, State, Country, Zone.)
-      # Returns nil in the case of no matches.
-      def self.match(address)
-        return unless address and matches = self.includes(:zone_members).
-          order(:zone_members_count, :created_at, :id).
-          where("
-            (spree_zone_members.zoneable_type = 'Spree::Country' AND spree_zone_members.zoneable_id = ?)
-            OR
-            (spree_zone_members.zoneable_type = 'Spree::State' AND spree_zone_members.zoneable_id = ?)
-            OR
-            (spree_zone_members.zoneable_type = 'Spree::PostalCode' AND spree_zone_members.zoneable_id = ?)
-          ", address.country_id, address.state_id, address.postal_code_id).
-          references(:zones)
-
-        ['postal_code', 'state', 'country'].each do |zone_kind|
-          if match = matches.detect { |zone| zone_kind == zone.kind }
-            return match
-          end
-        end
-        matches.first
       end
     end
 
