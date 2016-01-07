@@ -174,7 +174,7 @@ dish.properties += [
   Spree::Property.find_or_create_by!(name: 'sidebar', presentation: 'Sidebar'),
 ]
 
-usa = Spree::Country.find_by(iso: 'US') || Spree::Country.first
+usa = Spree::Country.find_by(iso: 'US') || Spree::Country.default
 
 # Default stock location to hold stocks of products
 Spree::StockLocation.find_or_create_by!(name: 'Default') do |s|
@@ -204,10 +204,10 @@ delivery_windows.each do |d|
       preferred_currency: d[:window][:currency],
     })
     d[:zones].each do |z|
-      sm.shipping_method_zones.create!(zone: z)
+      sm.shipping_method_zones.build(zone: z)
     end
   end
-  shipping_method.delivery_windows = [Spree::DeliveryWindow.create!(d[:window])]
+  Spree::DeliveryWindow.create!(d[:window].merge(shipping_method: shipping_method))
 end
 
 # Stripe Payment Gateway

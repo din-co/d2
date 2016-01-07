@@ -11,7 +11,7 @@ RSpec.describe Spree::PostalCode, type: :model do
     pending "value is required"
     pending "country is required"
     pending "runs postal_code_validate"
-    pending "runs us_restrict_digits_validate"
+    pending "restrict US postal codes to 5 digits"
   end
 
   describe "instance methods" do

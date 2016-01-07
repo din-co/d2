@@ -21,3 +21,5 @@
 
 en:
   hello: "Hello world"
+  spree:
+    unsupported_delivery_location: "Delivery is not available to this location"
