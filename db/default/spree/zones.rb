@@ -45,6 +45,8 @@ regions = [
   },
 ]
 
+usa = Spree::Country.find_by(iso: 'US') || Spree::Country.default
+
 regions.each do |region|
   ActiveRecord::Base.transaction do
     zone = Spree::Zone.find_or_create_by!(name: region[:name]) do |s|
@@ -53,7 +55,7 @@ regions.each do |region|
     end
 
     region[:postal_codes].map do |p|
-      postal_code = Spree::PostalCode.find_or_create_by!(value: p, country: Spree::Country.default)
+      postal_code = Spree::PostalCode.find_or_create_by!(value: p, country: usa)
       zone.zone_members.create!(zoneable: postal_code)
     end
   end

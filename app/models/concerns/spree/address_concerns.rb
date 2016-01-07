@@ -20,16 +20,14 @@ module Spree
     private
       def associate_postal_code
         return true if zipcode.blank?
-
-        code = if country.iso && country.iso.downcase == "us"
-                 zipcode.first(5)
-               else
-                 zipcode
-               end
-
-        postal_obj = Spree::PostalCode.where(value: code, country: country).first_or_create
+        code = country.try!(:iso).try(:downcase) == "us" ? zipcode.first(5) : zipcode
+        postal_code = Spree::PostalCode.find_by(value: code, country: country)
+        if postal_code.blank?
+          errors[:base] = Spree.t(:unsupported_delivery_location)
+          return false
+        end
         # Need to use assign_attributes when in callback
-        assign_attributes(postal_code_id: postal_obj.id)
+        assign_attributes(postal_code_id: postal_code.id)
       end
   end
 end
