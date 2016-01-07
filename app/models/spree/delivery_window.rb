@@ -12,8 +12,12 @@ module Spree
       "#{format_offset(start_hour)} - #{format_offset(start_hour + duration)}"
     end
 
+    def admin_display
+      "#{to_s} (#{display_cost}) - #{lead_time_in_hours} lead time"
+    end
+
     def lead_time_in_hours
-      "#{lead_time_duration} hours"
+      "#{lead_time_duration} hour".pluralize(lead_time_duration)
     end
 
     private

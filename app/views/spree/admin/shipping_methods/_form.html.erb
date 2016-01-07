@@ -63,7 +63,7 @@
       <legend align="center"><%= Spree.t(:delivery_windows) %></legend>
       <%= f.field_container :delivery_window_ids do %>
         <%= f.label :delivery_window_ids, Spree.t(:delivery_windows) %><br>
-        <%= f.collection_select :delivery_window_ids, f.object.delivery_windows, :id, :to_s, {}, { :multiple => true, :class => "select2 fullwidth" } %>
+        <%= f.collection_select :delivery_window_ids, Spree::DeliveryWindow.where(shipping_method_id: [f.object.id, nil]), :id, :admin_display, {}, { :multiple => true, :class => "select2 fullwidth" } %>
       <% end %>
     </fieldset>
   </div>
