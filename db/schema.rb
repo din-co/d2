@@ -174,11 +174,14 @@ ActiveRecord::Schema.define(version: 20160102214031) do
   end
 
   create_table "spree_delivery_windows", force: :cascade do |t|
-    t.integer  "start_hour",         null: false
-    t.integer  "duration",           null: false
-    t.integer  "lead_time_duration", null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.integer  "shipping_method_id"
+    t.integer  "start_hour",                                 null: false
+    t.integer  "duration",                                   null: false
+    t.integer  "lead_time_duration",                         null: false
+    t.decimal  "cost",               precision: 8, scale: 2, null: false
+    t.string   "currency",                                   null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "spree_inventory_units", force: :cascade do |t|
@@ -1199,16 +1202,6 @@ ActiveRecord::Schema.define(version: 20160102214031) do
   add_index "spree_variants", ["sku"], name: "index_spree_variants_on_sku", using: :btree
   add_index "spree_variants", ["tax_category_id"], name: "index_spree_variants_on_tax_category_id", using: :btree
   add_index "spree_variants", ["track_inventory"], name: "index_spree_variants_on_track_inventory", using: :btree
-
-  create_table "spree_delivery_window_zones", force: :cascade do |t|
-    t.integer  "delivery_window_id", null: false
-    t.integer  "zone_id",            null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "spree_delivery_window_zones", ["delivery_window_id"], name: "index_spree_delivery_window_zones_on_delivery_window_id", using: :btree
-  add_index "spree_delivery_window_zones", ["zone_id"], name: "index_spree_delivery_window_zones_on_zone_id", using: :btree
 
   create_table "spree_zone_members", force: :cascade do |t|
     t.integer  "zoneable_id"

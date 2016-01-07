@@ -3,7 +3,9 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      belongs_to :delivery_window, class_name: "Spree::DeliveryWindow", inverse_of: :shipments
+      belongs_to :selected_delivery_window, foreign_key: :delivery_window_id, class_name: "Spree::DeliveryWindow"
+
+      has_many :delivery_windows, through: :shipping_methods
     end
   end
 end

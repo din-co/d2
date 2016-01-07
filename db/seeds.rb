@@ -183,41 +183,31 @@ end
 
 # Shipping Zones, Categories and Methods required to create products
 standard_shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Dish - standard")
-san_francisco = Spree::Zone.find_by!(name: "San Francisco")
 
-# SF Delivery Windows - 1pm (13) through 8pm (20)
+sf_zone = Spree::Zone.find_by!(name: "San Francisco")
+bay_area_zones = ["East Bay", "North Bay", "Peninsula"].map { |name| zone = Spree::Zone.find_by!(name: name) }
 delivery_windows = [
-  {start_hour: 13, duration: 4, lead_time_duration: 1}, # 1pm - 5pm, order by 12pm
-  {start_hour: 18, duration: 2, lead_time_duration: 1}, # 6pm - 8pm, order by 5pm
-  {start_hour: 18, duration: 1, lead_time_duration: 1}, # 6pm - 7pm, order by 5pm
-  {start_hour: 19, duration: 1, lead_time_duration: 2}, # 7pm - 8pm, order by 5pm
-].map do |window|
-  san_francisco.delivery_window_zones.create!(delivery_window: Spree::DeliveryWindow.find_or_create_by!(window))
-end
+  {zones: [sf_zone],      window: {start_hour: 13, duration: 4, lead_time_duration: 1, cost: 4.99, currency: "USD"}}, # 1pm - 5pm, order by 12pm
+  {zones: [sf_zone],      window: {start_hour: 18, duration: 2, lead_time_duration: 1, cost: 6.99, currency: "USD"}}, # 6pm - 8pm, order by 5pm
+  {zones: [sf_zone],      window: {start_hour: 18, duration: 1, lead_time_duration: 1, cost: 8.99, currency: "USD"}}, # 6pm - 7pm, order by 5pm
+  {zones: [sf_zone],      window: {start_hour: 19, duration: 1, lead_time_duration: 2, cost: 8.99, currency: "USD"}}, # 7pm - 8pm, order by 5pm
 
-[
-  {hours: 4, price: 4.99},
-  {hours: 2, price: 6.99},
-  {hours: 1, price: 8.99},
-].map do |m|
-  Spree::ShippingMethod.find_or_create_by!(name: "#{m[:hours]}-Hour Window", code: "sf-#{m[:hours]}-hours") do |sm|
-    sm.zones += [san_francisco]
-    sm.shipping_categories += [standard_shipping_category]
-    sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: m[:price], preferred_currency: "USD")
+  {zones: bay_area_zones, window: {start_hour: 13, duration: 4, lead_time_duration: 1, cost: 6.99, currency: "USD"}} # 1pm - 5pm, order by 12pm
+]
+
+delivery_windows.each do |d|
+  shipping_method = Spree::ShippingMethod.create!(name: "#{d[:window][:duration]}-Hour Window", code: d[:zones].map(&:name).join(", ")) do |sm|
+    sm.shipping_categories = [standard_shipping_category]
+    sm.build_calculator({
+      type: "Spree::Calculator::Shipping::FlatRate",
+      preferred_amount: d[:window][:cost],
+      preferred_currency: d[:window][:currency],
+    })
+    d[:zones].each do |z|
+      sm.shipping_method_zones.create!(zone: z)
+    end
   end
-end
-
-# Other Zone Delivery Windows - 1pm (13) through 5pm (17)
-dw = Spree::DeliveryWindow.find_or_create_by!(start_hour: 13, duration: 4, lead_time_duration: 2)
-sm = Spree::ShippingMethod.find_or_create_by!(name: "4-Hour Window", code: "bayarea-4-hours") do |sm|
-  sm.shipping_categories += [standard_shipping_category]
-  sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 6.99, preferred_currency: "USD")
-end
-
-["East Bay", "North Bay", "Peninsula"].each do |name|
-  zone = Spree::Zone.find_by!(name: name)
-  zone.delivery_window_zones.create!(delivery_window: dw)
-  sm.zones += [zone]
+  shipping_method.delivery_windows = [Spree::DeliveryWindow.create!(d[:window])]
 end
 
 # Stripe Payment Gateway

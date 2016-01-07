@@ -1,10 +1,12 @@
 module Spree
   class DeliveryWindow < Spree::Base
-    has_many :shipments, :class_name => "Spree::Shipment", inverse_of: :delivery_window
-    has_many :delivery_window_zones, :class_name => "Spree::DeliveryWindowZone"
-    has_many :zones, through: :delivery_window_zones
+    belongs_to :shipping_method
+    has_many :shipments, inverse_of: :delivery_window
 
     scope :available, -> { where("start_hour - lead_time_duration > ?", Time.now.hour) }
+
+    extend DisplayMoney
+    money_methods :cost
 
     def to_s
       "#{format_offset(start_hour)} - #{format_offset(start_hour + duration)}"

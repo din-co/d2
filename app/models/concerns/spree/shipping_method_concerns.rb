@@ -3,7 +3,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      has_many :delivery_windows, -> { order(:start_hour) }, through: :zones, class_name: "Spree::DeliveryWindow"
+      has_many :delivery_windows, -> { order(:start_hour) }
     end
   end
 end
