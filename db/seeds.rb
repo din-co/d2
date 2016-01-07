@@ -1,11 +1,8 @@
 # This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# The data can then be loaded with bin/rake db:seed
 
+# Loads data from each gem's db/default/spree/*.rb files, unless overridden by files of
+# the same name in #{Rails.root}/db/default/spree/ (which we do).
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 
@@ -166,7 +163,7 @@ Spree::Taxon.find_or_create_by!(name: "plate", parent_id: taxon_equipment.id, ta
 end
 
 # Dish Prototype and Product Properties
-dish = Spree::Prototype.find_or_create_by!(name: 'Dish')
+dish = Spree::Prototype.find_or_create_by!(name: 'Dish - standard')
 dish.properties += [
   Spree::Property.find_or_create_by!(name: 'time', presentation: 'Time'),
   Spree::Property.find_or_create_by!(name: 'components', presentation: 'Components'),
@@ -177,15 +174,41 @@ dish.properties += [
   Spree::Property.find_or_create_by!(name: 'sidebar', presentation: 'Sidebar'),
 ]
 
-# Shipping Zones, Categories and Methods required to create products
-shipping_zone = Spree::Zone.find_or_create_by!(name: "San Francisco", description: "The 7x7", default_tax: false)
-shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Standard Dish")
-shipping_method = Spree::ShippingMethod.find_or_create_by!(name: "4-hour Window", admin_name: "4-hour window") do |sm|
-  sm.shipping_categories += [shipping_category]
-  sm.build_calculator(type: "Spree::Calculator::Shipping::FlatRate", preferred_amount: 4.99, preferred_currency: "USD")
+usa = Spree::Country.find_by(iso: 'US') || Spree::Country.first
+
+# Default stock location to hold stocks of products
+Spree::StockLocation.find_or_create_by!(name: 'Default') do |s|
+  s.country = usa
 end
-# FIXME: Add zip codes as members of this shipping zone:
-# shipping_zone.members += []
+
+# Shipping Zones, Categories and Methods required to create products
+standard_shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Dish - standard")
+
+sf_zone = Spree::Zone.find_by!(name: "San Francisco")
+bay_area_zones = ["East Bay", "North Bay", "Peninsula"].map { |name| zone = Spree::Zone.find_by!(name: name) }
+delivery_windows = [
+  {zones: [sf_zone],      window: {start_hour: 13, duration: 4, lead_time_duration: 1, cost: 4.99, currency: "USD"}}, # 1pm - 5pm, order by 12pm
+  {zones: [sf_zone],      window: {start_hour: 18, duration: 2, lead_time_duration: 1, cost: 6.99, currency: "USD"}}, # 6pm - 8pm, order by 5pm
+  {zones: [sf_zone],      window: {start_hour: 18, duration: 1, lead_time_duration: 1, cost: 8.99, currency: "USD"}}, # 6pm - 7pm, order by 5pm
+  {zones: [sf_zone],      window: {start_hour: 19, duration: 1, lead_time_duration: 2, cost: 8.99, currency: "USD"}}, # 7pm - 8pm, order by 5pm
+
+  {zones: bay_area_zones, window: {start_hour: 13, duration: 4, lead_time_duration: 1, cost: 6.99, currency: "USD"}} # 1pm - 5pm, order by 12pm
+]
+
+delivery_windows.each do |d|
+  shipping_method = Spree::ShippingMethod.create!(name: "#{d[:window][:duration]}-Hour Window", code: d[:zones].map(&:name).join(", ")) do |sm|
+    sm.shipping_categories = [standard_shipping_category]
+    sm.build_calculator({
+      type: "Spree::Calculator::Shipping::FlatRate",
+      preferred_amount: d[:window][:cost],
+      preferred_currency: d[:window][:currency],
+    })
+    d[:zones].each do |z|
+      sm.shipping_method_zones.create!(zone: z)
+    end
+  end
+  shipping_method.delivery_windows = [Spree::DeliveryWindow.create!(d[:window])]
+end
 
 # Stripe Payment Gateway
 Spree::Gateway::StripeGateway.find_or_create_by({

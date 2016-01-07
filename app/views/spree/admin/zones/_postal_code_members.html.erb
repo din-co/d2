@@ -1,0 +1,10 @@
+<div id="postal_code_members" data-hook="member" class="omega six columns">
+  <fieldset class="no-border-bottom">
+    <legend align="center"><%= Spree.t(:postal_codes) %></legend>
+
+    <%= zone_form.field_container :postal_code_ids do %>
+      <%= zone_form.label :postal_code_ids, Spree.t(:postal_codes) %><br>
+      <%= zone_form.collection_select :postal_code_ids, Spree::PostalCode.all, :id, :value, {}, { :multiple => true, :class => "select2 fullwidth" } %>
+    <% end %>
+  </fieldset>
+</div>

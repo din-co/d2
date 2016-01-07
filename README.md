@@ -11,51 +11,65 @@ Your choice: `heroku local --port 3000 --procfile Procfile.dev` to see the websi
 
 - Where are the templates to copy?
 
-`bundle show solidus_frontend`
+    ```console
+    $ bundle show solidus_frontend
+    ```
 
 - Where do I copy them to?
 
-Into your local copy, under `app/views/...` in the same place as they are in the `solidus_frontend` gem, _e.g._:
+    Into your local copy, under `app/views/...` in the same place as they are in the `solidus_frontend` gem, _e.g._:
 
-``` console
-$ mkdir -p app/views/spree/home
-$ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/views/spree/home
-```
+    ``` console
+    $ mkdir -p app/views/spree/home
+    $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/views/spree/home
+    ```
 
 ## Dev Env Setup
 
-1. Setup and seed the database, and create the root user.
+1. Create and seed the database
 
-    You will be prompted to create an admin account.
-
-    ```
-    git pull
-    bundle
-    rake db:drop db:create db:migrate db:seed
+    ```console
+    $ git pull
+    $ bundle
+    $ bin/rake db:create db:schema:load db:seed
     ```
 
-2. Start server.
+    Reset your DB to the starting state with `bin/rake db:reset`.
 
+    **Note:** This does not create the two `StoreCreditType`s or default `ReimbursementType` from migrations: `20150506181611_create_spree_store_credit_payment_method.rb` and the next two in sequence. That's OK.
+
+2. Start server (also starts mailcatcher).
+
+    ```console
+    $ heroku local --port 3000 --procfile Procfile.dev
     ```
-    bundle exec rails server
-    ```
 
-3. [Login to the Admin](http://localhost:3000/admin)
+3. [Login to the Admin](http://localhost:3000/admin) using `admin@din.co`/`password` (only created in development)
 
-4. You may now add new dishes!
-
+4. Add new dishes!
 
 ## Add a New Dish
 
 1. Go to [Products page](http://localhost:3000/admin/products) and click "+ New Product".
-2. Add product details:
+2. Add new product details:
     - **Name**: name of the dish.
+    - **Prototype**: select "Dish - standard"
     - **Master Price**: retail price of the dish.
-    - **Shipping Categories**: select "default"
-    - **Prototype**: select "Dish"
+    - **Available On**: select today or any date in the past to make the product available.
+    - **Shipping Categories**: select "Dish - standard"
     - Click "Create"
-3. Add product **description** (you may use html)
-4. Choose "Product Properties"
+3. Add addtional product details:
+    - **description**: anything you wish (you may use html).
+    - **taxons**:
+        - **restaurant**: select *one* restaurant.
+        - **chef**: select *one* chef.
+        - **diets**: select all associated diets.
+        - **allergens**: select all allergens contained in the dish.
+        - **pantry**: select all pantry items.
+        - **equipment**: select all needed equipment.
+    - Click "Update" to submit changes.
+4. Add Product Properties:
+    - Click "Product Properties" in the right navigation.
     - **time**: The number of full minutes this recipe takes to prepare (eg. "23"). Just the whole number, Do not include a label for units.
     - **components**: The list of components which will be included in the bag.
         - Format each component in a list item (`<li>`) tag, they will be placed inside a `<ul class="dish-components">` tag.
@@ -95,25 +109,23 @@ $ cp $(bundle show solidus_frontend)/app/views/spree/home/index.html.erb app/vie
           <li>A numbered ordered list of steps.<li>
         </ol>
         ```
-5. Add taxons:
-    - **restaurant**: select *one* restaurant.
-    - **chef**: select *one* chef.
-    - **diets**: select all associated diets.
-    - **allergens**: select all allergens contained in the dish.
-    - **pantry**: select all pantry items.
-    - **equipment**: select all needed equipment.
-
-    Taxons shouldn't change very often. If a taxon needs to be added, make sure there isn't and existing item before adding a new taxon.
-6. Add an image:
-    - Click "Images", then "+ New Image"
+    - Click "Update" to submit changes.
+6. Add a product image:
+    - Click "Images" in the right navigation, then click "+ New Image".
     - Select the file to upload.
         - **dimensions:** 1920px wide × 1080px tall at 72dpi.
         - **compression:** in Photoshop start with "Preset: JPEG High". Compress the image as low as possible until the quality of the image starts to degrade.
     - Do not add "Alternative Text", we will use the Dish Name as the "alt text".
-    - Click "Update"
-
+    - Click "Update" to submit changes.
+7. Add stock to enable ordering
+    - Click "Stock Management" in the right navigation.
+    - Click the Edit (pencil) button
+    - Set the "Count on hand" value.
+    - Click the checkmark to update stock count.
 
 ## Adding Taxons
+
+Taxons shouldn't change very often. If a taxon needs to be added, please discuss with product and eng.
 
 1. Go to [Product Taxonomies](http://localhost:3000/admin/taxonomies).
 2. Click the "Edit" link for the taxonomy you wish to add a taxon to.

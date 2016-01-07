@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215230839) do
+ActiveRecord::Schema.define(version: 20160102214031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,17 @@ ActiveRecord::Schema.define(version: 20151215230839) do
     t.integer  "stock_location_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "spree_delivery_windows", force: :cascade do |t|
+    t.integer  "shipping_method_id"
+    t.integer  "start_hour",                                 null: false
+    t.integer  "duration",                                   null: false
+    t.integer  "lead_time_duration",                         null: false
+    t.decimal  "cost",               precision: 8, scale: 2, null: false
+    t.string   "currency",                                   null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
   create_table "spree_inventory_units", force: :cascade do |t|
@@ -730,9 +741,11 @@ ActiveRecord::Schema.define(version: 20151215230839) do
     t.decimal  "promo_total",          precision: 10, scale: 2, default: 0.0
     t.decimal  "included_tax_total",   precision: 10, scale: 2, default: 0.0, null: false
     t.decimal  "pre_tax_amount",       precision: 12, scale: 4, default: 0.0, null: false
+    t.integer  "delivery_window_id"
   end
 
   add_index "spree_shipments", ["address_id"], name: "index_spree_shipments_on_address_id", using: :btree
+  add_index "spree_shipments", ["delivery_window_id"], name: "index_spree_shipments_on_delivery_window_id", using: :btree
   add_index "spree_shipments", ["number"], name: "index_shipments_on_number", using: :btree
   add_index "spree_shipments", ["order_id"], name: "index_spree_shipments_on_order_id", using: :btree
   add_index "spree_shipments", ["stock_location_id"], name: "index_spree_shipments_on_stock_location_id", using: :btree
