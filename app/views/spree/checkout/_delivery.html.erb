@@ -39,14 +39,13 @@
 
           <h5 class="stock-shipping-method-title"><%= Spree.t(:delivery_window) %></h5>
           <ul class="field radios shipping-methods">
-            <% ship_form.object.shipping_method.delivery_windows.available.uniq.each do |delivery_window| %>
+            <%# TODO: select cheapest delivery window %>
+            <% ship_form.object.delivery_windows.available.each do |delivery_window| %>
               <li class="shipping-method" style="display:block;">
                 <label>
                   <%= ship_form.radio_button :delivery_window_id, delivery_window.id %>
-                  <span class="rate-name"><%= delivery_window %></span>
-                  <% # TODO: Make less terrible %>
-                  <% m = Spree::ShippingMethod.where("name like '%#{delivery_window.duration}%'").first %>
-                  <strong><%= "(#{m.shipping_rates.first.display_cost})" %></strong>
+                  <span class="window-name"><%= delivery_window %></span>
+                  <strong>(<%= delivery_window.display_cost %>)</strong>
                 </label>
               </li>
             <% end %>

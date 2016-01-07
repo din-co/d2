@@ -85,6 +85,8 @@ Spree.config do |config|
       Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
     end
   end
+
+  Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
 end
 
 Spree.user_class = "Spree::LegacyUser"
