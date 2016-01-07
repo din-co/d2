@@ -1,5 +1,7 @@
 require 'carmen'
 
+# This file overrides the built-in countries.rb to only load the United States.
+
 country = Carmen::Country.named('United States')
 usa = Spree::Country.create!({
     name: country.name,
