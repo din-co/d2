@@ -1,5 +1,18 @@
-<header id="header" class="row" data-hook>
-  <figure id="logo" class="columns six" data-hook><%= logo %></figure>
-  <%= render :partial => 'spree/shared/nav_bar' %>
-  <%= render :partial => 'spree/shared/main_nav_bar' if store_menu? %>
+<header>
+  <nav class="main-nav">
+    <%= link_to Spree.t(:menu), spree.root_path, :class => "main-nav__item" %>
+    <% if simple_current_order.nil? or simple_current_order.item_count.zero? %>
+      <%= link_to "#{Spree.t(:cart)}: (0)", spree.cart_path, :class => "main-nav__item cart cart--empty" %>
+    <% else %>
+      <%= link_to "#{Spree.t(:cart)}: (#{simple_current_order.item_count})", spree.cart_path, :class => "main-nav__item cart cart--full" %>
+    <% end %>
+    <% if spree_current_user %>
+      <div class="main-nav__item">
+        <%= link_to Spree.t(:account), spree.account_path, :class => "main-nav__item" %>
+        <%= link_to Spree.t(:logout), spree.logout_path, :class => "main-nav__item" %>
+      </div>
+    <% else %>
+      <%= link_to Spree.t(:login), spree.login_path, :class => "main-nav__item" %>
+    <% end %>
+  </nav>
 </header>
