@@ -39,7 +39,7 @@
 
           <h5 class="stock-shipping-method-title"><%= Spree.t(:delivery_window) %></h5>
           <ul class="field radios shipping-methods">
-            <%# TODO: select cheapest delivery window %>
+            <%# TODO: automatically select cheapest delivery window %>
             <% ship_form.object.delivery_windows.available.each do |delivery_window| %>
               <li class="shipping-method" style="display:block;">
                 <label>
