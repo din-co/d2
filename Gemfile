@@ -66,10 +66,13 @@ group :development, :test do
   # Mailcatcher sets up an SMTP server to receive and display emails, but it recommends NOT adding it to the Gemfile
   # gem 'mailcatcher'
 
-  # Let's use rspec
+  # Test gems
   gem 'rspec-rails', '~> 3.0'
+  gem 'capybara'
+  gem 'factory_girl'
+  gem 'faker'
 
-  # Pry is better
+  # Pry makes the Rails console much better
   gem 'pry-rails'
 end
 

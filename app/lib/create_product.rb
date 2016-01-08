@@ -73,6 +73,7 @@ class CreateProduct
       </ol>
     HTML
 
+    product
   end
 
   def self.prototype

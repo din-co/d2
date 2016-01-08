@@ -63,7 +63,7 @@ Spree.config do |config|
       menu:     "960x540",
       mini:     "48x48>",
     },
-  #   default_url:    "/spree/:class/:id/:style/:basename.:extension",
+    # default_url:    "/spree/:class/:id/:style/:basename.:extension", # used for items lacking an image
     default_style:  :detail
   }
   if Rails.env.production?

@@ -10,6 +10,7 @@ capybara-*.html
 /public/spree
 /coverage/
 /spec/tmp
+/spec/examples.txt
 **.orig
 rerun.txt
 pickle-email-*.html
