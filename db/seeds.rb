@@ -178,6 +178,7 @@ usa = Spree::Country.find_by(iso: 'US') || Spree::Country.default
 
 # Default stock location to hold stocks of products
 Spree::StockLocation.find_or_create_by!(name: 'Default') do |s|
+  s.default = true
   s.country = usa
 end
 
@@ -187,10 +188,10 @@ standard_shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "D
 sf_zone = Spree::Zone.find_by!(name: "San Francisco")
 bay_area_zones = ["East Bay", "North Bay", "Peninsula"].map { |name| zone = Spree::Zone.find_by!(name: name) }
 delivery_windows = [
-  {zones: [sf_zone],      window: {start_hour: 13, duration: 4, lead_time_duration: 1, cost: 4.99, currency: "USD"}}, # 1pm - 5pm, order by 12pm
-  {zones: [sf_zone],      window: {start_hour: 18, duration: 2, lead_time_duration: 1, cost: 6.99, currency: "USD"}}, # 6pm - 8pm, order by 5pm
-  {zones: [sf_zone],      window: {start_hour: 18, duration: 1, lead_time_duration: 1, cost: 8.99, currency: "USD"}}, # 6pm - 7pm, order by 5pm
-  {zones: [sf_zone],      window: {start_hour: 19, duration: 1, lead_time_duration: 2, cost: 8.99, currency: "USD"}}, # 7pm - 8pm, order by 5pm
+  {zones: [sf_zone], window: {start_hour: 13, duration: 4, lead_time_duration: 1, cost: 4.99, currency: "USD"}}, # 1pm - 5pm, order by 12pm
+  {zones: [sf_zone], window: {start_hour: 18, duration: 2, lead_time_duration: 1, cost: 6.99, currency: "USD"}}, # 6pm - 8pm, order by 5pm
+  {zones: [sf_zone], window: {start_hour: 18, duration: 1, lead_time_duration: 1, cost: 8.99, currency: "USD"}}, # 6pm - 7pm, order by 5pm
+  {zones: [sf_zone], window: {start_hour: 19, duration: 1, lead_time_duration: 2, cost: 8.99, currency: "USD"}}, # 7pm - 8pm, order by 5pm
 
   {zones: bay_area_zones, window: {start_hour: 13, duration: 4, lead_time_duration: 1, cost: 6.99, currency: "USD"}} # 1pm - 5pm, order by 12pm
 ]
