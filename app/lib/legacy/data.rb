@@ -14,6 +14,7 @@ module Legacy
       addresses_imported = 0
       stripe_ids_imported = 0
       Legacy::User.find_each do |user|
+        puts "-- importing user: #{user.id} #{user.email}"
         spree_user = Spree::User.find_or_create_by(email: user.email) do |spree_user|
           spree_user.login = user.email
           spree_user.last_sign_in_ip = user.creation_ip
@@ -30,10 +31,10 @@ module Legacy
         end
 
         # skip to next user if we already imported an address
-        next if spree_user.user_addresses.present?
+        next if Spree::UserAddress.unscoped.where(user_id: spree_user.id).any?
 
         state = states[user.state]
-        address = Spree::Address.new({
+        address_attributes = {
           firstname: user.first_name,
           lastname: user.last_name,
           address1: user.address,
@@ -43,13 +44,21 @@ module Legacy
           country: usa,
           zipcode: user.zip,
           phone: user.phone,
-        })
-        spree_user.default_address = address
-        address = spree_user.default_address
-        if address.persisted?
+        }
+        full_attributes = Spree::Address.value_attributes(
+          Spree::Address.column_defaults,
+          Spree::Address.new(address_attributes).attributes
+        )
+        new_address = Spree::Address.new(full_attributes)
+        user_address = spree_user.user_addresses.build
+        user_address.archived = false
+        user_address.default = true
+        user_address.address = new_address
+
+        if new_address.valid? && user_address.save(validate: false)
           addresses_imported += 1
         else
-          puts "  -> address errors: #{address.errors.messages}", true if address.errors.present?
+          puts "  -> address errors: #{new_address.errors.messages}", true if new_address.errors.present?
         end
 
         if user.stripe_id.present?
@@ -57,10 +66,10 @@ module Legacy
             gateway_customer_profile_id: user.stripe_id,
             cc_type: user.card_type,
             last_digits: user.last4,
-            name: "#{address.firstname} #{address.lastname}",
+            name: "#{new_address.firstname} #{new_address.lastname}",
             default: true,
             payment_method: stripe_payment_method,
-            address: address,
+            address_id: new_address.id,
           })
           if spree_credit_card.save
             stripe_ids_imported += 1
