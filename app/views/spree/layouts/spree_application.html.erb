@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= render :partial => 'spree/shared/head' %>
+  </head>
+  <body class="<%= body_class %>" id="<%= @body_id %>">
+
+    <%= render :partial => 'spree/shared/header' %>
+
+    <%#= breadcrumbs(@taxon) %>
+
+    <%#= render :partial => 'spree/shared/sidebar' if content_for? :sidebar %>
+
+    <%#= flash_messages %>
+
+    <%= yield %>
+
+    <%= yield :templates %>
+
+    <%= render :partial => 'spree/shared/footer' %>
+
+    <%= render :partial => 'spree/shared/google_analytics' %>
+
+  </body>
+</html>
