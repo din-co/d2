@@ -30,6 +30,8 @@
             </span>
           <% end -%>
 
+          <%= render :partial => 'spree/shared/order_form', :locals => { :product => product } %>
+
         <% end %>
       </div>
     <% end %>

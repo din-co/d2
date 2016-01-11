@@ -31,19 +31,7 @@
       <%= image_tag @product.display_image.attachment(:detail), itemprop: "image" %>
     </div>
 
-    <%= form_for :order, :url => populate_orders_path do |f| %>
-      <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-        <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
-        <link itemprop="availability" href="http://schema.org/InStock" />
-        <%= hidden_field_tag "variant_id", @product.master.id %>
-        <%= number_field_tag :quantity, 1, :class => 'title', :min => 1 %>
-        <%= button_tag :class => '', :type => :submit do %>
-          Add to Delivery
-          <span class="price selling" itemprop="price"><%= display_price(@product) %></span>
-        <% end %>
-      </div>
-    <% end %>
-
+    <%= render :partial => 'spree/shared/order_form', :locals => { :product => @product } %>
 
     <% if @product.property('components') %>
       <h2>In the Bag</h2>
