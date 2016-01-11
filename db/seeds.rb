@@ -5,6 +5,7 @@
 # the same name in #{Rails.root}/db/default/spree/ (which we do).
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
+Spree::Config[:default_country_id] = Spree::Country.find_by!(iso3: "USA").id
 
 # Create Taxons
 taxonomy_restaurants = Spree::Taxonomy.find_or_create_by!(name: 'Restaurants')

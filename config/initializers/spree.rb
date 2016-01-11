@@ -12,8 +12,8 @@ Spree.config do |config|
   # Default currency for new sites
   config.currency = "USD"
 
-  # Default to US
-  config.default_country_id = (Spree::Country.find_by(iso: 'US') || Spree::Country.first).id
+  # Default to USA
+  config.default_country_id = (Spree::Country.find_by(iso3: "USA") || Spree::Country.first).try!(:id)
 
   # from address for transactional emails
   config.mails_from = "cook@din.co"
