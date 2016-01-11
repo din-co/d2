@@ -7,7 +7,7 @@ IntercomRails.config do |config|
   # This is required to enable secure mode, you can find it on your Setup
   # guide in the "Secure Mode" step.
   #
-  # config.api_secret = "..."
+  config.api_secret = ENV["INTERCOM_API_SECRET"]
 
   # == Intercom API Key
   # This is required for some Intercom rake tasks like importing your users;
@@ -24,12 +24,12 @@ IntercomRails.config do |config|
   # The method/variable that contains the logged in user in your controllers.
   # If it is `current_user` or `@user`, then you can ignore this
   #
-  # config.user.current = Proc.new { current_user }
+  config.user.current = Proc.new { spree_current_user }
 
   # == Include for logged out Users
   # If set to true, include the Intercom messenger on all pages, regardless of whether
   # The user model class (set below) is present. Only available for Apps on the Acquire plan.
-  # config.include_for_logged_out_users = true
+  config.include_for_logged_out_users = true
 
   # == User model class
   # The class which defines your user model
