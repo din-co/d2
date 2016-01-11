@@ -57,8 +57,17 @@ Spree.config do |config|
   # )
 
   # Uploaded image assets
+  attachment_config = {
+    styles: {
+      detail:   "1920x1080",
+      menu:     "960x540",
+      mini:     "48x48>",
+    },
+  #   default_url:    "/spree/:class/:id/:style/:basename.:extension",
+    default_style:  :detail
+  }
   if Rails.env.production?
-    attachment_config = {
+    attachment_config = attachment_config.merge({
       s3_credentials: {
         access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
         secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
@@ -70,20 +79,12 @@ Spree.config do |config|
       s3_protocol:    "https",
       bucket:         ENV['S3_BUCKET_NAME'],
       url:            ":s3_domain_url",
-
-      styles: {
-        detail:   "1920x1080",
-        menu:     "960x540"
-      },
-
       path:           "/spree/:class/:id/:style/:basename.:extension",
-      default_url:    "/spree/:class/:id/:style/:basename.:extension",
-      default_style:  "product"
-    }
+    })
+  end
 
-    attachment_config.each do |key, value|
-      Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
-    end
+  attachment_config.each do |key, value|
+    Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
   end
 
   Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
