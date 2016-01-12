@@ -23,7 +23,7 @@
         <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
 
           <%= link_to url do %>
-            <%= image_tag product.display_image.attachment(:menu), itemprop: "image", class: "meal__image" %>
+            <%= image_tag product.display_image.attachment(:menu), itemprop: "image", class: "product-image" %>
             <h2 class="meal__name" itemprop="name"><%= product.name %></h2>
             <% if product.property('tagline').present? %>
               <p><%= product.property('tagline') %></p>

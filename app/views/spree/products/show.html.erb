@@ -30,7 +30,7 @@
     <% end -%>
 
     <div>
-      <%= image_tag @product.display_image.attachment(:detail), itemprop: "image" %>
+      <%= image_tag @product.display_image.attachment(:detail), itemprop: "image", class: "product-image" %>
     </div>
 
     <%= render :partial => 'spree/shared/order_form', :locals => { :product => @product } %>
