@@ -1,3 +1,45 @@
+.product
+  margin-bottom: 4em
+
 .product-image
   display: block
   width: 100%
+
+%center_element
+  @media (max-width: 767px)
+    text-align: center
+
+.product__link:link
+  text-decoration: none
+
+.product__name
+  @extend %center_element
+  margin-top: 10px
+
+.product__tagline
+  display: block
+
+.product__creator
+  @extend %center_element
+
+.product__meta
+  @extend %center_element
+
+.product__meta-separator:before
+  content: '•'
+  padding: 0 0.4em
+
+.product__add-form
+  margin-bottom: 1em
+
+.product__add-button
+  @media (max-width: 767px)
+    display: block
+    margin: 0 auto
+    width: 50%
+
+
+// Product List
+.product-list__name
+  margin-right: 10px
+  margin-left: 10px

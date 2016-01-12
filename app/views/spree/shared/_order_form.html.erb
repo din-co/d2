@@ -4,7 +4,7 @@
     <link itemprop="availability" href="http://schema.org/InStock" />
     <%= hidden_field_tag "variant_id", product.master.id %>
     <%= hidden_field_tag :quantity, 1 %>
-    <%= button_tag :type => :submit do %>
+    <%= button_tag type: :submit, class: "btn btn-primary product__add-button" do %>
       Add (<span itemprop="price"><%= display_price(product) %></span>)
     <% end %>
   </div>

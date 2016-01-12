@@ -1,145 +1,159 @@
 <% @body_id = 'product-details' %>
 <% cache [I18n.locale, current_currency, @product] do %>
+  <div itemscope itemtype="http://schema.org/Product">
+    <div class="container">
 
-  <div class="container" itemscope itemtype="http://schema.org/Product">
-
-    <h1 itemprop="name"><%= @product.name %></h1>
-    <% if @product.property('tagline').present? %>
-      <p><%= @product.property('tagline') %></p>
-    <% end -%>
-
-    <div>
-      <%= [@product.chef.try(:name), @product.restaurant.try(:name)].compact.join(', ') %>
-    </div>
-    <div>
-      2 servings
-    </div>
-    <% if @product.property('time').present? %>
-      <div>
-        <%= @product.property('time') %> minutes
-      </div>
-    <% end -%>
-    <% if @product.diets.present? %>
-      <div>
-        <%= @product.diets.map(&:name).join(", ") %>
-      </div>
-    <% end -%>
-
-    <% if product_description(@product).present? %>
-      <p><%= product_description(@product) %></p>
-    <% end -%>
-
-    <div>
-      <%= image_tag @product.display_image.attachment(:detail), itemprop: "image", class: "product-image" %>
-    </div>
-
-    <%= render :partial => 'spree/shared/order_form', :locals => { :product => @product } %>
-
-    <% if @product.property('components').present? %>
-      <h2>In the Bag</h2>
-      <ul class="dish-components">
-        <%= @product.property('components').html_safe %>
-      </ul>
-    <% end -%>
-
-    <% if @product.pantry.present? %>
-      <h4>From your Pantry</h4>
-      <ul><li><%= @product.pantry.map(&:name).join("</li><li>") %></li></ul>
-    <% end -%>
-
-    <% if @product.equipment.present? %>
-      <h4>Necessary Cooking Equiment</h4>
-      <ul><li><%= @product.equipment.map(&:name).join("</li><li>") %></li></ul>
-    <% end -%>
-
-    <% if @product.property('directions').present? %>
-      <h2>Directions</h2>
-      <% if @product.property('time').present? %>
-        <p>This meal should take about <strong><%= @product.property('time') %> minutes</strong> to prepare.</p>
-      <% end -%>
-      <ol class="dish-directions">
-        <%= @product.property('directions').html_safe %>
-      </ol>
-    <% end -%>
-
-    <% if @product.property('ingredients').present? %>
-      <h4>Ingredient List</h4>
-      <p class="dish-ingredients">
-        <%= @product.property('ingredients').html_safe %>
+      <h1 class="product__name" itemprop="name">
+        <%= @product.name %>
+        <% if @product.property('tagline').present? %>
+          <small class="product__tagline"><%= @product.property('tagline') %></small>
+        <% end -%>
+      </h1>
+      <h4 class="product__creator">
+        <%= [@product.chef.try(:name), @product.restaurant.try(:name)].compact.join(', ') %>
+      </h4>
+      <p class="product__meta">
+        <span>2 servings</span>
+        <% if @product.property('time').present? %>
+          <span class="product__meta-separator"></span>
+          <span><%= @product.property('time') %> minutes</span>
+        <% end -%>
+        <% if @product.diets.present? %>
+          <span class="product__meta-separator"></span>
+          <span><%= @product.diets.map(&:name).join(", ") %></span>
+        <% end -%>
       </p>
-    <% end -%>
 
-    <% if @product.allergens.present? %>
-      <p>Contains <%= @product.allergens.map(&:name).join(", ") %>.</p>
-    <% end -%>
+      <div class="product__add-form">
+        <%= render :partial => 'spree/shared/order_form', :locals => { :product => @product } %>
+      </div>
 
-
-<!--
-    <div itemprop="description">
-      <ul>
-        <li>attachment.url(:mini): <%= @product.display_image.attachment.url(:mini) %></li>
-        <li>attachment.url(:menu): <%= @product.display_image.attachment.url(:menu) %></li>
-        <li>attachment.url(:detail): <%= @product.display_image.attachment.url(:detail) %></li>
-        <li>attachment.url(:original): <%= @product.display_image.attachment.url(:original) %></li>
-        <li>attachment_width: <%= @product.display_image.attachment_width %></li>
-        <li>attachment_height: <%= @product.display_image.attachment_height %></li>
-        <li>attachment_file_size: <%= @product.display_image.attachment_file_size %></li>
-        <li>position: <%= @product.display_image.position %></li>
-        <li>attachment_content_type: <%= @product.display_image.attachment_content_type %></li>
-        <li>attachment_file_name: <%= @product.display_image.attachment_file_name %></li>
-        <li>alt: <%= @product.display_image.alt %></li>
-        <li>images:
-          <div>large: <%= image_tag(@product.display_image.attachment.url(:detail)) %></div>
-          <ul>
-            <% @product.images.each do |image| %>
-              <li>
-                <%= image_tag(image.attachment.url(:mini)) %>
-              </li>
-            <% end %>
-          </ul>
-        </li>
-      </ul>
     </div>
 
-    <div>
-      <% if @product.property('callout-1').present? %>
-        callout-1:
-        <%= @product.property('callout-1').html_safe %>
+    <%= image_tag @product.display_image.attachment(:detail), itemprop: "image", class: "product-image" %>
+
+    <div class="container">
+
+      <% if product_description(@product).present? %>
+        <p><%= product_description(@product) %></p>
       <% end -%>
-    </div>
-    <div>
-      <% if @product.property('callout-2').present? %>
-        callout-2:
-        <%= @product.property('callout-2').html_safe %>
+
+      <div class="row">
+        <% if @product.property('components').present? %>
+          <div class="col-sm-6">
+            <h2>In the Bag</h2>
+            <ul class="dish-components">
+              <%= @product.property('components').html_safe %>
+            </ul>
+          </div>
+        <% end -%>
+
+        <div class="col-sm-6">
+          <% if @product.pantry.present? or @product.equipment.present? %>
+            <h2>From your Kitchen</h2>
+          <% end -%>
+
+          <% if @product.pantry.present? %>
+            <h5>Pantry</h5>
+            <ul><li><%= @product.pantry.map(&:name).join("</li><li>").html_safe %></li></ul>
+          <% end -%>
+
+          <% if @product.equipment.present? %>
+            <h5>Equiment</h5>
+            <ul><li><%= @product.equipment.map(&:name).join("</li><li>").html_safe %></li></ul>
+          <% end -%>
+        </div>
+      </div>
+
+      <% if @product.property('directions').present? %>
+        <h2>Directions</h2>
+        <% if @product.property('time').present? %>
+          <p><em>This meal should take about <strong><%= @product.property('time') %> minutes</strong> to prepare.</em></p>
+        <% end -%>
+        <ol class="dish-directions">
+          <%= @product.property('directions').html_safe %>
+        </ol>
       <% end -%>
-    </div>
-    <div>
-      <% if @product.property('sidebar').present? %>
-        sidebar:
-        <%= @product.property('sidebar').html_safe %>
+
+      <% if @product.property('ingredients').present? %>
+        <p class="dish-ingredients">
+          <strong>Ingredients:</strong>
+          <%= @product.property('ingredients').html_safe %>
+        </p>
       <% end -%>
+
+      <% if @product.allergens.present? %>
+        <p><em>Contains <%= @product.allergens.map(&:name).join(", ") %>.</em></p>
+      <% end -%>
+
+
+  <!--
+      <div itemprop="description">
+        <ul>
+          <li>attachment.url(:mini): <%= @product.display_image.attachment.url(:mini) %></li>
+          <li>attachment.url(:menu): <%= @product.display_image.attachment.url(:menu) %></li>
+          <li>attachment.url(:detail): <%= @product.display_image.attachment.url(:detail) %></li>
+          <li>attachment.url(:original): <%= @product.display_image.attachment.url(:original) %></li>
+          <li>attachment_width: <%= @product.display_image.attachment_width %></li>
+          <li>attachment_height: <%= @product.display_image.attachment_height %></li>
+          <li>attachment_file_size: <%= @product.display_image.attachment_file_size %></li>
+          <li>position: <%= @product.display_image.position %></li>
+          <li>attachment_content_type: <%= @product.display_image.attachment_content_type %></li>
+          <li>attachment_file_name: <%= @product.display_image.attachment_file_name %></li>
+          <li>alt: <%= @product.display_image.alt %></li>
+          <li>images:
+            <div>large: <%= image_tag(@product.display_image.attachment.url(:detail)) %></div>
+            <ul>
+              <% @product.images.each do |image| %>
+                <li>
+                  <%= image_tag(image.attachment.url(:mini)) %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <% if @product.property('callout-1').present? %>
+          callout-1:
+          <%= @product.property('callout-1').html_safe %>
+        <% end -%>
+      </div>
+      <div>
+        <% if @product.property('callout-2').present? %>
+          callout-2:
+          <%= @product.property('callout-2').html_safe %>
+        <% end -%>
+      </div>
+      <div>
+        <% if @product.property('sidebar').present? %>
+          sidebar:
+          <%= @product.property('sidebar').html_safe %>
+        <% end -%>
+      </div>
+
+      <% if restaurant = @product.restaurant.presence %>
+        <div><%= link_to restaurant.name, seo_url(restaurant) %></div>
+        <div>restaurant.name: <%= restaurant.name %></div>
+        <div>restaurant.description: <%= restaurant.description.html_safe if restaurant.description %></div>
+        <div>restaurant.permalink: <%= restaurant.permalink %></div>
+        <div>restaurant.icon: <%= restaurant.icon %></div>
+        <div>restaurant_logo_url: <%= restaurant_logo_url(restaurant) %></div>
+        <div>restaurant_photo_url: <%= restaurant_photo_url(restaurant) %></div>
+      <% end %>
+
+      <% if chef = @product.chef.presence %>
+        <div><%= link_to chef.name, seo_url(chef) %></div>
+        <div>chef.name: <%= chef.name %></div>
+        <div>chef.description: <%= chef.description.html_safe if chef.description %></div>
+        <div>chef.permalink: <%= chef.permalink %></div>
+        <div>chef.icon: <%= chef.icon %></div>
+        <div>chef_photo_url: <%= chef_photo_url(chef) %></div>
+      <% end %>
+  -->
+
+
     </div>
-
-    <% if restaurant = @product.restaurant.presence %>
-      <div><%= link_to restaurant.name, seo_url(restaurant) %></div>
-      <div>restaurant.name: <%= restaurant.name %></div>
-      <div>restaurant.description: <%= restaurant.description.html_safe if restaurant.description %></div>
-      <div>restaurant.permalink: <%= restaurant.permalink %></div>
-      <div>restaurant.icon: <%= restaurant.icon %></div>
-      <div>restaurant_logo_url: <%= restaurant_logo_url(restaurant) %></div>
-      <div>restaurant_photo_url: <%= restaurant_photo_url(restaurant) %></div>
-    <% end %>
-
-    <% if chef = @product.chef.presence %>
-      <div><%= link_to chef.name, seo_url(chef) %></div>
-      <div>chef.name: <%= chef.name %></div>
-      <div>chef.description: <%= chef.description.html_safe if chef.description %></div>
-      <div>chef.permalink: <%= chef.permalink %></div>
-      <div>chef.icon: <%= chef.icon %></div>
-      <div>chef_photo_url: <%= chef_photo_url(chef) %></div>
-    <% end %>
--->
-
-
   </div>
 <% end %>
