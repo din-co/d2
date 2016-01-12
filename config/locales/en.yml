@@ -21,7 +21,7 @@
 
 en:
   spree:
-    delivery_window: "Delivery windowa"
+    delivery_window: "Delivery window"
     delivery_window_required: "A valid delivery window must be selected"
     unsupported_delivery_location: "Delivery is not available to this location"
     menu: "Menu"

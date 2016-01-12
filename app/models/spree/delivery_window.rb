@@ -4,7 +4,7 @@ module Spree
     has_many :shipments, inverse_of: :delivery_window
 
     # FIXME: start_hour - lead_time_duration isn't robust to crossing midnight
-    scope :available, -> { where("start_hour - lead_time_duration > ?", Time.now.hour) }
+    scope :available, -> { where("start_hour - lead_time_duration > ?", Time.zone.now.hour) }
 
     extend DisplayMoney
     money_methods :cost
@@ -24,7 +24,7 @@ module Spree
     private
 
     def format_offset(offset)
-      datetime = Time.now.beginning_of_day
+      datetime = Time.zone.now.beginning_of_day
 
       (datetime + offset.hours).strftime("%-l%P")
     end
