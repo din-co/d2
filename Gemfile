@@ -57,7 +57,6 @@ group :test do
   gem 'launchy'
   gem 'poltergeist'
 end
-# END Non-Rails additions
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -79,5 +78,9 @@ group :development, :test do
   gem 'factory_girl'
   gem 'ffaker'
   gem 'timecop'
+
+  # Generate diagrams
+  gem "rails-erd"
 end
+# END Non-Rails additions
 
