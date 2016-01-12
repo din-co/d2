@@ -1,17 +1,13 @@
-<h1><%= accurate_title %></h1>
+<div class="container container--main-content">
+  <h1><%= Spree.t(:account) %></h1>
+  <p>
+    <%= @user.email %>
+    <%= link_to Spree.t(:edit), spree.edit_account_path, class: "btn btn-default btn-xs" %>
+    <%= link_to Spree.t(:logout), spree.logout_path, class: "btn btn-danger btn-xs" %>
+  </p>
 
-<div data-hook="account_summary" class="account-summary">
-  <dl id="user-info">
-    <dt><%= Spree.t(:email) %></dt>
-    <dd><%= @user.email %> (<%= link_to Spree.t(:edit), spree.edit_account_path %>)</dd>
-    <dd><%= link_to Spree.t(:logout), spree.logout_path %></dd>
-  </dl>
+  <h3><%= Spree.t(:orders) %></h3>
 
-</div>
-
-<div data-hook="account_my_orders" class="account-my-orders">
-
-  <h3><%= Spree.t(:my_orders) %></h3>
   <% if @orders.present? %>
     <table class="order-summary">
       <thead>
@@ -38,8 +34,6 @@
       </tbody>
     </table>
   <% else %>
-    <p><%= Spree.t(:you_have_no_orders_yet) %></p>
+    <p>No orders yet. <%= link_to "View the menu.", spree.root_path %></p>
   <% end %>
-  <br />
-
 </div>

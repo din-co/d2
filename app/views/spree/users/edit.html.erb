@@ -1,0 +1,8 @@
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
+<div class="container container--main-content">
+  <h1><%= Spree.t(:editing_user) %></h1>
+  <%= form_for Spree::User.new, :as => @user, :url => spree.user_path(@user), :method => :put do |f| %>
+    <%= render :partial => 'spree/shared/user_form', :locals => { :f => f } %>
+    <%= f.submit Spree.t(:update), :class => 'btn btn-primary' %>
+  <% end %>
+</div>
