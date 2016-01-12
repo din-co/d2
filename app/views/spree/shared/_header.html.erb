@@ -7,10 +7,7 @@
       <%= link_to "#{Spree.t(:cart)}: (#{simple_current_order.item_count})", spree.cart_path, :class => "main-nav__item cart cart--full" %>
     <% end %>
     <% if spree_current_user %>
-      <div class="main-nav__item">
-        <%= link_to Spree.t(:account), spree.account_path, :class => "main-nav__item" %>
-        <%= link_to Spree.t(:logout), spree.logout_path, :class => "main-nav__item" %>
-      </div>
+      <%= link_to Spree.t(:account), spree.account_path, :class => "main-nav__item" %>
     <% else %>
       <%= link_to Spree.t(:login), spree.login_path, :class => "main-nav__item" %>
     <% end %>
