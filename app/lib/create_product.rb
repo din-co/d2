@@ -4,7 +4,7 @@ class CreateProduct
       name: name,
       price: price,
       description: desc,
-      available_on: Time.zone.now,
+      available_on: Time.current,
       shipping_category: shipping_category,
     })
 
@@ -12,10 +12,10 @@ class CreateProduct
     stock_location.move(product.stock_items.first.variant, 10, Spree::User.admin.first)
 
     # Add a chef Taxon
-    product.classifications.create!(taxon: Spree::Taxon.chef.random.first)
+    product.classifications.create!(taxon: Spree::Taxon.chefs.random.first)
 
     # Add a restaurant Taxon
-    product.classifications.create!(taxon: Spree::Taxon.restaurant.random.first)
+    product.classifications.create!(taxon: Spree::Taxon.restaurants.random.first)
 
     # Add 3 each diets, allergens, pantry, equipment
     [
@@ -73,6 +73,7 @@ class CreateProduct
       </ol>
     HTML
 
+    product
   end
 
   def self.prototype

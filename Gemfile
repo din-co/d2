@@ -49,9 +49,15 @@ gem 'twitter_cldr'
 gem 'aws-sdk', '< 2.0'
 gem 'intercom-rails'
 
-gem 'rails_12factor'
+gem 'rails_12factor', group: [:development, :production]
+group :test do
+  gem 'database_cleaner'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'capybara-puma'
+  gem 'launchy'
+  gem 'poltergeist'
+end
 # END Non-Rails additions
-
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -66,10 +72,12 @@ group :development, :test do
   # Mailcatcher sets up an SMTP server to receive and display emails, but it recommends NOT adding it to the Gemfile
   # gem 'mailcatcher'
 
-  # Let's use rspec
-  gem 'rspec-rails', '~> 3.0'
-
-  # Pry is better
+  # Pry makes the Rails console much better
   gem 'pry-rails'
+
+  # Some test gems are handy in development, especially in the console
+  gem 'factory_girl'
+  gem 'ffaker'
+  gem 'timecop'
 end
 

@@ -26,7 +26,7 @@ module Spree
     def format_offset(offset)
       datetime = Time.now.beginning_of_day
 
-      (datetime + offset.hours).strftime("%l%P")
+      (datetime + offset.hours).strftime("%-l%P")
     end
   end
 end

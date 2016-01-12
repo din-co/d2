@@ -3,7 +3,7 @@ require 'rails_helper'
 # See http://stackoverflow.com/a/20010923 for this method
 #   of testing concerns
 
-shared_examples_for "spree zone concerns" do
+RSpec.shared_examples_for "spree zone concerns" do
   # the class that includes the concern
   let(:model) { described_class }
 
