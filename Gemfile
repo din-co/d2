@@ -53,7 +53,8 @@ gem 'intercom-rails'
 gem 'rails_12factor', group: [:development, :production]
 group :test do
   gem 'database_cleaner'
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails'
+  gem 'rspec_junit_formatter'
   gem 'capybara-puma'
   gem 'launchy'
   gem 'poltergeist'
