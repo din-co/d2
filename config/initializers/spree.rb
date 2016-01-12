@@ -9,15 +9,9 @@ Spree.config do |config|
 
   # Core:
 
-  # Default currency for new sites
+  # Default country and currency for new sites
   config.currency = "USD"
-
-  # Default to USA
-  config.default_country_id = begin
-    (Spree::Country.find_by(iso3: "USA") || Spree::Country.first).try!(:id)
-  rescue ActiveRecord::StatementInvalid => e
-    puts e.message
-  end
+  config.default_country_id = 1
 
   # from address for transactional emails
   config.mails_from = "cook@din.co"
@@ -59,39 +53,45 @@ Spree.config do |config|
   #   server: Rails.env.production? ? 'production' : 'test',
   #   test: !Rails.env.production?
   # )
-
-  # Uploaded image assets
-  attachment_config = {
-    styles: {
-      detail:   "1920x1080",
-      menu:     "960x540",
-      mini:     "48x48>",
-    },
-    # default_url:    "/spree/:class/:id/:style/:basename.:extension", # used for items lacking an image
-    default_style:  :detail
-  }
-  if Rails.env.production?
-    attachment_config = attachment_config.merge({
-      s3_credentials: {
-        access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
-        secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-        bucket:            ENV['S3_BUCKET_NAME']
-      },
-
-      storage:        :s3,
-      s3_headers:     { "Cache-Control" => "max-age=31557600" },
-      s3_protocol:    "https",
-      bucket:         ENV['S3_BUCKET_NAME'],
-      url:            ":s3_domain_url",
-      path:           "/spree/:class/:id/:style/:basename.:extension",
-    })
-  end
-
-  attachment_config.each do |key, value|
-    Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
-  end
-
-  Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
 end
+
+Spree::Config[:default_country_id] = begin
+  (Spree::Country.find_by(iso3: "USA") || Spree::Country.first).try!(:id)
+rescue ActiveRecord::StatementInvalid => e
+  puts e.message
+end
+
+# Uploaded image assets
+attachment_config = {
+  styles: {
+    detail:   "1920x1080",
+    menu:     "960x540",
+    mini:     "48x48>",
+  },
+  # default_url:    "/spree/:class/:id/:style/:basename.:extension", # used for items lacking an image
+  default_style:  :detail
+}
+if Rails.env.production?
+  attachment_config = attachment_config.merge({
+    s3_credentials: {
+      access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
+      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+      bucket:            ENV['S3_BUCKET_NAME']
+    },
+
+    storage:        :s3,
+    s3_headers:     { "Cache-Control" => "max-age=31557600" },
+    s3_protocol:    "https",
+    bucket:         ENV['S3_BUCKET_NAME'],
+    url:            ":s3_domain_url",
+    path:           "/spree/:class/:id/:style/:basename.:extension",
+  })
+end
+
+attachment_config.each do |key, value|
+  Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
+end
+
+Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
 
 Spree.user_class = "Spree::LegacyUser"
