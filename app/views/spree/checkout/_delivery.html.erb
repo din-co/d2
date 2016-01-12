@@ -1,4 +1,7 @@
 <fieldset id='shipping_method' data-hook>
+  <% if flash[:error].present? %>
+    ERROR: <%= flash[:error] %>
+  <% end %>
   <legend align="center"><%= Spree.t(:delivery) %></legend>
   <div class="inner" data-hook="shipping_method_inner">
     <div id="methods">
