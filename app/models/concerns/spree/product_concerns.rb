@@ -8,11 +8,11 @@ module Spree
 
     module InstanceMethods
       def restaurant
-        taxons.non_root.restaurant.first
+        taxons.non_root.restaurants.first
       end
 
       def chef
-        taxons.non_root.chef.first
+        taxons.non_root.chefs.first
       end
 
       def diets

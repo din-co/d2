@@ -10,26 +10,12 @@ Spree::Config[:default_country_id] = Spree::Country.find_by!(iso3: "USA").id
 # Create Taxons
 taxonomy_restaurants = Spree::Taxonomy.find_or_create_by!(name: 'Restaurants')
 taxon_restaurants = Spree::Taxon.find_or_create_by!(name: 'Restaurants', taxonomy_id: taxonomy_restaurants.id)
-Spree::Taxon.find_or_create_by!(name: "Kin Khao", parent_id: taxon_restaurants.id, taxonomy_id: taxonomy_restaurants.id) do |t|
-  t.description = "Kin Khao restaurant description here."
-end
-Spree::Taxon.find_or_create_by!(name: "Souvla", parent_id: taxon_restaurants.id, taxonomy_id: taxonomy_restaurants.id) do |t|
-  t.description = "Souvla restaurant description here."
-end
-Spree::Taxon.find_or_create_by!(name: "Uma Casa", parent_id: taxon_restaurants.id, taxonomy_id: taxonomy_restaurants.id) do |t|
-  t.description = "Uma Casa restaurant description here."
-end
 
 taxonomy_chefs = Spree::Taxonomy.find_or_create_by!(name: 'Chefs')
 taxon_chefs = Spree::Taxon.find_or_create_by!(name: 'Chefs', taxonomy_id: taxonomy_chefs.id)
-Spree::Taxon.find_or_create_by!(name: "Pim Techamuanvivit", parent_id: taxon_chefs.id, taxonomy_id: taxonomy_chefs.id) do |t|
-  t.description =  "Pim Techamuanvivit bio here."
-end
-Spree::Taxon.find_or_create_by!(name: "Charles Billies", parent_id: taxon_chefs.id, taxonomy_id: taxonomy_chefs.id) do |t|
-  t.description =  "Charles Billies bio here."
-end
-Spree::Taxon.find_or_create_by!(name: "Telmo Faria", parent_id: taxon_chefs.id, taxonomy_id: taxonomy_chefs.id) do |t|
-  t.description =  "Telmo Faria bio here."
+
+if ENV['INCLUDE_SAMPLES']
+  load Rails.root.join('db/sample_chefs_restaurants.rb')
 end
 
 taxonomy_diets = Spree::Taxonomy.find_or_create_by!(name: 'Diets')
