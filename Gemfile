@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.5'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Bootstrap and Sass for stylesheets
@@ -42,6 +42,7 @@ gem 'solidus_gateway'
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 gem 'puma'
 gem 'rack-timeout'
+gem 'sprockets-rails', '~> 2.3' # there is an initializer bug in sprockets > 2.3
 
 # Twitter Common Locale Data Repository
 gem 'twitter_cldr'
