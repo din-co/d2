@@ -9,24 +9,23 @@
     <% end -%>
 
     <div>
-      <%= @product.chef.name %>,
-      <%= @product.restaurant.name %>
+      <%= [@product.chef.try(:name), @product.restaurant.try(:name)].compact.join(', ') %>
     </div>
     <div>
       2 servings
     </div>
-    <% if @product.property('time') %>
+    <% if @product.property('time').present? %>
       <div>
         <%= @product.property('time') %> minutes
       </div>
     <% end -%>
-    <% if @product.diets %>
+    <% if @product.diets.present? %>
       <div>
         <%= @product.diets.map(&:name).join(", ") %>
       </div>
     <% end -%>
 
-    <% if product_description(@product) %>
+    <% if product_description(@product).present? %>
       <p><%= product_description(@product) %></p>
     <% end -%>
 
@@ -36,26 +35,26 @@
 
     <%= render :partial => 'spree/shared/order_form', :locals => { :product => @product } %>
 
-    <% if @product.property('components') %>
+    <% if @product.property('components').present? %>
       <h2>In the Bag</h2>
       <ul class="dish-components">
         <%= @product.property('components').html_safe %>
       </ul>
     <% end -%>
 
-    <% if @product.pantry %>
+    <% if @product.pantry.present? %>
       <h4>From your Pantry</h4>
       <ul><li><%= @product.pantry.map(&:name).join("</li><li>") %></li></ul>
     <% end -%>
 
-    <% if @product.equipment %>
+    <% if @product.equipment.present? %>
       <h4>Necessary Cooking Equiment</h4>
       <ul><li><%= @product.equipment.map(&:name).join("</li><li>") %></li></ul>
     <% end -%>
 
-    <% if @product.property('directions') %>
+    <% if @product.property('directions').present? %>
       <h2>Directions</h2>
-      <% if @product.property('time') %>
+      <% if @product.property('time').present? %>
         <p>This meal should take about <strong><%= @product.property('time') %> minutes</strong> to prepare.</p>
       <% end -%>
       <ol class="dish-directions">
@@ -63,14 +62,14 @@
       </ol>
     <% end -%>
 
-    <% if @product.property('ingredients') %>
+    <% if @product.property('ingredients').present? %>
       <h4>Ingredient List</h4>
       <p class="dish-ingredients">
         <%= @product.property('ingredients').html_safe %>
       </p>
     <% end -%>
 
-    <% if @product.allergens %>
+    <% if @product.allergens.present? %>
       <p>Contains <%= @product.allergens.map(&:name).join(", ") %>.</p>
     <% end -%>
 
@@ -103,25 +102,25 @@
     </div>
 
     <div>
-      <% if @product.property('callout-1') %>
+      <% if @product.property('callout-1').present? %>
         callout-1:
         <%= @product.property('callout-1').html_safe %>
       <% end -%>
     </div>
     <div>
-      <% if @product.property('callout-2') %>
+      <% if @product.property('callout-2').present? %>
         callout-2:
         <%= @product.property('callout-2').html_safe %>
       <% end -%>
     </div>
     <div>
-      <% if @product.property('sidebar') %>
+      <% if @product.property('sidebar').present? %>
         sidebar:
         <%= @product.property('sidebar').html_safe %>
       <% end -%>
     </div>
 
-    <% if restaurant = @product.restaurant %>
+    <% if restaurant = @product.restaurant.presence %>
       <div><%= link_to restaurant.name, seo_url(restaurant) %></div>
       <div>restaurant.name: <%= restaurant.name %></div>
       <div>restaurant.description: <%= restaurant.description.html_safe if restaurant.description %></div>
@@ -131,7 +130,7 @@
       <div>restaurant_photo_url: <%= restaurant_photo_url(restaurant) %></div>
     <% end %>
 
-    <% if chef = @product.chef %>
+    <% if chef = @product.chef.presence %>
       <div><%= link_to chef.name, seo_url(chef) %></div>
       <div>chef.name: <%= chef.name %></div>
       <div>chef.description: <%= chef.description.html_safe if chef.description %></div>
