@@ -25,6 +25,9 @@
           <%= link_to url do %>
             <%= image_tag product.display_image.attachment(:menu), itemprop: "image", class: "meal__image" %>
             <h2 class="meal__name" itemprop="name"><%= product.name %></h2>
+            <% if @product.property('tagline').present? %>
+              <p><%= @product.property('tagline') %></p>
+            <% end -%>
             <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
               <span itemprop="price" content="<%= display_price(product) %>"></span>
             </span>

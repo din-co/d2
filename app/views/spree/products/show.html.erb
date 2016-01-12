@@ -4,6 +4,9 @@
   <div class="container" itemscope itemtype="http://schema.org/Product">
 
     <h1 itemprop="name"><%= @product.name %></h1>
+    <% if @product.property('tagline').present? %>
+      <p><%= @product.property('tagline') %></p>
+    <% end -%>
 
     <div>
       <%= @product.chef.name %>,
