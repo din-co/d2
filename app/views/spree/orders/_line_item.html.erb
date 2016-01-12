@@ -3,9 +3,9 @@
   <tr class="<%= cycle('', 'alt') %> line-item">
     <td class="cart-item-image" data-hook="cart_item_image">
       <% if variant.images.length == 0 %>
-        <%= link_to image_tag(variant.product.display_image.attachment(:menu)), variant.product %>
+        <%= link_to image_tag(variant.product.display_image.attachment(:menu), class: "product-image"), variant.product %>
       <% else %>
-        <%= link_to image_tag(variant.images.first.attachment.url(:menu)), variant.product %>
+        <%= link_to image_tag(variant.images.first.attachment.url(:menu), class: "product-image"), variant.product %>
       <% end %>
     </td>
     <td class="cart-item-description" data-hook="cart_item_description">
@@ -16,9 +16,9 @@
           <%= Spree.t(:out_of_stock) %>&nbsp;&nbsp;<br />
         </span>
       <% end %>
-      <span class="line-item-description" data-hook="line_item_description">
-        <%= line_item_description_text(line_item.description) %>
-      </span>
+      <p>
+        <%= [variant.product.chef.try(:name), variant.product.restaurant.try(:name)].compact.join(', ') %>
+      </p>
     </td>
     <td class="cart-item-price" data-hook="cart_item_price">
       <%= line_item.single_money.to_html %>

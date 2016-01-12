@@ -19,12 +19,12 @@
   <div class="menu">
     <% products.each do |product| %>
       <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
-      <div id="product_<%= product.id %>" class="meal" itemscope itemtype="http://schema.org/Product">
+      <div id="product_<%= product.id %>" itemscope itemtype="http://schema.org/Product">
         <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
 
           <%= link_to url do %>
-            <%= image_tag product.display_image.attachment(:menu), itemprop: "image", class: "meal__image" %>
-            <h2 class="meal__name" itemprop="name"><%= product.name %></h2>
+            <%= image_tag product.display_image.attachment(:menu), itemprop: "image", class: "product-image" %>
+            <h2 itemprop="name"><%= product.name %></h2>
             <% if product.property('tagline').present? %>
               <p><%= product.property('tagline') %></p>
             <% end -%>
