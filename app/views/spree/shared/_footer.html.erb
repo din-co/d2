@@ -2,7 +2,7 @@
 
   <nav class="footer-nav">
     <a class="footer-nav__link" href="#foo">about</a>
-    <a class="footer-nav__link" href="#foo">restaurants</a>
+    <%= link_to "restaurants", spree.nested_taxons_path(Spree::Taxonomy.restaurant.root), class: "footer-nav__link" %>
     <a class="footer-nav__link" href="#foo">careers</a>
     <a class="footer-nav__link" href="#foo">help</a>
   </nav>

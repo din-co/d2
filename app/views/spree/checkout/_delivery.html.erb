@@ -38,17 +38,22 @@
             </tbody>
           </table>
 
-          <% # removed shipping-methods %>
-
-p          <h5 class="stock-shipping-method-title"><%= Spree.t(:delivery_window) %></h5>
+          <h5 class="stock-shipping-method-title"><%= Spree.t(:delivery_window) %></h5>
           <ul class="field radios shipping-methods">
-            <%# TODO: automatically select cheapest delivery window %>
-            <% ship_form.object.delivery_windows.available.each do |delivery_window| %>
-              <li class="shipping-method" style="display:block;">
+            <% if available_windows = ship_form.object.delivery_windows.available.presence %>
+              <% available_windows.each do |delivery_window| %>
+                <li class="shipping-method" style="display:block;">
+                  <label>
+                    <%= ship_form.radio_button :delivery_window_id, delivery_window.id %>
+                    <span class="window-name"><%= delivery_window %></span>
+                    <strong>(<%= delivery_window.display_cost %>)</strong>
+                  </label>
+                </li>
+              <% end %>
+            <% else %>
+              <li class="delivery-method" style="display: block;">
                 <label>
-                  <%= ship_form.radio_button :delivery_window_id, delivery_window.id %>
-                  <span class="window-name"><%= delivery_window %></span>
-                  <strong>(<%= delivery_window.display_cost %>)</strong>
+                  <%= Spree.t(:no_available_delivery_windows) %>
                 </label>
               </li>
             <% end %>
