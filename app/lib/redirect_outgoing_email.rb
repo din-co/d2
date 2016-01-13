@@ -5,6 +5,9 @@ class RedirectOutgoingEmail
     cc = mail.cc
     bcc = mail.bcc
     mail.to = ["testing@din.co"]
+    to.each do |t|
+        mail.to << t if t.ends_with? "@din.co"
+    end
     mail.cc = []
     mail.bcc = []
     recipients =  " to: #{to.join(',')}"
