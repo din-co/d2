@@ -26,3 +26,7 @@ en:
     no_available_delivery_windows: "We're sorry, there are no more deliveries available today"
     unsupported_delivery_location: "Delivery is not available to this location"
     menu: "Menu"
+    forgot: "Forgot?"
+    password_reset: "Password Reset"
+    reset_password: "Reset Password"
+    create_account: "Create Account"
