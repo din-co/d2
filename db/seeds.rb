@@ -14,10 +14,6 @@ taxon_restaurants = Spree::Taxon.find_or_create_by!(name: 'Restaurants', taxonom
 taxonomy_chefs = Spree::Taxonomy.find_or_create_by!(name: 'Chefs')
 taxon_chefs = Spree::Taxon.find_or_create_by!(name: 'Chefs', taxonomy_id: taxonomy_chefs.id)
 
-if ENV['INCLUDE_SAMPLES']
-  load Rails.root.join('db/sample_chefs_restaurants.rb')
-end
-
 taxonomy_diets = Spree::Taxonomy.find_or_create_by!(name: 'Diets')
 taxon_diets = Spree::Taxon.find_or_create_by!(name: 'Diets', taxonomy_id: taxonomy_diets.id)
 Spree::Taxon.find_or_create_by!(name: "vegetarian", parent_id: taxon_diets.id, taxonomy_id: taxonomy_diets.id) do |t|
@@ -210,4 +206,8 @@ Spree::Gateway::StripeGateway.find_or_create_by({
   g.preferred_test_mode = true
   g.preferred_secret_key = "sk_test_0wqvetWX3zDayzZc8KSggjhO"
   g.preferred_publishable_key = "pk_test_RtnEyAHZVnP5lTdheh6UuR9W"
+end
+
+if ENV['INCLUDE_SAMPLES']
+  load Rails.root.join('db/samples.rb')
 end
