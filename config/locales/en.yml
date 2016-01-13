@@ -30,3 +30,4 @@ en:
     password_reset: "Password Reset"
     reset_password: "Reset Password"
     create_account: "Create Account"
+    same_as_billing_address: "Same as billing address"

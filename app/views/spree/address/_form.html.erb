@@ -1,0 +1,44 @@
+<% address_id = address_type.chars.first %>
+<div class="inner row">
+  <div class="form-group col-sm-4" id=<%="#{address_id}firstname" %>>
+    <%= form.label :firstname, Spree.t(:first_name) %>
+    <%= form.text_field :firstname, class: 'form-control' %>
+  </div>
+  <div class="form-group col-sm-4" id=<%="#{address_id}lastname" %>>
+    <%= form.label :lastname, Spree.t(:last_name) %>
+    <%= form.text_field :lastname, class: 'form-control' %>
+  </div>
+  <div class="form-group col-sm-4" id=<%="#{address_id}phone" %>>
+    <%= form.label :phone, Spree.t(:phone) %>
+    <%= form.phone_field :phone, class: "form-control" %>
+  </div>
+  <% if Spree::Config[:company] && address_type == "shipping" %>
+    <div class="form-group col-sm-12" id=<%="#{address_id}company" %>>
+      <%= form.label :company, Spree.t(:company) %>
+      <%= form.text_field :company, class: 'form-control' %>
+    </div>
+  <% end %>
+  <div class="form-group col-sm-6" id=<%="#{address_id}address1" %>>
+    <%= form.label :address1, Spree.t(:street_address) %>
+    <%= form.text_field :address1, class: 'form-control' %>
+  </div>
+  <div class="form-group col-sm-6" id=<%="#{address_id}address2" %>>
+    <%= form.label :address2, Spree.t(:street_address_2) %>
+    <%= form.text_field :address2, class: 'form-control' %>
+  </div>
+  <div class="form-group col-sm-4" id=<%="#{address_id}city" %>>
+    <%= form.label :city, Spree.t(:city) %>
+    <%= form.text_field :city, class: 'form-control' %>
+  </div>
+  <%= form.hidden_field :country_id %>
+  <% address.state = Spree::State.find_by(name: "California") unless address.state_id? %>
+  <% states = address_type == "shipping" ? Spree::State.where(name: "California") : Spree::Country.default.states %>
+  <div class="form-group col-sm-4" id=<%="#{address_id}state" %>>
+    <%= form.label :state, Spree.t(:state) %>
+    <%= form.collection_select :state_id, states, :id, :name, {}, class: "form-control" %>
+  </div>
+  <div class="form-group col-sm-4" id=<%="#{address_id}zipcode" %>>
+    <%= form.label :zipcode, Spree.t(:zip) %>
+    <%= form.text_field :zipcode, class: "form-control" %>
+  </div>
+</div>

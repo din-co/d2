@@ -35,6 +35,7 @@ Spree.config do |config|
 
   # Show shipping instructions in checkout
   config.shipping_instructions = true
+  config.company = true
 
 
   # Admin:

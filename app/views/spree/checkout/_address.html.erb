@@ -1,0 +1,23 @@
+<div id="billing">
+  <%= form.fields_for :bill_address do |bill_form| %>
+    <h3><%= Spree.t(:billing_address) %></h3>
+    <%= render :partial => 'spree/address/form', :locals => { :form => bill_form, :address_type => 'billing', :address => @order.bill_address } %>
+  <% end %>
+</div>
+
+<div id="shipping">
+  <%= form.fields_for :ship_address do |ship_form| %>
+    <h3><%= Spree.t(:shipping_address) %></h3>
+    <div class="checkbox">
+      <%= label_tag :order_use_billing, :id => 'use_billing' do %>
+        <%= check_box_tag 'order[use_billing]', '1', true %> <%= Spree.t(:same_as_billing_address) %>
+      <% end -%>
+    </div>
+    <%= render :partial => 'spree/address/form', :locals => { :form => ship_form, :address_type => 'shipping', :address => @order.ship_address } %>
+  <% end %>
+</div>
+<% if try_spree_current_user %>
+  <%= hidden_field_tag 'save_user_address', 1 %>
+<% end %>
+
+<%= submit_tag Spree.t(:save_and_continue), :class => 'continue btn btn-primary' %>
