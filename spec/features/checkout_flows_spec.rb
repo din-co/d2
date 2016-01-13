@@ -30,8 +30,6 @@ RSpec.feature "Checkout flow:" do
 
     # User registration pages
     expect(page).to have_current_path(spree.checkout_registration_path)
-    click_on "Create a new account"
-    expect(page).to have_current_path(spree.signup_path)
     fill_in "Email", with: "new_user@example.com"
     fill_in "Password", with: "password"
     fill_in "Password Confirmation", with: "password"
