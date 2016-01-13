@@ -23,3 +23,7 @@ end
 Spree::Taxon.find_or_create_by!(name: "Uma Casa", parent_id: taxon_restaurants.id, taxonomy_id: taxonomy_restaurants.id) do |t|
   t.description = "Uma Casa restaurant description here."
 end
+
+CreateProduct.create!("Magic Beans", 14.99, "Plant these beans and your beanstalk will grow to the clouds!")
+CreateProduct.create!("Zuni Roasted Chicken", 34.99, "The most amazing roasted chicken you've ever eaten, sitting on a bed of bread salad.")
+
