@@ -39,25 +39,22 @@ RSpec.feature "Checkout flow:" do
     # Address page
     expect(page).to have_current_path(spree.checkout_state_path(:address))
     address.zipcode = "94110"
-    within_fieldset("billing") do
+    within("#billing") do
       fill_in "First Name", with: address.firstname
       fill_in "Last Name", with: address.lastname
       fill_in "Street Address", with: address.address1
       fill_in "City", with: address.city
-      select "United States of America"
       select "California"
       fill_in "Zip", with: address.zipcode
       fill_in "Phone", with: address.phone
     end
-    within_fieldset("shipping") do
-      check "Use Billing Address"
+    within("#shipping") do
+      check "Same as billing address"
     end
-    check "Save my address"
     click_on "Save and Continue"
 
     # Delivery options page
     expect(page).to have_current_path(spree.checkout_state_path(:delivery))
-    expect(page).to have_text(product.name)
     delivery_window = Spree::DeliveryWindow.available.first
     choose("#{delivery_window.to_s} (#{delivery_window.display_cost})")
     fill_in "Shipping Instructions", with: "Ring the doorbell and then huck the package onto the roof"

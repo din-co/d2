@@ -1,0 +1,21 @@
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
+<div class="container container--main">
+
+  <%= checkout_progress %>
+
+  <%= form_for @order, :url => update_checkout_path(@order.state), :html => { :id => "checkout_form_#{@order.state}" } do |form| %>
+    <% if @order.state == 'address' || !@order.email? %>
+      <%= form.hidden_field :email %>
+    <% end %>
+    <%= render @order.state, :form => form %>
+  <% end %>
+</div>
+
+<script>
+Spree.current_order_id = "<%= @order.number %>"
+Spree.current_order_token = "<%= @order.guest_token %>"
+</script>
+
+<% if I18n.locale != :en %>
+  <%= javascript_include_tag 'jquery.validate/localization/messages_' + I18n.locale.to_s.downcase.gsub('-', '') %>
+<% end %>

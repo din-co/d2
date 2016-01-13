@@ -10,7 +10,7 @@ module Spree
     money_methods :cost
 
     def to_s
-      "#{format_offset(start_hour)} - #{format_offset(start_hour + duration)}"
+      "#{format_offset(start_hour, false)}–#{format_offset(start_hour + duration)}"
     end
 
     def admin_display
@@ -23,10 +23,10 @@ module Spree
 
     private
 
-    def format_offset(offset)
+    def format_offset(offset, meridiem = true)
       datetime = Time.zone.now.beginning_of_day
-
-      (datetime + offset.hours).strftime("%-l%P")
+      format = (meridiem) ? "%-l%P" : "%-l"
+      (datetime + offset.hours).strftime(format)
     end
   end
 end
