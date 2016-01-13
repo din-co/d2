@@ -3,16 +3,16 @@
   <div itemscope itemtype="http://schema.org/Product">
     <div class="container">
 
-      <h1 class="product__name" itemprop="name">
+      <h1 class="product__name text-center--on-mobile" itemprop="name">
         <%= @product.name %>
         <% if @product.property('tagline').present? %>
           <small class="product__tagline"><%= @product.property('tagline') %></small>
         <% end -%>
       </h1>
-      <h4 class="product__creator">
+      <h4 class="text-center--on-mobile">
         <%= [@product.chef.try(:name), @product.restaurant.try(:name)].compact.join(', ') %>
       </h4>
-      <p class="product__meta">
+      <p class="text-center--on-mobile">
         <span>2 servings</span>
         <% if @product.property('time').present? %>
           <span class="product__meta-separator"></span>
