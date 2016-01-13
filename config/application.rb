@@ -21,8 +21,19 @@ module D2
       end
     end
 
+    # Configure logging
     console do
       ActiveRecord::Base.logger = Rails.logger = RailsStdoutLogging::Rails.heroku_stdout_logger
+    end
+    config.lograge.enabled = Rails.env.production?
+    exclude_keys = ['controller', 'action', 'utf8']
+    config.lograge.custom_options = lambda do |event|
+      params = event.payload[:params].except(*exclude_keys)
+      {
+        'request_id' => event.payload[:request_id],
+        'remote_ip' => event.payload[:remote_ip],
+        'params' => params,
+      }
     end
 
     # Settings in config/environments/* take precedence over those specified here.

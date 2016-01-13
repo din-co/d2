@@ -2,7 +2,7 @@
   "name": "d2-review-apps",
   "description": "Enable review apps for D2",
   "scripts": {
-    "postdeploy": "bin/rake db:schema:load db:seed"
+    "postdeploy": "env INCLUDE_SAMPLES=true bin/rake db:reset"
   },
   "env": {
     "AWS_ACCESS_KEY_ID": {
