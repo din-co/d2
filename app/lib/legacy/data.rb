@@ -1,7 +1,7 @@
 module Legacy
   class Data
     def self.load!
-      puts "== Importing legacy Users =================================="
+      Rails.logger.info "== Importing legacy Users =================================="
 
       usa = Spree::Country.find_by(iso: 'US') || Spree::Country.first
       states = { # need string hash keys, thus => syntax
@@ -14,7 +14,7 @@ module Legacy
       addresses_imported = 0
       stripe_ids_imported = 0
       Legacy::User.find_each do |user|
-        puts "-- importing user: #{user.id} #{user.email}"
+        Rails.logger.info "-- importing user: #{user.id} #{user.email}"
         spree_user = Spree::User.find_or_create_by(email: user.email) do |spree_user|
           spree_user.login = user.email
           spree_user.last_sign_in_ip = user.creation_ip
@@ -26,7 +26,7 @@ module Legacy
         if spree_user.persisted?
           users_imported += 1
         else
-          puts "-- user errors: #{spree_user.errors.messages}"
+          Rails.logger.info "-- user errors: #{spree_user.errors.messages}"
           next unless spree_user.errors[:email] = ["has already been taken"] # skip to next user unless we are re-importing
         end
 
@@ -58,7 +58,7 @@ module Legacy
         if new_address.valid? && user_address.save(validate: false)
           addresses_imported += 1
         else
-          puts "  -> address errors: #{new_address.errors.messages}", true if new_address.errors.present?
+          Rails.logger.info "  -> address errors: #{new_address.errors.messages}", true if new_address.errors.present?
         end
 
         if user.stripe_id.present?
@@ -74,13 +74,13 @@ module Legacy
           if spree_credit_card.save
             stripe_ids_imported += 1
           else
-            puts "  -> credit card errors: #{spree_credit_card.errors.messages}", true if spree_credit_card.errors.present?
+            Rails.logger.info "  -> credit card errors: #{spree_credit_card.errors.messages}", true if spree_credit_card.errors.present?
           end
         end
       end
 
-      puts "== Imported: ==============================================="
-      puts ["#{users_imported} users", "#{addresses_imported} addresses", "#{stripe_ids_imported} Stripe IDs"]
+      Rails.logger.info "== Imported: ==============================================="
+      Rails.logger.info ["#{users_imported} users", "#{addresses_imported} addresses", "#{stripe_ids_imported} Stripe IDs"]
     end
   end
 end

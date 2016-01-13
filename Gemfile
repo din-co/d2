@@ -51,6 +51,8 @@ gem 'aws-sdk', '< 2.0'
 gem 'intercom-rails'
 
 gem 'rails_12factor', group: [:development, :production]
+gem 'lograge'
+
 group :test do
   gem 'database_cleaner'
   gem 'rspec-rails'
