@@ -48,6 +48,9 @@ Rails.application.configure do
   # when problems arise.
   config.log_level = :debug
 
+  # Don't log queries in production
+  config.active_record.logger = nil
+
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
