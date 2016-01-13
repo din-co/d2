@@ -52,6 +52,7 @@ gem 'intercom-rails'
 
 gem 'rails_12factor', group: [:development, :production]
 gem 'lograge'
+gem 'newrelic_rpm'
 
 group :test do
   gem 'database_cleaner'

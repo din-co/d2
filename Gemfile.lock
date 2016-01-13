@@ -184,6 +184,7 @@ GEM
     multi_json (1.11.2)
     mysql2 (0.3.20)
     netrc (0.11.0)
+    newrelic_rpm (3.14.1.311)
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
@@ -435,6 +436,7 @@ DEPENDENCIES
   launchy
   lograge
   mysql2 (~> 0.3.20)
+  newrelic_rpm
   pg
   poltergeist
   pry-rails
