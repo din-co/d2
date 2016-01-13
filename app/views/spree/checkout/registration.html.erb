@@ -1,5 +1,5 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
-<div class="container container--main-content">
+<div class="container container--main">
   <h1><%= Spree.t(:create_account) %></h1>
   <%= form_for @user, :as => :spree_user, :url => spree.registration_path(@user), html: {class: "form--margin-bottom"} do |f| %>
     <%= render :partial => 'spree/shared/user_form', :locals => { :f => f } %>

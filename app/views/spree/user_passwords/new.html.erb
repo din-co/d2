@@ -1,5 +1,5 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @spree_user } %>
-<div class="container container--main-content">
+<div class="container container--main">
   <h1><%= Spree.t(:password_reset) %></h1>
   <%= form_for Spree::User.new, :as => :spree_user, :url => spree.reset_password_path do |f| %>
     <div class="form-group">
