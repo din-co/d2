@@ -21,7 +21,7 @@ Rails.application.configure do
   # config.action_dispatch.rack_cache = true
 
   # Disable serving static files from the `/public` folder by default since
-  # Apache or NGINX already handles this.
+  # the web server already handles this.
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
@@ -42,7 +42,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -56,7 +56,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = 'http://assets.example.com'
+  config.action_controller.asset_host = ENV['CLOUDFRONT_DISTRIBUTION'].presence
 
   # Do not raise email delivery errors, since emails are processed by a background queue.
   config.action_mailer.raise_delivery_errors = false
