@@ -26,9 +26,28 @@ en:
     no_available_delivery_windows: "We're sorry, there are no more deliveries available today"
     unsupported_delivery_location: "Delivery is not available to this location"
     menu: "Menu"
+    cart: "Cart"
     forgot: "Forgot?"
     password_reset: "Password Reset"
     reset_password: "Reset Password"
     create_account: "Create Account"
     same_as_billing_address: "Same as billing address"
     cvc: "CVC"
+    delivery_details: "Delivery Details"
+    change: "change"
+    billing: "Billing"
+    shipping: "Shipping"
+    delivery: "Delivery"
+    your_order: "Your Order"
+    status: "Status"
+    cc_display: '%{cc_type} ending in %{cc_last_4}'
+    mastercard: 'MasterCard'
+    visa: 'Visa'
+    amex: 'American Express'
+    discover: 'Discover'
+    dinersclub: 'Diners Club'
+    jcb: 'JCB'
+
+  date:
+    formats:
+      delivery_window_date: "%A, %b %d"

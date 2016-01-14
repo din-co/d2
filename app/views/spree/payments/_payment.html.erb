@@ -1,0 +1,10 @@
+<% source = payment.source %>
+<% if source.is_a?(Spree::CreditCard) %>
+  <span class="card-type-<%= source.cc_type %>"></span>
+  <%= Spree.t(:cc_display, :cc_type => Spree.t(source.cc_type), :cc_last_4 => source.last_digits) %>
+<% elsif source.is_a?(Spree::StoreCredit) %>
+  <%= content_tag(:span, payment.payment_method.name) %>:
+  <%= content_tag(:span, payment.display_amount) %>
+<% else %>
+  <%= content_tag(:span, payment.payment_method.name) %>
+<% end %>
