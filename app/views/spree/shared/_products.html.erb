@@ -21,9 +21,9 @@
       <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
       <div class="product" itemscope itemtype="http://schema.org/Product">
         <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
-          <%= link_to url, class: "product__link" do %>
-            <%= image_tag product.display_image.attachment(:menu), itemprop: "image", class: "product-image" %>
-            <h2 class="product__name product-list__name" itemprop="name">
+          <%= link_to image_tag(product.display_image.attachment(:menu), itemprop: "image", class: "product-image product-list__image"), url %>
+          <%= link_to url, class: "product__details" do %>
+            <h2 class="product__name text-center" itemprop="name">
               <%= product.name %>
               <% if product.property('tagline').present? %>
                 <small class="product__tagline"><%= product.property('tagline') %></small>
@@ -33,9 +33,7 @@
               <span itemprop="price" content="<%= display_price(product) %>"></span>
             </span>
           <% end -%>
-          <div class="product__add-form">
-            <%= render :partial => 'spree/shared/order_form', :locals => { :product => product } %>
-          </div>
+          <%= render :partial => 'spree/shared/order_form', :locals => { :product => product } %>
         <% end %>
       </div>
     <% end %>

@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.feature "Checkout flow:" do
   let(:address) { FactoryGirl.build_stubbed(:address, state: Spree::State.find_by!(name: "California")) }
-  let(:product) { CreateProduct.create!("Magic Beans", 5.99, "A descripton of some special beans") }
+  let(:product) { CreateProduct.create!("Gulf White Shrimp + Caesar + Chicories + Avocado", 30.00, <<-TXT.strip_heredoc) }
+    These shrimp are caught from healthy stocks using trawls that allow sea turtles to escape. By buying these shrimp, we are supporting fisheries badly damaged in Hurricane Katrina. Cooling avocado contrasts spicy harissa, a North African condiment, on a salad of bitter greens, all assertive flavors held in perfect balance.
+  TXT
 
   before do
     Timecop.travel(Time.current.beginning_of_day)
@@ -63,12 +65,12 @@ RSpec.feature "Checkout flow:" do
     # Payment information page
     expect(page).to have_current_path(spree.checkout_state_path(:payment))
     expect(page).to have_text("Stripe")
-    within_fieldset("payment") do
+    within("#payment-methods") do
       fill_in "Name on card", with: "#{address.firstname} #{address.lastname}"
       # TODO: make this use stripe.js!!
       fill_in "Card Number", with: "4242424242424242"
       fill_in "Expiration", with: 6.months.from_now.strftime("%-l/%y") # e.g. 12/17
-      fill_in "Card Code", with: "123"
+      fill_in "CVC", with: "123"
     end
 
       click_on "Save and Continue"

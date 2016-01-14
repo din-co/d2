@@ -1,0 +1,4 @@
+<div class="container container--main">
+  <h1><%= Spree.t(:order_number, :number => @order.number) %></h1>
+  <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
+</div>

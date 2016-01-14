@@ -1,0 +1,20 @@
+<% if @order.line_item_adjustments.exists? %>
+  <% @order.line_item_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+    <%= render "spree/orders/adjustment_row", :label => label, :adjustments => adjustments, :type => Spree.t(:promotion) %>
+  <% end %>
+<% end %>
+
+<% @order.all_adjustments.tax.eligible.group_by(&:label).each do |label, adjustments| %>
+  <%= render "spree/orders/adjustment_row", :label => label, :adjustments => adjustments, :type => Spree.t(:tax) %>
+<% end %>
+
+<% @order.shipments.each do |shipment| %>
+  <tr>
+    <td colspan="4"><%= Spree.t(:shipping) %>: <%= shipment.shipping_method.name %></td>
+    <td class="cart-table__total"><%= shipment.display_discounted_cost %></td>
+  </tr>
+<% end %>
+
+<% @order.adjustments.eligible.group_by(&:label).each do |label, adjustments| %>
+  <%= render "spree/orders/adjustment_row", :label => label, :adjustments => adjustments, :type => Spree.t(:adjustment) %>
+<% end %>

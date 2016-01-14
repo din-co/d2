@@ -5,11 +5,22 @@
   display: block
   width: 100%
 
-.product__link:link
+.product-list__image
+  border: 1px solid grey
+  border-width: 1px 0
+  .menu .product:first-child &
+    border-top: 0
+
+.product__details:link
+  display: block
+  padding: 5px 10px 0
   text-decoration: none
 
+.product__offers
+  padding: 0 10px
+
 .product__name
-  margin-top: 10px
+  margin-top: 0
 
 .product__tagline
   display: block
@@ -18,17 +29,67 @@
   content: '•'
   padding: 0 0.4em
 
-.product__add-form
-  margin-bottom: 1em
-
 .product__add-button
-  @media (max-width: 767px)
-    display: block
-    margin: 0 auto
-    width: 50%
+  display: block
+  margin: 0 auto
+  width: 50%
+
+// Product Table
+.order-table
+  .image
+    width: 15%
+    min-width: 50px
+  .name
+    width: 70%
+  .price,
+  .quantity,
+  .total
+    width: 5%
+  .quantity
+    text-align: center
+  .price,
+  .total
+    text-align: right
+
+.subtotal-row
+  font-weight: 500
+  background-color: #f9f9f9
+
+.total-row
+  font-weight: 700
+  background-color: #f9f9f9
+
+.order-table__image
+  padding-top: 0
+  padding-bottom: 0
+  padding-left: 0
 
 
-// Product List
-.product-list__name
-  margin-right: 10px
-  margin-left: 10px
+// Cart Table
+.cart-table__image
+  width: 15%
+  min-width: 50px
+.cart-table__name
+  width: 65%
+.cart-table__price,
+.cart-table__quantity,
+.cart-table__total,
+.cart-table__remove
+  width: 5%
+.cart-table__quantity
+  text-align: center
+  white-space: nowrap
+.cart-table__price,
+.cart-table__total
+  text-align: right
+
+.cart-table__quantity-group
+  width: 4.7em
+.cart-table__quantity-input
+  text-align: center
+.cart-table__quantity-remove:link
+  color: red
+  text-decoration: none
+  font-size: 1.5em
+  padding: 0 4px 4px
+  line-height: 0

@@ -61,6 +61,7 @@ group :test do
   gem 'capybara-puma'
   gem 'launchy'
   gem 'poltergeist'
+  gem 'capybara-screenshot'
 end
 
 group :development, :test do

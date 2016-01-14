@@ -1,0 +1,70 @@
+<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
+<table class="cart-table table table-condensed table--vertical-middle">
+  <colgroup>
+    <col class="cart-table__image">
+    <col class="cart-table__name">
+    <col class="cart-table__price">
+    <col class="cart-table__quantity">
+    <col class="cart-table__total">
+    <col class="cart-table__remove">
+  </colgroup>
+
+  <thead>
+    <tr>
+      <th colspan="2"><%= Spree.t(:item) %></th>
+      <th class="cart-table__price"><%= Spree.t(:price) %></th>
+      <th class="cart-table__quantity"><%= Spree.t(:qty) %></th>
+      <th class="cart-table__total"><%= Spree.t(:total) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% order_form.object.line_items.each do |line_item| %>
+      <% variant = line_item.variant -%>
+      <%= order_form.fields_for :line_items, line_item do |item_form| -%>
+        <tr class="line-item">
+          <td class="cart-table__image">
+            <% if variant.images.length == 0 %>
+              <%= link_to image_tag(variant.product.display_image.attachment(:menu), class: "product-image"), variant.product %>
+            <% else %>
+              <%= link_to image_tag(variant.images.first.attachment.url(:menu), class: "product-image"), variant.product %>
+            <% end %>
+          </td>
+          <td class="cart-table__name">
+            <strong><%= link_to line_item.name, product_path(variant.product) %></strong>
+            <p><%= [variant.product.chef.try(:name), variant.product.restaurant.try(:name)].compact.join(', ') %></p>
+            <% if line_item.insufficient_stock? %>
+              <span class="out-of-stock">
+                <%= Spree.t(:out_of_stock) %>&nbsp;&nbsp;<br />
+              </span>
+            <% end %>
+          </td>
+          <td class="cart-table__price">
+            <%= line_item.single_money.to_html %>
+          </td>
+          <td class="cart-table__quantity">
+            <div class="input-group cart-table__quantity-group">
+              <%= item_form.number_field :quantity, :min => 0, :class => "line_item_quantity cart-table__quantity-input form-control", :maxlength => 2 %>
+              <%= link_to "×", '#', :class => 'delete input-group-addon cart-table__quantity-remove', :id => "delete_#{dom_id(line_item)}" %>
+            </div>
+          </td>
+          <td class="cart-table__total">
+            <%= line_item.display_amount.to_html unless line_item.quantity.nil? %>
+          </td>
+        </tr>
+      <% end -%>
+    <% end -%>
+  </tbody>
+  <tfoot>
+    <% if @order.adjustments.nonzero.exists? || @order.line_item_adjustments.nonzero.exists? || @order.shipment_adjustments.nonzero.exists? || @order.shipments.any? %>
+      <tr class="cart-subtotal subtotal-row">
+        <td colspan="4"><%= Spree.t(:cart_subtotal, :count => @order.line_items.sum(:quantity)) %></th>
+        <td><%= order_form.object.display_item_total %></td>
+      </tr>
+      <%= render "spree/orders/adjustments" %>
+    <% end %>
+    <tr class="cart-total total-row">
+      <td colspan="4"><%= Spree.t(:total) %></th>
+      <td><%= order_form.object.display_total %></td>
+    </tr>
+  </tfoot>
+</table>
