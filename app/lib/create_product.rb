@@ -4,7 +4,7 @@ class CreateProduct
       name: name,
       price: price,
       description: desc,
-      available_on: Time.zone.now,
+      available_on: 1.day.ago,
       shipping_category: shipping_category,
     })
 
