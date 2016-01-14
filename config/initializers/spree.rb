@@ -96,4 +96,6 @@ end
 
 Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
 
+# The name is strange, but this is the default Spree implementation of User.
+# This class is intended to be modified by extensions (ex. spree_auth_devise)
 Spree.user_class = "Spree::LegacyUser"
