@@ -63,12 +63,12 @@ RSpec.feature "Checkout flow:" do
     # Payment information page
     expect(page).to have_current_path(spree.checkout_state_path(:payment))
     expect(page).to have_text("Stripe")
-    within_fieldset("payment") do
+    within("#payment-methods") do
       fill_in "Name on card", with: "#{address.firstname} #{address.lastname}"
       # TODO: make this use stripe.js!!
       fill_in "Card Number", with: "4242424242424242"
       fill_in "Expiration", with: 6.months.from_now.strftime("%-l/%y") # e.g. 12/17
-      fill_in "Card Code", with: "123"
+      fill_in "CVC", with: "123"s
     end
 
       click_on "Save and Continue"

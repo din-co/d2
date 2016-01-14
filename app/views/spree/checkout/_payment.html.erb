@@ -1,5 +1,7 @@
 <h1><%= Spree.t(:payment) %></h1>
 
+<p>Card payments powered by Stripe.</p>
+
 <% if @payment_sources.present? %>
   <div class="card_options">
     <%= radio_button_tag 'use_existing_card', 'yes', true %>
@@ -34,11 +36,11 @@
   </div>
 <% end %>
 
-<p>Card payments powered by Stripe.</p>
-
-<% method = @order.available_payment_methods.first %>
-<%= hidden_field_tag "order[payments_attributes][][payment_method_id]", method.id %>
-<%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
+<div id="payment-methods">
+  <% method = @order.available_payment_methods.first %>
+  <%= hidden_field_tag "order[payments_attributes][][payment_method_id]", method.id %>
+  <%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
+</div>
 
 <%= submit_tag Spree.t(:save_and_continue), :class => 'continue btn btn-primary', :tabindex => 20 %>
 <script>Spree.disableSaveOnClick();</script>
