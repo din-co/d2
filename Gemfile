@@ -54,6 +54,8 @@ gem 'rails_12factor', group: [:development, :production]
 gem 'lograge'
 gem 'newrelic_rpm'
 
+gem 'font_assets' # for CORS
+
 group :test do
   gem 'database_cleaner'
   gem 'rspec-rails'

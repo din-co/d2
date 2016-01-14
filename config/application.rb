@@ -51,5 +51,9 @@ module D2
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Allow any origin to load fonts
+    # TODO: tighten this up in production
+    config.font_assets.origin = '*'
   end
 end
