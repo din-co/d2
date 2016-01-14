@@ -137,6 +137,8 @@ GEM
     ffaker (1.32.1)
     font-awesome-rails (4.5.0.0)
       railties (>= 3.2, < 5.0)
+    font_assets (0.1.12)
+      rack
     friendly_id (5.0.5)
       activerecord (>= 4.0.0)
     globalid (0.3.6)
@@ -434,6 +436,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl
   ffaker
+  font_assets
   intercom-rails
   jbuilder (~> 2.0)
   jquery-rails
