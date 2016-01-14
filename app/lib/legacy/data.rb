@@ -58,7 +58,7 @@ module Legacy
         if new_address.valid? && user_address.save(validate: false)
           addresses_imported += 1
         else
-          Rails.logger.info "  -> address errors: #{new_address.errors.messages}", true if new_address.errors.present?
+          Rails.logger.info "  -> address errors: #{new_address.errors.messages}" if new_address.errors.present?
         end
 
         if user.stripe_id.present?
@@ -74,7 +74,7 @@ module Legacy
           if spree_credit_card.save
             stripe_ids_imported += 1
           else
-            Rails.logger.info "  -> credit card errors: #{spree_credit_card.errors.messages}", true if spree_credit_card.errors.present?
+            Rails.logger.info "  -> credit card errors: #{spree_credit_card.errors.messages}" if spree_credit_card.errors.present?
           end
         end
       end
