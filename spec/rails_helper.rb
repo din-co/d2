@@ -28,6 +28,17 @@ require 'spree/testing_support/factories'
 
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
+
+require 'capybara-screenshot/rspec'
+Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
+  "screenshot_#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//,'')}"
+end
+if ENV['CIRCLE_ARTIFACTS'].present?
+  Capybara.save_and_open_page_path = ENV['CIRCLE_ARTIFACTS']
+  Capybara::Screenshot::RSpec.add_link_to_screenshot_for_failed_examples = false
+end
+Capybara::Screenshot.webkit_options = { width: 1024, height: 768 }
+Capybara::Screenshot.prune_strategy = { keep: 100 }
 ## END Custom additions
 
 # Checks for pending migration and applies them before tests are run.
