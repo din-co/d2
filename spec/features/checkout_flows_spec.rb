@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.feature "Checkout flow:" do
   let(:address) { FactoryGirl.build_stubbed(:address, state: Spree::State.find_by!(name: "California")) }
-  let(:product) { CreateProduct.create!("Magic Beans", 5.99, "A descripton of some special beans") }
+  let(:product) { CreateProduct.create!("Gulf White Shrimp + Caesar + Chicories + Avocado", 30.00, <<-TXT.strip_heredoc) }
+    These shrimp are caught from healthy stocks using trawls that allow sea turtles to escape. By buying these shrimp, we are supporting fisheries badly damaged in Hurricane Katrina. Cooling avocado contrasts spicy harissa, a North African condiment, on a salad of bitter greens, all assertive flavors held in perfect balance.
+  TXT
 
   before do
     Timecop.travel(Time.current.beginning_of_day)
