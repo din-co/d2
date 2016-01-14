@@ -9,7 +9,10 @@ if Rails.env.production?
     :enable_starttls_auto => true
   }
 
-  Rails.application.config.x.redirect_emails_internally = ENV['SEND_REAL_EMAILS'].blank?
+  # Production doesn't send real email unless SEND_REAL_EMAILS is set
+  block_real_emails = ENV['SEND_REAL_EMAILS'].blank?
+  Rails.application.config.x.redirect_emails_internally = block_real_emails
+  config.action_mailer.show_previews = block_real_emails
 
   ActionMailer::Base.register_interceptor(RedirectOutgoingEmail)
   ActionMailer::Base.register_interceptor(BccOutgoingEmail)
