@@ -87,10 +87,8 @@ production:
 legacy:
   legacy_default: &legacy_default
     pool: 5
-    adapter: mysql2
     encoding: utf8
-    reconnect: true
-    # <CREDENTIALS REDACTED>
+    url: <%= ENV['LEGACY_DATABASE_URL'] %>
 
   development:
     <<: *legacy_default
