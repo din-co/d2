@@ -41,12 +41,13 @@ en:
     your_order: "Your Order"
     status: "Status"
     cc_display: '%{cc_type} ending in %{cc_last_4}'
-    mastercard: 'MasterCard'
+    master: 'MasterCard'
     visa: 'Visa'
-    amex: 'American Express'
+    american_express: 'American Express'
     discover: 'Discover'
-    dinersclub: 'Diners Club'
+    diners_club: 'Diners Club'
     jcb: 'JCB'
+    use_a_new_card: "Use a new card"
 
   date:
     formats:

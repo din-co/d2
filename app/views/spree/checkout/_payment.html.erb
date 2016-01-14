@@ -3,33 +3,31 @@
 <p>Card payments powered by Stripe.</p>
 
 <% if @payment_sources.present? %>
-  <div class="card_options">
-    <%= radio_button_tag 'use_existing_card', 'yes', true %>
-    <label for="use_existing_card_yes">
-      <%= Spree.t(:use_existing_cc) %>
-    </label>
-    <br/>
-    <%= radio_button_tag 'use_existing_card', 'no' %>
-    <label for="use_existing_card_no">
-      <%= Spree.t(:use_new_cc_or_payment_method) %>
-    </label>
-  </div>
-
   <div id="existing_cards">
     <p class="field" data-hook="existing_cards">
-      <table class="existing-credit-card-list">
+      <table class="table existing-credit-card-list">
         <tbody>
           <% @payment_sources.each do |card| %>
-            <tr id="<%= dom_id(card,'spree')%>" class="<%= cycle('even', 'odd') %>">
-              <td><%= card.name %></td>
-              <td><%= card.display_number %></td>
-              <td><%= card.month %></td>
-              <td><%= card.year %></td>
+            <tr id="<%= dom_id(card,'spree')%>" class="existing-card">
               <td>
                 <%= radio_button_tag "order[existing_card]", card.id, (card == @payment_sources.first), { class: "existing-cc-radio" }  %>
               </td>
+              <td><%= card.name %></td>
+              <td><%= Spree.t(card.cc_type) %></td>
+              <td>*<%= card.last_digits %></td>
+              <td><%= card.month %>/<%= card.year.split(//).last(2).join  %></td>
             </tr>
           <% end %>
+          <tr>
+            <td>
+              <%= radio_button_tag "order[existing_card]", 'no', false, { class: "existing-cc-radio" }  %>
+            </td>
+            <td colspan="4">
+              <label for="order_existing_card_no">
+                <%= Spree.t(:use_a_new_card) %>
+              </label>
+            </td>
+          </tr>
         </tbody>
       </table>
     </p>
