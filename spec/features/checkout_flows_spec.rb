@@ -68,7 +68,7 @@ RSpec.feature "Checkout flow:" do
       # TODO: make this use stripe.js!!
       fill_in "Card Number", with: "4242424242424242"
       fill_in "Expiration", with: 6.months.from_now.strftime("%-l/%y") # e.g. 12/17
-      fill_in "CVC", with: "123"s
+      fill_in "CVC", with: "123"
     end
 
       click_on "Save and Continue"
