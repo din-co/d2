@@ -1,9 +1,9 @@
-
 # This file overrides the built-in users.rb from solidus_auth_devise to automatically
-# create an admin user in development mode.
+# create an admin user if there are no admin user accounts.
 
-if Rails.env.development? && Spree::User.admin.empty?
-  admin = Spree::User.find_or_create_by!(email: "admin@din.co") do |u|
+unless Spree::User.admin.exists?
+  admin = Spree::User.create! do |u|
+    u.email = "admin@din.co"
     u.password = "password"
     u.password_confirmation = "password"
     u.login = u.email
