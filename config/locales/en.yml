@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  date:
+    formats:
+      delivery_window_date: "%A, %b %d"
   spree:
     delivery_window: "Delivery Window"
     delivery_window_required: "A valid delivery window must be selected"
@@ -40,16 +43,12 @@ en:
     delivery: "Delivery"
     your_order: "Your Order"
     status: "Status"
-    cc_display: '%{cc_type} ending in %{cc_last_4}'
-    master: 'MasterCard'
-    visa: 'Visa'
-    american_express: 'American Express'
-    discover: 'Discover'
-    diners_club: 'Diners Club'
-    jcb: 'JCB'
+    cc_display: "%{cc_type} ending in %{cc_last_4}"
+    master: "MasterCard"
+    visa: "Visa"
+    american_express: "American Express"
+    discover: "Discover"
+    diners_club: "Diners Club"
+    jcb: "JCB"
     use_a_new_card: "Use a new card"
     street_address_2: "Apt/Suite"
-
-  date:
-    formats:
-      delivery_window_date: "%A, %b %d"
