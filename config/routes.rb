@@ -1,14 +1,6 @@
 Rails.application.routes.draw do
-
-  get 'about', to: 'static_pages#about'
-
-  get 'help', to: 'static_pages#help'
-
-  get 'faq', to: 'static_pages#faq'
-
-  get 'terms', to: 'static_pages#terms'
-
-  get 'privacy', to: 'static_pages#privacy'
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
 
   # This line mounts Spree's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
@@ -16,8 +8,11 @@ Rails.application.routes.draw do
   #
   # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
   mount Spree::Core::Engine, :at => '/'
-          # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+
+  # Fall back to static pages
+  get '/:page', to: 'static_pages#show', as: 'static_page', constraints: lambda { |req|
+      Rails.application.config.x.static_pages.include? req.path_parameters[:page]
+  }
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
