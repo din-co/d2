@@ -129,8 +129,8 @@ end
 Spree::Taxon.find_or_create_by!(name: "small ovenproof skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "small ovenproof skillet description here."
 end
-Spree::Taxon.find_or_create_by!(name: "medium ovenproof skillet skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "medium ovenproof skillet skillet description here."
+Spree::Taxon.find_or_create_by!(name: "medium ovenproof skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "medium ovenproof skillet description here."
 end
 Spree::Taxon.find_or_create_by!(name: "large ovenproof skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "large ovenproof skillet description here."
