@@ -33,6 +33,8 @@ en:
     forgot: "Forgot?"
     password_reset: "Password Reset"
     reset_password: "Reset Password"
+    confirm_password: "Confirm Password"
+    send_link_to_reset_password: "Send Link to Reset Password"
     create_account: "Create Account"
     same_as_billing_address: "Same as billing address"
     cvc: "CVC"
