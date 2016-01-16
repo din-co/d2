@@ -29,7 +29,7 @@ class CreateProduct
 
     # Add properties
     product.product_properties.create!(value: "A tagline adds more clarity to the name of the dish.", property: Spree::Property.find_by!(name: 'tagline'))
-    product.product_properties.create!(value: "23", property: Spree::Property.find_by!(name: 'time'))
+    product.product_properties.create!(value: "23", property: Spree::Property.find_by!(name: 'time-minutes'))
     product.product_properties.create!(value: <<-HTML.strip_heredoc, property: Spree::Property.find_by!(name: 'components'))
       <li>Hodo Soy tofu</li>
       <li>shallot</li>

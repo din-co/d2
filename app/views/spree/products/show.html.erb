@@ -14,9 +14,9 @@
       </h4>
       <p class="text-center--on-mobile">
         <span>2 servings</span>
-        <% if @product.property('time').present? %>
+        <% if @product.property('time-minutes').present? %>
           <span class="product__meta-separator"></span>
-          <span><%= @product.property('time') %> minutes</span>
+          <span><%= @product.property('time-minutes') %> minutes</span>
         <% end -%>
         <% if @product.diets.present? %>
           <span class="product__meta-separator"></span>
@@ -67,8 +67,8 @@
 
       <% if @product.property('directions').present? %>
         <h2>Directions</h2>
-        <% if @product.property('time').present? %>
-          <p><em>This meal should take about <strong><%= @product.property('time') %> minutes</strong> to prepare.</em></p>
+        <% if @product.property('time-minutes').present? %>
+          <p><em>This meal should take about <strong><%= @product.property('time-minutes') %> minutes</strong> to prepare.</em></p>
         <% end -%>
         <ol class="dish-directions">
           <%= @product.property('directions').html_safe %>

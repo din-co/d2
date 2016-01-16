@@ -149,7 +149,7 @@ end
 dish = Spree::Prototype.find_or_create_by!(name: 'Dish - standard')
 dish.properties += [
   Spree::Property.find_or_create_by!(name: 'tagline', presentation: 'Tagline'),
-  Spree::Property.find_or_create_by!(name: 'time', presentation: 'Time'),
+  Spree::Property.find_or_create_by!(name: 'time-minutes', presentation: 'Time (minutes)'),
   Spree::Property.find_or_create_by!(name: 'components', presentation: 'Components'),
   Spree::Property.find_or_create_by!(name: 'directions', presentation: 'Directions'),
   Spree::Property.find_or_create_by!(name: 'ingredients', presentation: 'Ingredients'),
