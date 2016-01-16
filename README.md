@@ -68,3 +68,9 @@ bundle show solidus_core
 bundle show solidus
 bundle show solidus_frontend
 ```
+
+## SSL Setup
+
+Most infrastructure setup steps are described here: https://devcenter.heroku.com/articles/ssl-endpoint
+
+Key, CSR, and cert are stored in a 1Password vault.
