@@ -34,7 +34,7 @@ RSpec.feature "Checkout flow:" do
     expect(page).to have_current_path(spree.checkout_registration_path)
     fill_in "Email", with: "new_user@example.com"
     fill_in "Password", with: "password"
-    fill_in "Password Confirmation", with: "password"
+    fill_in "Confirm Password", with: "password"
     click_on "Create"
     user = Spree::User.last
 
