@@ -1,4 +1,4 @@
-class StaticPagesController < ApplicationController
+class StaticPagesController < Spree::StoreController
   def show
     if valid_page?
       render template: template_path
