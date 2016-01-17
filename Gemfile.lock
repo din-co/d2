@@ -427,6 +427,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
   aws-sdk (< 2.0)
   bootstrap-sass (~> 3.3.6)
   byebug
