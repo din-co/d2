@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe StaticPagesController, type: :controller do
   before do
+    pending "sign_in helper method"
     sign_in nil
   end
 
