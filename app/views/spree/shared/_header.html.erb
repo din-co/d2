@@ -1,15 +1,37 @@
 <header>
-  <nav class="main-nav">
-    <%= link_to Spree.t(:menu), spree.root_path, :class => "main-nav__item" %>
-    <% if simple_current_order.nil? or simple_current_order.item_count.zero? %>
-      <%# link_to "#{Spree.t(:cart)}: (0)", spree.cart_path, :class => "main-nav__item cart cart--empty" %>
-    <% else %>
-      <%= link_to "#{Spree.t(:cart)}: (#{simple_current_order.item_count})", spree.cart_path, :class => "main-nav__item cart cart--full" %>
-    <% end %>
-    <% if spree_current_user %>
-      <%= link_to Spree.t(:account), spree.account_path, :class => "main-nav__item" %>
-    <% else %>
-      <%= link_to Spree.t(:login), spree.login_path, :class => "main-nav__item" %>
-    <% end %>
+  <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <a class="navbar-brand" href="/">Din</a>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="container">
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+
+          <ul class="nav navbar-nav navbar-left">
+            <li><%= link_to Spree.t(:menu), spree.root_path, :class => "main-nav__item" %></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+
+            <% if spree_current_user %>
+            <li><%= link_to Spree.t(:account), spree.account_path, :class => "main-nav__item" %></li>
+            <% else %>
+            <li><%= link_to Spree.t(:login), spree.login_path, :class => "main-nav__item" %></li>
+            <% end %>
+
+            <% if simple_current_order.nil? or simple_current_order.item_count.zero? %>
+              <%# link_to "#{Spree.t(:cart)}: (0)", spree.cart_path, :class => "main-nav__item cart cart--empty" %>
+            <% else %>
+              <li><%= link_to "#{Spree.t(:cart)}: (#{simple_current_order.item_count})", spree.cart_path, :class => "main-nav__item cart cart--full" %></li>
+            <% end %>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div>
   </nav>
 </header>
