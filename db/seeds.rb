@@ -81,29 +81,41 @@ end
 
 taxonomy_equipment = Spree::Taxonomy.find_or_create_by!(name: 'Equipment')
 taxon_equipment = Spree::Taxon.find_or_create_by!(name: 'Equipment', taxonomy_id: taxonomy_equipment.id)
+Spree::Taxon.find_or_create_by!(name: "baking sheet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "baking sheet description here."
+end
+Spree::Taxon.find_or_create_by!(name: "grater", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "grater description here."
+end
+Spree::Taxon.find_or_create_by!(name: "rubber spatula", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "rubber spatula description here."
+end
+Spree::Taxon.find_or_create_by!(name: "wisk", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "wisk description here."
+end
+Spree::Taxon.find_or_create_by!(name: "paper towels", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "paper towels description here."
+end
 Spree::Taxon.find_or_create_by!(name: "bowl", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "bowl description here."
 end
 Spree::Taxon.find_or_create_by!(name: "large bowl", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "large bowl description here."
 end
+Spree::Taxon.find_or_create_by!(name: "medium bowl", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "medium bowl description here."
+end
 Spree::Taxon.find_or_create_by!(name: "small bowl", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "small bowl description here."
-end
-Spree::Taxon.find_or_create_by!(name: "chef knife", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "chef knife description here."
-end
-Spree::Taxon.find_or_create_by!(name: "paring knife", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "paring knife description here."
-end
-Spree::Taxon.find_or_create_by!(name: "cutting board", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "cutting board description here."
 end
 Spree::Taxon.find_or_create_by!(name: "skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "skillet description here."
 end
 Spree::Taxon.find_or_create_by!(name: "small skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "small skillet description here."
+end
+Spree::Taxon.find_or_create_by!(name: "medium skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "medium skillet description here."
 end
 Spree::Taxon.find_or_create_by!(name: "large skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "large skillet description here."
@@ -117,39 +129,31 @@ end
 Spree::Taxon.find_or_create_by!(name: "small ovenproof skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "small ovenproof skillet description here."
 end
+Spree::Taxon.find_or_create_by!(name: "medium ovenproof skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "medium ovenproof skillet description here."
+end
 Spree::Taxon.find_or_create_by!(name: "large ovenproof skillet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "large ovenproof skillet description here."
+end
+Spree::Taxon.find_or_create_by!(name: "saucepan", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "saucepan description here."
 end
 Spree::Taxon.find_or_create_by!(name: "small saucepan", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "small saucepan description here."
 end
+Spree::Taxon.find_or_create_by!(name: "medium saucepan", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
+  t.description = "medium saucepan description here."
+end
 Spree::Taxon.find_or_create_by!(name: "large saucepan", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
   t.description = "large saucepan description here."
-end
-Spree::Taxon.find_or_create_by!(name: "baking sheet", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "baking sheet description here."
-end
-Spree::Taxon.find_or_create_by!(name: "grater", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "grater description here."
-end
-Spree::Taxon.find_or_create_by!(name: "rubber spatula", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "rubber spatula description here."
-end
-Spree::Taxon.find_or_create_by!(name: "paper towels", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "paper towels description here."
-end
-Spree::Taxon.find_or_create_by!(name: "fork", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "fork description here."
-end
-Spree::Taxon.find_or_create_by!(name: "plate", parent_id: taxon_equipment.id, taxonomy_id: taxonomy_equipment.id) do |t|
-  t.description = "plate description here."
 end
 
 # Dish Prototype and Product Properties
 dish = Spree::Prototype.find_or_create_by!(name: 'Dish - standard')
 dish.properties += [
   Spree::Property.find_or_create_by!(name: 'tagline', presentation: 'Tagline'),
-  Spree::Property.find_or_create_by!(name: 'time', presentation: 'Time'),
+  Spree::Property.find_or_create_by!(name: 'time-minutes', presentation: 'Time (minutes)'),
+  Spree::Property.find_or_create_by!(name: 'shelf-life-days', presentation: 'Shelf Life (days)'),
   Spree::Property.find_or_create_by!(name: 'components', presentation: 'Components'),
   Spree::Property.find_or_create_by!(name: 'directions', presentation: 'Directions'),
   Spree::Property.find_or_create_by!(name: 'ingredients', presentation: 'Ingredients'),

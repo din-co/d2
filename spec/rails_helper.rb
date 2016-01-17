@@ -23,6 +23,8 @@ require 'rspec/rails'
 # Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ## Custom additions
+require 'support/devise'
+
 require 'capybara'
 require 'spree/testing_support/factories'
 
