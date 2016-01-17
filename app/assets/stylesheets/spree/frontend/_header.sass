@@ -10,11 +10,16 @@ $nav-height: $base-line-height + $link-v-padding * 2
 
 .main-nav
   position: fixed
+  top: 0
   +layer(menu)
   display: flex
   background: white
   width: 100%
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2)
+  transition: top 0.3s ease-in-out
+
+.main-nav--hidden
+  top: -64px
 
 %main-nav__item
   flex: 2
