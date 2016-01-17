@@ -1,0 +1,8 @@
+$din-layers: (modal: 300, menu: 200, dropdown: 100)
+
+=layer($layer)
+  z-index: map-get($din-layers, $layer)
+
+// Layers Helper Usage
+// .modal
+//   +layer(modal);
