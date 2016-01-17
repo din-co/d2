@@ -1,5 +1,79 @@
+/*Typography Styles*/
+
+body
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+  font-size: 14px
+  font-style: normal
+  font-variant: normal
+  font-weight: 300
+  line-height: 20px
+  color: rgb(0,0,0)
+  -webkit-font-smoothing: antialiased
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+  line-height: 110%
+  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Tahoma", "Geneva", "Arial Narrow", "Arial", sans-serif
+  font-weight: 600
+  font-stretch: condensed
+
+p
+  font-family: Georgia, Times, 'Times New Roman', serif
+  font-size: 14px
+  font-style: normal
+  font-variant: normal
+  font-weight: 400
+  line-height: 20px
+  color: rgb(0,0,0)
+  -webkit-font-smoothing: antialiased
+
 b
-  font-weight: 500
+  font-weight: 600
+
+.hr-header
+  text-align: center
+  text-transform: uppercase
+  letter-spacing: normal
+
+.hr-header:before, .hr-header:after
+  content: ' '
+  display: block
+  width: 55px
+  margin: 15px auto
+  border: 2px solid rgb(0,0,0)
+
+.sub-header
+  font-size: 18px
+  color: rgb(128,128,128)
+
+/*Typography Modifiers*/
+
+.center
+  text-align: center
+
+.uppercase
+  text-transform: uppercase
+
+.lowercase
+  text-transform: lowercase
+
+.capitalize
+  text-transform: capitalize
+
+.serif
+  font-family: Georgia, Times, 'Times New Roman', serif
+
+.text-gray
+  color: rgb(128,128,128)
+
+.text-white
+  color: rgb(255,255,255)
+
+/*Mobile Styles*/
 
 %text-center-on-mobile
   @media (max-width: 767px)
