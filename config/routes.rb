@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
 
   namespace :admin do
     get 'raw_reports/outbound_shipments'
@@ -10,8 +12,11 @@ Rails.application.routes.draw do
   #
   # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
   mount Spree::Core::Engine, :at => '/'
-          # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+
+  # Fall back to static pages
+  get '/:page', to: 'static_pages#show', as: 'static_page', constraints: lambda { |req|
+      Rails.application.config.x.static_pages.include? req.path_parameters[:page]
+  }
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
