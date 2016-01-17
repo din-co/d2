@@ -1,16 +1,52 @@
+$base-line-height: 20px
+
+$din-logo-size: 52px
+$link-v-padding: 8px
+$logo-v-offset: 4px
+$nav-height: $base-line-height + $link-v-padding * 2
+
+.main-header
+  height: $nav-height
+
 .main-nav
-  display: flex
-  border-bottom: 1px solid grey
-
-.main-nav__item
-  flex: 1
-  padding: 5px
-  text-align: center
-
-.navbar-brand
-  position: absolute
-  width: 100%
-  left: 0
+  position: fixed
   top: 0
-  text-align: center
-  margin: auto
+  +layer(menu)
+  display: flex
+  background: white
+  width: 100%
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2)
+  transition: top 0.3s ease-in-out
+
+.main-nav--hidden
+  top: -64px
+
+%main-nav__item
+  flex: 2
+
+.main-nav__menu
+  @extend %main-nav__item
+  text-align: left
+
+.main-nav__user
+  @extend %main-nav__item
+  text-align: right
+
+.main-nav_logo
+  width: $din-logo-size
+
+.main-nav__link
+  display: inline-block
+  padding: 10px 16px
+
+.nav-logo
+  position: absolute
+  // top: $logo-v-offset
+  top: 12px
+  display: inline-block
+  width: $din-logo-size
+  height: $din-logo-size
+  border-radius: 50%
+  box-shadow: 0 1px 1px rgba(82,82,82,0.3)
+  path
+    fill: white
