@@ -1,6 +1,24 @@
-b
-  font-weight: 500
+body
+  -webkit-font-smoothing: antialiased
 
+.hr-header
+  text-align: center
+  text-transform: uppercase
+  letter-spacing: normal
+  &:before,
+  &:after
+    content: ' '
+    display: block
+    width: 55px
+    margin: 15px auto
+    border: 2px solid rgb(0,0,0)
+
+.sub-header
+  font-size: 18px
+  color: rgb(128,128,128)
+
+
+// Mobile Styles
 %text-center-on-mobile
   @media (max-width: 767px)
     text-align: center
