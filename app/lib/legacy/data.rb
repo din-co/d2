@@ -30,9 +30,6 @@ module Legacy
           next unless spree_user.errors[:email] = ["has already been taken"] # skip to next user unless we are re-importing
         end
 
-        # skip to next user if we already imported an address
-        next if Spree::UserAddress.unscoped.where(user_id: spree_user.id).any?
-
         state = states[user.state]
         address_attributes = {
           firstname: user.first_name,
@@ -55,28 +52,32 @@ module Legacy
         user_address.default = true
         user_address.address = new_address
 
+        if user.stripe_id.present?
+          spree_credit_card = spree_user.credit_cards.find_or_create_by(gateway_customer_profile_id: user.stripe_id) do |card|
+            card.cc_type = user.card_type
+            card.last_digits = user.last4
+            card.name = "#{new_address.firstname} #{new_address.lastname}"
+            card.default = true
+            card.payment_method = stripe_payment_method
+            card.address_id = new_address.id
+          end
+          spree_credit_card.name ||= "#{new_address.firstname} #{new_address.lastname}"
+          if spree_credit_card.changed? && spree_credit_card.save
+            stripe_ids_imported += 1
+          else
+            Rails.logger.info "  -> credit card errors: #{spree_credit_card.errors.messages}" if spree_credit_card.errors.present?
+          end
+        end
+
+        # skip to next user if we already imported an address
+        next if Spree::UserAddress.unscoped.where(user_id: spree_user.id).any?
+
         if new_address.valid? && user_address.save(validate: false)
           addresses_imported += 1
         else
           Rails.logger.info "  -> address errors: #{new_address.errors.messages}" if new_address.errors.present?
         end
 
-        if user.stripe_id.present?
-          spree_credit_card = spree_user.credit_cards.build({
-            gateway_customer_profile_id: user.stripe_id,
-            cc_type: user.card_type,
-            last_digits: user.last4,
-            name: "#{new_address.firstname} #{new_address.lastname}",
-            default: true,
-            payment_method: stripe_payment_method,
-            address_id: new_address.id,
-          })
-          if spree_credit_card.save
-            stripe_ids_imported += 1
-          else
-            Rails.logger.info "  -> credit card errors: #{spree_credit_card.errors.messages}" if spree_credit_card.errors.present?
-          end
-        end
       end
 
       Rails.logger.info "== Imported: ==============================================="

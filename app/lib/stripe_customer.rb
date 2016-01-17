@@ -27,11 +27,11 @@ class StripeCustomer
     end
   end
 
-  def spree_credit_card_data
+  def spree_credit_card_data(spree_card)
     card = default_card_source
     return {} if card.blank?
     {
-      name: card.name,
+      name: card.name.presence || spree_card.name,
       month: card.exp_month,
       year: card.exp_year,
       gateway_payment_profile_id: card.id,
@@ -44,7 +44,7 @@ class StripeCustomer
       return
     end
 
-    if card.update(spree_credit_card_data)
+    if card.update(spree_credit_card_data(card))
       Rails.logger.info "Updated user: #{card.user_id}/#{card.gateway_customer_profile_id} with token: #{card.gateway_payment_profile_id} "
     else
       Rails.logger.info "Failed to update user: #{card.user_id}/#{card.gateway_customer_profile_id} errors: #{card.errors.messages}"
