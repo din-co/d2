@@ -1,15 +1,36 @@
-<header>
+<header class="main-header">
   <nav class="main-nav">
-    <%= link_to Spree.t(:menu), spree.root_path, :class => "main-nav__item" %>
-    <% if simple_current_order.nil? or simple_current_order.item_count.zero? %>
-      <%# link_to "#{Spree.t(:cart)}: (0)", spree.cart_path, :class => "main-nav__item cart cart--empty" %>
-    <% else %>
-      <%= link_to "#{Spree.t(:cart)} (#{simple_current_order.item_count})", spree.cart_path, :class => "main-nav__item cart cart--full" %>
-    <% end %>
-    <% if spree_current_user %>
-      <%= link_to Spree.t(:account), spree.account_path, :class => "main-nav__item" %>
-    <% else %>
-      <%= link_to Spree.t(:login), spree.login_path, :class => "main-nav__item" %>
-    <% end %>
+
+    <div class="main-nav__menu">
+      <%= link_to Spree.t(:menu), spree.root_path, :class => "main-nav__link" %>
+    </div>
+
+    <div class="main-nav_logo">
+      <%= link_to spree.root_path, :class => "nav-logo" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <title>Din</title>
+          <circle class="logo-circle" cx="256" cy="256" r="256"/>
+          <path class="logo-d" d="M205,323.13V130H153v1c10,6.63,13,11.75,13,32.53V237c-5-22-17.16-32.23-35.83-32.23-27.41,0-49.69,30.12-49.69,78S101.86,359,128.06,359c19.58,0,32.94-12.65,37.94-35.55V356h51v-0.64C207,349,205,343,205,323.13Zm-39-24.7c0,28.62-11.13,44-22.28,44-14.16,0-21.07-22.59-21.07-59.94,0-40.36,7.22-64.16,21.38-64.16,10.84,0,22,15.66,22,46.39v33.74Z"/>
+          <path class="logo-i" d="M290,356H229v-0.64c9-6.32,11-10.54,11-30.42V241.2c0-20.78-3-26.51-13-32.83V208h52V324.94c0,19.88,2,24.1,11,30.42V356Z"/>
+          <path class="logo-n" d="M377,356v-0.64c10-6.32,11-10.54,11-30.42V246c0-11.44-3.29-19.88-14.74-19.88C363,226.14,354,236.38,354,260.48v64.46c0,19.88,1,24.1,11,30.42V356H303v-0.64c10-6.32,11-10.54,11-30.42V241.2c0-20.78-2-26.51-12-32.83V208h52v31.09c5-22,20.13-34.34,39.11-34.34,22.59,0,34.89,15.36,34.89,40.67v79.52c0,19.88,2,24.1,11,30.42V356H377Z"/>
+          <path class="logo-tittle" d="M258.65,130.35a23.65,23.65,0,1,1-23.49,23.49A23.33,23.33,0,0,1,258.65,130.35Z"/>
+        </svg>
+      <% end -%>
+    </div>
+
+    <div class="main-nav__user">
+      <% if spree_current_user %>
+        <%= link_to Spree.t(:account), spree.account_path, :class => "main-nav__link" %>
+      <% else %>
+        <%= link_to Spree.t(:login), spree.login_path, :class => "main-nav__link" %>
+      <% end %>
+
+      <% if simple_current_order.nil? or simple_current_order.item_count.zero? %>
+        <%# link_to "#{Spree.t(:cart)}: (0)", spree.cart_path, :class => "main-nav__item cart cart--empty" %>
+      <% else %>
+        <%= link_to "#{Spree.t(:cart)} (#{simple_current_order.item_count})", spree.cart_path, :class => "main-nav__link" %>
+      <% end %>
+    </div>
+
   </nav>
 </header>
