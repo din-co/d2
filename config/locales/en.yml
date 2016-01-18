@@ -60,6 +60,7 @@ en:
     delivery_instructions_placeholder: "Delivery Instructions (e.g. leave at the front door)"
     login: Sign In
     logout: Sign Out
+    out_of_stock: Sold Out
     order_mailer:
       confirm_email:
         subject: Din Order Confirmation
