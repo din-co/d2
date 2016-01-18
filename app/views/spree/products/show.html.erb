@@ -90,9 +90,13 @@
       <% end -%>
 
       <% if @product.allergens.present? %>
-        <p class="small"><em>Contains <%= @product.allergens.map(&:name).join(", ") %>.</em></p>
+        <p class="small">
+          <strong>Contains:</strong>
+          <%= @product.allergens.map(&:name).join(", ") %>.
+        </p>
       <% end -%>
 
+      <p class="small"><em>Food Allergy Notice: Our meals are prepared in restaurant kitchens that may contain tree nuts, peanuts, fish, shellfish, dairy, soy, eggs, and wheat. Though best practices are used when preparing the meal, inadvertent cross-contamination may occur. We cannot guarantee the complete absence of allergens.</em></p>
 
   <!--
       <div itemprop="description">
