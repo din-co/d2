@@ -30,6 +30,7 @@ en:
     unsupported_delivery_location: "Delivery is not available to this location"
     menu: "Menu"
     cart: "Cart"
+    add_dish: "Add 2 Servings"
     forgot: "Forgot?"
     password_reset: "Password Reset"
     reset_password: "Reset Password"
