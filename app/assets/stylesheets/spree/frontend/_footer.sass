@@ -1,8 +1,15 @@
 .main-footer
-  border-top: 1px solid grey
+  background: $din-color-tan
+  text-transform: uppercase
+  padding: 30px 0 50px
+  a,
+  a:hover,
+  a:active,
+  a:link
+    text-decoration: none
 
 %footer-spacing
-  margin-bottom: 2rem
+  padding-bottom: 2rem
 
 .footer-nav
   @extend %footer-spacing
@@ -10,6 +17,7 @@
 .footer-nav__link
   display: block
   text-align: center
+  margin-bottom: 30px
 
 .social-nav
   @extend %footer-spacing
@@ -18,3 +26,21 @@
 .legal-footer
   @extend %footer-spacing
   text-align: center
+  font-size: 12px
+  color: rgb(128,128,128)
+  a,
+  a:hover,
+  a:active,
+  a:link
+    border-bottom: 1px black dotted
+
+.social-facebook,
+.social-twitter,
+.social-instagram
+  display: inline-block
+  padding: 0 10px
+
+.social-facebook-icon,
+.social-twitter-icon,
+.social-instagram-icon
+  width: 30px
