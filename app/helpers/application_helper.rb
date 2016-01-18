@@ -25,8 +25,8 @@ module ApplicationHelper
     image_url("chefs/#{taxon.name.parameterize}-photo.png")
   end
 
-  def support_email_link(subject="Help!")
-    mail_to support_email_address, nil, subject: subject, target: "_blank", class: "text-nowrap"
+  def support_email_link(subject="Help!", link_text=nil)
+    mail_to support_email_address, link_text, subject: subject, target: "_blank", class: "text-nowrap"
   end
 
   def support_phone_link

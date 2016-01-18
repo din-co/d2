@@ -3,14 +3,14 @@
     <h1 class="hr-header">We're Here For You</h1>
     <h4>Contact Us</h4>
     <ul>
-      <li><a class="text-nowrap" target="_blank" href="tel:+14153650533">415-365-0533</a></li>
-      <li><a class="text-nowrap" target="_blank" href="mailto:help@din.co">help@din.co</a></li>
+      <li><%= support_phone_link %></li>
+      <li><%= support_email_link("Help!") %></li>
     </ul>
 
     <h4>Self Help</h4>
     <p><a href="/faq">Frequently Asked Questions</a></p>
 
     <h4>Help us improve Din</h4>
-    <a target="_blank" href="mailto:help@din.co?Subject=Helpful%20Feedback">Share Feedback</a>
+    <p><%= support_email_link("Din would be even better if...", "Share Feedback") %></p>
   </div>
 </div>
