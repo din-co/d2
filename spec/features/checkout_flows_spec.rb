@@ -22,7 +22,7 @@ RSpec.feature "Checkout flow:" do
 
     # Product page
     expect(page).to have_current_path(spree.product_path(product))
-    click_on "Add (#{product.display_price})"
+    click_on "Add 2 Servings #{product.display_price}"
 
     # Cart page
     expect(page).to have_current_path(spree.cart_path)

@@ -1,15 +1,18 @@
 .product
-  margin-bottom: 4em
+  margin-bottom: 35px
+  border-bottom: 1px solid rgb(208,208,208)
+  padding-bottom: 35px
+  &:last-child
+    margin-bottom: 0
+    border-bottom: 0
 
 .product-image
   display: block
   width: 100%
+  border-radius: 1px
 
 .product-list__image
-  border: 1px solid grey
-  border-width: 1px 0
-  .menu .product:first-child &
-    border-top: 0
+  border: 1px solid rgb(228,228,228)
 
 .product__details:link
   display: block
@@ -17,22 +20,29 @@
   text-decoration: none
 
 .product__offers
-  padding: 0 10px
+  display: flex
+  flex-direction: column
+  @media (min-width: 768px)
+    flex-direction: row-reverse
+  .btn
+    flex: 1
+    &:first-child
+      margin-bottom: 15px
+      @media (min-width: 768px)
+        margin-bottom: 0
+        margin-left: 15px
+    &:last-child
+      @media (min-width: 768px)
+        margin-right: 15px
 
-.product__name
-  margin-top: 0
-
-.product__tagline
-  display: block
+.product__restaurant-name
+  margin-bottom: 15px
+  text-align: center
+  color: rgb(128,128,128)
 
 .product__meta-separator:before
   content: '•'
   padding: 0 0.4em
-
-.product__add-button
-  display: block
-  margin: 0 auto
-  width: 50%
 
 // Product Table
 .order-table
