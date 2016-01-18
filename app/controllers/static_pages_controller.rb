@@ -7,7 +7,7 @@ class StaticPagesController < Spree::StoreController
     end
   end
 
-private
+  private
   def valid_page?
     Rails.application.config.x.static_pages.include?(params[:page]) &&
     File.exist?(template_file)
