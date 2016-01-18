@@ -1,3 +1,34 @@
-<% cache(cache_key_for_products) do %>
-  <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
-<% end %>
+<div class="jumbotron index-hero">
+    <div class="container">
+        <h1 class="hr-header">Recreate Restaurant Dishes at Home</h1>
+        <div class="sub-header text-center">in under 20 minutes</div>
+    </div>
+</div>
+<div class="bg-tan bottom30">
+	<div class="container">
+		<div class="row bottom30">
+			<div class="col-sm-4 hiw-block">
+				<div class="row hiw-circle">1</div>
+				<div class="row hiw-text serif">You select from our menu of the best dishes from top restaurants &amp; chefs.</div>
+			</div>
+			<div class="col-sm-4 hiw-block">
+				<div class="row hiw-circle">2</div>
+				<div class="row hiw-text serif">We deliver all of the prepped ingredients directly to your door.</div>
+			</div>
+			<div class="col-sm-4 hiw-block">
+				<div class="row hiw-circle">3</div>
+				<div class="row hiw-text serif">You cook an incredible meal in
+				under 20 minutes at home.</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h2 class="hr-header">Menu</h2>
+<div class="sub-header text-center bottom30">Monday, January 18th</div>
+
+	<% cache(cache_key_for_products) do %>
+	  <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
+	<% end %>
+
+

@@ -16,31 +16,37 @@
 <% end %>
 
 <% if products.any? %>
-  <div class="menu">
-    <% products.each do |product| %>
-      <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
-      <div class="product" itemscope itemtype="http://schema.org/Product">
-        <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
-          <%= link_to image_tag(product.display_image.attachment(:detail), itemprop: "image", class: "product-image product-list__image"), url %>
-          <%= link_to url, class: "product__details" do %>
-            <h2 class="product__name text-center" itemprop="name">
-              <%= product.name %>
-              <% if product.property('tagline').present? %>
-                <small class="product__tagline"><%= product.property('tagline') %></small>
-              <% end -%>
-            </h2>
-            <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-              <span itemprop="price" content="<%= display_price(product) %>"></span>
-            </span>
-          <% end -%>
-          <%= render :partial => 'spree/shared/order_form', :locals => { :product => product } %>
-        <% end %>
-      </div>
-    <% end %>
-    <% reset_cycle("classes") %>
+  <div class="container">
+    <div class="menu">
+      <% products.each do |product| %>
+        <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
+        <div class="product" itemscope itemtype="http://schema.org/Product">
+          <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
+            <%= link_to image_tag(product.display_image.attachment(:detail), itemprop: "image", class: "product-image product-list__image"), url %>
+            <%= link_to url, class: "product__details" do %>
+              <h2 class="product__name text-center" itemprop="name">
+                <%= product.name %>
+              </h2>
+                <% if product.property('tagline').present? %>
+
+                  <div class="sub-header text-center product__tagline"><%= product.property('tagline') %></div>
+                <% end -%>
+              <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                <span itemprop="price" content="<%= display_price(product) %>"></span>
+              </span>
+              <h4 class="product__restaurant-name"><%= product.restaurant.try(:name) %></h4>
+            <% end -%>
+
+            <%= render :partial => 'spree/shared/order_form', :locals => { :product => product } %>
+          <% end %>
+          <hr>
+        </div>
+      <% end %>
+      <% reset_cycle("classes") %>
+    </div>
   </div>
 <% end %>
 
-<% if paginated_products.respond_to?(:num_pages) %>
-  <%= paginate paginated_products %>
-<% end %>
+  <% if paginated_products.respond_to?(:num_pages) %>
+    <%= paginate paginated_products %>
+  <% end %>

@@ -1,0 +1,65 @@
+.index-hero
+  position: relative
+  background: rgb(255,255,255) url("https://dl.dropboxusercontent.com/u/6528/index-hero.jpg") bottom center //need to reference assets/images directory
+  width: 100%
+  height: 100%
+  min-height: 250px
+  background-size: cover
+  overflow: hidden
+  color: rgb(255,255,255)
+
+  .hr-header
+    &:before,
+    &:after
+      border: 2px solid rgb(255,255,255)
+  .sub-header
+    font-family: Georgia, Times, 'Times New Roman', serif
+    font-weight: 500
+    color: rgb(255,255,255)
+  @media screen and (min-width: 768px)
+    .sub-header
+      font-size: 24px
+
+.hiw-block
+  padding-top: 30px
+  text-align: center
+
+.hiw-circle
+  width: 40px
+  height: 40px
+  margin: 0 auto
+  padding: 5px 0px
+  border: 1px solid rgb(128,128,128)
+  -moz-border-radius: 50%
+  -webkit-border-radius: 50%
+  border-radius: 50%
+  font-size: 20px
+
+.hiw-text
+  padding: 15px 10px
+
+.menu
+  h2
+    margin: 10px auto 5px auto
+    text-transform: uppercase
+  .sub-header
+    font-size: 16px
+    margin: 0px auto
+    &:after
+      content: ' '
+      display: block
+      width: 55px
+      margin: 15px auto
+      border: 2px solid rgb(0,0,0)
+
+
+  a,
+  a:link,
+  a:hover,
+  a:active
+    color: rgb(0,0,0)
+  hr
+    margin-top: 15px
+    margin-bottom: 15px
+    border: 0
+    border-top: 1px solid rgb(208,208,208)
