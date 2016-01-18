@@ -4,12 +4,9 @@
     <link itemprop="availability" href="http://schema.org/InStock" />
     <%= hidden_field_tag "variant_id", product.master.id %>
     <%= hidden_field_tag :quantity, 1 %>
-    <div class="product__offers">
-      <%= button_tag type: :submit, class: "btn btn-primary" do %>
+    <div class="product__order text-center">
+      <%= button_tag type: :submit, class: "btn btn-primary product__order-button" do %>
         Add 2 Servings <span class="list-button" itemprop="price"><%= display_price(product) %></span>
-      <% end %>
-      <%= button_tag type: :submit, class: "btn btn-default" do %>
-        View Details <span class="list-button" itemprop="time"><%= product.property('time-minutes') %> Min Prep</span>
       <% end %>
     </div>
   </div>

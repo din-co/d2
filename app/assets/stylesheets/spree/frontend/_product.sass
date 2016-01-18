@@ -1,3 +1,7 @@
+.container__product
+  padding-top: 2em
+  padding-bottom: 2em
+
 .product
   margin-bottom: 35px
   border-bottom: 1px solid rgb(208,208,208)
@@ -10,8 +14,6 @@
   display: block
   width: 100%
   border-radius: 1px
-
-.product-list__image
   border: 1px solid rgb(228,228,228)
 
 .product__details:link
@@ -36,13 +38,32 @@
         margin-right: 15px
 
 .product__restaurant-name
-  margin-bottom: 15px
+  margin: 0 0 15px 0
   text-align: center
   color: rgb(128,128,128)
+  font-size: 20px
+  &:before
+    content: ""
+    display: block
+    width: 55px
+    margin: 10px auto
+    border: 2px solid rgb(0,0,0)
+
+.product__meta
+  margin: 30px 0
 
 .product__meta-separator:before
   content: '•'
   padding: 0 0.4em
+
+.product__directions
+  margin-bottom: 3em
+
+.product__order-button
+  width: 100%
+  @media (min-width: 768px)
+    width: 50%
+
 
 // Product Table
 .order-table
