@@ -15,15 +15,17 @@
 
   <% if order.has_step?("delivery") %>
     <div class="col-sm-6">
-      <h3><%= Spree.t(:shipping) %></h3>
+      <h3><%= Spree.t(:delivery) %></h3>
       <p>
         <%= render :partial => 'spree/shared/address', :locals => { :address => order.ship_address } %>
         <%= link_to Spree.t(:change), checkout_state_path(:address), class: "edit-link" unless order.completed? %>
       </p>
-      <p>
-        <%= order.special_instructions %>
-        <%= link_to Spree.t(:change), checkout_state_path(:delivery), class: "edit-link" unless order.completed? %>
-      </p>
+      <% if order.special_instructions.present? %>
+        <p>
+          <%= order.special_instructions %>
+          <%= link_to Spree.t(:change), checkout_state_path(:delivery), class: "edit-link" unless order.completed? %>
+        </p>
+      <% end -%>
     </div>
   <% end %>
 </div>
