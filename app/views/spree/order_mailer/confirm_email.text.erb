@@ -53,9 +53,9 @@
 <%= @order.special_instructions %>
 <% end -%>
 
-<%= Spree.t(:questions_contact) %>
+<%= Spree.t('order_mailer.confirm_email.questions_contact') %>
 
-<%= Spree.t(:check_the_faq) %>
+<%= Spree.t('order_mailer.confirm_email.check_the_faq') %>
 <%= main_app.static_page_url('faq') %>
 
 <%= Spree.t('order_mailer.confirm_email.salutation_thanks') %>
