@@ -1,7 +1,7 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
 <div class="container container--main">
 
-  <%= checkout_progress %>
+  <%#= checkout_progress %>
 
   <%= form_for @order, :url => update_checkout_path(@order.state), :html => { :id => "checkout_form_#{@order.state}" } do |form| %>
     <% if @order.state == 'address' || !@order.email? %>
