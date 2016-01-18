@@ -30,6 +30,7 @@ en:
     unsupported_delivery_location: "Delivery is not available to this location"
     menu: "Menu"
     cart: "Cart"
+    add_dish: "Add 2 Servings"
     forgot: "Forgot?"
     password_reset: "Password Reset"
     reset_password: "Reset Password"
@@ -57,6 +58,8 @@ en:
     the_din_team: The Din team
     delivery_instructions: "Delivery Instructions"
     delivery_instructions_placeholder: "Delivery Instructions (e.g. leave at the front door)"
+    login: Sign In
+    logout: Sign Out
     order_mailer:
       confirm_email:
         subject: Din Order Confirmation

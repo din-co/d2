@@ -2,22 +2,20 @@
 
   <nav class="footer-nav">
     <%= link_to 'about', main_app.static_page_path('about'), class: 'footer-nav__link' %>
-    <%= link_to 'restaurants', spree.nested_taxons_path(Spree::Taxonomy.restaurant.root), class: 'footer-nav__link' %>
+    <%# link_to 'restaurants', spree.nested_taxons_path(Spree::Taxonomy.restaurant.root), class: 'footer-nav__link' %>
     <%= link_to 'faq', main_app.static_page_path('faq'), class: 'footer-nav__link' %>
     <%= link_to 'help', main_app.static_page_path('help'), class: 'footer-nav__link' %>
-    <%= link_to 'privacy', main_app.static_page_path('privacy'), class: 'footer-nav__link' %>
-    <%= link_to 'terms', main_app.static_page_path('terms'), class: 'footer-nav__link' %>
   </nav>
 
   <nav class="social-nav">
-    <a href="#foo">facebook</a>
-    <a href="#foo">twitter</a>
-    <a href="#foo">instagram</a>
+    <a href="https://facebook.com/cookdin">facebook</a>
+    <a href="https://twitter.com/din">twitter</a>
+    <a href="https://instagram.com/din">instagram</a>
   </nav>
 
   <div class="legal-footer">
     <div>© Din, 2015</div>
-    <div><a href="#foo">Privacy Policy</a> and <a href="#foo">Terms of Service</a></div>
+    <div><%= link_to 'Privacy Policy', main_app.static_page_path('privacy') %> and <%= link_to 'Terms of Service', main_app.static_page_path('terms') %>
   </div>
 
 </footer>

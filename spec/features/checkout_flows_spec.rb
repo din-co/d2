@@ -22,7 +22,7 @@ RSpec.feature "Checkout flow:" do
 
     # Product page
     expect(page).to have_current_path(spree.product_path(product))
-    click_on "Add (#{product.display_price})"
+    click_on "Add 2 Servings #{product.display_price}"
 
     # Cart page
     expect(page).to have_current_path(spree.cart_path)
@@ -59,7 +59,7 @@ RSpec.feature "Checkout flow:" do
     expect(page).to have_current_path(spree.checkout_state_path(:delivery))
     delivery_window = Spree::DeliveryWindow.available.first
     choose("#{delivery_window.to_s} (#{delivery_window.display_cost})")
-    fill_in "Shipping Instructions", with: "Ring the doorbell and then huck the package onto the roof"
+    fill_in "Delivery Instructions", with: "Ring the doorbell and then huck the package onto the roof"
     click_on "Save and Continue"
 
     # Payment information page

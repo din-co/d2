@@ -38,9 +38,14 @@ $nav-height: $base-line-height + $link-v-padding * 2
 .main-nav_logo
   width: $din-logo-size
 
-.main-nav__link
+.main-nav__link:link,
+.main-nav__link:visited
   display: inline-block
   padding: 10px 16px
+  color: rgb(88,88,88)
+  text-decoration: none
+  &:hover
+    color: rgb(28,28,28)
 
 .nav-logo
   position: absolute
