@@ -1,0 +1,62 @@
+<%
+  address = @order.ship_address
+  shipment = @order.shipments.first
+-%>
+<%= Spree.t('order_mailer.confirm_email.dear_customer', name: address.firstname) %>
+
+<%= Spree.t('order_mailer.confirm_email.thanks_for_placing_order') %>
+
+<%= Spree.t('order_mailer.confirm_email.delivery_info', delivery_window: shipment.selected_delivery_window.to_s) %>
+
+<%= Spree.t('order_mailer.confirm_email.delivery_sms', phone: address.phone) %>
+
+<%= Spree.t('order_mailer.confirm_email.pantry_check_text') %>
+<%= main_app.static_page_url(:faq) %>
+
+=========================================================================
+<%= Spree.t('order_mailer.confirm_email.order_summary') %>
+=========================================================================
+<% @order.line_items.each do |item| %>
+<%# image %><%= raw(item.variant.product.name) %> <%= raw(item.variant.options_text) %> <%=item.quantity%> @ <%= item.single_money %> = <%= item.display_amount %>
+<% end %>
+-------------------------------------------------------------------------
+<%= Spree.t('order_mailer.confirm_email.subtotal') %> <%= @order.display_item_total %>
+<% if @order.line_item_adjustments.exists? %>
+  <% if @order.all_adjustments.promotion.eligible.exists? %>
+    <% @order.all_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+<%= Spree.t(:promotion) %>: <%= label %> <%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
+    <% end -%>
+  <% end -%>
+<% end -%>
+<% @order.shipments.group_by { |s| s.selected_shipping_rate.try(:name) }.each do |name, shipments| %>
+<%= Spree.t(:shipping) %>: <%= Spree::Money.new(shipments.sum(&:discounted_cost), currency: @order.currency) %> (<%= l Time.current.to_date, format: :delivery_window_date %>, <%= shipments.first.selected_delivery_window.to_s %>)
+<% end -%>
+<% if @order.all_adjustments.eligible.tax.exists? %>
+  <% @order.all_adjustments.eligible.tax.group_by(&:label).each do |label, adjustments| %>
+<%= Spree.t(:tax) %>: <%= label %> <%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %>
+  <% end -%>
+<% end -%>
+<% @order.adjustments.eligible.each do |adjustment| %>
+  <% next if (adjustment.source_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
+<%= adjustment.label %> <%= adjustment.display_amount %>
+<% end -%>
+=========================================================================
+<%= Spree.t('order_mailer.confirm_email.total') %> <%= @order.display_total %>
+
+<%= Spree.t('order_mailer.confirm_email.delivery_address') %>
+<%= address.full_name %>
+<%= address.address1 %>, <% unless address.address2.blank? %><%= address.address2 %>, <% end %><%= address.city %> <%= address.state_text %> <%= address.zipcode %>
+<%= address.phone %>
+
+<% if @order.special_instructions.present? %>
+<%= Spree.t(:delivery_instructions) %>:
+<%= @order.special_instructions %>
+<% end -%>
+
+<%= Spree.t('order_mailer.confirm_email.questions_contact') %>
+
+<%= Spree.t('order_mailer.confirm_email.check_the_faq') %>
+<%= main_app.static_page_url('faq') %>
+
+<%= Spree.t('order_mailer.confirm_email.salutation_thanks') %>
+<%= Spree.t('the_din_team') %>
