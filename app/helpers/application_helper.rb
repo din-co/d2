@@ -25,4 +25,23 @@ module ApplicationHelper
     image_url("chefs/#{taxon.name.parameterize}-photo.png")
   end
 
+  def support_email_link(subject="Help!")
+    mail_to support_email_address, nil, subject: subject, target: "_blank", class: "text-nowrap"
+  end
+
+  def support_phone_link
+    link_to support_phone_number, support_phone_tel, target: "_blank", class: "text-nowrap"
+  end
+
+  def support_email_address
+    Rails.application.config.x.support_email_address
+  end
+
+  def support_phone_number
+    Rails.application.config.x.support_phone_number
+  end
+
+  def support_phone_tel
+    "tel:+1#{support_phone_number.remove('-')}"
+  end
 end
