@@ -21,9 +21,11 @@ module Spree
         quantity = params[:quantity].to_i
         unless Stock::Quantifier.new(variant).can_supply?(quantity)
           flash[:error] = Spree.t(:inventory_error_flash_for_insufficient_quantity)
-          redirect_to :back
-        rescue ActionController::RedirectBackError
-          redirect_to root_path
+          begin
+            redirect_to :back
+          rescue ActionController::RedirectBackError
+            redirect_to root_path
+          end
         end
       end
     end
