@@ -54,3 +54,5 @@ en:
     jcb: "JCB"
     use_a_new_card: "Use a new card"
     street_address_2: "Apt/Suite"
+    delivery_instructions: "Delivery Instructions"
+    delivery_instructions_placeholder: "Delivery Instructions (e.g. leave at the front door)"
