@@ -13,7 +13,7 @@ module Spree
       private
 
       def redirect_empty_order_to_menu
-        redirect_to spree.root_path if current_order.try!(:quantity) < 1
+        redirect_to spree.root_path if current_order.try!(:quantity).to_i < 1
       end
 
       def disallow_out_of_stock_items
