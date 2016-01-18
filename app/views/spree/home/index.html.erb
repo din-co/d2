@@ -1,3 +1,40 @@
+<div class="bg-tan">
+  <div class="jumbotron index-hero">
+    <div class="container">
+      <h1 class="hr-header">Recreate Restaurant Dishes at Home</h1>
+      <div class="sub-header text-center type-serif">in under 20 minutes</div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="hiw-block">
+          <div class="row hiw-circle">1</div>
+          <div class="row hiw-text type-serif">You select from our menu of the best dishes from top restaurants &amp; chefs.</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="hiw-block">
+          <div class="row hiw-circle">2</div>
+          <div class="row hiw-text type-serif">We deliver all of the prepped ingredients directly to your door.</div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="hiw-block">
+          <div class="row hiw-circle">3</div>
+          <div class="row hiw-text type-serif">You cook an incredible meal in under 20 minutes at home.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="menu-header">
+  <h2 class="hr-header">Menu</h2>
+  <div class="sub-header text-center bottom30">
+    <% menu_time = Time.current.to_date %>
+    <%= menu_time.strftime("%A, %B #{menu_time.day.ordinalize}") %>
+  </div>
+</div>
 <% cache(cache_key_for_products) do %>
   <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
 <% end %>
