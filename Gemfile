@@ -54,6 +54,7 @@ gem 'intercom-rails'
 gem 'rails_12factor', group: [:development, :production]
 gem 'lograge'
 gem 'newrelic_rpm'
+gem 'rollbar'
 
 gem 'font_assets' # for CORS
 
