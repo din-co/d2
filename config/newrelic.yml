@@ -4,7 +4,7 @@
 # overhead.  For more information, visit www.newrelic.com.
 #
 # Generated January 12, 2016, for version 3.14.1.311
-# 
+#
 # For full documentation of agent configuration options, please refer to
 # https://docs.newrelic.com/docs/agents/ruby-agent/installation-configuration/ruby-agent-configuration
 
@@ -14,7 +14,7 @@ common: &default_settings
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: d2-staging
+  app_name: <%= ENV["NEW_RELIC_APP_NAME"] %>
 
   # To disable the agent regardless of other settings, uncomment the following:
   # agent_enabled: false
@@ -28,7 +28,7 @@ common: &default_settings
 # If your application has other named environments, configure them here.
 development:
   <<: *default_settings
-  app_name: d2-staging (Development)
+  app_name: d2-development
 
   # NOTE: There is substantial overhead when running in developer mode.
   # Do not use for production or load testing.
@@ -38,10 +38,6 @@ test:
   <<: *default_settings
   # It doesn't make sense to report to New Relic from automated test runs.
   monitor_mode: false
-
-staging:
-  <<: *default_settings
-  app_name: d2-staging (Staging)
 
 production:
   <<: *default_settings
