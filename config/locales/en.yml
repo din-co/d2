@@ -54,5 +54,21 @@ en:
     jcb: "JCB"
     use_a_new_card: "Use a new card"
     street_address_2: "Apt/Suite"
+    the_din_team: The Din team
     delivery_instructions: "Delivery Instructions"
     delivery_instructions_placeholder: "Delivery Instructions (e.g. leave at the front door)"
+    order_mailer:
+      confirm_email:
+        subject: Din Order Confirmation
+        dear_customer: "Hi %{name},"
+        order_summary: Order Summary
+        subtotal: ! 'Subtotal:'
+        total: ! 'Total:'
+        salutation_thanks: Thanks,
+        thanks_for_placing_order: "Thank you for placing an order with Din!"
+        delivery_info: "You can expect delivery of your order between %{delivery_window} this evening in an insulated tote, which will keep your meal(s) cold until 8pm. Our couriers will gladly take the tote bag back upon delivery or with your next order, you may leave the tote out or give it directly to the driver."
+        delivery_sms: "Our courier will send a text message to %{phone} when your delivery is getting close, usually 10-15 minutes before they’ll arrive."
+        pantry_check_text: "Don’t forget to check out the kitchen tools and pantry items you’ll need to complete your meal, which you can find on our FAQ:"
+        delivery_address: "Delivery address"
+        questions_contact: "If you have any questions, reply to this email or call/text 415-365-0533, we’ve got your back!"
+        check_the_faq: "You can also check out our frequently asked questions here for more information:"
