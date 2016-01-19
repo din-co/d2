@@ -1,8 +1,8 @@
 <div class="bg-tan">
   <div class="container container--main">
     <h1 class="hr-header"><%= Spree.t(:login) %></h1>
-    <p class="text-center"><b>Welcome back!</b> If you cooked with us in 2015, please <%= link_to "create a new password", spree.recover_password_path %> for your account.</p>
     <%= form_for Spree::User.new, as: :spree_user, url: spree.create_new_session_path, html: {class: "form-container"} do |f| %>
+    <p class="text-center"><b>Welcome back!</b> If you cooked with us in 2015,<br> please <%= link_to "create a new password", spree.recover_password_path %> for your account.</p>
       <div class="form-group">
         <%= f.label :email, Spree.t(:email) %>
         <%= f.email_field :email, :class => 'form-control', :tabindex => 1, autofocus: true %>
