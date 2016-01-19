@@ -12,12 +12,12 @@
         <div class="input-group">
           <%= f.password_field :password, :tabindex => 2, :class => 'form-control' %>
           <%= link_to Spree.t(:forgot), spree.recover_password_path, class: "input-group-addon" %>
-        </div>
       </div>
-      <div class="form-footer">
-        <%= f.submit Spree.t(:login), :tabindex => 3, :class => 'btn btn-primary btn-block' %>
-      </div>
-      <%= hidden_field_tag :remember_me, 1 %>
-    <% end %>
-  </div>
+    </div>
+    <div class="form-footer">
+      <%= f.submit Spree.t(:login), :tabindex => 3, :class => 'btn btn-primary btn-block' %>
+    </div>
+    <%= hidden_field_tag :remember_me, 1 %>
+  <% end %>
+  <p class="form_text-link text-center">Don't have an account? <%= link_to Spree.t(:create_a_new_account), spree.signup_path %></p>
 </div>

@@ -1,10 +1,11 @@
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
 <div class="container container--main">
-  <h1><%= Spree.t(:create_account) %></h1>
-  <%= form_for @user, :as => :spree_user, :url => spree.registration_path(@user), html: {class: "form--margin-bottom"} do |f| %>
+  <h1 class="hr-header"><%= Spree.t(:create_account) %></h1>
+  <%= form_for @user, :as => :spree_user, :url => spree.registration_path(@user), html: {class: "form-container form--margin-bottom"} do |f| %>
     <%= render :partial => 'spree/shared/user_form', :locals => { :f => f } %>
-    <%= f.submit Spree.t(:create_account), :class => 'btn btn-primary' %>
+    <div class="form-footer">
+	<%= f.submit Spree.t(:create_account), :class => 'btn btn-primary btn-block' %>
+    </div>
   <% end %>
 
-  <p class="text-center--on-mobile">Already have a Din account? <%= link_to Spree.t(:login), spree.login_path %></p>
+  <p class="text-center">Already have a Din account? <%= link_to Spree.t(:login), spree.login_path %></p>
 </div>
