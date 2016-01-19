@@ -1,23 +1,32 @@
 <div class="bg-tan">
   <div class="container container--main">
     <h1 class="hr-header"><%= Spree.t(:login) %></h1>
+
     <p class="text-center"><b>Welcome back!</b> If you cooked with us in 2015, please <%= link_to "create a new password", spree.recover_password_path %> for your account.</p>
+
     <%= form_for Spree::User.new, as: :spree_user, url: spree.create_new_session_path, html: {class: "form-container"} do |f| %>
+      <%= hidden_field_tag :remember_me, 1 %>
+
       <div class="form-group">
         <%= f.label :email, Spree.t(:email) %>
-        <%= f.email_field :email, :class => 'form-control', :tabindex => 1, autofocus: true %>
+        <%= f.email_field :email, class: 'form-control', tabindex: 1, autofocus: true %>
       </div>
+
       <div class="form-group">
         <%= f.label :password, Spree.t(:password) %>
         <div class="input-group">
-          <%= f.password_field :password, :tabindex => 2, :class => 'form-control' %>
+          <%= f.password_field :password, tabindex: 2, class: 'form-control' %>
           <%= link_to Spree.t(:forgot), spree.recover_password_path, class: "input-group-addon" %>
+        </div>
       </div>
-    </div>
-    <div class="form-footer">
-      <%= f.submit Spree.t(:login), :tabindex => 3, :class => 'btn btn-primary btn-block' %>
-    </div>
-    <%= hidden_field_tag :remember_me, 1 %>
-  <% end %>
-  <p class="form_text-link text-center">Don't have an account? <%= link_to Spree.t(:create_a_new_account), spree.signup_path %></p>
+
+      <div class="form-footer">
+        <%= f.submit Spree.t(:login), tabindex: 3, class: 'btn btn-primary btn-block' %>
+      </div>
+
+    <% end %>
+
+    <p class="form-footer text-center">Don't have an account? <%= link_to Spree.t(:create_a_new_account), spree.signup_path %></p>
+
+  </div>
 </div>

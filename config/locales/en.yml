@@ -83,3 +83,5 @@ en:
     user_passwords:
          spree_user:
            email_must_be_valid: "Please double-check the email address you entered."
+    registrations:
+      signed_up: "Welcome! You have signed up successfully. Check out our menu."
