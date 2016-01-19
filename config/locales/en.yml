@@ -76,3 +76,6 @@ en:
         delivery_address: "Delivery address"
         questions_contact: "If you have any questions, reply to this email or call/text 415-365-0533, we’ve got your back!"
         check_the_faq: "You can also check out our frequently asked questions here for more information:"
+  devise:
+    failure:
+      invalid: "Invalid email or password. If you cooked with us in 2015, you will need to create a new password."
