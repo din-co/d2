@@ -79,3 +79,6 @@ en:
   devise:
     failure:
       invalid: "Invalid email or password. If you cooked with us in 2015, you will need to create a new password."
+    user_passwords:
+         spree_user:
+           email_must_be_valid: "Please double-check the email address you entered."
