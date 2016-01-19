@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= tag('meta', name: "robots", content: "noindex, nofollow") unless ENV["EMAIL_HOST"] == "din.co" %>
     <title><%= title %></title>
-    <% meta_data_tags %>
+    <%# meta_data_tags %>
     <%= canonical_tag(current_store.url) %>
     <%= favicon_link_tag 'icons/favicon.ico' %>
     <%= stylesheet_link_tag 'spree/frontend/all', :media => 'screen' %>
