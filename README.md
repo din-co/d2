@@ -32,22 +32,34 @@ Your choice: `heroku local --port 3000 --procfile Procfile.dev` to see the websi
     ```console
     $ git pull
     $ bundle
-    $ bin/rake db:create db:schema:load db:seed
+    $ INCLUDE_SAMPLES=true bin/rake db:create db:schema:load db:seed
     ```
+
+    Omit sample restaurants, chefs, and meals by removing `INCLUDE_SAMPLES=true`.
 
     Reset your DB to the starting state with `bin/rake db:reset`.
 
     **Note:** This does not create the two `StoreCreditType`s or default `ReimbursementType` from migrations: `20150506181611_create_spree_store_credit_payment_method.rb` and the next two in sequence. That's OK.
 
-2. Start server (also starts mailcatcher).
+2. Create sample products:
+
+    Product Name and price are required. Description is optional.
+
+    You must have restaurant and chef taxons for this to work. If you used `INCLUDE_SAMPLES=true` above, then you will have sample restaurant and chef taxons.
+
+    ```console
+    $ bin/rails r 'CreateProduct.create!("Your Product Name", 30, "Description.")'
+    ```
+
+3. Start server (also starts mailcatcher).
 
     ```console
     $ heroku local --port 3000 --procfile Procfile.dev
     ```
 
-3. [Login to the Admin](http://localhost:3000/admin) using `admin@din.co`/`password` (only created in development)
+4. [Login to the Admin](http://localhost:3000/admin) using `admin@din.co`/`password` (only created in development)
 
-4. Add new dishes!
+5. Add new dishes!
 
 
 ## Editorial Guidelines
