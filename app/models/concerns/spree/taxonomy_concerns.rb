@@ -26,6 +26,10 @@ module Spree
       def equipment
         find_by!(name: 'Equipment')
       end
+
+      def pages
+        find_by!(name: 'Pages')
+      end
     end
   end
 end

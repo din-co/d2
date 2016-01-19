@@ -12,6 +12,7 @@ module Spree
       scope :allergens,   -> { non_root.where(taxonomy: Spree::Taxonomy.allergens) }
       scope :pantry,      -> { non_root.where(taxonomy: Spree::Taxonomy.pantry) }
       scope :equipment,   -> { non_root.where(taxonomy: Spree::Taxonomy.equipment) }
+      scope :pages,       -> { non_root.where(taxonomy: Spree::Taxonomy.pages) }
     end
   end
 end
