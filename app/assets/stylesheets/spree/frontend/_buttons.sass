@@ -1,19 +1,13 @@
-.btn-primary.disabled,
-.btn-primary.disabled:link,
-.btn-primary[disabled],
-fieldset[disabled] .btn-primary
-  background-color: rgb(158,158,158)
-  border-color: rgb(158,158,158)
-
-
-.btn-primary.disabled:hover,
-.btn-primary.disabled:focus,
-.btn-primary.disabled.focus,
-.btn-primary[disabled]:hover,
-.btn-primary[disabled]:focus,
-.btn-primary[disabled].focus,
-fieldset[disabled] .btn-primary:hover,
-fieldset[disabled] .btn-primary:focus,
-fieldset[disabled] .btn-primary.focus
-  background-color: rgb(158,158,158)
-  border-color: rgb(158,158,158)
+// Bootstrap extensions
+// (Default Boostrap uses opacity for disabled state.)
+.btn-primary
+  &.disabled,
+  &.disabled:link,
+  &[disabled]
+    background-color: $din-color-med-grey
+    border-color: $din-color-med-grey
+    &:hover,
+    &:focus,
+    &.focus,
+      background-color: $din-color-med-grey
+      border-color: $din-color-med-grey
