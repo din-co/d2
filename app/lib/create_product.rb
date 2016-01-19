@@ -19,6 +19,7 @@ class CreateProduct
 
     # Add 3 each diets, allergens, pantry, equipment
     [
+      Spree::Taxon.pages.find_by!(name: "Home"),
       Spree::Taxon.diets.random.limit(3),
       Spree::Taxon.allergens.random.limit(3),
       Spree::Taxon.pantry.random.limit(3),
