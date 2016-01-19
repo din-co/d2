@@ -1,0 +1,1 @@
+Spree::UserPasswordsController.include Spree::UserPasswordsControllerConcerns
