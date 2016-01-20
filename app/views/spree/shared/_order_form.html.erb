@@ -1,4 +1,4 @@
-<%- available =  product.master.can_supply? -%>
+<%- available = product.master.can_supply? -%>
 <%= form_for :order, :url => populate_orders_path do |f| %>
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
     <span itemprop="priceCurrency" content="<%= product.currency %>"></span>
