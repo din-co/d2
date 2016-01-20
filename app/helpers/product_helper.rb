@@ -21,8 +21,10 @@ module ProductHelper
       label = "Becomes available #{KITCHEN.next_opens.to_s(:ordinal_weekday_month_day)}"
       disabled = true
     end
+
     button_tag type: :submit, class: button_class, disabled: disabled do
       concat label
+      concat ' '
       concat content_tag :span, display_price(product), class: 'list-button', itemprop: 'price'
     end
   end
