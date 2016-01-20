@@ -6,7 +6,7 @@
 
     <p>
       <%= Spree.t(:your_cart_is_empty) %>
-      <%= link_to "View the menu.", spree.root_path %>
+      <%= link_to "View the menu.", spree.root_path(anchor: "menu") %>
     </p>
 
   <% else %>
