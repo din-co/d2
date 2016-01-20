@@ -14,14 +14,14 @@
   <div class="menu-header">
     <h2 class="hr-header">Today’s Menu</h2>
     <div class="sub-header text-center bottom30">
-      <% menu_time = Time.current.to_date %>
-      <%= menu_time.strftime("%A, %B #{menu_time.day.ordinalize}") %>
+      <%= Time.current.to_s(:ordinal_weekday_month_day) %>
     </div>
   </div>
 
   <% cache(cache_key_for_products) do %>
     <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
   <% end %>
+
 </div>
 
 <div class="bg-tan">
