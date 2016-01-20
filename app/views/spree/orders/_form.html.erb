@@ -31,12 +31,15 @@
           </td>
           <td class="cart-table__name">
             <strong><%= link_to line_item.name, product_path(variant.product) %></strong>
-            <p><%= [variant.product.chef.try(:name), variant.product.restaurant.try(:name)].compact.join(', ') %></p>
-            <% if line_item.insufficient_stock? %>
-              <span class="out-of-stock">
-                <%= Spree.t(:out_of_stock) %>&nbsp;&nbsp;<br />
-              </span>
-            <% end %>
+            <p>
+              <%= [variant.product.chef.try(:name), variant.product.restaurant.try(:name)].compact.join(', ') %>
+              <% if line_item.insufficient_stock? %>
+                <br>
+                <span class="label label-danger">
+                  <%= Spree.t(:sold_out) %>
+                </span>
+              <% end %>
+            </p>
           </td>
           <td class="cart-table__price">
             <%= line_item.single_money.to_html %>

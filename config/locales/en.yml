@@ -61,6 +61,8 @@ en:
     login: Sign In
     logout: Sign Out
     out_of_stock: Sold Out
+    sold_out: Sold Out
+    inventory_error_flash_for_insufficient_quantity: "Sorry, a meal in your cart has been sold out. Please remove it and select another dish."
     order_mailer:
       confirm_email:
         subject: Din Order Confirmation
