@@ -23,9 +23,7 @@ module ProductHelper
     end
     button_tag type: :submit, class: button_class, disabled: disabled do
       concat label
-      content_tag :span, class: 'list-button', itemprop: 'price' do
-        display_price(product)
-      end
+      concat content_tag :span, display_price(product), class: 'list-button', itemprop: 'price'
     end
   end
 end
