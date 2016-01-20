@@ -1,0 +1,22 @@
+<% @body_id = 'signup' %>
+
+<div class="bg-tan">
+  <div class="container container--main">
+
+    <h1 class="hr-header"><%= Spree.t(:create_a_new_account) %></h1>
+
+    <%= render 'spree/shared/error_messages', target: resource %>
+
+    <%= form_for resource, :as => :spree_user, :url => spree.registration_path(resource), html: {class: "form-container"} do |f| %>
+
+      <%= render :partial => 'spree/shared/user_form', :locals => { :f => f } %>
+
+      <div class="form-footer">
+        <%= f.submit Spree.t(:create), class: 'btn btn-primary btn-block' %>
+      </div>
+
+    <% end %>
+
+    <p class="form-footer text-center">Have an account? <%= link_to Spree.t(:login), spree.login_path %></p>
+  </div>
+</div>
