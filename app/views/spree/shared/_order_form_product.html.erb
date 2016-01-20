@@ -1,4 +1,3 @@
-<%- available = product.master.can_supply? -%>
 <%= form_for :order, :url => populate_orders_path do |f| %>
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
     <span itemprop="priceCurrency" content="<%= product.currency %>"></span>
@@ -6,10 +5,7 @@
     <%= hidden_field_tag "variant_id", product.master.id %>
     <%= hidden_field_tag :quantity, 1 %>
     <div class="product__order text-center">
-      <%= button_tag type: :submit, class: "btn btn-primary product__order-button", disabled: !available do %>
-        <%= available ? Spree.t(:add_dish) : Spree.t(:out_of_stock) %>
-        <span class="list-button" itemprop="price"><%= display_price(product) %></span>
-      <% end %>
+      <%= add_to_cart_button(product, 'product__order-button') %>
     </div>
   </div>
 <% end %>
