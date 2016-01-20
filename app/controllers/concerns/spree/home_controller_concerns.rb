@@ -11,7 +11,7 @@ module Spree
 
     module InstanceMethods
       def kitchen_hours
-        if kitchen_closed?
+        unless KITCHEN.open?
           prepare_kitchen
           render :kitchen_closed
         end
@@ -22,29 +22,12 @@ module Spree
       end
 
       private
-      def kitchen_closed?
-        # return true
-        !Time.current.between?(kitchen_opening, kitchen_closing)
-      end
-
       def prepare_kitchen
-        @kitchen_reopens = kitchen_reopens
+        @kitchen_reopens = KITCHEN.next_opens
         # TODO: change products to "coming soon" collection
         @searcher = build_searcher(params.merge(include_images: true))
         @products = @searcher.retrieve_products
         @taxonomies = Spree::Taxonomy.includes(root: :children)
-      end
-
-      def kitchen_opening
-        Time.current.monday
-      end
-
-      def kitchen_closing
-        kitchen_opening.advance(days: 2).end_of_day
-      end
-
-      def kitchen_reopens
-        kitchen_opening.advance(week: 1)
       end
     end
   end
