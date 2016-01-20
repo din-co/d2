@@ -61,7 +61,11 @@
         </td>
         <td data-hook="order_item_description">
           <strong><%= item.variant.product.name %></strong>
-          <p><%= [item.product.chef.try(:name), item.product.restaurant.try(:name)].compact.join(', ') %></p>
+          <p class="small">
+            <%= [item.product.chef.try(:name), item.product.restaurant.try(:name)].compact.join(', ') %>
+            <br>
+            <span class="label label-servings"><%= Spree.t(:two_servings) %></span>
+          </p>
         </td>
         <td data-hook="order_item_price" class="price"><span><%= item.single_money.to_html %></span></td>
         <td data-hook="order_item_qty" class="quantity"><%= item.quantity %></td>

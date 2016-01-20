@@ -31,8 +31,10 @@
           </td>
           <td class="cart-table__name">
             <strong><%= link_to line_item.name, product_path(variant.product) %></strong>
-            <p>
+            <p class="small">
               <%= [variant.product.chef.try(:name), variant.product.restaurant.try(:name)].compact.join(', ') %>
+              <br>
+              <span class="label label-servings"><%= Spree.t(:two_servings) %></span>
               <% if line_item.insufficient_stock? %>
                 <br>
                 <span class="label label-danger">
