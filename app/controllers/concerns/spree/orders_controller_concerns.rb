@@ -14,7 +14,7 @@ module Spree
 
       def redirect_empty_order_to_menu
         if current_order.try!(:quantity).to_i < 1
-          flash[:notice] = Spree.t('you_have_emptied_your_cart')
+          flash[:notice] = Spree.t(:you_have_emptied_your_cart)
           redirect_to spree.root_path
         end
       end
