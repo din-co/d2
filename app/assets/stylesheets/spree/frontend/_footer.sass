@@ -1,7 +1,5 @@
 .main-footer
-  background: rgb(242,235,226)
-  text-transform: uppercase
-  padding: 30px 0 50px
+  padding: 30px 0
   a,
   a:hover,
   a:active,
@@ -9,38 +7,58 @@
     text-decoration: none
 
 %footer-spacing
-  padding-bottom: 2rem
+  padding-bottom: 4rem
+
 
 .footer-nav
   @extend %footer-spacing
+  @media (min-width: 768px)
+    float: left
+    margin-left: -15px
 
 .footer-nav__link
   display: block
   text-align: center
-  margin-bottom: 30px
+  padding: 11px 15px
+  font-family: $headings-font-family
+  font-size: 20px
+  text-transform: uppercase
+  @media (min-width: 768px)
+    display: inline-block
+    text-align: left
+
 
 .social-nav
   @extend %footer-spacing
   text-align: center
-
-.legal-footer
-  @extend %footer-spacing
-  text-align: center
-  font-size: 12px
-  color: rgb(128,128,128)
-  a,
-  a:hover,
-  a:active,
-  a:link
-    border-bottom: 1px black dotted
+  @media (min-width: 768px)
+    float: right
+    margin-right: -15px
 
 .social-facebook,
 .social-twitter,
 .social-instagram
   display: inline-block
   padding: 0 10px
+  @media (min-width: 768px)
+    padding: 10px 15px
 
 .social-facebook-icon,
 .social-twitter-icon,
 .social-instagram-icon
   width: 30px
+
+
+.legal-footer
+  clear: both
+  text-align: center
+  font-size: 12px
+  color: $din-color-light-grey
+  a:link,
+  a:visited
+    color: $din-color-light-grey
+  a:hover,
+  a:active
+    color: darken($din-color-light-grey, 50%)
+  @media (min-width: 768px)
+    text-align: left
