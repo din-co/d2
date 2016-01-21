@@ -28,6 +28,13 @@
 
     <%= flash_messages %>
 
+    <div class="kitchen-status-closed">
+      <div class="container">
+        <p>The Din kitchen is closed. We reopen on Monday.</p>
+        <p><strong><%= link_to "Sign up", spree.signup_path %></strong> and we’ll email when Monday’s menu is up.</p>
+      </div>
+    </div>
+
     <%= yield %>
 
     <%= render :partial => 'spree/shared/footer' %>
