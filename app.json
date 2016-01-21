@@ -11,6 +11,7 @@
     "AWS_SECRET_ACCESS_KEY": {
       "required": true
     },
+    "HEROKU_APP_NAME": {},
     "INTERCOM_API_SECRET": {
       "required": true
     },

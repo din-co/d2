@@ -70,9 +70,16 @@ attachment_config = {
     menu:     "960x540",
     mini:     "48x48>",
   },
-  default_style:  :detail
+  default_style:  :detail,
+  preserve_files: "true",
 }
 if Rails.env.production?
+  if ENV['EMAIL_HOST'] == 'din.co' || ENV['HEROKU_APP_NAME'] == 'din-marketplace'
+    attachment_path = "/:class/:attachment/:id_partition/:style/:filename"
+  else
+    attachment_path = "/staging/:class/:attachment/:id_partition/:style/:filename"
+    attachment_config[:s3_storage_class] = :reduced_redundancy
+  end
   attachment_config = attachment_config.merge({
     storage:       :s3,
     s3_credentials: {
@@ -82,11 +89,10 @@ if Rails.env.production?
     },
 
     s3_headers:    { "Cache-Control" => "max-age=31557600" },
-    s3_protocol:   "https",
     bucket:        ENV['S3_BUCKET_NAME'],
     url:           ":s3_alias_url",
     s3_host_alias: Rails.configuration.action_controller.asset_host,
-    path:          "/:class/:attachment/:id_partition/:style/:filename",
+    path:          attachment_path,
   })
 end
 
