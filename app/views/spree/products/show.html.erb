@@ -34,7 +34,7 @@
             <span><%= @product.property('time-minutes') %> minutes</span>
           <% end -%>
           <% if @product.diets.present? %>
-            <span class="product__meta-separator"></span>
+            <span class="text-separator"></span>
             <span><%= @product.diets.map(&:name).join(", ") %></span>
           <% end -%>
         </p>
