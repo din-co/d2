@@ -24,28 +24,49 @@ $nav-height: $base-line-height + $link-v-padding * 2
 .main-nav--hidden
   top: -64px
 
-%main-nav__item
-  flex: 2
-
-.main-nav__menu
-  @extend %main-nav__item
-  text-align: left
-
-.main-nav__user
-  @extend %main-nav__item
-  text-align: right
-
-.main-nav_logo
-  width: $din-logo-size
-
 .main-nav__link:link,
 .main-nav__link:visited
   display: inline-block
-  padding: 10px 16px
+  padding: 10px 2px
   color: rgb(88,88,88)
   text-decoration: none
   &:hover
     color: rgb(28,28,28)
+  @media (min-width: 768px)
+    padding: 10px 15px
+  @media (max-width: 500px)
+    font-size: 14px
+
+.main-nav__badge
+  position: relative
+  background: $din-color-med-grey
+  font-size: 12px
+  padding: 2px 5px
+  right: -2px
+  top: -1px
+  @media (min-width: 500px)
+    font-size: 14px
+
+
+%main-nav__item
+  flex: 2
+  white-space: nowrap
+
+.main-nav__menu
+  @extend %main-nav__item
+  text-align: left
+  .main-nav__link:first-child
+    padding-left: 15px
+
+.main-nav__user
+  @extend %main-nav__item
+  text-align: right
+  .main-nav__link:last-child
+    padding-right: 15px
+
+.main-nav_logo
+  width: $din-logo-size
+
 
 .nav-logo
   position: absolute

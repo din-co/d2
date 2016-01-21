@@ -4,7 +4,7 @@
     <div class="container container--nav">
 
       <div class="main-nav__menu">
-        <%= link_to Spree.t(:menu), spree.root_path, :class => "main-nav__link" %>
+        <%= link_to Spree.t(:menu), spree.root_path(anchor: "menu"), :class => "main-nav__link" %>
       </div>
 
       <div class="main-nav_logo">
@@ -27,10 +27,10 @@
           <%= link_to Spree.t(:login), spree.login_path, :class => "main-nav__link" %>
         <% end %>
 
-        <% if simple_current_order.nil? or simple_current_order.item_count.zero? %>
-          <%# link_to "#{Spree.t(:cart)}: (0)", spree.cart_path, :class => "main-nav__item cart cart--empty" %>
-        <% else %>
-          <%= link_to "#{Spree.t(:cart)} (#{simple_current_order.item_count})", spree.cart_path, :class => "main-nav__link" %>
+        <% unless simple_current_order.nil? or simple_current_order.item_count.zero? %>
+          <%= link_to spree.cart_path, :class => "main-nav__link" do %>
+            <%= Spree.t(:cart) %><span class="badge main-nav__badge"><%= simple_current_order.item_count %></span>
+          <% end -%>
         <% end %>
       </div>
 

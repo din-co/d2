@@ -10,9 +10,13 @@
 
   .sub-header
     color: white
-    @media (min-width: 768px)
-      font-size: 24px
-
+    @media (max-width: 767px)
+      font-size: 18px
+  .learn-more-button
+    background: transparentize($btn-default-bg, .2)
+    color: #333
+    &:hover
+      background: white
 
 .hiw-block
   text-align: center
@@ -21,10 +25,8 @@
   width: 40px
   height: 40px
   margin: 0 auto
-  padding: 5px 0px
+  padding: 5px 0
   border: 1px solid rgb(128,128,128)
-  -moz-border-radius: 50%
-  -webkit-border-radius: 50%
   border-radius: 50%
   font-size: 20px
 .hiw-text
@@ -47,3 +49,59 @@
 .list-button:before
   content: '• '
   padding: 0 0.4em
+
+
+.how-din-works
+  counter-reset: section
+  max-width: 460px
+  @media (min-width: 768px)
+    max-width: 600px
+
+.how-din-works__step
+  $step-size: 36px
+  position: relative
+  margin: 2em 0
+  &:before
+    counter-increment: section
+    content: counter(section)
+    display: block
+    width: $step-size
+    height: $step-size
+    margin: 0 auto 10px
+    border: 1px solid rgb(128,128,128)
+    border-radius: 50%
+    background: white
+    line-height: $step-size - 1px // adjust line-height to vertically center
+    text-align: center
+    @media (min-width: 768px)
+      position: absolute
+      left: 0
+  @media (min-width: 768px)
+    padding-left: $step-size + 20px
+
+.how-din-works__title
+  @extend %text-center-on-mobile
+
+.how-din-works__header,
+.how-din-works__description
+  margin: 0
+  @extend %text-center-on-mobile
+
+.how-din-works-table__location
+  white-space: nowrap
+
+.how-din-works-table__cutoff,
+.how-din-works-table__window
+  text-align: center
+
+.how-din-works-table__price
+  text-align: right
+
+.how-din-works__table
+  max-width: 340px
+  & > thead > tr > th
+    padding: 1px 8px
+    font-size: 12px
+    white-space: nowrap
+  @media (max-width: 767px)
+    margin: auto
