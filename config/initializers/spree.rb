@@ -74,26 +74,29 @@ attachment_config = {
   preserve_files: "true",
 }
 if Rails.env.production?
-  if ENV['EMAIL_HOST'] == 'din.co' || ENV['HEROKU_APP_NAME'] == 'din-marketplace'
-    attachment_path = "/:class/:attachment/:id_partition/:style/:filename"
+  attachment_config[:storage]     = :s3
+  attachment_config[:s3_headers]  = { "Cache-Control" => "max-age=31557600" }
+  attachment_config[:s3_protocol] = 'https'
+  attachment_config[:bucket]      = ENV['S3_BUCKET_NAME']
+  attachment_config[:s3_credentials] = {
+    access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
+    secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+    bucket:            ENV['S3_BUCKET_NAME'],
+  }
+
+  if Rails.configuration.action_controller.asset_host.present?
+    attachment_config[:url]           = ':s3_alias_url'
+    attachment_config[:s3_host_alias] = Rails.configuration.action_controller.asset_host
   else
-    attachment_path = "/staging/:class/:attachment/:id_partition/:style/:filename"
+    attachment_config[:url] = ':s3_path_url'
+  end
+
+  if ENV['EMAIL_HOST'] == 'din.co' || ENV['HEROKU_APP_NAME'] == 'din-marketplace'
+    attachment_config[:path] = "/:class/:attachment/:id_partition/:style/:filename"
+  else
+    attachment_config[:path] = "/staging/:class/:attachment/:id_partition/:style/:filename"
     attachment_config[:s3_storage_class] = :reduced_redundancy
   end
-  attachment_config = attachment_config.merge({
-    storage:       :s3,
-    s3_credentials: {
-      access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
-      secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-      bucket:            ENV['S3_BUCKET_NAME']
-    },
-
-    s3_headers:    { "Cache-Control" => "max-age=31557600" },
-    bucket:        ENV['S3_BUCKET_NAME'],
-    url:           ":s3_alias_url",
-    s3_host_alias: Rails.configuration.action_controller.asset_host,
-    path:          attachment_path,
-  })
 end
 
 attachment_config.each do |key, value|
