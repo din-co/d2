@@ -31,6 +31,7 @@ en:
     menu: "Menu"
     cart: "Cart"
     you_have_emptied_your_cart: "You have emptied your cart."
+    checkout_disabled: "Checkout is unavailable while the kitchen is closed."
     add_dish: "Add 2 Servings"
     two_servings: "2 Servings"
     forgot: "Forgot?"

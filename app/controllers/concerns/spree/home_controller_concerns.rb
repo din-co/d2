@@ -13,5 +13,6 @@ module Spree
         params[:taxon] = Spree::Taxon.pages.find_by(name: "Home").try(:id)
       end
     end
+
   end
 end

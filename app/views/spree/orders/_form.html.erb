@@ -68,8 +68,8 @@
       <%= render "spree/orders/adjustments" %>
     <% end %>
     <tr class="cart-total total-row">
-      <td colspan="4"><%= Spree.t(:total) %></th>
-      <td><%= order_form.object.display_total %></td>
+      <td colspan="4"><%= Spree.t(:subtotal) %></th>
+      <td><%= order_form.object.display_item_total %></td>
     </tr>
   </tfoot>
 </table>

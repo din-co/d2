@@ -7,7 +7,7 @@ RSpec.feature "Checkout flow:" do
   TXT
 
   before do
-    Timecop.travel(Time.current.beginning_of_day)
+    Timecop.travel(KITCHEN.opening_time)
     expect(product).to be_available
   end
 

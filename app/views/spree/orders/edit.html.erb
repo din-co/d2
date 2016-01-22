@@ -18,7 +18,11 @@
       <div>
         <%# order_form.text_field :coupon_code, :size => 10, :placeholder => Spree.t(:coupon_code) %>
         <%= button_tag Spree.t(:update), :class => 'btn btn-default pull-right', :id => 'update-button' %>
-        <%= button_tag Spree.t(:checkout), :class => 'checkout btn btn-primary', :id => 'checkout-link', :name => 'checkout' %>
+        <% if KITCHEN.open? %>
+          <%= button_tag Spree.t(:checkout), :class => 'checkout btn btn-primary', :id => 'checkout-link', :name => 'checkout' %>
+        <% else %>
+          <%= Spree.t(:checkout_disabled) %>
+        <% end %>
       </div>
 
     <% end %>
