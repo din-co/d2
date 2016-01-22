@@ -4,6 +4,14 @@ Solidus-based commerce application.
 ## Note: forcing the kitchen open or closed
 Set the environment variable `KITCHEN_STATUS` to either `open` or `closed` to force that behavior, regardless of the automatic timer. The kitchen will stay in the overridden state until the `KITCHEN_STATUS` variable is unset.
 
+Heroku Dashboard:
+- Visit the app's settings page (e.g. for staging https://dashboard.heroku.com/apps/d2-staging/settings)
+- Click "Reveal Config Vars". **Use caution when editing these important variables.**
+- Force open: set or create a `KITCHEN_STATUS` variable to `open`
+- Force closed: set or create a `KITCHEN_STATUS` variable to `closed`
+- Reset to automatic timer: delete the `KITCHEN_STATUS` variable
+
+Command line:
 - Force open: `heroku config:set KITCHEN_STATUS=open -a din-marketplace`
 - Force closed: `heroku config:set KITCHEN_STATUS=closed -a din-marketplace`
 - Reset to automatic timer `heroku config:unset KITCHEN_STATUS -a din-marketplace`
