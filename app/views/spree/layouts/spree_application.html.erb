@@ -29,7 +29,6 @@
     <%= flash_messages %>
 
     <% if @show_kitchen_status %>
-      <% next_open = KITCHEN.next_opens %>
       <div class="kitchen-status-closed">
         <div class="container">
           <%= render :partial => 'spree/shared/kitchen_reopens' %>
