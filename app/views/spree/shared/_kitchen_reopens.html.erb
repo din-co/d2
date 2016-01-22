@@ -1,0 +1,11 @@
+<% next_open = KITCHEN.next_opens %>
+<h3>
+  Our Kitchen Reopens
+  <span class="text-nowrap"><%= next_open.to_s(:ordinal_weekday_month_day) %></span>
+</h3>
+<% if spree_current_user %>
+  <p>We’ll email you when you can order on <%= next_open.to_s(:weekday) %>.</p>
+<% else %>
+  <p>We are open Monday, Tuesday, and Wednesday. Get notified when <%= next_open.to_s(:weekday) %>’s menu is live.</p>
+  <p><%= link_to Spree.t(:create_a_new_account), spree.signup_path, class: "btn btn-primary" %></p>
+<% end -%>

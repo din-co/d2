@@ -28,12 +28,14 @@
 
     <%= flash_messages %>
 
-    <div class="kitchen-status-closed">
-      <div class="container">
-        <p>The Din kitchen is closed. We reopen on Monday.</p>
-        <p><strong><%= link_to "Sign up", spree.signup_path %></strong> and we’ll email when Monday’s menu is up.</p>
+    <% if @show_kitchen_status %>
+      <% next_open = KITCHEN.next_opens %>
+      <div class="kitchen-status-closed">
+        <div class="container">
+          <%= render :partial => 'spree/shared/kitchen_reopens' %>
+        </div>
       </div>
-    </div>
+    <% end -%>
 
     <%= yield %>
 
