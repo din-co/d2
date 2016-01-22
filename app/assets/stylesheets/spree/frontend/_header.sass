@@ -1,12 +1,15 @@
 $base-line-height: 20px
 
 $din-logo-size: 52px
-$link-v-padding: 8px
+$link-v-padding: 10px
 $logo-v-offset: 4px
 $nav-height: $base-line-height + $link-v-padding * 2
+$nav-height--wide: 16px * $line-height-base + $link-v-padding * 2
 
 .main-header
   height: $nav-height
+  @media (min-width: 500px)
+    height: $nav-height--wide
 
 .main-nav
   position: fixed
@@ -27,13 +30,13 @@ $nav-height: $base-line-height + $link-v-padding * 2
 .main-nav__link:link,
 .main-nav__link:visited
   display: inline-block
-  padding: 10px 2px
+  padding: $link-v-padding 2px
   color: rgb(88,88,88)
   text-decoration: none
   &:hover
     color: rgb(28,28,28)
   @media (min-width: 768px)
-    padding: 10px 15px
+    padding: $link-v-padding 15px
   @media (max-width: 500px)
     font-size: 14px
 
