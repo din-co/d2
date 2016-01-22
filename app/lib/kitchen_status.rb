@@ -1,6 +1,6 @@
 class KitchenStatus
   # Initialized from ENV['KITCHEN_STATUS'] in production
-  def initialize(override)
+  def initialize(override=nil)
     @override = override.presence
   end
 
@@ -32,7 +32,7 @@ class KitchenStatus
 
   # First second of next Monday
   def next_opens
-    opening_time.advance(week: 1)
+    opening_time.advance(weeks: 1)
   end
 
   private
