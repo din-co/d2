@@ -41,6 +41,7 @@ en:
     send_link_to_reset_password: "Send Link to Reset Password"
     create_account: "Create Account"
     create_a_new_account: "Sign Up"
+    logged_in_succesfully: "You are now signed in." # Typo in key name is in Spree
     same_as_billing_address: "Same as billing address"
     cvc: "CVC"
     delivery_details: "Delivery Details"
