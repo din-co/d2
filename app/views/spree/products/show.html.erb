@@ -65,7 +65,7 @@
           <% end -%>
 
           <% if @product.equipment.present? %>
-            <h5>Equiment</h5>
+            <h5>Equipment</h5>
             <ul><li><%= @product.equipment.map(&:name).join("</li><li>").html_safe %></li></ul>
           <% end -%>
         </div>
