@@ -48,7 +48,7 @@
         <% if @product.property('components').present? %>
           <div class="col-sm-6">
             <h2>In the Bag</h2>
-            <ul class="dish-components">
+            <ul>
               <%= @product.property('components').html_safe %>
             </ul>
           </div>
@@ -77,14 +77,14 @@
           <% if @product.property('time-minutes').present? %>
             <p><em>This meal should take about <strong><%= @product.property('time-minutes') %> minutes</strong> to prepare.</em></p>
           <% end -%>
-          <ol class="dish-directions">
+          <ol class="meal-directions">
             <%= @product.property('directions').html_safe %>
           </ol>
         </div>
       <% end -%>
 
       <% if @product.property('ingredients').present? %>
-        <p class="dish-ingredients small">
+        <p class="small">
           <strong>Ingredients:</strong>
           <%= @product.property('ingredients').html_safe %>
         </p>
