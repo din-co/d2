@@ -1,0 +1,57 @@
+<% @orders.in_groups_of(5, false) do |group| %>
+  <div class="letter-sheet letter-sheet-ol1159wx">
+
+    <% group.each do |order| %>
+      <% order.tote_tags.each do |tag| %>
+
+      <% shipment = order.shipments.first %>
+      <%#
+        tag.number
+        tag.state
+        tag.completed_at
+        shipment.number
+        shipment.state
+       %>
+        <div class="label">
+          <div class="printable-area">
+            <div class="member-name"><%= tag.name %></div>
+            <div class="member-address">
+              <div>
+                <span class="address-street type-nowrap"><%= tag.ship_address.address1 %><%= "," if tag.ship_address.address2 %></span>
+                <% if tag.ship_address.address2 %><span class="address-apt type-nowrap"><%= tag.ship_address.address2 %></span><% end -%>
+              </div>
+              <span class="type-nowrap"><%= tag.ship_address.city %>,</span>
+              <span class="type-nowrap"><%= tag.ship_address.state.abbr %></span>
+              <span class="address-zip type-nowrap"><%= tag.ship_address.zipcode %></span>
+            </div>
+            <div class="member-phone">☎︎ <%= number_to_phone(tag.ship_address.phone) %></div>
+            <% if tag.special_instructions %><div class="member-delivery-instructions"><%= tag.special_instructions %></div><% end -%>
+            <div class="member-delivery-window">
+              <strong><%= shipment.selected_delivery_window.to_s %> delivery</strong>
+            </div>
+            <% if tag.line_items.any? %>
+              <table class="order-table">
+                <% tag.line_items.each do |line_item| %>
+                  <tr>
+                    <td class="order-quantity"><%= line_item.quantity %></td>
+                    <td>
+                      <%= line_item.product.name %>
+                      <strong class="small"><%= [line_item.product.chef.try(:name), line_item.product.restaurant.try(:name)].compact.join(', ') %></strong>
+                    </td>
+                  </tr>
+                <% end -%>
+              </table>
+            <% end -%>
+            <footer class="small">
+              <div class="order-id">
+                <%= order.number %>
+              </div>
+            </footer>
+          </div>
+        </div>
+
+      <% end -%>
+    <% end -%>
+
+  </div>
+<% end -%>

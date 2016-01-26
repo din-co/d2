@@ -1,0 +1,88 @@
+$outline-width: 0.0125in
+$outline-color: rgba(0,0,0,.5)
+
+html
+  box-sizing: border-box
+
+*,
+*:before,
+*:after
+  box-sizing: inherit
+
+body
+  margin: 0
+  padding: 0
+  font-family: "Helvetica Neue", Helvetica
+  font-size: 10pt
+  line-height: 14pt
+
+
+// Utilities
+.type-nowrap
+  white-space: nowrap
+
+.type-right
+  float: right
+
+.printable-area
+  overflow: hidden
+
+.small
+  font-size: 8pt
+  line-height: 10pt
+
+.bold
+  font-weight: 600
+
+// Sheet and label defaults
+.letter-sheet
+  display: flex
+  width: 11in
+  height: 8.5in
+  outline: $outline-width solid black
+  @media print
+    outline: none
+
+.label
+  display: flex
+  align-items: flex-end
+  // justify-content: flex-end
+  outline: $outline-width solid black
+  @media print
+    outline: none
+
+// OnlineLabels.com OL1159WX
+// 5 per page, 2in x 8in
+.letter-sheet-ol1159wx
+  padding: 0.25in 0.25in
+  .label
+    width: 2in
+    height: 8in
+    padding: 0.125in
+
+// Member
+.member-name
+  font-weight: bold
+
+.member-delivery-window
+  margin: .125in 0
+
+.member-delivery-instructions
+  margin: .125in 0
+  font-style: italic
+
+
+.order-table
+  width: 100%
+  margin: .125in 0
+  border-collapse: collapse
+  border-bottom: 0.0125in solid #ccc
+  td
+    vertical-align: top
+    border-top: 0.0125in solid #ccc
+
+.order-quantity
+  width: 5%
+  white-space: nowrap
+  &:after
+    content: ' ×'

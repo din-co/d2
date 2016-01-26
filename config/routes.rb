@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    get 'labels/tote'
+    get 'labels/meal'
+    get 'labels/ingredient'
+
     get 'raw_reports/outbound_shipments'
   end
 

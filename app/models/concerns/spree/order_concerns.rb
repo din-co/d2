@@ -45,6 +45,14 @@ module Spree
         shipments.first.try!(:selected_delivery_window).present?
       end
 
+      def tote_tags
+        if quantity < 3
+          [self]
+        else
+          raise NotImplementedError
+        end
+      end
+
       def to_csv_data
         shipment = shipments.first
         line_items.includes(:product).map do |line_item|
