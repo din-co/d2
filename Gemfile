@@ -56,6 +56,7 @@ gem 'lograge'
 gem 'newrelic_rpm'
 
 gem 'font_assets' # for CORS
+gem 'immutable-struct'
 
 group :test do
   gem 'database_cleaner'
