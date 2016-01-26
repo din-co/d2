@@ -3,7 +3,7 @@ unless Spree::Store.where(code: 'din').exists?
     s.code              = 'din'
     s.name              = 'Din'
     s.url               = 'din.co'
-    s.mail_from_address = 'cook@din.co'
+    s.mail_from_address = 'Din <cook@din.co>'
     s.default           = true
   end
 end
