@@ -106,6 +106,19 @@ image_attachment_config.each do |key, value|
   Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
 end
 
+taxon_icon_config = paperclip_config.merge({
+  styles: {
+    detail: '1920x1080',
+    menu:   '960x540',
+    mini:   '32x32>',
+  },
+  default_style: :mini,
+})
+taxon_icon_config.each do |key, value|
+  Spree::Taxon.attachment_definitions[:icon][key.to_sym] = value
+end
+
+
 Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
 
 # The name is strange, but this is the default Spree implementation of User.
