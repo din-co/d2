@@ -9,6 +9,16 @@ Rails.application.routes.draw do
     end
   end
 
+  class TrailingSlashMatcher
+    def matches?(request)
+      uri = request.env["REQUEST_URI"].to_s
+      uri != '/' && uri.end_with?("/")
+    end
+  end
+  constraints(TrailingSlashMatcher.new) do
+    match :via => [:get, :post], "/(*path)" => redirect { |params, req| params[:path].chomp('/') }
+  end
+
   namespace :admin do
     get 'raw_reports/outbound_shipments'
   end
