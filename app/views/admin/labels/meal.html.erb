@@ -1,2 +1,61 @@
-<h1>Admin::Labels#meal</h1>
-<p>Find me in app/views/admin/labels/meal.html.erb</p>
+<% @products.each do |product| %>
+  <div class="letter-sheet letter-sheet-ol1159wx">
+
+    <% 5.times do %>
+      <div class="label meal-label">
+        <div class="printable-area meal-label__front">
+          <h1 class="type-center meal-name"><%= product.name %></h1>
+          <% if product.property('tagline').present? %>
+            <p class="type-center meal-tagline"><%= product.property('tagline') %></p>
+          <% end -%>
+          <p class="type-center small bold">
+            <%= product.chef.name %>
+            <br>
+            <%= product.restaurant.name %>
+          </p>
+          <% if restaurant = product.restaurant.presence %>
+            <div class="restaurant-logo" style="background-image: url(<%= image_path "restaurants/kin-khao.svg" %>)"></div>
+          <% end %>
+          <p class="type-center tiny">
+            <span class="servings">
+              Serves 2.
+            </span>
+            <% if product.property('time-minutes').present? %>
+              <!-- <span> ▪︎ </span> -->
+              <span class="prep-time">
+                Ready in <%= product.property('time-minutes') %> minutes.
+              </span>
+            <% end -%>
+            <% if product.diets.present? %>
+              <br>
+              <span class="type-nowrap"><%= product.diets.map(&:name).join(", ") %></span>
+            <% end -%>
+          </p>
+        </div>
+
+        <div class="printable-area">
+          <p class="small type-center">
+            Prepped &amp; packed with ♥ by
+            <br>
+            <strong><%= product.chef.name %></strong>
+            at
+            <strong><%= product.restaurant.name %></strong>.
+          </p>
+          <p class="small type-center"><em>Perishable. Keep refrigerated.</em></p>
+          <p class="best-by small">Cook by:</p>
+          <p class="ingredients tiny">
+            <strong>Ingredients:</strong>
+            <%= product.property('ingredients').html_safe %>
+            <br>
+            <strong>Contains:</strong>
+            <%= product.allergens.map(&:name).join(", ") %>.
+            <em>Made in a facility on shared equipment that produces dairy, wheat, soy and nut products.</em>
+          </p>
+          <p class="small type-center">More delicious nom at <strong>din.co</strong></p>
+        </div>
+
+      </div>
+    <% end -%>
+
+  </div>
+<% end -%>

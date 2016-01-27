@@ -65,8 +65,9 @@ module Spree
         packing_list = line_items.includes(product: :taxons).map do |line_item|
             TagLineItem.new({
               name:       line_item.product.name,
-              restaurant: line_item.product.restaurant,
               quantity:   line_item.quantity,
+              restaurant: line_item.product.restaurant,
+              chef:       line_item.product.chef,
             })
         end
 
@@ -119,7 +120,7 @@ module Spree
       :delivery_window,
       [:packing_list]
     )
-    TagLineItem = ImmutableStruct.new(:name, :restaurant, :quantity)
+    TagLineItem = ImmutableStruct.new(:name, :quantity, :restaurant, :chef)
 
   end
 end

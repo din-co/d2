@@ -1,5 +1,5 @@
 $outline-width: 0.0125in
-$outline-color: rgba(0,0,0,.5)
+$outline-color: rgba(0,0,0,.15)
 
 html
   box-sizing: border-box
@@ -12,53 +12,102 @@ html
 body
   margin: 0
   padding: 0
-  font-family: "Helvetica Neue", Helvetica
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
   font-size: 10pt
   line-height: 14pt
 
+
+// Type
+h1,
+.meal-name
+  margin: 0
+  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Tahoma", "Geneva", "Arial Narrow", "Arial", sans-serif
+  line-height: 1
+  text-transform: uppercase
+  font-size: 16pt
+
+.meal-tagline
+  margin-top: 0
+  font-size: 10pt
 
 // Utilities
 .type-nowrap
   white-space: nowrap
 
 .type-right
-  float: right
+  text-align: right
 
-.printable-area
-  overflow: hidden
+.type-center
+  text-align: center
 
 .small
   font-size: 8pt
   line-height: 10pt
 
+.tiny
+  font-size: 7pt
+  line-height: 9pt
+
 .bold
   font-weight: 600
 
+.printable-area
+  overflow: hidden
+
+
+
 // Sheet and label defaults
 .letter-sheet
+  position: relative
   display: flex
   width: 11in
   height: 8.5in
-  outline: $outline-width solid black
+  outline: $outline-width solid $outline-color
+  outline-width: $outline-width $outline-width 0
+  &:last-child
+    outline-width: $outline-width
   @media print
     outline: none
-
-.label
-  display: flex
-  align-items: flex-end
-  // justify-content: flex-end
-  outline: $outline-width solid black
-  @media print
-    outline: none
+  &:after
+    content: ""
+    position: absolute
+    top: 50%
+    left: 0
+    width: 100%
+    border-bottom: 1px dashed $outline-color
+    @media print
+      border-bottom: none
 
 // OnlineLabels.com OL1159WX
 // 5 per page, 2in x 8in
 .letter-sheet-ol1159wx
-  padding: 0.25in 0.25in
+  padding: 0.25in 0.5in
   .label
     width: 2in
     height: 8in
     padding: 0.125in
+
+
+// Label
+.label
+  display: flex
+  flex-direction: column
+  outline: $outline-width solid $outline-color
+  @media print
+    outline: none
+
+
+.tote-label
+  justify-content: flex-end
+
+.meal-label
+  justify-content: space-between
+  &:nth-child(2n)
+    transform: rotate(180deg)
+
+.meal-label__front
+  transform: rotate(-180deg)
+
 
 // Member
 .member-name
@@ -72,6 +121,7 @@ body
   font-style: italic
 
 
+// Order Table
 .order-table
   width: 100%
   margin: .125in 0
@@ -86,3 +136,11 @@ body
   white-space: nowrap
   &:after
     content: ' ×'
+
+
+.restaurant-logo
+  display: block
+  width: 160px
+  height: 90px
+  margin: 20pt auto
+  background: no-repeat center/contain

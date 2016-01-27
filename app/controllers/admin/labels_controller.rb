@@ -10,6 +10,7 @@ class Admin::LabelsController < Spree::Admin::BaseController
 
   def meal
     @title = "Meal Bag Labels"
+    @products = Spree::Product.all
   end
 
   def ingredient
