@@ -58,9 +58,16 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   config.action_controller.asset_host = ENV['CLOUDFRONT_DISTRIBUTION'].presence
 
+  # Define the default canonical domain name, and redirect to it if accessed via another domain.
+  canonical_domain = ENV['CANONICAL_DOMAIN']
+  if ENV['HEROKU_APP_NAME'].include?('-pr-')
+    canonical_domain = "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
+  end
+  config.x.canonical_domain = canonical_domain || 'din.co'
+
   # Do not raise email delivery errors, since emails are processed by a background queue.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: ENV['EMAIL_HOST'] || 'din.co' }
+  config.action_mailer.default_url_options = { host: ENV['EMAIL_HOST'] || config.x.canonical_domain }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

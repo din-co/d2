@@ -19,6 +19,8 @@ Command line:
 ### Development server:
 Your choice: `heroku local --port 3000 --procfile Procfile.dev` to see the website at http://localhost:3000 (which also launches `mailcatcher` on http://localhost:3100) or if you can't be bothered, `rails server` will run just the website.
 
+**N.B.:** There is a canonical redirect to `local.flavvor.co` in development mode. You may add an entry to your `/etc/hosts` file for `local.flavvor.co 127.0.0.1` if you need to access the development site without internet access.
+
 #### Seeing email in development:
 `gem install mailcatcher -- --with-cppflags=-I/usr/local/opt/openssl/include`  (flags necessary on OS X El Capitan) and then run `mailcatcher` from the command line.
 
