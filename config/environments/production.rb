@@ -60,7 +60,7 @@ Rails.application.configure do
 
   # Define the default canonical domain name, and redirect to it if accessed via another domain.
   canonical_domain = ENV['CANONICAL_DOMAIN']
-  if ENV['HEROKU_APP_NAME'].include?('-pr-')
+  if ENV['HEROKU_APP_NAME'].to_s.include?('-pr-')
     canonical_domain = "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
   end
   config.x.canonical_domain = canonical_domain || 'din.co'
