@@ -2,6 +2,13 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  # Rewrite non-canonical requests to canonical host (also removes trailing slashes, thanks to Rails)
+  if canonical_domain = Rails.configuration.x.canonical_domain.presence
+    constraints(host: Regexp.new("^(?!#{Regexp.escape(canonical_domain)})")) do
+      match :via => [:get, :post], "/(*path)" => redirect(host: canonical_domain)
+    end
+  end
+
   namespace :admin do
     get 'raw_reports/outbound_shipments'
   end
