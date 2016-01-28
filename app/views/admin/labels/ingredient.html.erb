@@ -1,2 +1,29 @@
-<h1>Admin::Labels#ingredient</h1>
-<p>Find me in app/views/admin/labels/ingredient.html.erb</p>
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'spree/backend/bootstrap_default', :media => 'all' %>
+<% end -%>
+
+<div class="container">
+  <%= form_tag main_app.admin_labels_ingredient_print_path, method: :get do %>
+    <h1>Ingredient Labels</h1>
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" name="quantity" value="10" class="form-control">
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-6">
+        <label>Large Labels</label>
+        <%= text_area_tag "large_labels", @large_labels, rows: 10, class: "form-control" %>
+      </div>
+      <div class="form-group col-sm-6">
+        <label>Small Labels</label>
+        <%= text_area_tag "small_labels", @small_labels, rows: 10, class: "form-control" %>
+      </div>
+      <div class="form-group col-sm-6">
+        <button type="submit" name="label_size" value="large" class="btn btn-primary">Print Large</button>
+      </div>
+      <div class="form-group col-sm-6">
+        <button type="submit" name="label_size" value="small" class="btn btn-primary">Print Small</button>
+      </div>
+    </div>
+  <% end -%>
+</div>

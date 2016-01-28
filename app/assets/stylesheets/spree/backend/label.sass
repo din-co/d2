@@ -40,6 +40,10 @@ h1,
 .type-center
   text-align: center
 
+.medium
+  font-size: 9pt
+  line-height: 11pt
+
 .small
   font-size: 8pt
   line-height: 10pt
@@ -55,19 +59,30 @@ h1,
   overflow: hidden
 
 
+// Ingredients Form
+.ingredients-textarea
+  height: 400px
+
 
 // Sheet and label defaults
-.letter-sheet
+.sheet
   position: relative
-  display: flex
   width: 11in
   height: 8.5in
   outline: $outline-width solid $outline-color
   outline-width: $outline-width $outline-width 0
-  &:last-child
-    outline-width: $outline-width
   @media print
     outline: none
+
+// OnlineLabels.com OL1159WX
+// 5 per page, 2in x 8in
+.ol1159wx-sheet
+  display: flex
+  padding: 0.25in 0.5in
+  .label
+    width: 2in
+    height: 8in
+    padding: 0.125in
   &:after
     content: ""
     position: absolute
@@ -78,29 +93,77 @@ h1,
     @media print
       border-bottom: none
 
-// OnlineLabels.com OL1159WX
-// 5 per page, 2in x 8in
-.letter-sheet-ol1159wx
-  padding: 0.25in 0.5in
-  .label
-    width: 2in
-    height: 8in
-    padding: 0.125in
+%circle-sheet
+  display: flex
+  flex-wrap: wrap
+  // justify-content: space-between
+  align-content: flex-start
 
+%circle-label
+  display: flex
+  justify-content: center
+  align-items: center
+  border-radius: 50%
+  word-break: break-word
+  border: $outline-width solid $outline-color
+  @media print
+    border: none
+
+// OnlineLabels.com OL350TC
+// 12 per page, 2.5in circle, 3x4
+.ol350tc-sheet
+  @extend %circle-sheet
+  padding: 0.343in (0.579in - 0.001) // html layout fix
+  .label
+    @extend %circle-label
+    width: 2.4375in
+    height: 2.4375in
+    font-size: 18pt
+    line-height: 1
+    padding: .2in
+    margin-right: 0.03125in
+    margin-bottom: 0.25in
+    &:nth-child(4n)
+      margin-right: 0
+    @for $i from 9 through 12
+      &:nth-child(#{$i})
+        margin-bottom: 0
+
+// OnlineLabels.com OL1025TC
+// 63 per page, 1in circle, 7x9
+.ol1025tc-sheet
+  @extend %circle-sheet
+  padding: 0.375in 0.5in
+  .label
+    @extend %circle-label
+    width: 1in
+    height: 1in
+    padding: .1in
+    font-size: 9pt
+    line-height: 11pt
+    margin-right: 0.125in
+    margin-bottom: 0.125in
+    &:nth-child(9n)
+      margin-right: 0
+    @for $i from 55 through 63
+      &:nth-child(#{$i})
+        margin-bottom: 0
 
 // Label
-.label
+
+%ol1159wx-label
   display: flex
   flex-direction: column
   outline: $outline-width solid $outline-color
   @media print
     outline: none
 
-
 .tote-label
+  @extend %ol1159wx-label
   justify-content: flex-end
 
 .meal-label
+  @extend %ol1159wx-label
   justify-content: space-between
   &:nth-child(2n)
     transform: rotate(180deg)

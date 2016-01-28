@@ -12,4 +12,5 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w(
   spree/frontend/nav.js
   spree/backend/label.css
+  spree/backend/bootstrap_default.css
 )

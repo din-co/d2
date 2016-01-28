@@ -1,0 +1,12 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag 'spree/backend/bootstrap_default', :media => 'all' %>
+<% end -%>
+
+<div class="container">
+  <h1>Labels</h1>
+  <ul>
+    <li><%= link_to "Tote Labels", admin_labels_tote_path %></li>
+    <li><%= link_to "Meal Labels", admin_labels_meal_path %></li>
+    <li><%= link_to "Ingredient Labels", admin_labels_ingredient_path %></li>
+  </ul>
+</div>
