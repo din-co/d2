@@ -62,6 +62,6 @@
   <% end -%>
   <div class="container">
     <h1>Tote Labels</h1>
-    <p>No orders for this date. Add a date to the url ("http://din.co/admin/labels/tote/?date=2016-01-30") to select a different date.</p>
+    <p>No orders for this date. Add a date to the url (<%= link_to admin_labels_tote_url(date: "2016-01-30") %>) to select a different date.</p>
   </div>
 <% end -%>
