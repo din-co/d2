@@ -23,7 +23,9 @@
       </div>
 
       <% if product_description(@product).present? %>
-        <p><%= product_description(@product) %></p>
+        <div class="product__description">
+          <%= product_description(@product) %>
+        </div>
       <% end -%>
 
     </div>
