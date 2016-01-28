@@ -14,7 +14,7 @@
           <div class="product__tagline grey-link"><%= @product.property('tagline') %></div>
         <% end -%>
         <h4 class="product__restaurant-name">
-          <%= [@product.chef.try(:name), @product.restaurant.try(:name)].compact.join(', ') %>
+          <%= [@product.restaurant.try(:name), @product.chef.try(:name)].compact.join(', ') %>
         </h4>
 
         <div class="product__add-form">
