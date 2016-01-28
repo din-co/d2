@@ -97,7 +97,7 @@ image_attachment_config = paperclip_config.merge({
   styles: {
     detail: '1920x1080',
     menu:   '960x540',
-    small:  '100x100>',
+    small:  '160x90>',
     mini:   '48x48>',
   },
   default_style:  :detail,
@@ -110,9 +110,9 @@ taxon_icon_config = paperclip_config.merge({
   styles: {
     detail: '1920x1080',
     menu:   '960x540',
-    mini:   '32x32>',
+    small:  '160x90>',
   },
-  default_style: :mini,
+  default_style: :small,
 })
 taxon_icon_config.each do |key, value|
   Spree::Taxon.attachment_definitions[:icon][key.to_sym] = value
