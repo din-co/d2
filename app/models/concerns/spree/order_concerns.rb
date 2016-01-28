@@ -45,6 +45,40 @@ module Spree
         shipments.first.try!(:selected_delivery_window).present?
       end
 
+      def tote_tags
+        # Prototype tag
+        tag_attributes = {
+          order_number:    number,
+          tag_number:      1,
+          name:            name,
+          address1:        ship_address.address1,
+          address2:        ship_address.address2,
+          city:            ship_address.city,
+          state:           ship_address.state.abbr,
+          zipcode:         ship_address.zipcode,
+          phone:           ship_address.phone,
+          instructions:    special_instructions,
+          delivery_window: shipments.first.selected_delivery_window,
+        }
+
+        # Include packing list only on the first tag.
+        packing_list = line_items.includes(product: :taxons).map do |line_item|
+            TagLineItem.new({
+              name:       line_item.product.name,
+              quantity:   line_item.quantity,
+              restaurant: line_item.product.restaurant,
+              chef:       line_item.product.chef,
+            })
+        end
+
+        tags = [ToteTag.new(tag_attributes.merge(packing_list: packing_list))]
+
+        # Generate an extra tag without line items for each group of 3 items
+        1.upto(quantity/3) { |n| tags << ToteTag.new(tag_attributes.merge(tag_number: n + 1)) }
+
+        tags
+      end
+
       def to_csv_data
         shipment = shipments.first
         line_items.includes(:product).map do |line_item|
@@ -71,5 +105,22 @@ module Spree
         end
       end
     end
+
+    ToteTag = ImmutableStruct.new(
+      :order_number,
+      :tag_number,
+      :name,
+      :address1,
+      :address2,
+      :city,
+      :state,
+      :zipcode,
+      :phone,
+      :instructions,
+      :delivery_window,
+      [:packing_list]
+    )
+    TagLineItem = ImmutableStruct.new(:name, :quantity, :restaurant, :chef)
+
   end
 end

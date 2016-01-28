@@ -78,6 +78,12 @@ Your choice: `heroku local --port 3000 --procfile Procfile.dev` to see the websi
 
 5. Add new dishes!
 
+## Rebuild images
+
+```
+bundle exec rake paperclip:refresh:thumbnails CLASS=Spree::Image
+bundle exec rake paperclip:refresh:thumbnails CLASS=Spree::Taxon
+```
 
 ## Editorial Guidelines
 

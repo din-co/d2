@@ -1,0 +1,9 @@
+<% @labels.in_groups_of(@sheet_count, false) do |group| %>
+  <div class="sheet <%= @sheet_class %>">
+    <% group.each do |label| %>
+      <div class="label ingredient-label <%= @label_class %> printable-area type-center">
+        <%= label %>
+      </div>
+    <% end -%>
+  </div>
+<% end -%>

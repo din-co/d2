@@ -64,44 +64,60 @@ rescue ActiveRecord::StatementInvalid => e
 end
 
 # Uploaded image assets
-attachment_config = {
-  styles: {
-    detail:   "1920x1080",
-    menu:     "960x540",
-    mini:     "48x48>",
-  },
-  default_style:  :detail,
+paperclip_config = {
   preserve_files: "true",
 }
 if Rails.env.production?
-  attachment_config[:storage]     = :s3
-  attachment_config[:s3_headers]  = { "Cache-Control" => "max-age=31557600" }
-  attachment_config[:s3_protocol] = 'https'
-  attachment_config[:bucket]      = ENV['S3_BUCKET_NAME']
-  attachment_config[:s3_credentials] = {
+  paperclip_config[:storage]     = :s3
+  paperclip_config[:s3_headers]  = { "Cache-Control" => "max-age=31557600" }
+  paperclip_config[:s3_protocol] = 'https'
+  paperclip_config[:bucket]      = ENV['S3_BUCKET_NAME']
+  paperclip_config[:s3_credentials] = {
     access_key_id:     ENV['AWS_ACCESS_KEY_ID'],
     secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
     bucket:            ENV['S3_BUCKET_NAME'],
   }
 
   if Rails.configuration.action_controller.asset_host.present?
-    attachment_config[:url]           = ':s3_alias_url'
-    attachment_config[:s3_host_alias] = Rails.configuration.action_controller.asset_host
+    paperclip_config[:url]           = ':s3_alias_url'
+    paperclip_config[:s3_host_alias] = Rails.configuration.action_controller.asset_host
   else
-    attachment_config[:url] = ':s3_path_url'
+    paperclip_config[:url] = ':s3_path_url'
   end
 
   if ENV['EMAIL_HOST'] == 'din.co' || ENV['HEROKU_APP_NAME'] == 'din-marketplace'
-    attachment_config[:path] = "/:class/:attachment/:id_partition/:style/:filename"
+    paperclip_config[:path] = "/:class/:attachment/:id_partition/:style/:filename"
   else
-    attachment_config[:path] = "/staging/:class/:attachment/:id_partition/:style/:filename"
-    attachment_config[:s3_storage_class] = :reduced_redundancy
+    paperclip_config[:path] = "/staging/:class/:attachment/:id_partition/:style/:filename"
+    paperclip_config[:s3_storage_class] = :reduced_redundancy
   end
 end
 
-attachment_config.each do |key, value|
+image_attachment_config = paperclip_config.merge({
+  styles: {
+    detail: '1920x1080',
+    menu:   '960x540',
+    small:  '160x90>',
+    mini:   '48x48>',
+  },
+  default_style:  :detail,
+})
+image_attachment_config.each do |key, value|
   Spree::Image.attachment_definitions[:attachment][key.to_sym] = value
 end
+
+taxon_icon_config = paperclip_config.merge({
+  styles: {
+    detail: '1920x1080',
+    menu:   '960x540',
+    small:  '160x90>',
+  },
+  default_style: :small,
+})
+taxon_icon_config.each do |key, value|
+  Spree::Taxon.attachment_definitions[:icon][key.to_sym] = value
+end
+
 
 Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
 

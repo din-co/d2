@@ -1,0 +1,209 @@
+$outline-width: 0.0125in
+$outline-color: rgba(0,0,0,.15)
+
+html
+  box-sizing: border-box
+
+*,
+*:before,
+*:after
+  box-sizing: inherit
+
+body
+  margin: 0
+  padding: 0
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+  font-size: 10pt
+  line-height: 14pt
+
+
+// Type
+h1,
+.meal-name
+  margin: 0
+  font-family: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", 'TeXGyreHerosCnBold', "Helvetica", "Tahoma", "Geneva", "Arial Narrow", "Arial", sans-serif
+  line-height: 1
+  text-transform: uppercase
+  font-size: 16pt
+
+.meal-tagline
+  margin-top: 0
+  font-size: 10pt
+
+// Utilities
+.type-nowrap
+  white-space: nowrap
+
+.type-right
+  text-align: right
+
+.type-center
+  text-align: center
+
+.medium
+  font-size: 9pt
+  line-height: 11pt
+
+.small
+  font-size: 8pt
+  line-height: 10pt
+
+.tiny
+  font-size: 7pt
+  line-height: 9pt
+
+.bold
+  font-weight: 600
+
+.printable-area
+  overflow: hidden
+
+
+// Ingredients Form
+.ingredients-textarea
+  height: 400px
+
+
+// Sheet and label defaults
+.sheet
+  position: relative
+  width: 11in
+  height: 8.5in
+  outline: $outline-width solid $outline-color
+  outline-width: $outline-width $outline-width 0
+  @media print
+    outline: none
+
+// OnlineLabels.com OL1159WX
+// 5 per page, 2in x 8in
+.ol1159wx-sheet
+  display: flex
+  padding: 0.25in 0.5in
+  .label
+    width: 2in
+    height: 8in
+    padding: 0.125in
+  &:after
+    content: ""
+    position: absolute
+    top: 50%
+    left: 0
+    width: 100%
+    border-bottom: 1px dashed $outline-color
+    @media print
+      border-bottom: none
+
+%circle-sheet
+  display: flex
+  flex-wrap: wrap
+  // justify-content: space-between
+  align-content: flex-start
+
+%circle-label
+  display: flex
+  justify-content: center
+  align-items: center
+  border-radius: 50%
+  word-break: break-word
+  border: $outline-width solid $outline-color
+  @media print
+    border: none
+
+// OnlineLabels.com OL350TC
+// 12 per page, 2.5in circle, 3x4
+.ol350tc-sheet
+  @extend %circle-sheet
+  padding: 0.343in (0.579in - 0.001) // html layout fix
+  .label
+    @extend %circle-label
+    width: 2.4375in
+    height: 2.4375in
+    font-size: 18pt
+    line-height: 1
+    padding: .2in
+    margin-right: 0.03125in
+    margin-bottom: 0.25in
+    &:nth-child(4n)
+      margin-right: 0
+    @for $i from 9 through 12
+      &:nth-child(#{$i})
+        margin-bottom: 0
+
+// OnlineLabels.com OL1025TC
+// 63 per page, 1in circle, 7x9
+.ol1025tc-sheet
+  @extend %circle-sheet
+  padding: 0.375in 0.5in
+  .label
+    @extend %circle-label
+    width: 1in
+    height: 1in
+    padding: .1in
+    font-size: 9pt
+    line-height: 11pt
+    margin-right: 0.125in
+    margin-bottom: 0.125in
+    &:nth-child(9n)
+      margin-right: 0
+    @for $i from 55 through 63
+      &:nth-child(#{$i})
+        margin-bottom: 0
+
+// Label
+
+%ol1159wx-label
+  display: flex
+  flex-direction: column
+  outline: $outline-width solid $outline-color
+  @media print
+    outline: none
+
+.tote-label
+  @extend %ol1159wx-label
+  justify-content: flex-end
+
+.meal-label
+  @extend %ol1159wx-label
+  justify-content: space-between
+  &:hover
+    transform: rotate(180deg)
+
+.meal-label__front
+  transform: rotate(-180deg)
+
+
+// Member
+.member-name
+  font-weight: bold
+
+.member-delivery-window
+  margin: .125in 0
+
+.member-delivery-instructions
+  margin: .125in 0
+  font-style: italic
+
+
+// Order Table
+.order-table
+  width: 100%
+  margin: .125in 0
+  border-collapse: collapse
+  border-bottom: 0.0125in solid #ccc
+  td
+    vertical-align: top
+    border-top: 0.0125in solid #ccc
+
+.order-quantity
+  width: 5%
+  white-space: nowrap
+  &:after
+    content: ' ×'
+
+
+.restaurant-logo
+  display: block
+  width: 1.5in       // 160px
+  height: 0.84375in  // 90px
+  margin: 0.25in auto // 20pt
+  background: no-repeat center/contain
