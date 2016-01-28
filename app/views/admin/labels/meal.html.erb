@@ -14,7 +14,7 @@
             <%= product.restaurant.name %>
           </p>
           <% if restaurant = product.restaurant.presence %>
-            <div class="restaurant-logo" style="background-image: url(<%= image_path "restaurants/kin-khao.svg" %>)"></div>
+            <div class="restaurant-logo" style="background-image: url(<%= image_path restaurant.icon(:original) %>)"></div>
           <% end %>
           <p class="type-center tiny">
             <span class="servings">
