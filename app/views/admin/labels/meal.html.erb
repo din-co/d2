@@ -8,13 +8,17 @@
           <% if product.property('tagline').present? %>
             <p class="type-center meal-tagline"><%= product.property('tagline') %></p>
           <% end -%>
-          <p class="type-center small bold">
-            <%= product.chef.name %>
-            <br>
-            <%= product.restaurant.name %>
+          <p class="type-center">
+            <% if product.restaurant.present? %>
+              <strong class="type-nowrap"><%= product.restaurant.name %></strong>
+            <% end -%>
+            <% if product.chef.present? %>
+              <br>
+              <span class="type-nowrap"><%= product.chef.name %></span>
+            <% end -%>
           </p>
-          <% if restaurant = product.restaurant.presence %>
-            <div class="restaurant-logo" style="background-image: url(<%= image_path restaurant.icon(:original) %>)"></div>
+          <% if product.restaurant.present? %>
+            <div class="restaurant-logo" style="background-image: url(<%= image_path product.restaurant.icon(:original) %>)"></div>
           <% end %>
           <p class="type-center tiny">
             <span class="servings">
@@ -34,11 +38,19 @@
 
         <div class="printable-area">
           <p class="small type-center">
-            Prepped &amp; packed with ♥ by
-            <br>
-            <strong><%= product.chef.name %></strong>
-            at
-            <strong><%= product.restaurant.name %></strong>.
+            Prepped &amp; packed with ♥
+            <% if product.restaurant.present? %>
+              at
+              <br>
+              <strong class="type-nowrap"><%= product.restaurant.name %></strong>
+            <% end -%>
+            <% if product.chef.present? %>
+              by
+              <% unless product.restaurant.present? %>
+                <br>
+              <% end -%>
+              <strong class="type-nowrap"><%= product.chef.name %></strong>.
+            <% end -%>
           </p>
           <p class="small type-center"><em>Perishable. Keep refrigerated.</em></p>
           <p class="best-by small">Cook by:</p>
