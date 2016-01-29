@@ -1,13 +1,15 @@
 class Admin::LabelsController < Spree::Admin::BaseController
   layout "admin/labels"
+  helper_method :date
 
   before_action :require_quantity, only: :ingredient_print
 
   def tote
     @title = "Tote Labels"
-    @orders = Spree::Order
+    orders = Spree::Order
       .shippable_day_of(date)
       .includes(:ship_address, :line_items, {shipments: :selected_delivery_window})
+    @labels = orders.flat_map(&:tote_tags)
   end
 
   def meal
@@ -42,9 +44,9 @@ class Admin::LabelsController < Spree::Admin::BaseController
   private
   def date
     if params[:date].present?
-      Time.zone.parse(params[:date])
+      Time.zone.parse(params[:date]).to_date
     else
-      Time.current
+      Time.current.to_date
     end
   end
 
