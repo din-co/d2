@@ -6,7 +6,7 @@ require 'rails_helper'
 RSpec.shared_examples_for "spree order concerns" do
   # the class that includes the concern
   let(:model) { described_class }
-  let(:california) { Spree::State.find_by!(name: "California") }
+  let(:california) { Spree::State.find_or_create_by(name: "California") }
   let(:address) { FactoryGirl.create(:address, state: california, zipcode: "94110") }
 
   describe "tote tags for completed orders" do
