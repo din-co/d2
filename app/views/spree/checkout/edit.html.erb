@@ -1,3 +1,9 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    _kmq.push(['trackSubmit', '<%= j "checkout_form_#{@order.state}" %>', '<%= j "Completed Checkout Step #{@order.state}" %>']);
+  </script>
+<% end -%>
+
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
 <div class="container container--main">
 

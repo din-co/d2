@@ -1,31 +1,27 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    _kmq.push(['trackSubmit', 'update-cart', 'Started Checkout']);
+  </script>
+<% end -%>
+
 <% @body_id = 'cart' %>
 <div class="container container--main">
   <h1><%= Spree.t(:cart) %></h1>
 
-  <% if @order.line_items.empty? %>
 
-    <p>
-      <%= Spree.t(:your_cart_is_empty) %>
-      <%= link_to "View the menu.", spree.root_path(anchor: "menu") %>
-    </p>
+  <%= form_for @order, url: update_cart_path, html: {id: 'update-cart'} do |order_form| %>
 
-  <% else %>
+    <%= render :partial => 'form', :locals => { :order_form => order_form } %>
 
-    <%= form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form| %>
-
-      <%= render :partial => 'form', :locals => { :order_form => order_form } %>
-
-      <div>
-        <%# order_form.text_field :coupon_code, :size => 10, :placeholder => Spree.t(:coupon_code) %>
-        <%= button_tag Spree.t(:update), :class => 'btn btn-default pull-right', :id => 'update-button' %>
-        <% if KITCHEN.open? %>
-          <%= button_tag Spree.t(:checkout), :class => 'checkout btn btn-primary', :id => 'checkout-link', :name => 'checkout' %>
-        <% else %>
-          <%= Spree.t(:checkout_disabled) %>
-        <% end %>
-      </div>
-
-    <% end %>
+    <div>
+      <%# order_form.text_field :coupon_code, :size => 10, :placeholder => Spree.t(:coupon_code) %>
+      <%= button_tag Spree.t(:update), :class => 'btn btn-default pull-right', :id => 'update-button' %>
+      <% if KITCHEN.open? %>
+        <%= button_tag Spree.t(:checkout), :class => 'checkout btn btn-primary', :id => 'checkout-link', :name => 'checkout' %>
+      <% else %>
+        <%= Spree.t(:checkout_disabled) %>
+      <% end %>
+    </div>
 
   <% end %>
 </div>
