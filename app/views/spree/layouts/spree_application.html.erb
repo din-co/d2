@@ -42,7 +42,6 @@
     <%= render :partial => 'spree/shared/footer' %>
     <% if spree_current_user %>
     <script>
-      var _kmq = _kmq || [];
       _kmq.push(['identify', '<%= j spree_current_user.email -%>']);
     </script>
     <% end -%>
