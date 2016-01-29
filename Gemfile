@@ -57,6 +57,7 @@ gem 'newrelic_rpm'
 
 gem 'font_assets' # for CORS
 gem 'immutable-struct'
+gem 'rack-rewrite'
 
 group :test do
   gem 'database_cleaner'

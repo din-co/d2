@@ -14,7 +14,7 @@
           <div class="product__tagline grey-link"><%= @product.property('tagline') %></div>
         <% end -%>
         <h4 class="product__restaurant-name">
-          <%= [@product.chef.try(:name), @product.restaurant.try(:name)].compact.join(', ') %>
+          <%= [@product.restaurant, @product.chef].compact.map(&:name).join(', ') %>
         </h4>
 
         <div class="product__add-form">
@@ -23,7 +23,9 @@
       </div>
 
       <% if product_description(@product).present? %>
-        <p><%= product_description(@product) %></p>
+        <div class="product__description">
+          <%= product_description(@product) %>
+        </div>
       <% end -%>
 
     </div>

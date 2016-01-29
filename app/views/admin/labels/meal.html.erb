@@ -8,10 +8,14 @@
           <% if product.property('tagline').present? %>
             <p class="type-center meal-tagline"><%= product.property('tagline') %></p>
           <% end -%>
-          <p class="type-center small bold">
-            <%= product.chef.try(:name) %>
-            <br>
-            <%= product.restaurant.try(:name) %>
+          <p class="type-center">
+            <% if product.restaurant.present? %>
+              <strong class="type-nowrap"><%= product.restaurant.name %></strong>
+            <% end -%>
+            <% if product.chef.present? %>
+              <br>
+              <span class="type-nowrap"><%= product.chef.name %></span>
+            <% end -%>
           </p>
           <% if product.restaurant.present? %>
             <div class="restaurant-logo" style="background-image: url(<%= image_path product.restaurant.icon(:original) %>)"></div>
@@ -34,11 +38,19 @@
 
         <div class="printable-area">
           <p class="small type-center">
-            Prepped &amp; packed with ♥ by
-            <br>
-            <strong><%= product.chef.try(:name) %></strong>
-            at
-            <strong><%= product.restaurant.try(:name) %></strong>.
+            Prepped &amp; packed with ♥
+            <% if product.restaurant.present? %>
+              at
+              <br>
+              <strong class="type-nowrap"><%= product.restaurant.name %></strong>
+            <% end -%>
+            <% if product.chef.present? %>
+              by
+              <% unless product.restaurant.present? %>
+                <br>
+              <% end -%>
+              <strong class="type-nowrap"><%= product.chef.name %></strong>.
+            <% end -%>
           </p>
           <p class="small type-center"><em>Perishable. Keep refrigerated.</em></p>
           <p class="best-by small">Cook by:</p>
@@ -50,7 +62,11 @@
             <%= product.allergens.map(&:name).join(", ") %>.
             <em>Made in a facility on shared equipment that produces dairy, wheat, soy and nut products.</em>
           </p>
-          <p class="small type-center">More delicious nom at <strong>din.co</strong></p>
+          <p class="small type-center">
+            More delicious nom at <strong>din.co</strong>
+            <br>
+            <span>Share <strong>#DinLove</strong> at <strong>@din</strong></span>
+          </p>
         </div>
 
       </div>
