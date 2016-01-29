@@ -9,12 +9,12 @@
             <p class="type-center meal-tagline"><%= product.property('tagline') %></p>
           <% end -%>
           <p class="type-center small bold">
-            <%= product.chef.name %>
+            <%= product.chef.try(:name) %>
             <br>
-            <%= product.restaurant.name %>
+            <%= product.restaurant.try(:name) %>
           </p>
-          <% if restaurant = product.restaurant.presence %>
-            <div class="restaurant-logo" style="background-image: url(<%= image_path restaurant.icon(:original) %>)"></div>
+          <% if product.restaurant.present? %>
+            <div class="restaurant-logo" style="background-image: url(<%= image_path product.restaurant.icon(:original) %>)"></div>
           <% end %>
           <p class="type-center tiny">
             <span class="servings">
@@ -36,15 +36,15 @@
           <p class="small type-center">
             Prepped &amp; packed with ♥ by
             <br>
-            <strong><%= product.chef.name %></strong>
+            <strong><%= product.chef.try(:name) %></strong>
             at
-            <strong><%= product.restaurant.name %></strong>.
+            <strong><%= product.restaurant.try(:name) %></strong>.
           </p>
           <p class="small type-center"><em>Perishable. Keep refrigerated.</em></p>
           <p class="best-by small">Cook by:</p>
           <p class="ingredients tiny">
             <strong>Ingredients:</strong>
-            <%= product.property('ingredients').html_safe %>
+            <%= product.property('ingredients').to_s.html_safe %>
             <br>
             <strong>Contains:</strong>
             <%= product.allergens.map(&:name).join(", ") %>.
