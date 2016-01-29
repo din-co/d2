@@ -1,3 +1,9 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    _kmq.push(['trackSubmit', 'update-cart', 'Started Checkout']);
+  </script>
+<% end -%>
+
 <% @body_id = 'cart' %>
 <div class="container container--main">
   <h1><%= Spree.t(:cart) %></h1>
