@@ -9,7 +9,10 @@ class Admin::LabelsController < Spree::Admin::BaseController
     orders = Spree::Order
       .shippable_day_of(date)
       .includes(:ship_address, :line_items, {shipments: :selected_delivery_window})
-    @labels = orders.flat_map(&:tote_tags)
+      .order("spree_shipments.delivery_window_id")
+      .order("spree_addresses.firstname")
+    raw_labels = orders.flat_map(&:tote_tags)
+    @labels = Set.new(raw_labels).classify(&:delivery_window)
   end
 
   def meal

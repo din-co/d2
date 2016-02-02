@@ -9,8 +9,7 @@
   </div>
 
 <% else %>
-
-  <% @labels.in_groups_of(5, false) do |labels| %>
+  <% @labels.map {|_, labels| labels.to_a.in_groups_of(5) }.flatten.in_groups_of(5, false).each do |labels| %>
     <div class="sheet ol1159wx-sheet">
 
       <% labels.each do |label| %>
