@@ -19,10 +19,6 @@
 
     <%= render :partial => 'spree/shared/header' %>
 
-    <%#= breadcrumbs(@taxon) %>
-
-    <%#= render :partial => 'spree/shared/sidebar' if content_for? :sidebar %>
-
     <%= flash_messages %>
 
     <% if !KITCHEN.open? && @show_kitchen_status %>
