@@ -24,6 +24,11 @@ Your choice: `heroku local --port 3000 --procfile Procfile.dev` to see the websi
 #### Seeing email in development:
 `gem install mailcatcher -- --with-cppflags=-I/usr/local/opt/openssl/include`  (flags necessary on OS X El Capitan) and then run `mailcatcher` from the command line.
 
+## Syncing production data to staging (notes for posterity)
+- Back up staging: `heroku pg:backups capture -r staging`
+- Copy production to staging: `heroku pg:copy din-marketplace::HEROKU_POSTGRESQL_CYAN_URL HEROKU_POSTGRESQL_NAVY_URL -r staging`
+- Sync missing image attachments: `aws s3 sync --acl public-read --storage-class REDUCED_REDUNDANCY s3://din-shop-img/spree/ s3://din-shop-img/staging/spree/`
+
 ## How to Override Templates (FAQ)
 
 - Where are the templates to copy?
