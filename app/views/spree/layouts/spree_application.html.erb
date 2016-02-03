@@ -12,20 +12,12 @@
     <%= stylesheet_link_tag 'spree/frontend/all', :media => 'screen' %>
     <%= csrf_meta_tags %>
     <%= javascript_include_tag 'spree/frontend/all' %>
-    <!--[if lt IE 9]>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
-    <![endif]-->
-    <%= javascript_include_tag 'spree/frontend/nav' %>
     <%= render :partial => 'spree/shared/analytics_trackers' %>
     <%= yield :head %>
   </head>
   <body class="<%= body_class %>" id="<%= @body_id %>">
 
     <%= render :partial => 'spree/shared/header' %>
-
-    <%#= breadcrumbs(@taxon) %>
-
-    <%#= render :partial => 'spree/shared/sidebar' if content_for? :sidebar %>
 
     <%= flash_messages %>
 
