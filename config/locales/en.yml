@@ -32,8 +32,10 @@ en:
     cart: "Cart"
     you_have_emptied_your_cart: "You have emptied your cart."
     checkout_disabled: "Checkout is unavailable while the kitchen is closed."
-    add_dish: "Add 2 Servings"
-    two_servings: "2 Servings"
+    add_dish: "Add to Cart (Serves 2)"
+    two_servings: "Serves 2"
+    next_available: Available on %{date}
+    not_currently_available: "Not currently available to order"
     forgot: "Forgot?"
     password_reset: "Password Reset"
     reset_password: "Reset Password"

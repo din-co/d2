@@ -8,27 +8,35 @@ module Spree
 
     module InstanceMethods
       def restaurant
-        taxons.non_root.restaurants.first
+        taxons.restaurants.first
       end
 
       def chef
-        taxons.non_root.chefs.first
+        taxons.chefs.first
       end
 
       def diets
-        taxons.non_root.diets
+        taxons.diets
       end
 
       def allergens
-        taxons.non_root.allergens
+        taxons.allergens
       end
 
       def pantry
-        taxons.non_root.pantry
+        taxons.pantry
       end
 
       def equipment
-        taxons.non_root.equipment
+        taxons.equipment
+      end
+
+      def pages
+        taxons.pages
+      end
+
+      def on_home_page?
+        pages.find_by(name: "Home").present?
       end
     end
   end
