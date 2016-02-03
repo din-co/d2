@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'labels', to: 'labels#index'
     get 'labels/tote'
+    get 'labels/tote/print', to: 'labels#tote_print'
     get 'labels/meal'
     get 'labels/ingredient'
     get 'labels/ingredient/print', to: 'labels#ingredient_print'

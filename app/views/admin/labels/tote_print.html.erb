@@ -1,0 +1,71 @@
+<% if @labels.blank? %>
+
+  <% content_for :head do %>
+    <%= stylesheet_link_tag 'spree/backend/bootstrap_default', :media => 'all' %>
+  <% end -%>
+  <div class="container">
+    <h1>Tote Labels</h1>
+    <p>No totes for <%= date.to_s %>. <%= link_to "Go back", admin_labels_tote_url(params.slice(:date)) %> to select a different date.</p>
+  </div>
+
+<% else %>
+
+  <% @labels.in_groups_of(5, false) do |labels| %>
+    <div class="sheet ol1159wx-sheet">
+
+      <% labels.each do |label| %>
+        <div class="label tote-label">
+          <div class="printable-area">
+            <% if label.total_tags > 1 %>
+              <p>
+                <em>Tote <%= label.tag_number %> of <%= label.total_tags %></em>
+              </p>
+            <% end -%>
+            <div class="member-name"><strong><%= label.name %></strong></div>
+            <div class="member-address">
+              <div>
+                <span class="address-street type-nowrap"><%= label.address1 %><%= "," if label.address2 %></span>
+                <% if label.address2 %><span class="address-apt type-nowrap"><%= label.address2 %></span><% end -%>
+              </div>
+              <span class="type-nowrap"><%= label.city %>,</span>
+              <span class="type-nowrap"><%= label.state %></span>
+              <span class="address-zip type-nowrap"><%= label.zipcode %></span>
+            </div>
+            <div class="member-phone">☎︎ <%= number_to_phone(label.phone) %></div>
+            <div class="member-delivery-window">
+              <strong><%= label.delivery_window.to_s %> delivery</strong>
+            </div>
+            <% if label.instructions.present? %>
+              <div class="member-delivery-instructions">
+                <%= label.instructions %>
+              </div>
+            <% end -%>
+            <% if label.packing_list.any? %>
+              <table class="order-table">
+                <% label.packing_list.each do |item| %>
+                  <tr>
+                    <td class="order-quantity <%= "bold" if item.quantity > 1 %>"><%= item.quantity %></td>
+                    <td>
+                      <strong><%= item.name %></strong>
+                      <div class="small">
+                        <span class="type-nowrap"><%= item.restaurant.name %>,</span>
+                        <span class="type-nowrap"><%= item.chef.name %></span>
+                      </div>
+                    </td>
+                  </tr>
+                <% end -%>
+              </table>
+            <% end -%>
+            <footer class="small">
+              <div class="order-id">
+                <%= label.order_number %>
+              </div>
+            </footer>
+          </div>
+        </div>
+      <% end -%>
+
+    </div>
+  <% end -%>
+
+<% end -%>
