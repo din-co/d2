@@ -18,10 +18,10 @@
           <div class="printable-area">
             <% if label.total_tags > 1 %>
               <p>
-                <strong>Tote <%= label.tag_number %> of <%= label.total_tags %></strong>
+                <em>Tote <%= label.tag_number %> of <%= label.total_tags %></em>
               </p>
             <% end -%>
-            <div class="member-name"><%= label.name %></div>
+            <div class="member-name"><strong><%= label.name %></strong></div>
             <div class="member-address">
               <div>
                 <span class="address-street type-nowrap"><%= label.address1 %><%= "," if label.address2 %></span>
@@ -35,15 +35,19 @@
             <div class="member-delivery-window">
               <strong><%= label.delivery_window.to_s %> delivery</strong>
             </div>
-            <% if label.instructions %><div class="member-delivery-instructions"><%= label.instructions %></div><% end -%>
+            <% if label.instructions.present? %>
+              <div class="member-delivery-instructions">
+                <%= label.instructions %>
+              </div>
+            <% end -%>
             <% if label.packing_list.any? %>
               <table class="order-table">
                 <% label.packing_list.each do |item| %>
                   <tr>
-                    <td class="order-quantity"><%= item.quantity %></td>
+                    <td class="order-quantity <%= "bold" if item.quantity > 1 %>"><%= item.quantity %></td>
                     <td>
-                      <%= item.name %>
-                      <div class="small bold">
+                      <strong><%= item.name %></strong>
+                      <div class="small">
                         <span class="type-nowrap"><%= item.restaurant.name %>,</span>
                         <span class="type-nowrap"><%= item.chef.name %></span>
                       </div>
