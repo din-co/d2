@@ -14,6 +14,13 @@ module Spree
       scope :day_of, ->(t) { completed_between(t.midnight, t.end_of_day) }
       scope :not_canceled, -> { where(canceled_at: nil) }
       scope :shippable_day_of, ->(t) { day_of(t).not_canceled }
+      scope :with_delivery_window, ->(id) { joins(:shipments).where("spree_shipments.delivery_window_id" => id) }
+      scope :including_tote_data, -> {
+        includes(:ship_address, {shipments: :selected_delivery_window})
+          .references(:spree_shipments, :spree_addresses)
+          .order("spree_shipments.delivery_window_id")
+          .order("spree_addresses.firstname")
+      }
     end
 
     class_methods do
@@ -45,8 +52,12 @@ module Spree
         shipments.first.try!(:selected_delivery_window).present?
       end
 
+      def tote_tags_count
+        (quantity/3.0).ceil
+      end
+
       def tote_tags
-        total_tags = (quantity/3.0).ceil
+        total_tags = tote_tags_count
         # Prototype tag
         tag_attributes = {
           order_number:    number,

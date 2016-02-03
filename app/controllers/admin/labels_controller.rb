@@ -6,13 +6,19 @@ class Admin::LabelsController < Spree::Admin::BaseController
 
   def tote
     @title = "Tote Labels"
-    orders = Spree::Order
-      .shippable_day_of(date)
-      .includes(:ship_address, :line_items, {shipments: :selected_delivery_window})
-      .order("spree_shipments.delivery_window_id")
-      .order("spree_addresses.firstname")
-    raw_labels = orders.flat_map(&:tote_tags)
-    @labels = Set.new(raw_labels).classify(&:delivery_window)
+    @delivery_windows = Spree::DeliveryWindow.includes(:shipping_method)
+    @order_counts = {}
+    @label_counts = @delivery_windows.each_with_object({}) do |window, counts|
+      orders = window.orders.shippable_day_of(date).select(:id).to_a
+      counts[window.id] = orders.sum(&:tote_tags_count)
+      @order_counts[window.id] = orders.size
+    end
+  end
+
+  def tote_print
+    orders = Spree::Order.including_tote_data.shippable_day_of(date)
+    orders = orders.where(spree_shipments: {delivery_window_id: delivery_window_id}) if delivery_window_id
+    @labels = orders.flat_map(&:tote_tags)
   end
 
   def meal
@@ -51,6 +57,10 @@ class Admin::LabelsController < Spree::Admin::BaseController
     else
       Time.current.to_date
     end
+  end
+
+  def delivery_window_id
+    params[:delivery_window_id].presence
   end
 
   def large_labels

@@ -2,6 +2,7 @@ module Spree
   class DeliveryWindow < Spree::Base
     belongs_to :shipping_method
     has_many :shipments, inverse_of: :delivery_window
+    has_many :orders, through: :shipments
 
     # FIXME: start_hour - lead_time_duration isn't robust to crossing midnight
     scope :available, -> { where("start_hour - lead_time_duration > ?", Time.zone.now.hour) }

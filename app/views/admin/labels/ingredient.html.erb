@@ -4,7 +4,7 @@
 
 <div class="container">
   <%= form_tag main_app.admin_labels_ingredient_print_path, method: :get do %>
-    <h1>Ingredient Labels</h1>
+    <h1><%= @title %></h1>
     <div class="form-group">
       <label>Quantity</label>
       <input type="number" name="quantity" value="10" class="form-control">
