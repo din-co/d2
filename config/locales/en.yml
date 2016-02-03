@@ -34,6 +34,8 @@ en:
     checkout_disabled: "Checkout is unavailable while the kitchen is closed."
     add_dish: "Add 2 Servings"
     two_servings: "2 Servings"
+    next_available: Available on %{date}
+    not_currently_available: "Not currently available to order"
     forgot: "Forgot?"
     password_reset: "Password Reset"
     reset_password: "Reset Password"

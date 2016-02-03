@@ -30,6 +30,14 @@ module Spree
       def equipment
         taxons.non_root.equipment
       end
+
+      def pages
+        taxons.pages
+      end
+
+      def on_home_page?
+        pages.find_by(name: "Home").present?
+      end
     end
   end
 end
