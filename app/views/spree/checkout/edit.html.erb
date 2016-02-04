@@ -1,19 +1,13 @@
-<% content_for :head do %>
-  <script type="text/javascript">
-    _kmq.push(['trackSubmit', '<%= j "checkout_form_#{@order.state}" %>', '<%= j "Completed Checkout Step #{@order.state}" %>']);
-  </script>
-<% end -%>
-
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
 <div class="container container--main">
 
   <%#= checkout_progress %>
 
-  <%= form_for @order, :url => update_checkout_path(@order.state), :html => { :id => "checkout_form_#{@order.state}" } do |form| %>
+  <%= form_for @order, url: update_checkout_path(@order.state), html: { id: "checkout_form_#{@order.state}" } do |form| %>
     <% if @order.state == 'address' || !@order.email? %>
       <%= form.hidden_field :email %>
     <% end %>
-    <%= render @order.state, :form => form %>
+    <%= render @order.state, form: form %>
   <% end %>
 </div>
 
