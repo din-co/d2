@@ -15,7 +15,7 @@
             product_id: $(this).data("product-id"),
             quantity: quantity_form
           }
-          if (quantity_initial > quantity_form) {
+          if (quantity_initial > quantity_form && quantity_form > 0) {
             track({name: 'decreased product quantity', metadata: metadata});
           } else if (quantity_initial < quantity_form) {
             track({name: 'increased product quantity', metadata: metadata});
