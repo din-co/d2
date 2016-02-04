@@ -2,8 +2,11 @@
   <% content_for :head do %>
     <script type="text/javascript">
       var metadata = {
-        cart_total: <%= order.display_order_total_after_store_credit.to_f %>,
-        item_count: <%= order.item_count %>
+        item_count: <%= @order.item_count %>,
+        item_total: <%= @order.amount.to_f %>,
+        tax_total: <%= @order.tax_total.to_f %>,
+        total_applicable_store_credit: <%= @order.total_applicable_store_credit.to_f %>,
+        order_total: <%= @order.total.to_f %>
       }
       track({name: "completed checkout", metadata: metadata});
     </script>
