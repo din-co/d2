@@ -8,9 +8,6 @@
   </script>
 <% end -%>
 
-<% if flash[:error].present? %>
-  ERROR: <%= flash[:error] %>
-<% end %>
 <h1><%= Spree.t(:delivery) %></h1>
 <%= form.fields_for :shipments do |ship_form| %>
 
