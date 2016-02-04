@@ -1,6 +1,13 @@
 <% content_for :head do %>
   <script type="text/javascript">
-    _kmq.push(['trackSubmit', '.add-product-form', 'Added Product to Cart', {"page": "product detail"}]);
+    $(function() {
+      $(".add-product-form").submit(function() {
+        var metadata = {
+          product_id: $("[name='product_id']", this).val()
+        }
+        track({name: 'added product', metadata: metadata});
+      })
+    });
   </script>
 <% end -%>
 <% @body_id = 'product-details' %>

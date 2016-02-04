@@ -1,3 +1,15 @@
+<% if flash['order_completed'] %>
+  <% content_for :head do %>
+    <script type="text/javascript">
+      var metadata = {
+        cart_total: <%= order.display_order_total_after_store_credit.to_f %>,
+        item_count: <%= order.item_count %>
+      }
+      track({name: "completed checkout", metadata: metadata});
+    </script>
+  <% end -%>
+<% end -%>
+
 <div class="container container--main">
   <h1><%= Spree.t(:order_number, :number => @order.number) %></h1>
   <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>

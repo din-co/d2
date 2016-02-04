@@ -1,3 +1,17 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    <% payment_method = @order.credit_cards.with_payment_profile.first %>
+    var metadata = {
+      stripe_customer: "<%= j payment_method.try(:gateway_customer_profile_id) %>"
+    }
+    track({name: "visited checkout step confirm", metadata: metadata});
+    <% if payment_method.try(:payments).try(:count) == 0 %>
+      metadata.added_card = true;
+      track({name: "added payment method", metadata: metadata});
+    <% end -%>
+  </script>
+<% end -%>
+
 <h1><%= Spree.t(:confirm) %></h1>
 <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
 

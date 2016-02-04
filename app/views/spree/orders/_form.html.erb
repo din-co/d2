@@ -1,3 +1,37 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    $(function() {
+      $(".js_remove_product").click(function() {
+        var metadata = {
+          product_id: $(this).data("product-id")
+        }
+        track({name: 'removed product', metadata: metadata});
+      })
+      $("#update-cart").submit(function(){
+        $(".line-item", this).each(function(){
+          var quantity_initial = $(this).data("quantity");
+          var quantity_form = parseInt($(".js_track_quantity", this).val());
+          var metadata = {
+            product_id: $(this).data("product-id"),
+            quantity: quantity_form
+          }
+          if (quantity_initial > quantity_form) {
+            track({name: 'decreased product quantity', metadata: metadata});
+          } else if (quantity_initial < quantity_form) {
+            track({name: 'increased product quantity', metadata: metadata});
+          }
+        })
+      })
+      $("#checkout-link").click(function(){
+        var metadata = {
+          authenticated: <%= spree_current_user.present? %>
+        }
+        track({name: 'started checkout', metadata: metadata})
+      })
+    });
+  </script>
+<% end -%>
+
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @order } %>
 <table class="cart-table table table-condensed table--vertical-middle">
   <colgroup>
@@ -21,7 +55,7 @@
     <% order_form.object.line_items.each do |line_item| %>
       <% variant = line_item.variant -%>
       <%= order_form.fields_for :line_items, line_item do |item_form| -%>
-        <tr class="line-item">
+        <tr class="line-item" data-price="<%= line_item.price %>" data-quantity=<%= line_item.quantity %>>
           <td class="cart-table__image">
             <% if variant.images.length == 0 %>
               <%= link_to image_tag(variant.product.display_image.attachment(:menu), class: "product-image"), variant.product %>
@@ -48,8 +82,8 @@
           </td>
           <td class="cart-table__quantity">
             <div class="input-group cart-table__quantity-group">
-              <%= item_form.number_field :quantity, :min => 0, :class => "line_item_quantity cart-table__quantity-input form-control", :maxlength => 2 %>
-              <%= link_to "×", '#', :class => 'delete input-group-addon cart-table__quantity-remove', :id => "delete_#{dom_id(line_item)}" %>
+              <%= item_form.number_field :quantity, class: "js_track_quantity line_item_quantity cart-table__quantity-input form-control" %>
+              <%= link_to "×", '#remove-product', class: 'js_remove_product delete input-group-addon cart-table__quantity-remove', id: "delete_#{dom_id(line_item)}", "data-product-id": line_item.id %>
             </div>
           </td>
           <td class="cart-table__total">

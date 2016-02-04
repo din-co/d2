@@ -1,3 +1,12 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    var metadata = {
+      delivery_window: "<%= j @order.delivery_window.to_s %>"
+    }
+    track({name: "visited checkout step payment", metadata: metadata});
+  </script>
+<% end -%>
+
 <h1><%= Spree.t(:payment) %></h1>
 
 <p>Card payments powered by Stripe.</p>

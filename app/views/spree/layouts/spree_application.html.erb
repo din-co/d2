@@ -13,6 +13,11 @@
     <%= csrf_meta_tags %>
     <%= javascript_include_tag 'spree/frontend/all' %>
     <%= render :partial => 'spree/shared/analytics_trackers' %>
+    <% if spree_current_user %>
+      <script>
+        _kmq.push(['identify', '<%= j spree_current_user.email -%>']);
+      </script>
+    <% end -%>
     <%= yield :head %>
   </head>
   <body class="<%= body_class %>" id="<%= @body_id %>">
@@ -32,10 +37,5 @@
     <%= yield %>
 
     <%= render :partial => 'spree/shared/footer' %>
-    <% if spree_current_user %>
-    <script>
-      _kmq.push(['identify', '<%= j spree_current_user.email -%>']);
-    </script>
-    <% end -%>
   </body>
 </html>

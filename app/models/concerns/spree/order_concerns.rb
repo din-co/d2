@@ -48,8 +48,12 @@ module Spree
     end
 
     module InstanceMethods
+      def delivery_window
+        shipments.first.try!(:selected_delivery_window)
+      end
+
       def delivery_window_selected?
-        shipments.first.try!(:selected_delivery_window).present?
+        delivery_window.present?
       end
 
       def tote_tags_count

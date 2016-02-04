@@ -1,13 +1,17 @@
 <% content_for :head do %>
   <script type="text/javascript">
-    _kmq.push(['trackSubmit', 'update-cart', 'Started Checkout']);
+    var metadata = {
+      cart_total: <%= @order.total.to_f %>,
+      item_count: <%= @order.item_count %>,
+      authenticated: <%= spree_current_user.present? %>
+    }
+    track({name: "visited cart", metadata: metadata});
   </script>
 <% end -%>
 
 <% @body_id = 'cart' %>
 <div class="container container--main">
   <h1><%= Spree.t(:cart) %></h1>
-
 
   <%= form_for @order, url: update_cart_path, html: {id: 'update-cart'} do |order_form| %>
 
