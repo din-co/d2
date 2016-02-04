@@ -5,7 +5,7 @@
       stripe_customer: "<%= j payment_method.try(:gateway_customer_profile_id) %>"
     }
     track({name: "visited checkout step confirm", metadata: metadata});
-    <% if payment_method.try(:payments).try(:count) == 0 %>
+    <% if payment_method.payments.completed.count == 0 %>
       metadata.added_card = true;
       track({name: "added payment method", metadata: metadata});
     <% end -%>
