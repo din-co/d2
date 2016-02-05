@@ -18,6 +18,7 @@
         _kmq.push(['identify', '<%= j spree_current_user.email -%>']);
       </script>
     <% end -%>
+    <%= intercom_script_tag %>
     <%= yield :head %>
   </head>
   <body class="<%= body_class %>" id="<%= @body_id %>">
