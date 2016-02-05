@@ -1,3 +1,14 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    var metadata = {}
+    <% if simple_current_order %>
+      metadata.item_count = <%= simple_current_order.item_count %>
+      metadata.cart_total = <%= simple_current_order.total.to_f %>
+    <% end -%>
+    track({name: "visited sign in", metadata: metadata});
+  </script>
+<% end -%>
+
 <div class="bg-tan">
   <div class="container container--main">
     <h1 class="hr-header"><%= Spree.t(:login) %></h1>

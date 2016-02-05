@@ -4,4 +4,5 @@
 //= require spree/frontend/product
 //= require spree/frontend/cart
 //= require spree/frontend/nav
+//= require spree/frontend/track
 //= require bootstrap-sprockets

@@ -1,0 +1,30 @@
+function track(args) {
+  <% unless Rails.env.production? %>
+    console.log('Track: ' + JSON.stringify(args));
+  <% end %>
+  trackKissmetrics(args);
+  trackIntercom(args);
+// trackGoogle(args);
+// trackFacebook(args);
+}
+
+
+// Kissmetrics
+function trackKissmetrics(args) {
+  _kmq.push(['record', args.name, args.metadata]);
+}
+
+// Intercom
+function trackIntercom(args) {
+  $(function() {
+  	Intercom('trackEvent', args.name, args.metadata);
+  });
+}
+
+// Google Analytics
+// function trackGA(args) {
+// }
+
+// Facebook
+// function trackFacebook(args) {
+// }

@@ -1,8 +1,7 @@
-<%= form_for :order, :url => populate_orders_path, html: { class: "add-product-form"} do |f| %>
+<%= form_for :order, :url => populate_orders_path, html: { class: "add-product-form", 'data-name': product.name, 'data-id': product.id, 'data-restaurant': product.restaurant.try(:name), 'data-chef': product.chef.try(:name) } do |f| %>
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
     <span itemprop="priceCurrency" content="<%= product.currency %>"></span>
     <link itemprop="availability" href="http://schema.org/InStock" />
-    <%= hidden_field_tag "product_id", product.id, class: "km_include" %>
     <%= hidden_field_tag "variant_id", product.master.id %>
     <%= hidden_field_tag :quantity, 1 %>
     <div class="product__order text-center">

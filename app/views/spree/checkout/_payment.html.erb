@@ -1,3 +1,20 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    var metadata = {
+      delivery_window: "<%= j @order.delivery_window.to_s %>"
+    }
+    track({name: "visited checkout step payment", metadata: metadata});
+    <% if payment_error_message.present? %>
+      var metadata = {
+        item_count: <%= @order.item_count %>,
+        cart_total: <%= @order.total.to_f %>,
+        error: '<%= j payment_error_message %>'
+      }
+      track({name: "experienced payment error", metadata: metadata});
+    <% end %>
+  </script>
+<% end -%>
+
 <h1><%= Spree.t(:payment) %></h1>
 
 <p>Card payments powered by Stripe.</p>

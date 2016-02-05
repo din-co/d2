@@ -1,0 +1,1 @@
+Spree::UserRegistrationsController.include Spree::UserRegistrationsControllerConcerns

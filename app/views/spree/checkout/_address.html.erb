@@ -1,3 +1,19 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+    var metadata = {
+      cart_total: <%= @order.total.to_f %>,
+      item_count: <%= @order.item_count %>
+    }
+    <% if flash['user_signed_up'] %>
+      metadata.signed_up_during_checkout = true;
+    <% end -%>
+    <% if flash['signed_in'] %>
+      metadata.signed_in_during_checkout = true;
+    <% end -%>
+    track({name: "visited checkout step address", metadata: metadata});
+  </script>
+<% end -%>
+
 <div id="billing">
   <%= form.fields_for :bill_address do |bill_form| %>
     <h3><%= Spree.t(:billing_address) %></h3>

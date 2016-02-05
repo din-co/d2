@@ -1,3 +1,31 @@
+<% if flash['order_completed'] %>
+  <% content_for :head do %>
+    <script type="text/javascript">
+      var metadata = {
+        item_count: <%= @order.item_count %>,
+        item_total: <%= @order.amount.to_f %>,
+        tax_total: <%= @order.tax_total.to_f %>,
+        total_applicable_store_credit: <%= @order.total_applicable_store_credit.to_f %>,
+        order_total: <%= @order.total.to_f %>
+      }
+      track({name: "completed checkout", metadata: metadata});
+      <% @order.line_items.each do |item| %>
+        metadata = {
+          name: "<%= j item.product.name %>",
+          <% if item.product.restaurant %>
+            restaurant: "<%= j item.product.restaurant.name %>",
+          <% end -%>
+          <% if item.product.chef %>
+            chef: "<%= j item.product.chef.name %>",
+          <% end -%>
+          product_id: <%= item.product.id %>
+        }
+        track({name: "purchased product", metadata: metadata});
+      <% end %>
+    </script>
+  <% end -%>
+<% end -%>
+
 <div class="container container--main">
   <h1><%= Spree.t(:order_number, :number => @order.number) %></h1>
   <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>

@@ -1,6 +1,13 @@
-<% if flash[:error].present? %>
-  ERROR: <%= flash[:error] %>
-<% end %>
+<% content_for :head do %>
+  <script type="text/javascript">
+    var metadata = {
+      city: "<%= j @order.ship_address.city %>",
+      postal_code: "<%= j @order.ship_address.zipcode %>"
+    }
+    track({name: "visited checkout step delivery", metadata: metadata});
+  </script>
+<% end -%>
+
 <h1><%= Spree.t(:delivery) %></h1>
 <%= form.fields_for :shipments do |ship_form| %>
 
