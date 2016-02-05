@@ -1,6 +1,6 @@
 function track(args) {
   <% unless Rails.env.production? %>
-  	console.log('Track: ' + JSON.stringify(args));
+    console.log('Track: ' + JSON.stringify(args));
   <% end %>
   trackKissmetrics(args);
   trackIntercom(args);
