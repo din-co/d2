@@ -3,7 +3,7 @@
     $(function() {
       $(".add-product-form").submit(function() {
         var metadata = {
-          product_id: $("[name='product_id']", this).val(),
+          product_id: $(this).data("id"),
           name: $(this).data("name"),
           restaurant: $(this).data("restaurant"),
           chef: $(this).data("chef")
