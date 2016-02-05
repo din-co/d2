@@ -55,5 +55,7 @@ module D2
     # Allow any origin to load fonts
     # TODO: tighten this up in production
     config.font_assets.origin = '*'
+
+    ::TRUE_PRODUCTION_INSTANCE = false # Set to true under the right conditions in production.rb
   end
 end

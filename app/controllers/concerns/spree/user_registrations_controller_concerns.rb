@@ -12,8 +12,6 @@ module Spree
       private
 
       def set_flash_for_registration
-        Rails.logger.info "FLASH FLASH"
-        Rails.logger.info flash.inspect
         flash['user_signed_up'] = true if flash[:notice].present?
       end
     end

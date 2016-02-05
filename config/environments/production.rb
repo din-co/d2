@@ -69,6 +69,8 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { protocol: 'https', host: ENV['EMAIL_HOST'] || config.x.canonical_domain }
 
+  ::TRUE_PRODUCTION_INSTANCE = (canonical_domain == 'din.co' && ENV['EMAIL_HOST'] == 'din.co')
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true

@@ -45,15 +45,18 @@ Spree.config do |config|
 
   # Gateway credentials can be configured statically here and referenced from
   # the admin. They can also be fully configured from the admin.
-  #
-  # config.static_model_preferences.add(
-  #   Spree::Gateway::StripeGateway,
-  #   'stripe_env_credentials',
-  #   secret_key: ENV['STRIPE_SECRET_KEY'],
-  #   publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
-  #   server: Rails.env.production? ? 'production' : 'test',
-  #   test: !Rails.env.production?
-  # )
+
+  # Force Stripe test server unless really in production
+  unless Rails.configuration.x.true_production_instance
+    config.static_model_preferences.add(
+      Spree::Gateway::StripeGateway,
+      'stripe_env_credentials',
+      secret_key: 'sk_test_0wqvetWX3zDayzZc8KSggjhO',
+      publishable_key: 'pk_test_RtnEyAHZVnP5lTdheh6UuR9W',
+      server: 'test',
+      test: true,
+    )
+  end
 end
 
 Spree::Config[:default_country_id] = begin
@@ -85,7 +88,7 @@ if Rails.env.production?
     paperclip_config[:url] = ':s3_path_url'
   end
 
-  if ENV['EMAIL_HOST'] == 'din.co' || ENV['HEROKU_APP_NAME'] == 'din-marketplace'
+  if TRUE_PRODUCTION_INSTANCE
     paperclip_config[:path] = "/:class/:attachment/:id_partition/:style/:filename"
   else
     paperclip_config[:path] = "/staging/:class/:attachment/:id_partition/:style/:filename"

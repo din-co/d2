@@ -1,0 +1,40 @@
+<% if TRUE_PRODUCTION_INSTANCE
+    if flash['user_signed_up']
+      conversion_label = "3IlNCLnW0WMQ67CAvQM"
+    elsif flash['order_completed'] && @order.present?
+      conversion_label = "pdo7COeIzmMQ67CAvQM"
+      conversion_value = @order.total.to_f
+    end
+  elsif flash['user_signed_up'] || (flash['order_completed'] && @order.present?)
+    conversion_label = "QLAfCPDZzmMQ67CAvQM"
+end %>
+
+<% if conversion_label.present? %>
+  <script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 933238891;
+    var google_conversion_language = "en";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "<%= conversion_label %>";
+    <% if conversion_value.present? %>
+      var google_conversion_value = <%= conversion_value %>;
+      var google_conversion_currency = "USD";
+    <% end %>
+    var google_remarketing_only = false;
+    /* ]]> */
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  </script>
+  <noscript>
+    <div style="display:inline;">
+      <% if conversion_value.present? %>
+        <img height="1" width="1" style="border-style:none;" alt=""
+        src="//www.googleadservices.com/pagead/conversion/933238891/?value=<%= conversion_value %>&amp;currency_code=USD&amp;label=<%= conversion_label %>&amp;guid=ON&amp;script=0"/>
+      <% else %>
+        <img height="1" width="1" style="border-style:none;" alt=""
+        src="//www.googleadservices.com/pagead/conversion/933238891/?label=<%= conversion_label %>&amp;guid=ON&amp;script=0"/>
+      <% end %>
+    </div>
+  </noscript>
+<% end %>
