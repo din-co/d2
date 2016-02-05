@@ -9,6 +9,19 @@
         order_total: <%= @order.total.to_f %>
       }
       track({name: "completed checkout", metadata: metadata});
+      <% @order.line_items.each do |item| %>
+        metadata = {
+          name: "<%= j item.product.name %>",
+          <% if item.product.restaurant %>
+            restaurant: "<%= j item.product.restaurant.name %>",
+          <% end -%>
+          <% if item.product.chef %>
+            chef: "<%= j item.product.chef.name %>",
+          <% end -%>
+          product_id: <%= item.product.id %>
+        }
+        track({name: "purchased product", metadata: metadata});
+      <% end %>
     </script>
   <% end -%>
 <% end -%>
