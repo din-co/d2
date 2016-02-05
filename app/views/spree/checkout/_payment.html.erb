@@ -4,6 +4,14 @@
       delivery_window: "<%= j @order.delivery_window.to_s %>"
     }
     track({name: "visited checkout step payment", metadata: metadata});
+    <% if flash['payment_error'].present? %>
+      var metadata = {
+        item_count: <%= @order.item_count %>,
+        cart_total: <%= @order.total.to_f %>,
+        error: '<%= j flash['payment_error'] %>'
+      }
+      track({name: "experienced payment error", metadata: metadata});
+    <% end %>
   </script>
 <% end -%>
 

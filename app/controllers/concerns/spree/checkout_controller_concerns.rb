@@ -7,6 +7,8 @@ module Spree
 
       before_filter :assign_shipping_rate_of_delivery_window, only: :update, if: Proc.new { params['state'] == 'delivery' }
       before_filter :ensure_order_valid, only: :update, if: Proc.new { params['state'] == 'delivery' }
+
+      rescue_from Spree::Core::GatewayError, :with => :rescue_from_spree_gateway_error
     end
 
     module InstanceMethods
@@ -26,6 +28,11 @@ module Spree
         delivery_window = shipment.delivery_windows.find(delivery_window_id)
         shipping_rate = shipment.shipping_rates.find_by(shipping_method: delivery_window.shipping_method)
         params['order']['shipments_attributes']['0']['selected_shipping_rate_id'] = shipping_rate.id
+      end
+
+      def rescue_from_spree_gateway_error(exception)
+        flash['payment_error'] = exception.message
+        super
       end
     end
   end
