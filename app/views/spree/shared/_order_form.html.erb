@@ -7,7 +7,7 @@
     <div class="product__offers">
       <%= add_to_cart_button(product) %>
       <%= link_to spree.product_path(product, taxon_id: @taxon.try(:id)), class: "btn btn-default" do %>
-        View Details <span class="list-button" itemprop="time"><%= product.property('time-minutes') %> Min Cook Time</span>
+        View Recipe <span class="list-button" itemprop="time"><%= product.property('time-minutes') %> Min Cook Time</span>
       <% end %>
     </div>
   </div>
