@@ -5,8 +5,12 @@
       conversion_label = "pdo7COeIzmMQ67CAvQM"
       conversion_value = @order.total.to_f
     end
-  elsif flash['user_signed_up'] || (flash['order_completed'] && @order.present?)
+  elsif flash['user_signed_up'] || flash['order_completed']
+    ## In dev and test we count all conversions under one label
     conversion_label = "QLAfCPDZzmMQ67CAvQM"
+    if flash['order_completed'] && @order.present?
+      conversion_value = @order.total.to_f
+    end
 end %>
 
 <% if conversion_label.present? %>
