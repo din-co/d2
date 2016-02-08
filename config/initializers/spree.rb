@@ -45,18 +45,15 @@ Spree.config do |config|
 
   # Gateway credentials can be configured statically here and referenced from
   # the admin. They can also be fully configured from the admin.
-
-  # Force Stripe test server unless really in production
-  unless ::TRUE_PRODUCTION_INSTANCE
-    config.static_model_preferences.add(
-      Spree::Gateway::StripeGateway,
-      'stripe_env_credentials',
-      secret_key: 'sk_test_0wqvetWX3zDayzZc8KSggjhO',
-      publishable_key: 'pk_test_RtnEyAHZVnP5lTdheh6UuR9W',
-      server: 'test',
-      test: true,
-    )
-  end
+  #
+  # config.static_model_preferences.add(
+  #   Spree::Gateway::StripeGateway,
+  #   'stripe_env_credentials',
+  #   secret_key: ENV['STRIPE_SECRET_KEY'],
+  #   publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
+  #   server: Rails.env.production? ? 'production' : 'test',
+  #   test: !Rails.env.production?
+  # )
 end
 
 Spree::Config[:default_country_id] = begin
