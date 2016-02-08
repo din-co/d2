@@ -1,3 +1,4 @@
+// track is the preferred way to send events to both KM and Intercom.
 function track(args) {
   <% unless TRUE_PRODUCTION_INSTANCE %>
     console.log('Track: ' + JSON.stringify(args));
@@ -6,23 +7,12 @@ function track(args) {
   trackIntercom(args);
 }
 
-
-// Kissmetrics
 function trackKissmetrics(args) {
   _kmq.push(['record', args.name, args.metadata]);
 }
 
-// Intercom
 function trackIntercom(args) {
   $(function() {
   	Intercom('trackEvent', args.name, args.metadata);
   });
 }
-
-// Google Analytics
-// function trackGA(args) {
-// }
-
-// Facebook
-// function trackFacebook(args) {
-// }
