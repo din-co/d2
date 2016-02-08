@@ -8,9 +8,11 @@
   fbq('init', '1577613412519021');
   fbq('track', "PageView");
 </script>
-<noscript>
-  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1577613412519021&ev=PageView&noscript=1" />
-</noscript>
+<% content_for :body_scripts do %>
+  <noscript>
+    <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1577613412519021&ev=PageView&noscript=1" />
+  </noscript>
+<% end %>
 
 <% if flash['user_signed_up'] %>
   <script type="text/javascript">
