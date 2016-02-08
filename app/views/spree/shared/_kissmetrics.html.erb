@@ -12,3 +12,14 @@
   _kms('//i.kissmetrics.com/i.js');
   _kms('//scripts.kissmetrics.com/' + _kmk + '.2.js');
 </script>
+
+<% if flash['user_signed_up'] %>
+  <script type="text/javascript">
+    var metadata = {}
+    <% if simple_current_order %>
+      metadata.item_count = <%= simple_current_order.item_count %>
+      metadata.cart_total = <%= simple_current_order.total.to_f %>
+    <% end -%>
+    _kmq.push(['record', 'signed up', metadata]);
+  </script>
+<% end %>
