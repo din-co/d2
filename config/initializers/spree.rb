@@ -47,7 +47,7 @@ Spree.config do |config|
   # the admin. They can also be fully configured from the admin.
 
   # Force Stripe test server unless really in production
-  unless Rails.configuration.x.true_production_instance
+  unless ::TRUE_PRODUCTION_INSTANCE
     config.static_model_preferences.add(
       Spree::Gateway::StripeGateway,
       'stripe_env_credentials',
@@ -88,7 +88,7 @@ if Rails.env.production?
     paperclip_config[:url] = ':s3_path_url'
   end
 
-  if TRUE_PRODUCTION_INSTANCE
+  if ::TRUE_PRODUCTION_INSTANCE
     paperclip_config[:path] = "/:class/:attachment/:id_partition/:style/:filename"
   else
     paperclip_config[:path] = "/staging/:class/:attachment/:id_partition/:style/:filename"
