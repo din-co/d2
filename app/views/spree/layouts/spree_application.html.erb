@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%= tag('meta', name: "robots", content: "noindex, nofollow") unless ENV["EMAIL_HOST"] == "din.co" %>
+    <%= tag('meta', name: "robots", content: "noindex, nofollow") unless TRUE_PRODUCTION_INSTANCE %>
     <title><%= title %></title>
     <%# meta_data_tags %>
     <%= canonical_tag(current_store.url) %>
@@ -25,7 +25,7 @@
 
     <%= render :partial => 'spree/shared/header' %>
 
-    <%= flash_messages %>
+    <%= flash_messages(ignore_types: %w[user_signed_up]) %>
 
     <% if !KITCHEN.open? && @show_kitchen_status %>
       <div class="kitchen-status-closed">

@@ -11,7 +11,7 @@ if Rails.env.production?
 
   # Production doesn't send real email unless SEND_REAL_EMAILS is set
   block_real_emails = ENV['SEND_REAL_EMAILS'].blank?
-  Rails.application.config.x.redirect_emails_internally = block_real_emails
+  Rails.configuration.x.redirect_emails_internally = block_real_emails
   Rails.application.config.action_mailer.show_previews = block_real_emails
 
   ActionMailer::Base.register_interceptor(RedirectOutgoingEmail)

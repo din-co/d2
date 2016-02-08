@@ -85,7 +85,7 @@ if Rails.env.production?
     paperclip_config[:url] = ':s3_path_url'
   end
 
-  if ENV['EMAIL_HOST'] == 'din.co' || ENV['HEROKU_APP_NAME'] == 'din-marketplace'
+  if ::TRUE_PRODUCTION_INSTANCE
     paperclip_config[:path] = "/:class/:attachment/:id_partition/:style/:filename"
   else
     paperclip_config[:path] = "/staging/:class/:attachment/:id_partition/:style/:filename"

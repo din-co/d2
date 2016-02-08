@@ -34,11 +34,11 @@ module ApplicationHelper
   end
 
   def support_email_address
-    Rails.application.config.x.support_email_address
+    Rails.configuration.x.support_email_address
   end
 
   def support_phone_number
-    Rails.application.config.x.support_phone_number
+    Rails.configuration.x.support_phone_number
   end
 
   def support_phone_tel
