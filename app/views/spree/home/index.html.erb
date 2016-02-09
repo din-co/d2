@@ -27,25 +27,24 @@
 </div>
 
 <div id="menu" class="container--main">
-  <div class="menu-header">
-
-    <% unless KITCHEN.open? %>
-      <div class="kitchen-closed">
-        <%= render :partial => 'spree/shared/kitchen_reopens' %>
-      </div>
-      <% next_open = KITCHEN.next_opens %>
-      <h2 class="hr-header"><%= next_open.to_s(:weekday) %>’s Menu</h2>
-      <div class="sub-header text-center bottom30">
-        <%= next_open.to_s(:ordinal_weekday_month_day) %>
-      </div>
-    <% else %>
-      <h2 class="hr-header">Today’s Menu</h2>
-      <div class="sub-header text-center bottom30">
-        <%= Time.current.to_s(:ordinal_weekday_month_day) %>
-      </div>
-    <% end -%>
-  </div>
   <% cache(cache_key_for_products) do %>
+    <div class="menu-header">
+      <% unless KITCHEN.open? %>
+        <div class="kitchen-closed">
+          <%= render :partial => 'spree/shared/kitchen_reopens' %>
+        </div>
+        <% next_open = KITCHEN.next_opens %>
+        <h2 class="hr-header"><%= next_open.to_s(:weekday) %>’s Menu</h2>
+        <div class="sub-header text-center bottom30">
+          <%= next_open.to_s(:ordinal_weekday_month_day) %>
+        </div>
+      <% else %>
+        <h2 class="hr-header">Today’s Menu</h2>
+        <div class="sub-header text-center bottom30">
+          <%= Time.current.to_s(:ordinal_weekday_month_day) %>
+        </div>
+      <% end -%>
+    </div>
     <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
   <% end %>
 
