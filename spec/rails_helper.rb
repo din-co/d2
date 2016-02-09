@@ -64,10 +64,10 @@ RSpec.configure do |config|
         (or set it to false) to prevent uncommitted transactions being used in
         JavaScript-dependent specs.
 
-        During testing, the app-under-test that the browser driver connects to
-        uses a different database connection to the database connection used by
-        the spec. The app's database connection would not be able to access
-        uncommitted transaction data setup over the spec's database connection.
+        During testing, the app-under-test in the browser uses a different database
+        connection than the one used by the spec driver. The app's database connection
+        cannot access uncommitted transaction data set up by the spec's database
+        connection.
       MSG
     end
     DatabaseCleaner.clean_with(:truncation)
@@ -89,7 +89,24 @@ RSpec.configure do |config|
       # Driver is probably for an external browser with an app
       # under test that does *not* share a database connection with the
       # specs, so use truncation strategy.
-      DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.strategy = :truncation, {:except => %w[
+        spree_countries
+        spree_states
+        spree_postal_codes
+        spree_zone_members
+        spree_zones
+        spree_shipping_method_zones
+        spree_shipping_methods
+        spree_shipping_method_categories
+        spree_shipping_categories
+        spree_delivery_windows
+        spree_stock_locations
+
+        spree_taxonomies
+        spree_taxons
+        spree_prototype_taxons
+        spree_prototypes
+      ]}
     end
   end
 
