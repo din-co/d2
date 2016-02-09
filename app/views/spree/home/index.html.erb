@@ -10,6 +10,12 @@
         }
         track({name: 'added product', metadata: metadata});
       })
+      $(".js_view_menu_button").click(function(){
+        track({name: 'clicked learn more button in home jumbotron'});
+      })
+      $(".js_view_menu_button").click(function(){
+        track({name: 'clicked view menu button in home how-din-works'});
+      })
     });
   </script>
 <% end -%>
@@ -20,7 +26,7 @@
       <h1 class="hr-header">Recreate Restaurant Dishes at Home</h1>
       <p class="sub-header text-center type-serif">in about 20 minutes</p>
       <div class="text-center">
-        <a class="btn btn-default learn-more-button" href="#how-din-works">Learn how Din works</a>
+        <a class="btn btn-default learn-more-button js_learn_more_button" href="#how-din-works">Learn how Din works</a>
       </div>
     </div>
   </div>
@@ -138,7 +144,7 @@
       <div class="how-din-works__description">
         <p>Gather around the table with your loved ones to share stories of your day.</p>
         <p>
-          <a class="btn btn-primary" href="#menu">View the Din menu</a>
+          <a class="btn btn-primary js_view_menu_button" href="#menu">View the Din menu</a>
         </p>
       </div>
     </div>
