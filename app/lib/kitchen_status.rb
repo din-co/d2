@@ -15,6 +15,10 @@ class KitchenStatus
     end
   end
 
+  def status
+    (overridden_status || open? ? :open : :closed).to_s
+  end
+
   # Relative time methods describing a kitchen that is open part of the week and closed the other part
   #         Open |---------------------------------\ 5pm Close
   # |------------|------------|------------|------------|------------|------------|------------|
