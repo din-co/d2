@@ -102,6 +102,8 @@ RSpec.configure do |config|
         spree_delivery_windows
         spree_stock_locations
 
+        spree_calculators
+
         spree_taxonomies
         spree_taxons
         spree_prototype_taxons
