@@ -10,6 +10,12 @@
         }
         track({name: 'added product', metadata: metadata});
       })
+      $(".js_learn_more_button").click(function(){
+        track({name: 'clicked learn more button', metadata: {location: 'jumbotron'}});
+      })
+      $(".js_view_menu_button").click(function(){
+        track({name: 'clicked view menu button', metadata: {location: 'how din works'}});
+      })
     });
   </script>
 <% end -%>
