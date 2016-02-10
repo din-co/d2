@@ -82,7 +82,7 @@ module Spree
         }
 
         # Include packing list only on the first tag.
-        packing_list = shipments.first.pre_shipment_manifest  .map do |manifest_item|
+        packing_list = shipments.first.pre_shipment_manifest.map do |manifest_item|
             TagLineItem.new({
               name:       manifest_item.variant.name,
               quantity:   manifest_item.quantity,
