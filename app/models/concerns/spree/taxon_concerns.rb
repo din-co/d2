@@ -3,7 +3,7 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
-      scope :non_root, -> { where('parent_id IS NOT NULL') }
+      scope :non_root, -> { where.not(parent_id: nil) }
       scope :random,   -> { order('RANDOM()') }
 
       scope :restaurants, -> { non_root.where(taxonomy: Spree::Taxonomy.restaurant) }
