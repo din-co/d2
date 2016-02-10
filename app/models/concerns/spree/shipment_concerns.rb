@@ -11,7 +11,7 @@ module Spree
     end
 
     module InstanceMethods
-      def pre_shipment_manifest
+      def shippable_manifest
         Spree::ShippingManifest.new(inventory_units: inventory_units.shippable).items
       end
     end

@@ -57,7 +57,7 @@ module Spree
       end
 
       def tote_tags_count
-        n = shipments.first.pre_shipment_manifest.sum(&:quantity)
+        n = shipments.first.shippable_manifest.sum(&:quantity)
         (n/3.0).ceil
       end
 
@@ -82,7 +82,7 @@ module Spree
         }
 
         # Include packing list only on the first tag.
-        packing_list = shipments.first.pre_shipment_manifest.map do |manifest_item|
+        packing_list = shipments.first.shippable_manifest.map do |manifest_item|
             TagLineItem.new({
               name:       manifest_item.variant.name,
               quantity:   manifest_item.quantity,

@@ -48,8 +48,8 @@ RSpec.shared_examples_for "spree order concerns" do
     end
 
     it 'generates additional tags without line items for orders with many items' do
-      6.times { |n| line_items_attributes << line_item_attributes } # Add 6 more items
-      expect(order.quantity).to eq(7)
+      7.times { |n| line_items_attributes << line_item_attributes } # Add 7 more items
+      expect(order.quantity).to eq(8)
 
       tote_tags = order.tote_tags
       expect(tote_tags.size).to eq(3) # 3 items per tag, the last may not be full
@@ -71,7 +71,7 @@ RSpec.shared_examples_for "spree order concerns" do
 
       # Only first tag should include packing list
       first_tag = tote_tags.shift
-      expect(first_tag.packing_list.size).to eq(7)
+      expect(first_tag.packing_list.size).to eq(8)
       tote_tags.each do |tag|
         expect(tag.packing_list).to be_empty
       end
