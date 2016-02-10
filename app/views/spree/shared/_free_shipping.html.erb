@@ -1,0 +1,7 @@
+<% if Time.current.between?(Time.zone.parse("2016-02-09"), Time.zone.parse("2016-02-10 17:00")) %>
+  <div class="free-shipping <%= "free-shipping--flash" if type == "flash" %>">
+    <div class="container text-center">
+      <strong>Free Delivery!</strong> For all orders, today only.
+    </div>
+  </div>
+<% end -%>
