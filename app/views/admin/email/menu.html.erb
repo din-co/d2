@@ -1,0 +1,75 @@
+<% @email_styles = "spree/backend/email/menu" %>
+<% @email_styles_responsive = "spree/backend/email/menu-responsive" %>
+<% @email_title = "Today’s Din Menu" %>
+<% @email_preheader = "Healthy and delicious meals ready to cook in 20 minutes." %>
+
+<div class="menu">
+  <div class="masthead">
+    <%= image_tag 'logo/din.png', width: 64, height: 64, class: "masthead__logo" %>
+    <!-- Tags required by Intercom -->
+    <div>{{ content }}</div>
+    <span class="hr hr--masthead-top"><%= image_tag 'black.png', width: 55, height: 4, class: "hr__img" %></span>
+    <h1 class="center"><%= "Today’s Menu".upcase %></h1>
+    <span class="hr"><%= image_tag 'black.png', width: 55, height: 4, class: "hr__img" %></span>
+    <p class="sub-header"><%= Time.current.to_s(:ordinal_weekday_month_day) %></p>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="full-menu-button">
+      <tr>
+        <td align="center" class="padding">
+          <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
+            <tr>
+              <td align="center" class="din-button__td">
+                <a href="<%= spree.root_path(anchor: "menu") %>" target="_blank" class="din-button__a mobile-button">View Full Menu</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <% @products.each do |product| %>
+    <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
+    <div class="product">
+      <%= link_to image_tag(product.display_image.attachment(:detail), class: "product-image"), url %>
+      <%= link_to url do %>
+        <h2 class="center product__name">
+          <%= product.name.upcase %>
+        </h2>
+        <% if product.property('tagline').present? %>
+          <div class="product__tagline grey-link"><%= product.property('tagline') %></div>
+        <% end -%>
+        <span class="hr"><%= image_tag 'black.png', width: 55, height: 4, class: "hr__img" %></span>
+        <p class="center restaurant-name"><strong><%= product.restaurant.try(:name) %>, <%= product.chef.try(:name) %></strong></p>
+        <p class="center">
+          Serves 2
+          &nbsp; • &nbsp;
+          <%= display_price(product) %>
+        </p>
+      <% end -%>
+
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="center" class="padding">
+            <table border="0" cellspacing="0" cellpadding="0" class="mobile-button-container">
+              <tr>
+                <td align="center" class="din-button__td">
+                  <a href="<%= url %>" target="_blank" class="din-button__a mobile-button">View Dish</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+
+  <h4>View full menu at <%= link_to "din.co/menu", spree.root_path(anchor: "menu") %></h4>
+</div>
+
+<div class="footer">
+  <p class="unsubscribe-text center">
+    <!-- Tag required by Intercom -->
+    Tell us how to make Din perfect for you: <%= support_email_link(%Q{The "#{@email_title}" email looks great and…}) %>,
+    or <a href="{{ unsubscribe_url }}" class="unsubscribe-link">unsubscribe</a> if you must. We’ll miss you. =(
+  </p>
+</div>
