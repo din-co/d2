@@ -57,11 +57,15 @@ module Spree
       end
 
       def tote_tags_count
-        (quantity/3.0).ceil
+        line_item_ids = shipments.first.inventory_units.shippable.pluck(:line_item_id)
+        n = Spree::LineItem.where(id: line_item_ids).sum(:quantity)
+        (n/3.0).ceil
       end
 
       def tote_tags
         total_tags = tote_tags_count
+        return [] if total_tags == 0
+
         # Prototype tag
         tag_attributes = {
           order_number:    number,
@@ -79,7 +83,8 @@ module Spree
         }
 
         # Include packing list only on the first tag.
-        packing_list = line_items.includes(product: :taxons).map do |line_item|
+        line_item_ids = shipments.first.inventory_units.shippable.pluck(:line_item_id)
+        packing_list = Spree::LineItem.where(id: line_item_ids).includes(:product).map do |line_item|
             TagLineItem.new({
               name:       line_item.product.name,
               quantity:   line_item.quantity,
