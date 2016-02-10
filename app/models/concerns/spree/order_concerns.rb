@@ -57,8 +57,7 @@ module Spree
       end
 
       def tote_tags_count
-        line_item_ids = shipments.first.inventory_units.shippable.pluck(:line_item_id)
-        n = Spree::LineItem.where(id: line_item_ids).sum(:quantity)
+        n = shipments.first.pre_shipment_manifest.sum(&:quantity)
         (n/3.0).ceil
       end
 
@@ -83,13 +82,12 @@ module Spree
         }
 
         # Include packing list only on the first tag.
-        line_item_ids = shipments.first.inventory_units.shippable.pluck(:line_item_id)
-        packing_list = Spree::LineItem.where(id: line_item_ids).includes(:product).map do |line_item|
+        packing_list = shipments.first.pre_shipment_manifest  .map do |manifest_item|
             TagLineItem.new({
-              name:       line_item.product.name,
-              quantity:   line_item.quantity,
-              restaurant: line_item.product.restaurant,
-              chef:       line_item.product.chef,
+              name:       manifest_item.variant.name,
+              quantity:   manifest_item.quantity,
+              restaurant: manifest_item.variant.product.restaurant,
+              chef:       manifest_item.variant.product.chef,
             })
         end
 
