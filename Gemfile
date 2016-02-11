@@ -59,6 +59,8 @@ gem 'font_assets' # for CORS
 gem 'immutable-struct'
 gem 'rack-rewrite'
 
+gem 'timecop'
+
 group :test do
   gem 'database_cleaner'
   gem 'rspec-rails'
@@ -88,7 +90,6 @@ group :development, :test do
   # Some test gems are handy in development, especially in the console
   gem 'factory_girl'
   gem 'ffaker'
-  gem 'timecop'
 
   # Generate diagrams
   gem "rails-erd"
