@@ -81,7 +81,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  unless ::TRUE_PRODUCTION_INSTANCE
-    Timecop.travel(Time.current.beginning_of_day) if ENV['TIME_TRAVEL'].present?
+  if ENV['TIME_TRAVEL'].present? && ! ::TRUE_PRODUCTION_INSTANCE
+    Timecop.travel(Time.find_zone('Pacific Time (US & Canada)').now.beginning_of_day)
   end
 end
