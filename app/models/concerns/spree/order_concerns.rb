@@ -57,14 +57,11 @@ module Spree
       end
 
       def tote_tags_count
-        n = shipments.first.shippable_manifest.sum(&:quantity)
-        (n/3.0).ceil
+        (quantity/3.0).ceil
       end
 
       def tote_tags
         total_tags = tote_tags_count
-        return [] if total_tags == 0
-
         # Prototype tag
         tag_attributes = {
           order_number:    number,
@@ -82,12 +79,12 @@ module Spree
         }
 
         # Include packing list only on the first tag.
-        packing_list = shipments.first.shippable_manifest.map do |manifest_item|
+        packing_list = line_items.includes(product: :taxons).map do |line_item|
             TagLineItem.new({
-              name:       manifest_item.variant.name,
-              quantity:   manifest_item.quantity,
-              restaurant: manifest_item.variant.product.restaurant,
-              chef:       manifest_item.variant.product.chef,
+              name:       line_item.product.name,
+              quantity:   line_item.quantity,
+              restaurant: line_item.product.restaurant,
+              chef:       line_item.product.chef,
             })
         end
 
