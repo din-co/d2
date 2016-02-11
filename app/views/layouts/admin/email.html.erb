@@ -1,34 +1,28 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="<%= I18n.locale %>">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width"/>
-    <title><%= @email_title || "" %></title>
-    <style type="text/css">
-      <%= Rails.application.assets['spree/backend/ink'].to_s.html_safe %>
-      <%= Rails.application.assets[@email_styles].to_s.html_safe if @email_styles.present? %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @email_title || "" %></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <style type="text/css">
+    <%= Rails.application.assets[@email_styles].to_s.html_safe if @email_styles.present? %>
+  </style>
+  <% if @email_styles_responsive.present? %>
+    <style type="text/css" data-premailer="ignore">
+      <%= Rails.application.assets[@email_styles_responsive].to_s.html_safe %>
     </style>
-    <% if @email_styles_responsive.present? %>
-      <style type="text/css" data-premailer="ignore">
-        <%= Rails.application.assets[@email_styles_responsive].to_s.html_safe %>
-      </style>
-    <% end -%>
-  </head>
-  <body>
-    <% if @email_preheader.present? %>
-      <div style="display: none; mso-hide: all; width: 0px; height: 0px; max-width: 0px; max-height: 0px; font-size: 0px; line-height: 0px;">
-        <%= @email_preheader %>
-      </div>
-    <% end -%>
-    <table class="body">
-      <tr>
-        <td class="center" align="center" valign="top">
-          <center>
-            <%= yield %>
-          </center>
-        </td>
-      </tr>
-    </table>
-  </body>
+  <% end -%>
+</head>
+<body style="margin: 0 !important; padding: 0 !important;">
+
+  <% if @email_preheader.present? %>
+    <div class="email-prehead">
+      <%= @email_preheader %>
+    </div>
+  <% end -%>
+
+  <%= yield %>
+
+</body>
 </html>
