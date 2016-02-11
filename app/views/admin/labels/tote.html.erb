@@ -10,7 +10,7 @@
     </p>
     <% @delivery_windows.each do |d| %>
       <p>
-        <%= d %> <%= d.shipping_method.code %>
+        <%= d %> <%= d.shipping_method.try(:code) || "(no shipping method)" %>
         <% order_count = @order_counts[d.id] %>
         <% if order_count > 0 %>
           —
