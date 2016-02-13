@@ -13,11 +13,6 @@
     <%= csrf_meta_tags %>
     <%= javascript_include_tag 'spree/frontend/all' %>
     <%= render :partial => 'spree/shared/analytics_trackers' %>
-    <% if spree_current_user %>
-      <script>
-        _kmq.push(['identify', '<%= j spree_current_user.email -%>']);
-      </script>
-    <% end -%>
     <%= intercom_script_tag %>
     <%= yield :head %>
   </head>
