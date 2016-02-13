@@ -1,0 +1,6 @@
+<% type ||= nil %>
+<div class="shipping-promo <%= "shipping-promo--flash" if type == "flash" && KITCHEN.open? %>">
+  <div class="container text-center">
+    Get <strong>$5 off delivery</strong> for all orders over $60.
+  </div>
+</div>

@@ -16,7 +16,7 @@
 <% @body_id = 'product-details' %>
 <% @show_kitchen_status = true %>
 <% cache [I18n.locale, current_currency, @product] do %>
-<%= render partial: 'spree/shared/free_shipping', locals: { type: "flash" } %>
+<%= render partial: 'spree/shared/shipping_promo', locals: { type: "flash" } %>
 
   <div itemscope itemtype="http://schema.org/Product">
     <div class="container container__product">
