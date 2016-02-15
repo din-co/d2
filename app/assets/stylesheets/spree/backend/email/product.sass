@@ -61,11 +61,15 @@ a[x-apple-data-detectors]
 // --------------------------------
 // Menu Styles
 
-.header__logo
+.header__logo-container
+  padding: 15px 0
+.header__logo-link
   display: block
-  font-family: Helvetica, Arial, sans-serif
-  color: #ffffff
-  font-size: 16px
+.header__logo-img
+  display: block
+  // font-family: Helvetica, Arial, sans-serif
+  // color: #ffffff
+  // font-size: 16px
 
 .container
   max-width: 500px
@@ -77,7 +81,7 @@ a[x-apple-data-detectors]
     width: 100% !important
     max-width: 100% !important
   // ADJUSTS LAYOUT OF LOGO IMAGE
-  .logo img
+  .header__logo-img
     margin: 0 auto !important
   // USE THESE CLASSES TO HIDE CONTENT ON MOBILE
   .mobile-hide
