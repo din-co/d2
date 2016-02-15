@@ -65,7 +65,7 @@ a[x-apple-data-detectors]
 
 
 // --------------------------------
-// Menu Styles
+// Header Styles
 
 .header__logo-container
   padding: 15px 0
@@ -78,12 +78,16 @@ a[x-apple-data-detectors]
   // font-size: 16px
 
 
+.email-section
+  padding-top: 70px
+  padding-bottom: 70px
 
-.container
+.content-container
   max-width: 500px
 
-// MOBILE STYLES
-@media screen and (max-width: 525px)
+
+// Responsive Styles
+@media screen and (max-width: 640px - 1px)
   // ALLOWS FOR FLUID TABLES
   .wrapper
     width: 100% !important
@@ -109,8 +113,9 @@ a[x-apple-data-detectors]
     text-align: center
   .no-padding
     padding: 0 !important
-  .section-padding
-    padding: 50px 15px 50px 15px !important
+  .email-section
+    padding-top: 70px !important
+    padding-bottom: 70px !important
   // ADJUST BUTTONS ON MOBILE
   .mobile-button-container
     margin: 0 auto
