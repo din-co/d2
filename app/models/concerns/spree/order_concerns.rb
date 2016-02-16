@@ -56,6 +56,15 @@ module Spree
         delivery_window.present?
       end
 
+      # override
+      def assign_billing_to_shipping_address
+        if bill_address
+          self.ship_address = bill_address
+          self.ship_address.used_for_shipping = true
+        end
+        true
+      end
+
       def tote_tags_count
         (quantity/3.0).ceil
       end
