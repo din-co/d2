@@ -97,7 +97,7 @@
                     <!-- Details -->
                     <table border="0" cellspacing="0" cellpadding="0" width="100%">
                       <tr>
-                        <td align="center" class="product-name"><%= link_to product.name.upcase, url %></td>
+                        <td align="center" class="product-name"><%= link_to product.name.upcase, url, class: "product-name-link" %></td>
                       </tr>
                       <tr>
                         <td align="center" class="product-tagline"><%= product.property('tagline') %></td>
