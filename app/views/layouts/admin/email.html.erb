@@ -9,13 +9,8 @@
 <body>
 
   <style type="text/css">
-    <%= Rails.application.assets[@email_styles].to_s.html_safe if @email_styles.present? %>
+    <%= Rails.application.assets[(@custom_email_styles.present? ? @custom_email_styles : "spree/backend/email/menu")].to_s.html_safe %>
   </style>
-  <% if @email_styles_responsive.present? %>
-    <style type="text/css" data-premailer="ignore">
-      <%= Rails.application.assets[@email_styles_responsive].to_s.html_safe %>
-    </style>
-  <% end -%>
 
   <% if @email_preheader.present? %>
     <div class="email-prehead">

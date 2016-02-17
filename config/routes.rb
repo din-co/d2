@@ -1,11 +1,4 @@
 Rails.application.routes.draw do
-  namespace :admin do
-  get 'email/menu'
-  end
-
-  namespace :admin do
-  get 'email/product'
-  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -34,6 +27,9 @@ Rails.application.routes.draw do
     get 'labels/meal'
     get 'labels/ingredient'
     get 'labels/ingredient/print', to: 'labels#ingredient_print'
+
+    get 'email/menu'
+    get 'email/product'
 
     get 'raw_reports/outbound_shipments'
   end

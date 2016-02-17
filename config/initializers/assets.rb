@@ -12,6 +12,4 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.precompile += %w(
   spree/backend/bootstrap_default.css
   spree/backend/label.css
-  spree/backend/ink.css
-  spree/backend/email-menu.css
 )

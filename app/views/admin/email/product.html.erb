@@ -1,5 +1,4 @@
-<% @email_styles = "spree/backend/email/product" %>
-<% @email_styles_responsive = "spree/backend/email/product-responsive" %>
+<%# @custom_email_styles = "spree/backend/email/menu" %>
 <% @email_title = "Today’s Din Menu" %>
 <% @email_preheader = "Healthy and delicious meals ready to cook in 20 minutes." %>
 
@@ -67,13 +66,13 @@
           <td>
 
             <% product = @products.first %>
-            <% url = spree.product_url(product, taxon_id: @taxon.try(:id)) %>
+            <% url = spree.product_url(product) %>
 
             <!-- HERO IMAGE -->
             <table border="0" cellspacing="0" cellpadding="0" width="100%">
               <tr>
                 <td align="center">
-                  <%= link_to image_tag(product.display_image.attachment(:menu), width: 640, height: 360, border: 0, alt: "Dish Name", class: "mobile-img-block"), url, target: "_blank", class: "hero__image-link" %>
+                  <%= link_to image_tag(product.display_image.attachment(:menu), width: 640, height: 360, border: 0, alt: "#{product.name} from #{product.restaurant.try(:name)}", class: "mobile-img-block"), url, target: "_blank", class: "hero__image-link" %>
                 </td>
               </tr>
               <tr>
