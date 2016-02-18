@@ -56,6 +56,24 @@ module Spree
         delivery_window.present?
       end
 
+      def shipping_promotion_difference
+        if amt = shipping_promotion_minimal_amount
+          Spree::Money.new(amt - display_item_total.money)
+        else
+          Spree::Money.new(0)
+        end
+      end
+
+      def discounted_shipping_cost
+        if calc = shipping_promotion_minimal_calculator
+          if calc.preferred_discount_amount == 0.0
+            'FREE'
+          else
+            Spree::Money.new(calc.preferred_discount_amount)
+          end
+        end
+      end
+
       def tote_tags_count
         (quantity/3.0).ceil
       end
@@ -140,5 +158,19 @@ module Spree
     )
     TagLineItem = ImmutableStruct.new(:name, :quantity, :restaurant, :chef)
 
+    private
+
+    def shipping_promotion_minimal_amount
+      if calc = shipping_promotion_minimal_calculator
+        Spree::Money.new(shipping_promotion_minimal_calculator.preferred_minimal_amount).money
+      end
+    end
+
+    def shipping_promotion_minimal_calculator
+      shipment = shipments.first
+      return nil unless shipment.try(:shipping_rates).present?
+      calculators = shipment.shipping_rates.map { |rate| rate.shipping_method.calculator }.select { |calc| calc.respond_to?(:preferred_minimal_amount) }
+      calculators.min_by { |calc| calc.preferred_minimal_amount }
+    end
   end
 end

@@ -10,6 +10,14 @@ module Spree
     extend DisplayMoney
     money_methods :cost
 
+    def currently_available?
+      Time.zone.now < available_until
+    end
+
+    def available_until
+      Time.zone.now.midnight.advance(hours: start_hour - lead_time_duration)
+    end
+
     def to_s
       "#{format_offset(start_hour, false)}–#{format_offset(start_hour + duration)}"
     end

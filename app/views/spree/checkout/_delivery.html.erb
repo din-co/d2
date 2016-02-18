@@ -8,25 +8,48 @@
   </script>
 <% end -%>
 
+<% delivery_windows_available = true %>
+<% difference = 0 %>
+
 <h1><%= Spree.t(:delivery) %></h1>
 <%= form.fields_for :shipments do |ship_form| %>
-
   <label><%= Spree.t(:delivery_window) %></label>
-  <% if available_windows = ship_form.object.delivery_windows.available.presence %>
-    <% available_windows.each do |delivery_window| %>
+  <% if ship_form.object.delivery_windows.available.count == 0 %>
+    <% delivery_windows_available = false %>
+    <p><%= Spree.t(:no_available_delivery_windows) %></p>
+  <% else %>
+    <% difference = @order.shipping_promotion_difference.money %>
+  <% end %>
+
+  <% ship_form.object.shipping_rates.each do |shipping_rate| %>
+    <% shipping_rate.shipping_method.delivery_windows.each do |delivery_window| %>
       <div class="radio">
-        <label>
-          <%= ship_form.radio_button :delivery_window_id, delivery_window.id %>
+        <label class="<%= 'disabled' unless delivery_window.currently_available? %>">
+          <%= ship_form.radio_button :delivery_window_id, delivery_window.id, disabled: !delivery_window.currently_available? %>
           <strong><%= delivery_window %></strong>
-          (<%= delivery_window.display_cost %>)
+          <% if delivery_window.cost == shipping_rate.cost %>
+            <span class="label label-shipping"><%= shipping_rate.display_cost %></span>
+          <% else %>
+            <del class="label label-shipping"><%= delivery_window.display_cost %></del>
+            <strong class="label label-discounted-shipping"><%= shipping_rate.cost == 0 ? 'FREE' : shipping_rate.display_cost %></strong>
+          <% end %>
         </label>
       </div>
     <% end %>
-  <% else %>
-    <p><%= Spree.t(:no_available_delivery_windows) %></p>
   <% end %>
-
 <% end %>
+
+<div class="form-group">
+  <% if difference > 0 %>
+    <p>
+      To get <strong><%= @order.discounted_shipping_cost %> Shipping</strong>, add <strong><%= Spree::Money.new(difference) %></strong> to your order.
+    </p>
+  <% else %>
+    <p>
+      Congratulations! Your order qualifies for <strong><%= @order.discounted_shipping_cost %> Shipping</strong>!
+    </p>
+  <% end %>
+</div>
 
 <% if Spree::Config[:shipping_instructions] %>
   <div class="form-group">
