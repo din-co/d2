@@ -1,0 +1,175 @@
+<%# @custom_email_styles = "spree/backend/email/menu" %>
+<% @email_title = "This Week’s Din Menu" %>
+<% @email_preheader = "Healthy and delicious meals ready to cook in 20 minutes." %>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+
+  <!-- Header -->
+  <tr>
+    <td bgcolor="#ffffff" align="center">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="640">
+      <tr>
+      <td align="center" valign="top" width="640">
+      <![endif]-->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="content-container">
+        <tr>
+          <td align="center" class="header__logo-container">
+            <%= link_to image_tag('logo/din.png', width: 64, height: 64, border: 0, alt: "Din logo", class: "header__logo-img"), spree.root_url, target: "_blank", class: "header__logo-link" %>
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+
+
+  <!-- Menu Title -->
+  <tr>
+    <td align="center" bgcolor="#ffffff" class="email-header">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="640">
+      <tr>
+      <td align="center" valign="top" width="640">
+      <![endif]-->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="content-container">
+        <tr>
+          <td align="center" class="heading-hr"><%= image_tag 'black.png', width: 55, height: 4, class: "heading-hr__img" %></td>
+        </tr>
+        <tr>
+          <td align="center" class="menu-title"><%= @email_title.upcase %></td>
+        </tr>
+        <tr>
+          <td align="center" class="heading-hr"><%= image_tag 'black.png', width: 55, height: 4, class: "heading-hr__img" %></td>
+        </tr>
+        <tr>
+          <td align="center" class="menu-date">Monday, February 15th</td>
+        </tr>
+        <tr>
+          <td align="center" class="product__button-container">
+            <table border="0" cellspacing="0" cellpadding="0" class="button-table">
+              <tr>
+                <td align="center" bgcolor="#5fd375" class="button-cell"><%= link_to "View Today’s Full Menu", spree.root_url(anchor: "menu"), target: "_blank", class: "button-link" %></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+
+
+  <!-- Menu Content -->
+  <tr>
+    <td align="center" bgcolor="#ffffff">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="640">
+      <tr>
+      <td align="center" valign="top" width="640">
+      <![endif]-->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="content-container">
+        <tr>
+          <td>
+
+            <% @products.each do |product| %>
+              <% url = spree.product_url(product) %>
+
+              <!-- HERO IMAGE -->
+              <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr>
+                  <td align="center">
+                    <%= link_to image_tag(product.display_image.attachment(:menu), width: 640, height: 360, border: 0, alt: "#{product.name} from #{product.restaurant.try(:name)}", class: "mobile-img-block"), url, target: "_blank", class: "hero__image-link" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" class="product-details">
+                    <!-- Details -->
+                    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+                      <tr>
+                        <td align="center" class="product-name"><%= link_to product.name.upcase, url, class: "product-name-link" %></td>
+                      </tr>
+                      <tr>
+                        <td align="center" class="product-tagline"><%= product.property('tagline') %></td>
+                      </tr>
+                      <tr>
+                        <td align="center" class="heading-hr"><%= image_tag 'black.png', width: 55, height: 4, class: "heading-hr__img" %></td>
+                      </tr>
+                      <tr>
+                        <td align="center" class="product-restchef"><%= product.restaurant.try(:name) %>, <%= product.chef.try(:name) %></td>
+                      </tr>
+                      <tr>
+                        <td align="center" class="product__button-container">
+                          <table border="0" cellspacing="0" cellpadding="0" class="button-table">
+                            <tr>
+                              <td align="center" bgcolor="#5fd375" class="button-cell"><%= link_to "View Meal &nbsp; • &nbsp; #{display_price(product)} (Serves 2)".html_safe, url, target: "_blank", class: "button-link" %></td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="product-rule"></td>
+                </tr>
+              </table>
+
+            <% end -%>
+
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+
+
+  <!-- Footer -->
+  <tr>
+    <td bgcolor="#ffffff" align="center" class="email-footer">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="640">
+      <tr>
+      <td align="center" valign="top" width="640">
+      <![endif]-->
+      <table border="0" cellspacing="0" cellpadding="0" width="100%" class="content-container">
+        <tr>
+          <td align="center" class="footer-text-content">
+            Hungry? <%= link_to "View this week’s Din menu", spree.root_url(anchor: "menu"), target: "_blank", class: "green-link text-nowrap" %> and <%= link_to "learn how Din works", spree.root_url(anchor: "how-din-works"), target: "_blank", class: "green-link text-nowrap" %>.
+          </td>
+        </tr>
+        <tr>
+          <td align="center" class="fine-print">
+            <b>Din</b> 1270 Valencia St, SF CA 94110
+            <br>
+            <!-- Tag required by Intercom -->
+            <%= support_email_link(%Q{The "#{@email_title}" email looks great and…}, nil, "green-link") %>,
+            or <a href="{{ unsubscribe_url }}" class="green-link">unsubscribe</a>, we’ll miss you. =(
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+
+
+</table>
+{{ content }}

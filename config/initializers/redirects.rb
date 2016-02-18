@@ -2,7 +2,7 @@ Rails.application.config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) 
 
   # Pages from old site that have an equivalent on the new site: r301 '/old', '/new'
   # r301 '/menu',               '/#menu'
-  r301 %r{/menu(?:.*?)(\?.*)?}, '/$1#menu' # /menu and /menu/dish-name, including malformed /menu&2015-07-09 stuff
+  r301 %r{^/menu(?:.*?)(\?.*)?}, '/$1#menu' # /menu and /menu/dish-name, including malformed /menu&2015-07-09 stuff
   r301 '/how-it-works',         '/#how-din-works'
   r301 '/onboarding/signup',    '/signup'
   r301 '/company/about',        '/about'

@@ -1,0 +1,241 @@
+// Theme
+$body-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+$heading-font: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", "TeXGyreHerosCnBold", "Helvetica", "Tahoma", "Geneva", "Arial Narrow", "Arial", sans-serif
+$din-color-tan: #f6f2ec
+
+// CLIENT-SPECIFIC STYLES
+
+// Remove spacing between tables in Outlook 2007 and up
+table,
+td
+  mso-table-lspace: 0pt
+  mso-table-rspace: 0pt
+
+// Prevent WebKit and Windows mobile changing default text sizes
+body,
+table,
+td,
+a
+  -webkit-text-size-adjust: 100%
+  -ms-text-size-adjust: 100%
+  -webkit-font-smoothing: antialiased
+
+// Allow smoother rendering of resized image in Internet Explorer
+img
+  -ms-interpolation-mode: bicubic
+
+// --------------------------------
+// RESET STYLES
+
+img
+  border: 0
+  height: auto
+  line-height: 100%
+  outline: none
+  text-decoration: none
+
+table
+  border-collapse: collapse !important
+
+body
+  height: 100% !important
+  margin: 0 !important
+  padding: 0 !important
+  width: 100% !important
+
+// ANDROID CENTER FIX // https://blog.jmwhite.co.uk/2015/09/19/revealing-why-emails-appear-off-centre-in-android-4-4-kitkat/
+div[style*="margin: 16px 0;"]
+  margin: 0 !important
+
+// iOS BLUE LINKS
+a[x-apple-data-detectors]
+  color: inherit !important
+  text-decoration: none !important
+  font-size: inherit !important
+  font-family: inherit !important
+  font-weight: inherit !important
+  line-height: inherit !important
+
+a
+  text-decoration: none
+  color: inherit
+
+// --------------------------------
+// Utilities
+.fine-print
+  font-size: 12px
+  line-height: 18px
+  font-family: Helvetica, Arial, sans-serif
+  color: #666666
+
+.green-link
+  color: #5fd375
+
+.text-nowrap
+  white-space: nowrap
+
+// --------------------------------
+// Template Styles
+.email-prehead
+  display: none
+  font-size: 1px
+  line-height: 1px
+  max-height: 0px
+  max-width: 0px
+  opacity: 0
+  overflow: hidden
+
+
+// --------------------------------
+// Table Styles
+.content-container
+  max-width: 640px
+
+
+// --------------------------------
+// Buttons
+.button-cell
+  border-radius: 3px
+  background-color: #5fd375
+
+.button-link
+  display: inline-block
+  padding: 15px 25px
+  border: 1px solid #5fd375
+  border-radius: 3px
+  font-size: 16px
+  font-family: Helvetica, Arial, sans-serif
+  color: #ffffff
+  text-decoration: none
+
+// -----------
+// Layout
+.email-header
+  padding: 20px 10px 60px
+
+.email-footer
+  padding: 0px 10px 20px
+
+// --------------------------------
+// Header
+.header__logo-container
+  padding: 15px 0
+.header__logo-link
+  display: block
+.header__logo-img
+  display: block
+  margin: 0 auto !important
+
+
+// --------------------------------
+// Header
+.menu-title
+  text-transform: uppercase
+  color: #000000
+  font-size: 34px
+  line-height: 34px
+  font-family: $heading-font
+  font-weight: bold
+  padding: 8px 0px 5px
+
+.menu-date
+  font-size: 16px
+  line-height: 20px
+  font-family: $body-font
+  color: #808080
+
+// --------------------------------
+// Footer
+
+.footer-text-content
+  font-size: 16px
+  line-height: 20px
+  font-family: $body-font
+  color: #808080
+  font-weight: bold
+  padding-bottom: 40px
+
+// --------------------------------
+// Product
+
+.product-details
+  padding: 20px 10px 35px
+
+.product-rule
+  border-top: 1px solid $din-color-tan
+  padding-bottom: 35px
+
+.heading-hr
+  padding: 10px 0px
+  line-height: 0px
+.heading-hr__img
+  width: 55px
+  height: 4px
+  background-color: black
+
+.product-name
+  text-transform: uppercase
+  color: #000000
+  font-size: 34px
+  line-height: 36px
+  font-family: $heading-font
+  font-weight: bold
+  padding-bottom: 5px
+  .product-name-link
+    color: #000000
+
+.product-tagline
+  font-size: 16px
+  line-height: 20px
+  font-family: $body-font
+  color: #808080
+
+.product-restchef
+  font-family: $heading-font
+  font-size: 20px
+  line-height: 24px
+  font-weight: bold
+  color: #808080
+
+.product-meta
+  font-size: 16px
+  line-height: 20px
+  font-family: $body-font
+  color: #808080
+
+.product__button-container
+  padding-top: 20px
+
+
+@media screen and (max-width: 640px - 1px)
+
+  .mobile-img-block
+    max-width: 100% !important
+    width: 100% !important
+    height: auto !important
+
+  .content-container
+    width: 100% !important
+    max-width: 100% !important
+
+  .email-header
+    padding: 20px 15px 40px
+
+  .email-footer
+    padding: 20px 15px
+
+  .product-details
+    padding: 10px 15px 25px !important
+
+  .product-rule
+    padding-bottom: 25px
+
+  .button-table
+    margin: 0 auto !important
+    width: 100% !important
+
+  .button-link
+    padding: 15px !important
+    border: 0 !important
+    font-size: 16px !important
+    display: block !important
