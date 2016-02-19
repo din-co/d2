@@ -28,6 +28,35 @@
         <%= Spree.t(:checkout_disabled) %>
       <% end %>
     </div>
-
   <% end %>
+
+  <% if @products_not_in_order.present? %>
+    <div class="related-products">
+      <h3 class="related-products__title">More from the menu…</h3>
+      <div class="contanier">
+        <div class="product-grid">
+          <% @products_not_in_order.each do |product| %>
+            <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
+            <div class="product-grid__item">
+              <%= link_to url, class: "product__link" do %>
+                <%= image_tag(product.display_image.attachment(:menu), itemprop: "image", class: "product__image") %>
+                <div class="product__details product__details--related-product">
+                  <h4 class="product__name black-link">
+                    <%= product.name %>
+                  </h4>
+                </div>
+                <p class="product__meta grey-link text-center">
+                Serves 2
+                •
+                <%= display_price(product) %>
+                </p>
+              <% end -%>
+              <%= render partial: 'spree/shared/order_form', locals: { product: product } %>
+            </div>
+          <% end -%>
+        </div>
+      </div>
+    </div>
+  <% end -%>
+
 </div>

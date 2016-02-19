@@ -143,3 +143,36 @@
     font-size: 1.5em
     padding: 0 4px 4px
     line-height: 0
+
+.related-products
+  margin-top: 35px
+  border-top: 1px solid rgb(208,208,208)
+  padding-top: 25px
+
+.related-products__title
+  margin-top: 0
+
+.product-grid
+  display: flex
+  flex-wrap: wrap
+
+.product-grid__item
+  display: flex
+  flex-direction: column
+  margin-bottom: 30px
+  @media (min-width: 568px) and (max-width: 992px - 1px)
+    width: 48%
+    &:nth-child(2n)
+      margin-left: 4%
+  @media (min-width: 992px) and (max-width: 1200px - 1px)
+    width: 30%
+    margin-left: 5%
+    &:nth-child(3n + 1)
+      margin-left: 0
+  @media (min-width: 1200px)
+    width: 23%
+    margin-left: (8%/3)
+    &:nth-child(4n + 1)
+      margin-left: 0
+  .product__link
+    flex-grow: 1
