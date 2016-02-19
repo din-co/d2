@@ -20,7 +20,7 @@ module Spree
       end
 
       def sort_by_taxon
-        params[:taxon] = Spree::Taxon.pages.find_by(name: "Home").try(:id)
+        params[:taxon] = Spree::Taxon.homepage.id
       end
     end
 

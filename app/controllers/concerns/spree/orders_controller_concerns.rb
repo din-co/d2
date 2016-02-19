@@ -13,7 +13,7 @@ module Spree
 
       def edit
         super
-        @products_not_in_order = Spree::Taxon.pages.find_by(name: "Home").products.where.not(id: @order.product_ids)
+        @products_not_in_order = Spree::Taxon.homepage.products.where.not(id: @order.product_ids)
       end
 
       private
