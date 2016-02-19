@@ -16,24 +16,28 @@
 <% end %>
 
 <% if products.any? %>
-  <div class="container">
+  <div class="container product-list">
     <% products.each do |product| %>
       <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
-      <div class="product" itemscope itemtype="http://schema.org/Product">
+      <div class="product product--list-item" itemscope itemtype="http://schema.org/Product">
         <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
-          <%= link_to image_tag(product.display_image.attachment(:detail), itemprop: "image", class: "product-image"), url %>
-          <%= link_to url, class: "product__details" do %>
-            <h2 class="product__name black-link" itemprop="name">
-              <%= product.name %>
-            </h2>
-            <% if product.property('tagline').present? %>
-              <div class="product__tagline grey-link"><%= product.property('tagline') %></div>
-            <% end -%>
-            <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-              <span itemprop="price" content="<%= display_price(product) %>"></span>
-            </span>
-            <h4 class="product__restaurant-name"><%= product.restaurant.try(:name) %></h4>
+
+          <%= link_to url, class: "product__link" do %>
+            <%= image_tag(product.display_image.attachment(:detail), itemprop: "image", class: "product__image") %>
+            <div class="product__details">
+              <h2 class="product__name black-link" itemprop="name">
+                <%= product.name %>
+              </h2>
+              <% if product.property('tagline').present? %>
+                <div class="product__tagline grey-link"><%= product.property('tagline') %></div>
+              <% end -%>
+              <h4 class="product__restaurant-name block--above"><%= product.restaurant.try(:name) %></h4>
+            </div>
           <% end -%>
+
+          <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+            <span itemprop="price" content="<%= display_price(product) %>"></span>
+          </span>
 
           <%= render partial: 'spree/shared/order_form', locals: { product: product, button_type: "product-list" } %>
 
@@ -44,6 +48,6 @@
   </div>
 <% end %>
 
-  <% if paginated_products.respond_to?(:num_pages) %>
-    <%= paginate paginated_products %>
-  <% end %>
+<% if paginated_products.respond_to?(:num_pages) %>
+  <%= paginate paginated_products %>
+<% end %>
