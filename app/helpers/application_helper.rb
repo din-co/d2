@@ -44,4 +44,28 @@ module ApplicationHelper
   def support_phone_tel
     "tel:+1#{support_phone_number.remove('-')}"
   end
+
+  # Renders the A/B test's javascript when between options[:start] and options[:end]. If
+  # either is omitted, its value defaults to Time.zone.now. The helper exposes local vars
+  # testName, variants, and variant in the content block, which is yielded inside a
+  # <script> element.
+  def ab_test_script(name, variants, options = {}, &block)
+    now = Time.zone.now
+    start_time = Time.zone.parse(options[:start]) rescue now
+    end_time = Time.zone.parse(options[:end]) rescue now
+    return nil unless now.between?(start_time, end_time) # now.between?(now, now) is true
+
+    content = capture(&block) if block_given?
+    javascript_tag do
+      concat "_kmq.push(function(){\n"
+      concat "  var testName = '#{j name}';\n".html_safe
+      concat "  var variants = [#{Array(variants).map { |v| "'#{j v}'" }.join(',')}];\n".html_safe
+      concat "  var variant = KM.ab(testName, variants);"
+      unless TRUE_PRODUCTION_INSTANCE
+        concat "\n  console.log('A/B test', [testName], 'selected variant:', [variant], 'from', variants);".html_safe
+      end
+      concat content.html_safe if content.present?
+      concat "});\n"
+    end.html_safe
+  end
 end
