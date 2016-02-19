@@ -30,6 +30,7 @@ en:
     unsupported_delivery_location: "Delivery is not available to this location"
     menu: "Menu"
     cart: "Cart"
+    free: "FREE"
     you_have_emptied_your_cart: "You have emptied your cart."
     checkout_disabled: "Checkout is unavailable while the kitchen is closed."
     add_dish: "Add to Cart (Serves 2)"

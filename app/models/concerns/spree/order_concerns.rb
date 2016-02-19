@@ -67,7 +67,7 @@ module Spree
       def discounted_shipping_cost
         if calc = shipping_promotion_minimal_calculator
           if calc.preferred_discount_amount == 0.0
-            'FREE'
+            Spree.t(:free)
           else
             Spree::Money.new(calc.preferred_discount_amount)
           end
