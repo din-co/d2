@@ -7,43 +7,61 @@ module Spree
 
       belongs_to :postal_code, class_name: "Spree::PostalCode"
 
-      # Finer grained control over validations than Spree::Address
-      clear_validators!
-      # Duplicate some validations
-      validates :zipcode, presence: true, if: :require_zipcode?
-      validates :phone, presence: true, if: :require_phone?
-      # Selectively apply validations, rather than all the time.
-      with_options if: :used_for_shipping? do
-        validates :firstname, :lastname, :address1, :city, :country_id, presence: true
-        validate :state_validate, :postal_code_validate
-      end
-      # END duplicated validations
+      before_validation :associate_postal_code
 
       # Prevent comparing address equality against these attributes
       Spree::Address::DB_ONLY_ATTRS << "used_for_shipping"
 
-      after_validation :associate_postal_code, if: Proc.new { |address| address.postal_code_id.blank? && address.errors.empty? }
+      # Finer grained control over validations than Spree::Address
+      clear_validators!
+      # Duplicate some validations
+      # validates :zipcode, presence: true, if: :require_zipcode? # handled by our postal_code_validate
+      validates :phone, presence: true, if: :require_phone?
+      # Selectively apply validations, rather than all the time.
+      validate :postal_code_validate
+      with_options if: :used_for_shipping? do
+        validates :firstname, :lastname, :address1, :city, :country, presence: true
+        validate :state_validate
+      end
+      # END duplicated validations
+
+
     end
 
     module InstanceMethods
       def require_phone?
         false
       end
+
+      def postal_code_value
+        postal_code.try(:value) || zipcode
+      end
     end
 
     private
-      def associate_postal_code
-        return true if zipcode.blank?
-        code = country.try!(:iso).try(:downcase) == "us" ? zipcode.first(5) : zipcode
-        postal_code = Spree::PostalCode.find_by(value: code, country: country)
-        if used_for_shipping?
-          if postal_code.blank?
-            errors[:base] = Spree.t(:unsupported_delivery_location)
-            return false
+      def postal_code_validate
+        super
+        # ensure associated postal_code belongs to country
+        if postal_code.present?
+          if postal_code.country == country
+            self.zipcode = nil # not required as we have a valid postal_code and country combo
+          else
+            if zipcode.present? # reset association
+              self.postal_code = nil
+            else
+              errors.add(:postal_code, :invalid)
+            end
           end
-          # Need to use assign_attributes when in callback
-          assign_attributes(postal_code_id: postal_code.id)
         end
+
+        # ensure at least one of postal_code or zipcode is populated
+        errors.add :postal_code, :blank if postal_code.blank? && zipcode.blank?
+      end
+
+      def associate_postal_code
+        return true if zipcode.blank? || country.blank?
+        code = country.try!(:iso) == "US" ? zipcode.to_s.first(5) : zipcode
+        self.postal_code = Spree::PostalCode.find_by(value: code, country: country)
       end
   end
 end

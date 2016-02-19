@@ -9,17 +9,14 @@ RSpec.shared_examples_for "spree address concerns" do
   let(:address) { FactoryGirl.build(:ship_address, postal_code: nil) }
 
   describe "callbacks" do
-    it "associates a postal code after validation if valid" do
+    it "associates a postal code before validation" do
+      expect(address.zipcode).to_not be_nil
       expect(address.postal_code).to be_nil
       expect(address).to be_valid
+      expect(address.zipcode).to be_nil
       expect(address.postal_code).to eql(Spree::PostalCode.find_by(value: address.zipcode))
     end
 
-    it "does not associate a postal code if not valid" do
-      address.firstname = ""
-      expect(address).to_not be_valid
-      expect(address.postal_code).to be_nil
-    end
   end
 
   describe "validations when used for shipping" do
@@ -36,7 +33,6 @@ RSpec.shared_examples_for "spree address concerns" do
   describe "private methods" do
     describe "associate_postal_code" do
       context "zipcode is blank" do
-
         let(:address) { FactoryGirl.build(:ship_address, zipcode: "") }
 
         it "returns true" do
@@ -46,12 +42,12 @@ RSpec.shared_examples_for "spree address concerns" do
 
       context "zipcode is not blank" do
 
-        let(:address) { FactoryGirl.build(:ship_address, zipcode: "94110-1234") }
+        let(:address) { FactoryGirl.build(:ship_address, zipcode: "99999-1234") }
 
         context "when country is US" do
           it "associates a postal code object with first 5 digits of zipcode" do
             expect(address).to be_valid
-            expect(address.postal_code).to eql(Spree::PostalCode.find_by(value: "94110"))
+            expect(address.postal_code).to eql(Spree::PostalCode.find_by(value: "99999"))
           end
         end
       end

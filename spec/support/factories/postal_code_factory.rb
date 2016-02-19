@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :postal_code, class: Spree::PostalCode do
-    value '94110'
+    sequence(:value, 99000) { |n|  n.to_s }
     state do |postal_code|
       if california = Spree::State.find_by_name("California")
         california

@@ -8,26 +8,28 @@ RSpec.describe Spree::PostalCode, type: :model do
       expect(postal_code.value).to be_present
       expect(postal_code).to be_valid
       postal_code.value = ""
+      postal_code.validate
       expect(postal_code.errors[:value]).to be_present
     end
 
-    it "requires a country_id" do
-      expect(postal_code.country_id).to be_present
+    it "requires a country" do
+      expect(postal_code.country).to be_present
       expect(postal_code).to be_valid
       postal_code.country_id = ""
-      expect(postal_code.errors[:country_id]).to be_present
+      postal_code.validate
+      expect(postal_code.errors[:country]).to be_present
     end
 
     it "runs postal_code_validate" do
-      expect(postal_code).to be_valid
       postal_code.value = "Q3X 4F3"
-      expect(postal_code.errors).to be_present
+      postal_code.validate
+      expect(postal_code.errors[:value]).to be_present
     end
 
     it "restricts US postal codes to 5 digits" do
       postal_code.value = "94110-1234"
-      expect(postal_code).to_not be_valid
-      expect(postal_code.errors[:value]).to include(I18n.t("activerecord.attributes.errors.models.spree/postal_codes.attributes.zipcode.numericality"))
+      postal_code.validate
+      expect(postal_code.errors[:value]).to be_present
     end
   end
 
