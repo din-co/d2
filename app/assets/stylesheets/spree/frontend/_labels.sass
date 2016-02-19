@@ -2,6 +2,17 @@
 .label-shipping
   background-color: $din-color-tan
   color: $din-color-light-grey
+  .disabled &
+    background-color: #efefef
+    color: #d0d0d0
 
 .label-discounted-shipping
   background-color: $din-color-green
+  .disabled &
+    background-color: #efefef
+    color: #d0d0d0
+
+.delivery-window__name,
+.delivery-window__cutoff
+  .disabled &
+    color: #d0d0d0

@@ -8,53 +8,49 @@
   </script>
 <% end -%>
 
-<% delivery_windows_available = true %>
-<% difference = 0 %>
-
-<h1><%= Spree.t(:delivery) %></h1>
 <%= form.fields_for :shipments do |ship_form| %>
-  <label><%= Spree.t(:delivery_window) %></label>
-  <% if ship_form.object.delivery_windows.available.count == 0 %>
-    <% delivery_windows_available = false %>
-    <p><%= Spree.t(:no_available_delivery_windows) %></p>
-  <% else %>
-    <% difference = @order.shipping_promotion_difference.money %>
-  <% end %>
+  <h1><%= Spree.t(:delivery) %></h1>
 
+  <div class="form-group">
+    <% if ship_form.object.delivery_windows.available.count == 0 %>
+      <p><%= Spree.t(:no_available_delivery_windows) %></p>
+    <% else %>
+      <% difference = @order.shipping_promotion_difference.money %>
+      <% if difference > 0 %>
+        <p>
+          To get <strong><%= @order.discounted_shipping_cost %> Shipping</strong>, add <strong><%= Spree::Money.new(difference) %></strong> to your order.
+        </p>
+      <% elsif @order.shipping_promotion_calculator.present? %>
+        <p>
+          <span class="delivery-window--delivery-discount">Congratulations! Your order qualifies for <strong><%= @order.discounted_shipping_cost %> Shipping</strong>!</span>
+        </p>
+      <% end %>
+    <% end -%>
+  </div>
+
+  <label><%= Spree.t(:delivery_window) %></label>
   <% ship_form.object.shipping_rates.each do |shipping_rate| %>
     <% shipping_rate.shipping_method.delivery_windows.each do |delivery_window| %>
       <% disabled = !delivery_window.currently_available? %>
-      <div class="radio">
-        <label class="<%= 'disabled' if disabled %>">
+      <div class="radio <%= 'disabled' if disabled %>">
+        <label>
           <% checked = shipping_rate.selected && delivery_window.currently_available? %>
           <%= ship_form.radio_button :delivery_window_id, delivery_window.id, checked: checked, disabled: disabled %>
-          <strong><%= delivery_window %></strong>
+          <strong class="delivery-window__name"><%= delivery_window %></strong>
           <% if delivery_window.cost == shipping_rate.cost %>
             <span class="label label-shipping"><%= shipping_rate.display_cost %></span>
           <% else %>
             <del class="label label-shipping"><%= delivery_window.display_cost %></del>
             <strong class="label label-discounted-shipping"><%= shipping_rate.cost == 0 ? 'FREE' : shipping_rate.display_cost %></strong>
           <% end %>
-          <% if disabled %>
-            Available for orders placed before <%= delivery_window.available_until.to_s(:short_time) %>
-          <% end %>
+          <span class="delivery-window__cutoff">
+            available until <strong><%= delivery_window.available_until.to_s(:short_time) %></strong>
+          </span>
         </label>
       </div>
     <% end %>
   <% end %>
 <% end %>
-
-<div class="form-group">
-  <% if difference > 0 %>
-    <p>
-      To get <strong><%= @order.discounted_shipping_cost %> Shipping</strong>, add <strong><%= Spree::Money.new(difference) %></strong> to your order.
-    </p>
-  <% elsif @order.shipping_promotion_calculator.present? %>
-    <p>
-      Congratulations! Your order qualifies for <strong><%= @order.discounted_shipping_cost %> Shipping</strong>!
-    </p>
-  <% end %>
-</div>
 
 <% if Spree::Config[:shipping_instructions] %>
   <div class="form-group">
