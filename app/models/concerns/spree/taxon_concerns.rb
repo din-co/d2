@@ -14,5 +14,11 @@ module Spree
       scope :equipment,   -> { non_root.where(taxonomy: Spree::Taxonomy.equipment) }
       scope :pages,       -> { non_root.where(taxonomy: Spree::Taxonomy.pages) }
     end
+
+    class_methods do
+      def homepage
+        pages.find_by(name: "Home")
+      end
+    end
   end
 end

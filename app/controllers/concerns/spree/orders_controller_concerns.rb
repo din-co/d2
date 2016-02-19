@@ -10,6 +10,12 @@ module Spree
     end
 
     module InstanceMethods
+
+      def edit
+        super
+        @products_not_in_order = Spree::Taxon.homepage.products.where.not(id: @order.product_ids)
+      end
+
       private
 
       def redirect_empty_order_to_menu

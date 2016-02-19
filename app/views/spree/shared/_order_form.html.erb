@@ -1,14 +1,25 @@
+<% button_type ||= nil %>
 <%= form_for :order, :url => populate_orders_path, html: { class: "add-product-form", 'data-name': product.name, 'data-id': product.id, 'data-restaurant': product.restaurant.try(:name), 'data-chef': product.chef.try(:name) } do |f| %>
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
     <span itemprop="priceCurrency" content="<%= product.currency %>"></span>
     <link itemprop="availability" href="http://schema.org/InStock" />
     <%= hidden_field_tag "variant_id", product.master.id %>
     <%= hidden_field_tag :quantity, 1 %>
-    <div class="product__offers">
-      <%= add_to_cart_button(product) %>
-      <%= link_to spree.product_path(product, taxon_id: @taxon.try(:id)), class: "btn btn-default" do %>
-        View Recipe <span class="list-button" itemprop="time"><%= product.property('time-minutes') %> Min Cook Time</span>
-      <% end %>
-    </div>
+    <% if button_type == "product-list" %>
+      <div class="product__offers">
+        <%= add_to_cart_button(product) %>
+        <%= link_to spree.product_path(product, taxon_id: @taxon.try(:id)), class: "btn btn-default" do %>
+          View Recipe <span class="list-button" itemprop="time"><%= product.property('time-minutes') %> Min Cook Time</span>
+        <% end %>
+      </div>
+    <% elsif button_type == "product-detail" %>
+      <div class="text-center">
+        <%= add_to_cart_button(product, button_class: 'product__order-button') %>
+      </div>
+    <% else %>
+      <div class="text-center">
+        <%= add_to_cart_button(product, display_price: false, display_servings: false) %>
+      </div>
+    <% end %>
   </div>
 <% end %>

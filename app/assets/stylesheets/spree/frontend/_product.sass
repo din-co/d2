@@ -1,8 +1,4 @@
-.container__product
-  padding-top: 2em
-  padding-bottom: 2em
-
-.product
+.product--list-item
   margin-bottom: 35px
   border-bottom: 1px solid rgb(208,208,208)
   padding-bottom: 35px
@@ -10,16 +6,46 @@
     margin-bottom: 0
     border-bottom: 0
 
-.product-image
+.product__link
+  &:link
+    display: block
+    text-decoration: none
+
+.product__image
   display: block
   width: 100%
   border-radius: 1px
   border: 1px solid rgb(228,228,228)
 
-.product__details:link
-  display: block
-  padding: 5px 10px 0
-  text-decoration: none
+.product__details
+  margin: 15px 10px
+.product__details--related-product
+  margin: 5px
+
+.product__name
+  margin-top: 0
+  margin-bottom: 5px
+  text-transform: uppercase
+  text-align: center
+
+.product__tagline
+  font-size: 16px
+  text-align: center
+
+.product__restaurant-name
+  margin: 0
+  text-align: center
+  color: rgb(128,128,128)
+  font-size: 20px
+
+.block--above
+  &:before
+    content: ""
+    display: block
+    width: 55px
+    margin: 10px auto
+    border: 2px solid rgb(0,0,0)
+
 
 .product__offers
   display: flex
@@ -37,28 +63,23 @@
       @media (min-width: 768px)
         margin-right: 15px
 
-.product__restaurant-name
-  margin: 0 0 15px 0
-  text-align: center
-  color: rgb(128,128,128)
-  font-size: 20px
-  &:before
-    content: ""
-    display: block
-    width: 55px
-    margin: 10px auto
-    border: 2px solid rgb(0,0,0)
-
-.product__meta
-  margin: 30px 0
 
 .product__directions
   margin-bottom: 3em
 
 .product__order-button
-  width: 100%
+  min-width: 100%
   @media (min-width: 768px)
-    width: 50%
+    min-width: 50%
+
+
+// Product
+.product-detail__header,
+.product-detail__description
+  margin: 2em 0
+.product-detail__meta
+  margin: 30px 0
+
 
 
 // Product Table
@@ -122,3 +143,36 @@
     font-size: 1.5em
     padding: 0 4px 4px
     line-height: 0
+
+.related-products
+  margin-top: 35px
+  border-top: 1px solid rgb(208,208,208)
+  padding-top: 25px
+
+.related-products__title
+  margin-top: 0
+
+.product-grid
+  display: flex
+  flex-wrap: wrap
+
+.product-grid__item
+  display: flex
+  flex-direction: column
+  margin-bottom: 30px
+  @media (min-width: 568px) and (max-width: 992px - 1px)
+    width: 48%
+    &:nth-child(2n)
+      margin-left: 4%
+  @media (min-width: 992px) and (max-width: 1200px - 1px)
+    width: 30%
+    margin-left: 5%
+    &:nth-child(3n + 1)
+      margin-left: 0
+  @media (min-width: 1200px)
+    width: 23%
+    margin-left: (8%/3)
+    &:nth-child(4n + 1)
+      margin-left: 0
+  .product__link
+    flex-grow: 1

@@ -19,28 +19,31 @@
 <%= render partial: 'spree/shared/shipping_promo', locals: { type: "flash" } %>
 
   <div itemscope itemtype="http://schema.org/Product">
-    <div class="container container__product">
+    <div class="container">
 
-      <div class="product">
-        <%= image_tag @product.display_image.attachment(:detail), itemprop: "image", class: "product-image" %>
+      <div class="product product-detail__header">
 
-        <h1 class="product__name text-center--on-mobile" itemprop="name">
-          <%= @product.name %>
-        </h1>
-        <% if @product.property('tagline').present? %>
-          <div class="product__tagline grey-link"><%= @product.property('tagline') %></div>
-        <% end -%>
-        <h4 class="product__restaurant-name">
-          <%= [@product.restaurant, @product.chef].compact.map(&:name).join(', ') %>
-        </h4>
+        <%= image_tag @product.display_image.attachment(:detail), itemprop: "image", class: "product__image" %>
+
+        <div class="product__details">
+          <h1 class="product__name text-center--on-mobile" itemprop="name">
+            <%= @product.name %>
+          </h1>
+          <% if @product.property('tagline').present? %>
+            <div class="product__tagline grey-link"><%= @product.property('tagline') %></div>
+          <% end -%>
+          <h4 class="product__restaurant-name block--above">
+            <%= [@product.restaurant, @product.chef].compact.map(&:name).join(', ') %>
+          </h4>
+        </div>
 
         <div class="product__add-form">
-          <%= render :partial => 'spree/shared/order_form_product', :locals => { :product => @product } %>
+          <%= render partial: 'spree/shared/order_form', locals: { product: @product, button_type: "product-detail" } %>
         </div>
       </div>
 
       <% if @product.description.present? %>
-        <div class="product__description">
+        <div class="product-detail__description">
           <%= product_description(@product) %>
         </div>
       <% end -%>
@@ -49,7 +52,7 @@
 
     <div class="bg-tan">
       <div class="container">
-        <p class="text-center product__meta">
+        <p class="text-center product-detail__meta">
           <% if @product.property('time-minutes').present? %>
             <span><%= @product.property('time-minutes') %> minutes</span>
           <% end -%>
