@@ -35,7 +35,7 @@
         </h4>
 
         <div class="product__add-form">
-          <%= render :partial => 'spree/shared/order_form_product', :locals => { :product => @product } %>
+          <%= render partial: 'spree/shared/order_form', locals: { product: @product, button_type: "product-detail" } %>
         </div>
       </div>
 

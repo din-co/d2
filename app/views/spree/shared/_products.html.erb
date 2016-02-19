@@ -35,7 +35,8 @@
             <h4 class="product__restaurant-name"><%= product.restaurant.try(:name) %></h4>
           <% end -%>
 
-          <%= render :partial => 'spree/shared/order_form', :locals => { :product => product } %>
+          <%= render partial: 'spree/shared/order_form', locals: { product: product, button_type: "product-list" } %>
+
         <% end %>
       </div>
     <% end %>
