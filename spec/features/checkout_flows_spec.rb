@@ -58,7 +58,7 @@ RSpec.feature "Checkout flow:" do
     # Delivery options page
     expect(page).to have_current_path(spree.checkout_state_path(:delivery))
     delivery_window = Spree::DeliveryWindow.available.first
-    choose("#{delivery_window.to_s} (#{delivery_window.display_cost})")
+    choose("#{delivery_window.to_s} #{delivery_window.display_cost}")
     fill_in "Delivery Instructions", with: "Ring the doorbell and then huck the package onto the roof"
     click_on "Save and Continue"
 

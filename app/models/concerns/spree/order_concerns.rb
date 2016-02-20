@@ -21,6 +21,8 @@ module Spree
           .order("spree_shipments.delivery_window_id")
           .order("spree_addresses.firstname")
       }
+
+      attr_reader :shipping_promotion_calculator # set once shipping_promotion_minimal_calculator is called
     end
 
     class_methods do
@@ -54,6 +56,24 @@ module Spree
 
       def delivery_window_selected?
         delivery_window.present?
+      end
+
+      def shipping_promotion_difference
+        if amt = shipping_promotion_minimal_amount
+          Spree::Money.new(amt - display_item_total.money)
+        else
+          Spree::Money.new(0)
+        end
+      end
+
+      def discounted_shipping_cost
+        if calc = shipping_promotion_minimal_calculator
+          if calc.preferred_discount_amount == 0.0
+            Spree.t(:free)
+          else
+            Spree::Money.new(calc.preferred_discount_amount)
+          end
+        end
       end
 
       def tote_tags_count
@@ -140,5 +160,22 @@ module Spree
     )
     TagLineItem = ImmutableStruct.new(:name, :quantity, :restaurant, :chef)
 
+    private
+
+    def shipping_promotion_minimal_amount
+      if calc = shipping_promotion_minimal_calculator
+        Spree::Money.new(shipping_promotion_minimal_calculator.preferred_minimal_amount).money
+      end
+    end
+
+    def shipping_promotion_minimal_calculator
+      return @shipping_promotion_calculator if defined?(@shipping_promotion_calculator)
+      shipment = shipments.first
+      return nil unless shipment.try(:shipping_rates).present?
+      valid_shipping_rates = shipment.shipping_rates.select { |rate| rate.shipping_method.delivery_windows.any?(&:currently_available?) }
+      calculators = valid_shipping_rates.map { |rate| rate.shipping_method.calculator }
+      calculators = calculators.select { |calc| calc.respond_to?(:preferred_minimal_amount) }
+      @shipping_promotion_calculator = calculators.min_by { |calc| calc.preferred_minimal_amount }
+    end
   end
 end
