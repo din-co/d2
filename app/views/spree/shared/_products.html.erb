@@ -51,3 +51,11 @@
 <% if paginated_products.respond_to?(:num_pages) %>
   <%= paginate paginated_products %>
 <% end %>
+
+<%= ab_test_script("home layout", ['default', 'responsive'], start: "2016-02-22 00:00", end: "2016-02-29 00:00") do %>
+  if (variant == 'responsive') {
+    $(".product-list").addClass('product-responsive-layout').append("<div></div>");
+    $(".product--list-item").addClass('product-responsive-layout__item');
+    $(".product__offers").addClass('responsive__product__offers');
+  }
+<% end -%>
