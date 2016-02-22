@@ -64,7 +64,7 @@ module ApplicationHelper
       concat "  var variants = [#{Array(variants).map { |v| "'#{j v}'" }.join(',')}];\n".html_safe
       concat "  var variant = KM.ab(testName, variants);"
       unless TRUE_PRODUCTION_INSTANCE
-        concat "\n  console.log('A/B test', [testName], 'selected variant:', [variant], 'from', variants, 'active:', ['<%= j start_time %>', '<%= j end_time %>']);".html_safe
+        concat "\n  console.log('A/B test', [testName], 'selected variant:', [variant], 'from', variants, 'active:', ['#{j start_time}', '#{j end_time}']);".html_safe
       end
       concat content.html_safe if content.present?
       concat "});\n"
