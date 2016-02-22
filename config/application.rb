@@ -9,6 +9,9 @@ Bundler.require(*Rails.groups)
 module D2
   class Application < Rails::Application
 
+    # Include helper overrides, solidus does not automatically
+    config.eager_load_paths += %W(#{config.root}/app/helpers/concerns)
+
     config.to_prepare do
       # Load application's model / class decorators
       Dir.glob(File.join(File.dirname(__FILE__), "../app/**/*_decorator*.rb")) do |c|
