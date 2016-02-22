@@ -6,14 +6,10 @@ class Admin::EmailController < Spree::Admin::BaseController
   newrelic_ignore_enduser
 
   def menu
-    @searcher = build_searcher(params.merge(include_images: true))
-    @products = @searcher.retrieve_products
-    @taxonomies = Spree::Taxonomy.includes(root: :children)
+    @products = Spree::Taxon.homepage.products
   end
 
   def product
-    @searcher = build_searcher(params.merge(include_images: true))
-    @products = @searcher.retrieve_products
-    @taxonomies = Spree::Taxonomy.includes(root: :children)
+    @products = Spree::Product.where(id: params[:id])
   end
 end
