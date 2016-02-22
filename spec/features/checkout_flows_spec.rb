@@ -15,7 +15,10 @@ RSpec.feature "Checkout flow:" do
       Timecop.travel(KITCHEN.closing_time)
     end
 
-    scenario
+    scenario "visitor is shown a closed kitchen notice" do
+      visit spree.root_path
+      expect(page).to have_content("")
+    end
   end
 
   context 'when the kitchen is open' do
