@@ -37,13 +37,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Non-Rails additions
 gem 'mysql2', '~> 0.3.20'
-gem 'solidus', '~> 1.2.1'
+gem 'solidus', github: 'solidusio/solidus', branch: 'v1.2'
 gem 'solidus_auth_devise'
 gem 'solidus_gateway'
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 gem 'puma'
 gem 'rack-timeout'
-gem 'sprockets-rails', '~> 2.3' # there is an initializer bug in sprockets > 2.3
+gem 'sprockets-rails'
 
 # Twitter Common Locale Data Repository
 gem 'twitter_cldr'
