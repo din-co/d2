@@ -13,10 +13,6 @@ module Spree
       def require_phone?
         false
       end
-
-      def postal_code_value
-        postal_code.try(:value) || zipcode
-      end
     end
 
     private
