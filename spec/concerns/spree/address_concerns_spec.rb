@@ -5,49 +5,37 @@ require 'rails_helper'
 
 RSpec.shared_examples_for "spree address concerns" do
   # the class that includes the concern
-  let(:model) { described_class }
-  let(:address) { FactoryGirl.build(:ship_address, postal_code: nil) }
+  let(:model)   { described_class }
+  let(:address) { FactoryGirl.build(:ship_address, zipcode: "94110", postal_code: nil) }
 
   describe "callbacks" do
-    it "associates a postal code before validation" do
+    it "associates a postal code during validation" do
       expect(address.zipcode).to_not be_nil
       expect(address.postal_code).to be_nil
       expect(address).to be_valid
-      expect(address.zipcode).to be_nil
       expect(address.postal_code).to eql(Spree::PostalCode.find_by(value: address.zipcode))
     end
 
   end
 
-  describe "validations when used for shipping" do
-    it 'requires all fields'
-  end
-
-  describe "validations when not used for shipping" do
-
-    let(:address) { FactoryGirl.build(:bill_address) }
-
-    it 'requires minimal fields'
-  end
-
   describe "private methods" do
     describe "associate_postal_code" do
-      context "zipcode is blank" do
-        let(:address) { FactoryGirl.build(:ship_address, zipcode: "") }
+      context "when country is US" do
+        context "zipcode is blank" do
+          let(:address) { FactoryGirl.build(:ship_address, zipcode: "", postal_code: nil) }
 
-        it "returns true" do
-          expect(address.send :associate_postal_code).to eql(true)
+          it "returns true" do
+            expect(address.send :associate_postal_code).to eql(true)
+          end
         end
-      end
 
-      context "zipcode is not blank" do
+        context "when zipcode has the value of an existing postal_code" do
+          let(:postal_code) { FactoryGirl.create(:postal_code) }
+          let(:address)     { FactoryGirl.build(:ship_address, zipcode: "#{postal_code.value}-1234", postal_code: nil) }
 
-        let(:address) { FactoryGirl.build(:ship_address, zipcode: "99999-1234") }
-
-        context "when country is US" do
-          it "associates a postal code object with first 5 digits of zipcode" do
+          it "associates the matching postal code" do
             expect(address).to be_valid
-            expect(address.postal_code).to eql(Spree::PostalCode.find_by(value: "99999"))
+            expect(address.postal_code).to eql(Spree::PostalCode.find_by(value: address.zipcode.to_s.first(5)))
           end
         end
       end

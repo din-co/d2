@@ -6,7 +6,7 @@ module Spree
       prepend(InstanceMethods)
 
       belongs_to :postal_code, class_name: "Spree::PostalCode"
-      after_validation :associate_postal_code, if: Proc.new { |address| address.postal_code_id.blank? && address.errors.empty? }
+      before_validation :associate_postal_code, if: Proc.new { |addr| postal_code_id.blank? }
     end
 
     module InstanceMethods
@@ -24,9 +24,7 @@ module Spree
         super
         # ensure associated postal_code belongs to country
         if postal_code.present?
-          if postal_code.country == country
-            self.zipcode = nil # not required as we have a valid postal_code and country combo
-          else
+          if postal_code.country != country
             if zipcode.present? # reset association
               self.postal_code = nil
             else

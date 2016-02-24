@@ -16,8 +16,4 @@ FactoryGirl.modify do
       end
     end
   end
-
-  factory :ship_address do
-    used_for_shipping true
-  end
 end
