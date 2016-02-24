@@ -1,0 +1,177 @@
+<div class="bg-tan">
+  <div class="container container--main">
+    <h1 class="hr-header">Subscription</h1>
+
+    <form>
+      <div class="container">
+
+<!--
+        <p class="form-inline">
+          I need to serve
+          <select class="form-control">
+            <% (1..12).each do |n| %>
+              <option<%= ' selected="selected"' if n == 2 %>><%= n %></option>
+            <% end -%>
+          </select>
+          people
+          <select class="form-control">
+            <% (1..12).each do |n| %>
+              <option<%= ' selected="selected"' if n == 2 %>><%= n %></option>
+            <% end -%>
+          </select>
+          meals per week.
+        </p>
+ -->
+
+        <div>
+          <p><strong>Back by popular demand</strong> for Din regulars who simply want tasty meals delivered on your schedule. Learn about <a href="#benefits" class="text-nowrap">subscription benefits</a> and <a href="#how-it-works">how subscription works</a>.</p>
+        </div>
+
+        <h3>Become a Din Regular</h3>
+
+        <div class="form-group">
+          <h4>Menus</h4>
+          <div class="radio">
+            <label><input type="radio" name="type" checked="checked"> <strong>Tasting Menu</strong> - chef’s choice!</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="type"> <strong>Vegetarian Menu</strong> - keepin’ it green.</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="type"> <strong>Carnivore’s Menu</strong> - Mmmmm…meat.</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="type"> <strong>50/50 Menu</strong> - half vegetarian, half meat.</label>
+          </div>
+          <p class="optional-settings-link">
+            <!-- <em>Need more control over diet or allergens?</em> <a href="#show-optional">View optional preferences</a> -->
+            <a href="#show-optional">Set allergen and diet preferences.</a> (optional)
+          </p>
+        </div>
+
+        <div class="optional-settings" style="display: none">
+          <div class="form-group">
+            <h4>Diet</h4>
+            <div>Select the diets which you observe. (optional)</div>
+            <div class="row form-inline js_checkbox-set">
+              <div class="col-sm-4"><div class="checkbox"><label><input type="checkbox" value="no-diets" checked="checked" class="js_checkbox-set-default"> Do not filter order for any specific diet.</label></div></div>
+              <div class="col-sm-4"><div class="checkbox"><label><input type="checkbox" value="dairy-free"> dairy-free</label></div></div>
+              <div class="col-sm-4"><div class="checkbox"><label><input type="checkbox" value="gluten-free"> gluten-free</label></div></div>
+              <div class="col-sm-4"><div class="checkbox"><label><input type="checkbox" value="nut-free"> nut-free</label></div></div>
+              <div class="col-sm-4"><div class="checkbox"><label><input type="checkbox" value="soy-free"> soy-free</label></div></div>
+              <div class="col-sm-4"><div class="checkbox"><label><input type="checkbox" value="vegan"> vegan</label></div></div>
+              <div class="col-sm-4"><div class="checkbox"><label><input type="checkbox" value="vegetarian"> vegetarian</label></div></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h4>Allergens</h4>
+            <div>I am allergic to, or I do not eat the following. (optional)</div>
+            <div class="row form-inline js_checkbox-set">
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="no-allergens" checked="checked" class="js_checkbox-set-default"> No allergens</label></div></div>
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="eggs"> eggs</label></div></div>
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="fish"> fish</label></div></div>
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="milk"> milk</label></div></div>
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="peanuts"> peanuts</label></div></div>
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="shellfish"> shellfish</label></div></div>
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="soybeans"> soybeans</label></div></div>
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="tree-nuts"> tree nuts</label></div></div>
+              <div class="col-sm-3"><div class="checkbox"><label><input type="checkbox" value="wheat"> wheat</label></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <h4>Meals</h4>
+          <p class="form-inline">
+            I want
+            <select class="form-control form-control--inline">
+              <% (1..12).each do |n| %>
+                <option<%= ' selected="selected"' if n == 2 %>><%= n %></option>
+              <% end -%>
+            </select>
+            meals in my delivery. <em class="text-nowrap">Each meal is 2 servings.</em>
+          </p>
+        </div>
+
+        <div class="form-group">
+          <h4>Delivery Day</h4>
+          <% ["Monday", "Tuesday", "Wednesday"].each_with_index do |day, i| %>
+            <div class="radio">
+              <label><input type="radio" name="delivery_day" <%= ' checked="checked"' if i == 0 %>> <%= day %></label>
+            </div>
+          <% end -%>
+        </div>
+
+        <div class="form-group">
+          <h4>Delivery Window</h4>
+          <% ["1–5pm", "6–8pm", "6–7pm", "7–8pm"].each_with_index do |window, i| %>
+            <div class="radio">
+              <label><input type="radio" name="delivery_window" <%= ' checked="checked"' if i == 0 %>> <%= window %></label>
+            </div>
+          <% end -%>
+        </div>
+
+        <div class="form-group">
+          <h4>Order Summary</h4>
+          <ul>
+            <li>Monday, <span class="text-nowrap">1–5pm</span> delivery</li>
+            <li>Tasting Menu</li>
+            <li>2 meals (each meal is 2 servings)</li>
+            <li>
+              Only meals which
+              are
+              vegetarian and gluten-free
+              and
+              do not contain:
+              nuts or eggs.
+            </li>
+          </ul>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Create Subscription</button>
+        </div>
+
+      </div>
+    </form>
+
+    <div id="benefits">
+      <h2>Subscription Benefits</h2>
+      <ul>
+        <li>Free delivery (for orders over $60)</li>
+        <li>Early access to new restaurant dishes likely to sell out.</li>
+        <li>Din arrives on your schedule.</li>
+        <li>Receive text/email with suggested meals 3 days before delivery.</li>
+        <li>You’ll have 48 hours to change meals, or cancel your order each week.</li>
+        <li>Pause your subscription when on vacation.</li>
+        <li>You may cancel order before 5pm the day before delivery.</li>
+        <!-- <li>Add multiple subscriptions to your account.</li> -->
+      </ul>
+    </div>
+
+    <div id="how-it-works">
+      <h2>How Subscription Works</h2>
+      <ol>
+        <li>You choose your meal preferences and delivery settings.</li>
+        <li>Din suggests meals 48 hours before delivery (via text/email). You have two options:
+          <ul>
+            <li>Suggested meals look exciting? Do nothing.</li>
+            <li>Want to change meals, or cancel order? Click link to edit order.</li>
+          </ul>
+        </li>
+        <li>Din delivers your order, chilled on dry ice. You place meals in the fridge, they’re good for a few days.</li>
+        <li>When you’re hungry, cook up your tasty meals and enjoy with your loved ones!</li>
+      </ol>
+    </div>
+
+  </div>
+</div>
+<script>
+  $(function(){
+    $(".optional-settings-link").click(function(){
+      $(this).hide();
+      $(".optional-settings").show();
+    })
+  })
+</script>
