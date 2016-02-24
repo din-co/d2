@@ -1,2 +1,2 @@
-Rack::Timeout.timeout = 30  # seconds, to match Heroku's router timeout
+Rack::Timeout.timeout = Rails.env.production? ? 30 : 90  # seconds, 30s is Heroku's router timeout
 Rack::Timeout::Logger.disable

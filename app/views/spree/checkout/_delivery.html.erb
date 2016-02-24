@@ -16,7 +16,7 @@
       <p><%= Spree.t(:no_available_delivery_windows) %></p>
     <% else %>
       <% difference = @order.shipping_promotion_difference.money %>
-      <% if difference > 0 %>
+      <% if difference > 0.to_money %>
         <p>
           To get <strong><%= @order.discounted_shipping_cost %> Shipping</strong>, add <strong><%= Spree::Money.new(difference) %></strong> to your order.
         </p>
