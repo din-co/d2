@@ -2,16 +2,24 @@
 <div class="bg-tan">
   <div class="container container--main">
     <h1 class="hr-header">We're Here For You</h1>
-    <h4>Contact Us</h4>
-    <ul>
-      <li><%= support_phone_link %></li>
-      <li><%= support_email_link("Help!") %></li>
-    </ul>
 
-    <h4>Self Help</h4>
-    <p><a href="/faq">Frequently Asked Questions</a></p>
+    <section class="help-section">
+      <h4>Contact Us</h4>
+      <ul>
+        <li><%= support_phone_link %></li>
+        <li><%= support_email_link("Help!") %></li>
+      </ul>
+    </section>
 
-    <h4>Help us improve Din</h4>
-    <p><%= support_email_link("Din would be even better if...", "Share Feedback") %></p>
+    <section class="help-section">
+      <h4>Self Help</h4>
+      <p><a href="/faq">Frequently Asked Questions</a></p>
+    </section>
+
+    <section class="help-section">
+      <h4>Help us improve Din</h4>
+      <p><%= support_email_link("Din would be even better if...", "Share Feedback") %></p>
+    </section>
+
   </div>
 </div>
