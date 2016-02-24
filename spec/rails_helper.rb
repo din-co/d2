@@ -29,6 +29,11 @@ require 'capybara'
 require 'spree/testing_support/factories'
 
 require 'capybara/poltergeist'
+
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {timeout: 90})
+end
+
 Capybara.javascript_driver = :poltergeist
 
 require 'capybara-screenshot/rspec'
