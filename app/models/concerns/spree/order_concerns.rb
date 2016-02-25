@@ -6,9 +6,17 @@ module Spree
       prepend(InstanceMethods)
 
       state_machine.before_transition to: :payment do |order|
-        next true if order.delivery_window_selected?
-        order.errors.add :base, Spree.t(:delivery_window_required)
-        false
+        unless order.delivery_window_selected?
+          order.errors.add :base, Spree.t(:delivery_window_required)
+          false
+        end
+      end
+
+      validate :validate_ship_address
+
+      state_machine.before_transition to: :delivery do |order|
+        order.send(:validate_ship_address)
+        return false if order.errors[:ship_address].present?
       end
 
       scope :day_of, ->(t) { completed_between(t.midnight, t.end_of_day) }
@@ -161,6 +169,12 @@ module Spree
     TagLineItem = ImmutableStruct.new(:name, :quantity, :restaurant, :chef)
 
     private
+
+    def validate_ship_address
+      if ship_address.present? && ship_address.postal_code.blank?
+        errors.add :ship_address, Spree.t(:unsupported_delivery_location)
+      end
+    end
 
     def shipping_promotion_minimal_amount
       if calc = shipping_promotion_minimal_calculator

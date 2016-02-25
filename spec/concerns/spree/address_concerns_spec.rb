@@ -8,6 +8,15 @@ RSpec.shared_examples_for "spree address concerns" do
   let(:model)   { described_class }
   let(:address) { FactoryGirl.build(:ship_address, zipcode: "94110", postal_code: nil) }
 
+  describe 'factory' do
+    let(:address) { FactoryGirl.build(:address) }
+    it 'does something' do
+      expect(address).to be_valid
+      expect(address.postal_code).to be_present, address.inspect
+      expect(address.state).to be_present, address.inspect
+    end
+  end
+
   describe "callbacks" do
     it "associates a postal code during validation" do
       expect(address.zipcode).to_not be_nil
@@ -22,7 +31,8 @@ RSpec.shared_examples_for "spree address concerns" do
     describe "associate_postal_code" do
       context "when country is US" do
         context "zipcode is blank" do
-          let(:address) { FactoryGirl.build(:ship_address, zipcode: "", postal_code: nil) }
+          let(:zipcode) { "" }
+          let(:address) { FactoryGirl.build(:ship_address, zipcode: zipcode) }
 
           it "returns true" do
             expect(address.send :associate_postal_code).to eql(true)
@@ -30,8 +40,9 @@ RSpec.shared_examples_for "spree address concerns" do
         end
 
         context "when zipcode has the value of an existing postal_code" do
+          let(:zipcode)     { postal_code.value }
           let(:postal_code) { FactoryGirl.create(:postal_code) }
-          let(:address)     { FactoryGirl.build(:ship_address, zipcode: "#{postal_code.value}-1234", postal_code: nil) }
+          let(:address)     { FactoryGirl.build(:ship_address, zipcode: "#{zipcode}-1234") }
 
           it "associates the matching postal code" do
             expect(address).to be_valid

@@ -6,7 +6,7 @@ module Spree
       prepend(InstanceMethods)
 
       belongs_to :postal_code, class_name: "Spree::PostalCode"
-      before_validation :associate_postal_code, if: Proc.new { |addr| postal_code_id.blank? }
+      before_validation :associate_postal_code, if: Proc.new { |addr| addr.postal_code_id.blank? || addr.zipcode_changed? }
     end
 
     module InstanceMethods

@@ -6,12 +6,32 @@ require 'rails_helper'
 RSpec.shared_examples_for "spree order concerns" do
   # the class that includes the concern
   let(:model) { described_class }
-  let(:country) { Spree::Country.find_or_create_by(name: "United States") }
-  let(:california) { Spree::State.find_or_create_by(name: "California") { |s| s.country = country } }
-  let(:address) { FactoryGirl.create(:address, state: california, zipcode: "94110") }
+  let(:address) { FactoryGirl.build(:address) }
+
+  describe "address validation" do
+    let(:ship_address) { FactoryGirl.create(:address) }
+    let(:bill_address) { FactoryGirl.create(:address, zipcode: "90210", postal_code: nil) }
+    let(:order) { FactoryGirl.build(:order_ready_to_ship, ship_address: ship_address, bill_address: bill_address)}
+
+    it 'requires a ship_address with an assigned postal_code' do
+      expect(ship_address).to be_valid
+      expect(ship_address.postal_code).to be_present
+      expect(order).to be_valid
+      order.ship_address = order.bill_address
+      expect(order).to_not be_valid
+      expect(order.errors[:ship_address]).to be_present
+    end
+
+    it 'allows a valid bill_address without an assigned postal_code' do
+      expect(bill_address).to be_valid
+      expect(bill_address.zipcode).to be_present
+      expect(bill_address.postal_code).to be_blank
+      expect(order).to be_valid
+    end
+  end
 
   describe "tote tags for completed orders" do
-    let(:order) { FactoryGirl.create(:completed_order_with_totals, ship_address: address, bill_address: address) }
+    let(:order) { FactoryGirl.create(:order_ready_to_ship) }
 
     it 'generates a single tag with complete information' do
       expect(order.quantity).to be <= 3
