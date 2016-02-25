@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160223202710) do
+ActiveRecord::Schema.define(version: 20160225212929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,30 @@ ActiveRecord::Schema.define(version: 20160223202710) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
   add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
   add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "legacy_orders", force: :cascade do |t|
+    t.string   "email",                                                   null: false
+    t.string   "ref_no",                                                  null: false
+    t.integer  "credits_redeemed",                          default: 0,   null: false
+    t.decimal  "total_charged",    precision: 10, scale: 2, default: 0.0, null: false
+    t.string   "full_name"
+    t.string   "address"
+    t.string   "apt_suite"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "phone"
+    t.string   "delivery_window"
+    t.date     "ship_date"
+    t.date     "ship_week"
+    t.date     "delivery_date"
+    t.string   "delivery_method"
+    t.integer  "status_code"
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+  end
+
+  add_index "legacy_orders", ["email"], name: "index_legacy_orders_on_email", using: :btree
 
   create_table "spree_addresses", force: :cascade do |t|
     t.string   "firstname"
