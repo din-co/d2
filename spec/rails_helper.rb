@@ -117,8 +117,6 @@ RSpec.configure do |config|
         spree_prototypes
         spree_property_prototypes
         spree_properties
-        spree_product_properties
-        spree_products
       ]}
     end
   end
