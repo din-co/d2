@@ -110,6 +110,7 @@ RSpec.configure do |config|
         spree_stock_locations
 
         spree_calculators
+        spree_payment_methods
 
         spree_taxonomies
         spree_taxons
