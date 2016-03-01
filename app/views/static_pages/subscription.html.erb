@@ -41,7 +41,7 @@
               <% [["Tasting Menu", "Chef’s choice!"], ["Vegetarian Menu", "Keepin’ it green."], ["Protein Menu", "Mmmmm…meat."], ["50/50 Menu", "Half veg, half meat."],
                 ].each_with_index do |menu, i| %>
                 <div class="radio">
-                  <label><input type="radio" value="<%= menu[0].parameterize %>" name="type" <%= ' checked="checked"' if i == 0 %>> <strong><%= menu[0] %></strong> <small class="text-nowrap"><%= menu[1] %></small></label>
+                  <label><input type="radio" name="menu" value="<%= menu[0].parameterize %>" data-value="<%= menu[0] %>" <%= ' checked="checked"' if i == 0 %>> <strong><%= menu[0] %></strong> <small class="text-nowrap"><%= menu[1] %></small></label>
                 </div>
               <% end -%>
             </div>
@@ -52,7 +52,7 @@
             <h4>Meals</h4>
             <p class="form-inline">
               Deliver
-              <select class="form-control form-control--inline input-sm">
+              <select name="meals" class="form-control form-control--inline input-sm">
                 <% (1..12).each do |n| %>
                   <option <%= 'selected="selected"' if n == 2 %>><%= n %></option>
                 <% end -%>
@@ -100,7 +100,7 @@
                 <% label = diet.is_a?(Array) ? diet[0] : diet %>
                 <% value = diet.is_a?(Array) ? diet[1] : diet.parameterize %>
                 <div class="radio">
-                  <div class="checkbox"><label><input type="checkbox" class="js_checkbox-set diets-checkbox" data-set="diets" value="<%= value %>" <%= ' checked="checked"' if i == 0 %>> <%= label %></label></div>
+                  <div class="checkbox"><label><input type="checkbox" name="diets" class="js_checkbox-set diets-checkbox" data-set="diets" value="<%= value %>" <%= ' checked="checked"' if i == 0 %>> <%= label %></label></div>
                 </div>
               <% end -%>
             </div>
@@ -114,7 +114,7 @@
                 <% label = allergen.is_a?(Array) ? allergen[0] : allergen %>
                 <% value = allergen.is_a?(Array) ? allergen[1] : allergen.parameterize %>
                 <div class="radio">
-                  <div class="checkbox"><label><input type="checkbox" class="js_checkbox-set allergens-checkbox" data-set="allergens" value="<%= value %>" <%= ' checked="checked"' if i == 0 %>> <%= label %></label></div>
+                  <div class="checkbox"><label><input type="checkbox" name="allergens" class="js_checkbox-set allergens-checkbox" data-set="allergens" value="<%= value %>" <%= ' checked="checked"' if i == 0 %>> <%= label %></label></div>
                 </div>
               <% end -%>
             </div>
@@ -128,16 +128,16 @@
       <div class="form-group">
         <h4>Order Summary</h4>
         <ul>
-          <li>Monday, <span class="text-nowrap">1–5pm</span> delivery</li>
-          <li>Tasting Menu</li>
-          <li>2 meals (each meal is 2 servings)</li>
+          <li><span id="summary-delivery-day">Monday</span>, <span id="summary-delivery-window" class="text-nowrap">1–5pm</span> delivery</li>
+          <li><span id="summary-delivery-menu">Tasting Menu</span></li>
+          <li><span id="summary-meals">2 meals</span> (each meal is 2 servings)</li>
           <li>
             Only meals which
             are
-            vegetarian and gluten-free
+            <span id="summary-diets">vegetarian and gluten-free</span>
             and
             do not contain:
-            nuts or eggs.
+            <span id="summary-allergens">nuts or eggs</span>.
           </li>
         </ul>
       </div>
@@ -190,10 +190,33 @@
       $(this).hide();
       $("#optional-settings").show();
     })
-    $("input:checkbox, input:radio").change(function() {
-      var value = $(this).attr('value');
+    $("input:checkbox, input:radio, select").change(function() {
       var name = $(this).attr('name');
+      var value = $(this).data('value') || $(this).attr('value') || $(this).val();
       console.log(name, value);
+
+      if (name == "delivery_day") {
+        $("#summary-delivery-day").text(value);
+      }
+      if (name == "delivery_window") {
+        $("#summary-delivery-window").text(value);
+      }
+      if (name == "meals") {
+        $("#summary-meals").text(value + " " + (value == 1 ? "meal" : "meals"));
+      }
+      if (name == "menu") {
+        $("#summary-delivery-menu").text(value);
+
+        if (value == "vegetarian-menu") {
+          $(".diets-checkbox").first().prop({checked: false})
+          $(".diets-checkbox[value='vegetarian']").prop({checked: true})
+        } else {
+          var dietsChecked = $(".diets-checkbox:checked");
+          if ((dietsChecked.length == 1) && (dietsChecked.attr('value') == "vegetarian")) {
+            $(".diets-checkbox").prop({checked: false}).first().prop({checked: true});
+          }
+        }
+      }
 
       if ($(this).hasClass("js_checkbox-set")) {
         var set = $("." + $(this).data("set") + "-checkbox");
@@ -207,6 +230,20 @@
         } else {
           setDefault.prop({checked: false});
         }
+      }
+      if (name == "allergens" || name == "diets") {
+        var selectedItems = [];
+        $("." + name + "-checkbox:checked").each(function(){
+          selectedItems.push($(this).attr("value"));
+        })
+        var itemsJoined;
+        if (selectedItems.length == 1) {
+          itemsJoined = selectedItems.join(", ")
+        } else {
+          var lastItem = selectedItems.pop();
+          itemsJoined = selectedItems.join(", ") + " and " + lastItem;
+        }
+        $("#summary-" + name + "").text(itemsJoined);
       }
     })
   })
