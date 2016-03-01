@@ -20,13 +20,13 @@ module Spree
 
     private
 
-      # Method borrowed from Spree::Address
-      def postal_code_validate
-        return if country.blank? || country.iso.blank?
-        return if !TwitterCldr::Shared::PostalCodes.territories.include?(country.iso.downcase.to_sym)
+    # Method borrowed from Spree::Address
+    def postal_code_validate
+      return if country.blank? || country.iso.blank?
+      return if !TwitterCldr::Shared::PostalCodes.territories.include?(country.iso.downcase.to_sym)
 
-        postal_code = TwitterCldr::Shared::PostalCodes.for_territory(country.iso)
-        errors.add(:value, :invalid) if !postal_code.valid?(value)
-      end
+      postal_code = TwitterCldr::Shared::PostalCodes.for_territory(country.iso)
+      errors.add(:value, :invalid) if !postal_code.valid?(value)
+    end
   end
 end

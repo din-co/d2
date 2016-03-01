@@ -6,7 +6,7 @@ module Spree
       prepend(InstanceMethods)
 
       belongs_to :postal_code, class_name: "Spree::PostalCode"
-      after_validation :associate_postal_code, if: Proc.new { |address| address.postal_code_id.blank? && address.errors.empty? }
+      before_validation :associate_postal_code, if: Proc.new { |addr| addr.postal_code_id.blank? || addr.zipcode_changed? }
     end
 
     module InstanceMethods
@@ -16,16 +16,28 @@ module Spree
     end
 
     private
-      def associate_postal_code
-        return true if zipcode.blank?
-        code = country.try!(:iso).try(:downcase) == "us" ? zipcode.first(5) : zipcode
-        postal_code = Spree::PostalCode.find_by(value: code, country: country)
-        if postal_code.blank?
-          errors[:base] = Spree.t(:unsupported_delivery_location)
-          return false
+
+    def postal_code_validate
+      super
+      # ensure associated postal_code belongs to country
+      if postal_code.present?
+        if postal_code.country != country
+          if zipcode.present? # reset association
+            self.postal_code = nil
+          else
+            errors.add(:postal_code, :invalid)
+          end
         end
-        # Need to use assign_attributes when in callback
-        assign_attributes(postal_code_id: postal_code.id)
       end
+
+      # ensure at least one of postal_code or zipcode is populated
+      errors.add :postal_code, :blank if postal_code.blank? && zipcode.blank?
+    end
+
+    def associate_postal_code
+      return true if zipcode.blank? || country.blank?
+      code = country.try!(:iso) == "US" ? zipcode.to_s.first(5) : zipcode
+      self.postal_code = Spree::PostalCode.find_by(value: code, country: country)
+    end
   end
 end

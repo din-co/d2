@@ -5,30 +5,49 @@ require 'rails_helper'
 
 RSpec.shared_examples_for "spree address concerns" do
   # the class that includes the concern
-  let(:model) { described_class }
+  let(:model)   { described_class }
+  let(:address) { FactoryGirl.build(:ship_address, zipcode: "94110", postal_code: nil) }
 
-  describe "associations" do
-    pending "belongs_to postal_code"
+  describe 'factory' do
+    let(:address) { FactoryGirl.build(:address) }
+    it 'does something' do
+      expect(address).to be_valid
+      expect(address.postal_code).to be_present, address.inspect
+      expect(address.state).to be_present, address.inspect
+    end
   end
 
   describe "callbacks" do
-    pending "it runs associate_postal_code after validation if valid"
-    pending "it does not run associate_postal_code if not valid"
+    it "associates a postal code during validation" do
+      expect(address.zipcode).to_not be_nil
+      expect(address.postal_code).to be_nil
+      expect(address).to be_valid
+      expect(address.postal_code).to eql(Spree::PostalCode.find_by(value: address.zipcode))
+    end
+
   end
 
   describe "private methods" do
     describe "associate_postal_code" do
-      context "postal code is blank" do
-        pending "it returns true"
-      end
+      context "when country is US" do
+        context "zipcode is blank" do
+          let(:zipcode) { "" }
+          let(:address) { FactoryGirl.build(:ship_address, zipcode: zipcode) }
 
-      context "postal code is not blank" do
-        context "when country is US" do
-          pending "it associates a postal code object with first 5 digits of zipcode"
+          it "returns true" do
+            expect(address.send :associate_postal_code).to eql(true)
+          end
         end
 
-        context "when country is not US" do
-          pending "it associates a postal code object with the entire value of zipcode"
+        context "when zipcode has the value of an existing postal_code" do
+          let(:zipcode)     { postal_code.value }
+          let(:postal_code) { FactoryGirl.create(:postal_code) }
+          let(:address)     { FactoryGirl.build(:ship_address, zipcode: "#{zipcode}-1234") }
+
+          it "associates the matching postal code" do
+            expect(address).to be_valid
+            expect(address.postal_code).to eql(Spree::PostalCode.find_by(value: address.zipcode.to_s.first(5)))
+          end
         end
       end
     end
