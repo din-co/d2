@@ -229,14 +229,14 @@
       }
 
       if (name == "allergens" || name == "diets") {
-        if (value == "vegetarian") {
+        if (value == "vegetarian" && $(".diets-checkbox[value='vegetarian']:checked")) {
           $(".diets-checkbox[value='dairy-free']").prop({checked: false})
           $(".diets-checkbox[value='vegan']").prop({checked: false})
         }
-        if (value == "dairy-free") {
+        if (value == "dairy-free" && $(".diets-checkbox[value='dairy-free']:checked")) {
           $(".diets-checkbox[value='vegetarian']").prop({checked: false})
         }
-        if (value == "vegan") {
+        if (value == "vegan" && $(".diets-checkbox[value='vegan']:checked")) {
           $(".diets-checkbox[value='vegetarian']").prop({checked: false})
           $(".diets-checkbox[value='dairy-free']").prop({checked: true})
           $(".diets-checkbox[value='pork-free']").prop({checked: true})
