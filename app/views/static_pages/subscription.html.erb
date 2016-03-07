@@ -1,120 +1,60 @@
-<div class="bg-tan">
-  <div class="container">
+<form>
+  <div class="container container--main">
+
     <h1 class="hr-header">Become a Regular</h1>
-  </div>
-</div>
 
-<div class="container container--main">
+    <div>
+      <p class="sub-header text-center"><strong>By popular demand, Subscription is back</strong> for Din regulars who want tasty meals delivered on their schedule. Learn about <a href="#benefits" class="text-nowrap">subscription benefits</a> and <a href="#how-it-works">how subscription works</a>.</p>
+    </div>
 
-  <form>
-    <div class="container">
+    <h3>Become a Din Regular</h3>
 
-      <!--
-      <p class="form-inline">
-        I need to serve
-        <select class="form-control">
-          <% (1..12).each do |n| %>
-            <option<%= ' selected="selected"' if n == 2 %>><%= n %></option>
-          <% end -%>
-        </select>
-        people
-        <select class="form-control">
-          <% (1..12).each do |n| %>
-            <option<%= ' selected="selected"' if n == 2 %>><%= n %></option>
-          <% end -%>
-        </select>
-        meals per week.
-      </p>
-      -->
+    <div class="row">
 
-      <div>
-        <p><strong>By popular demand, Subscription is back</strong> for Din regulars who want tasty meals delivered on their schedule. Learn about <a href="#benefits" class="text-nowrap">subscription benefits</a> and <a href="#how-it-works">how subscription works</a>.</p>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <h4>Meals</h4>
+          <p class="form-inline">
+            Deliver
+            <select name="meals" class="form-control form-control--inline input-sm">
+              <% (2..12).each do |n| %>
+                <option <%= 'selected="selected"' if n == 2 %>><%= n %></option>
+              <% end -%>
+            </select>
+            meals. <em class="text-nowrap">Each meal is 2 servings.</em>
+          </p>
+        </div>
       </div>
 
-      <h3>Become a Din Regular</h3>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <h4>Menus</h4>
+          <div class="radio-list">
+            <% [["Tasting Menu", "Chef’s choice!"], ["Vegetarian Menu", "Keepin’ it green."], ["Protein Menu", "Mmmmm…meat."], ["50/50 Menu", "Half veg, half meat."],
+              ].each_with_index do |menu, i| %>
+              <div class="radio">
+                <label><input type="radio" name="menu" value="<%= menu[0].parameterize %>" data-value="<%= menu[0] %>" <%= ' checked="checked"'.html_safe if i == 0 %>> <strong><%= menu[0] %></strong> <small class="text-nowrap"><%= menu[1] %></small></label>
+              </div>
+            <% end -%>
+          </div>
+        </div>
+      </div>
 
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="form-group">
-            <h4>Menus</h4>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <h4>Delivery Day and Time</h4>
+          <div class="delivery-settings">
+            <div class="delivery-settings__day radio-list">
+              <% ["Monday", "Tuesday", "Wednesday"].each_with_index do |day, i| %>
+                <div class="radio">
+                  <label><input type="radio" name="delivery_day" value="<%= day %>" <%= ' checked="checked"'.html_safe if i == 0 %>> <%= day %></label>
+                </div>
+              <% end -%>
+            </div>
             <div class="radio-list">
-              <% [["Tasting Menu", "Chef’s choice!"], ["Vegetarian Menu", "Keepin’ it green."], ["Protein Menu", "Mmmmm…meat."], ["50/50 Menu", "Half veg, half meat."],
-                ].each_with_index do |menu, i| %>
+              <% ["1–5pm", "6–8pm", "6–7pm", "7–8pm"].each_with_index do |window, i| %>
                 <div class="radio">
-                  <label><input type="radio" name="menu" value="<%= menu[0].parameterize %>" data-value="<%= menu[0] %>" <%= ' checked="checked"' if i == 0 %>> <strong><%= menu[0] %></strong> <small class="text-nowrap"><%= menu[1] %></small></label>
-                </div>
-              <% end -%>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <h4>Meals</h4>
-            <p class="form-inline">
-              Deliver
-              <select name="meals" class="form-control form-control--inline input-sm">
-                <% (1..12).each do |n| %>
-                  <option <%= 'selected="selected"' if n == 2 %>><%= n %></option>
-                <% end -%>
-              </select>
-              meals. <em class="text-nowrap">Each meal is 2 servings.</em>
-            </p>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <h4>Delivery Day and Time</h4>
-            <div class="delivery-settings">
-              <div class="delivery-settings__day radio-list">
-                <% ["Monday", "Tuesday", "Wednesday"].each_with_index do |day, i| %>
-                  <div class="radio">
-                    <label><input type="radio" name="delivery_day" value="<%= day %>" <%= ' checked="checked"' if i == 0 %>> <%= day %></label>
-                  </div>
-                <% end -%>
-              </div>
-              <div class="radio-list">
-                <% ["1–5pm", "6–8pm", "6–7pm", "7–8pm"].each_with_index do |window, i| %>
-                  <div class="radio">
-                    <label><input type="radio" name="delivery_window" value="<%= window %>" <%= ' checked="checked"' if i == 0 %>> <%= window %></label>
-                  </div>
-                <% end -%>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="optional-settings-link">
-        <p>
-          <a href="#show-optional-settings">Add allergen and diet preferences.</a> (optional)
-        </p>
-      </div>
-
-      <div id="optional-settings" class="row" style="display: none">
-        <div class="col-sm-4">
-          <div class="form-group">
-            <h4>Diets <small>(optional)</small></h4>
-            <div class="checkbox-list">
-              <% [["No specific diets", "no-diets"], "dairy-free", "gluten-free", "nut-free", "soy-free", "pork-free", ["vegetarian (lacto-ovo)", "vegetarian"], "vegan"].each_with_index do |diet, i| %>
-                <% label = diet.is_a?(Array) ? diet[0] : diet %>
-                <% value = diet.is_a?(Array) ? diet[1] : diet.parameterize %>
-                <div class="radio">
-                  <div class="checkbox"><label><input type="checkbox" name="diets" class="js_checkbox-set diets-checkbox" data-set="diets" value="<%= value %>" <%= ' checked="checked"' if i == 0 %>> <%= label %></label></div>
-                </div>
-              <% end -%>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="form-group">
-            <h4>Allergens <small>(optional)</small></h4>
-            <div class="checkbox-list">
-              <% [["No allergens", "no-allergens"], "eggs", "fish", "milk", "peanuts", "shellfish", "soybeans", ["tree nuts", "tree-nuts"], "wheat"].each_with_index do |allergen, i| %>
-                <% label = allergen.is_a?(Array) ? allergen[0] : allergen %>
-                <% value = allergen.is_a?(Array) ? allergen[1] : allergen.parameterize %>
-                <div class="radio">
-                  <div class="checkbox"><label><input type="checkbox" name="allergens" class="js_checkbox-set allergens-checkbox" data-set="allergens" value="<%= value %>" <%= ' checked="checked"' if i == 0 %>> <%= label %></label></div>
+                  <label><input type="radio" name="delivery_window" value="<%= window %>" <%= ' checked="checked"'.html_safe if i == 0 %>> <%= window %></label>
                 </div>
               <% end -%>
             </div>
@@ -122,33 +62,85 @@
         </div>
       </div>
 
-    </div>
-    <div class="container">
-
-      <div class="form-group">
-        <h4>Order Summary</h4>
-        <ul>
-          <li><span id="summary-delivery-day">Monday</span>, <span id="summary-delivery-window" class="text-nowrap">1–5pm</span> delivery</li>
-          <li><span id="summary-delivery-menu">Tasting Menu</span></li>
-          <li><span id="summary-meals">2 meals</span> (each meal is 2 servings)</li>
-          <li>
-            Only meals which
-            are
-            <span id="summary-diets">vegetarian and gluten-free</span>
-            and
-            do not contain:
-            <span id="summary-allergens">nuts or eggs</span>.
-          </li>
-        </ul>
-      </div>
-
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create Subscription</button>
+      <div class="col-sm-3">
+        <div class="form-group">
+          <h4>Notification</h4>
+          <div class="checkbox-list">
+            <div class="checkbox">
+              <div>Email to <strong>beau@beausmith.com</strong></div>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" name="notifications" class="notifications-checkbox" value="sms" data-set="notifications" data-label="text message" checked="checked"> Text message to <strong>415-555-1212</strong></label>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
-  </form>
-</div>
+
+    <p class="optional-settings-link">
+      <a href="#show-optional-settings">Add allergen and diet preferences.</a> (optional)
+    </p>
+
+    <div id="optional-settings" class="row well" style="display: none">
+      <div class="col-sm-4">
+        <h4>Please note</h4>
+        <p><em>Due to seasonality, restaurant availability, and factors beyond our control, we may not be able to provide meals to meet specific dietary needs every week.</em></p>
+        <p class="small"><em>Food Allergy Notice: Meals are prepared in restaurant kitchens that may contain tree nuts, peanuts, fish, shellfish, dairy, soy, eggs, and wheat. Though best practices are used when preparing meals, inadvertent cross-contamination may occur. We cannot guarantee the complete absence of allergens.</em></p>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <h4>Diets <small>(optional)</small></h4>
+          <div class="checkbox-list">
+            <% [["No specific diets", "no-diets"], "dairy-free", "gluten-free", "nut-free", "soy-free", "pork-free", ["vegetarian (lacto-ovo)", "vegetarian"], "vegan"].each_with_index do |diet, i| %>
+              <% label = diet.is_a?(Array) ? diet[0] : diet %>
+              <% value = diet.is_a?(Array) ? diet[1] : diet.parameterize %>
+              <div class="checkbox"><label><input type="checkbox" name="diets" class="js_checkbox-set-with-default diets-checkbox" data-set="diets" value="<%= value %>" <%= 'data-default="true" checked="checked"'.html_safe if i == 0 %>> <%= label %></label></div>
+            <% end -%>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <h4>Allergens <small>(optional)</small></h4>
+          <div class="checkbox-list">
+            <% [["No allergens", "no-allergens"], "eggs", "fish", "milk", "peanuts", "shellfish", "soybeans", ["tree nuts", "tree-nuts"], "wheat"].each_with_index do |allergen, i| %>
+              <% label = allergen.is_a?(Array) ? allergen[0] : allergen %>
+              <% value = allergen.is_a?(Array) ? allergen[1] : allergen.parameterize %>
+              <div class="checkbox"><label><input type="checkbox" name="allergens" class="js_checkbox-set-with-default allergens-checkbox" data-set="allergens" value="<%= value %>" <%= 'data-default="true" checked="checked"'.html_safe if i == 0 %>> <%= label %></label></div>
+            <% end -%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group" style="xdisplay: none">
+      <h4>Subscription Summary</h4>
+      <p>
+        Your subscription will include <strong id="summary-meals">2 meals</strong> (each meal is 2 servings)
+        from the <strong id="summary-delivery-menu">Tasting Menu</strong>
+        delivered on <strong id="summary-delivery-day">Monday</strong> between <strong id="summary-delivery-window" class="text-nowrap">1–5pm</strong>.
+      </p>
+      <p>
+        Din will <strong id="summary-notifications">email and text message</strong> suggested meals on <strong id="summary-suggestion-day">Friday</strong> at 5pm (48 hours before placing your order).
+        You may edit or cancel your order anytime before <strong id="summary-suggestion-day">Sunday</strong> at 5pm when your order is placed.
+      </p>
+      <p>
+        <span id="summary-diets-exist" style="display: none">
+          We will only suggest meals which are <strong id="summary-diets">vegetarian and gluten-free</strong>.
+        </span>
+        <span id="summary-allergens-exist" style="display: none">
+          We will not include meals containing <strong id="summary-allergens">peanuts or eggs</strong>.
+        </span>
+      </p>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Create Subscription</button>
+    </div>
+
+  </div>
+</form>
 
 <div class="bg-tan">
   <div class="container">
@@ -204,10 +196,21 @@
       if (name == "meals") {
         $("#summary-meals").text(value + " " + (value == 1 ? "meal" : "meals"));
       }
+      if (name == "notifications") {
+        var channels = ["email"];
+        $(".notifications-checkbox:checked").each(function(){
+          channels.push($(this).data("label"));
+        })
+        $("#summary-notifications").text(channels.join(" and "));
+      }
       if (name == "menu") {
         $("#summary-delivery-menu").text(value);
+        var dietsChecked = $(".diets-checkbox:checked");
 
-        if (value == "vegetarian-menu") {
+        $(".allergens-checkbox[data-default='true']").trigger("click");
+        $(".diets-checkbox[data-default='true']").trigger("click");
+
+        if (value == "Vegetarian Menu") {
           $(".diets-checkbox").first().prop({checked: false})
           $(".diets-checkbox[value='vegetarian']").prop({checked: true})
         } else {
@@ -216,34 +219,59 @@
             $(".diets-checkbox").prop({checked: false}).first().prop({checked: true});
           }
         }
-      }
 
-      if ($(this).hasClass("js_checkbox-set")) {
-        var set = $("." + $(this).data("set") + "-checkbox");
-        var setChecked = $("." + $(this).data("set") + "-checkbox:checked");
-        var setDefault = set.first();
-        if (setChecked.length == 0) {
-          setDefault.prop({checked: true});
-        } else if (setDefault.is($(this))) {
-          set.prop({checked: false});
-          setDefault.prop({checked: true});
-        } else {
-          setDefault.prop({checked: false});
+        if (value == "50/50 Menu") {
+          var vegtarianCheckbox = $(".diets-checkbox[value='vegetarian']:checked");
+          if (vegtarianCheckbox.length) {
+            vegtarianCheckbox.prop({checked: false})
+          }
         }
       }
+
       if (name == "allergens" || name == "diets") {
+        if (value == "vegetarian") {
+          $(".diets-checkbox[value='dairy-free']").prop({checked: false})
+          $(".diets-checkbox[value='vegan']").prop({checked: false})
+        }
+        if (value == "dairy-free") {
+          $(".diets-checkbox[value='vegetarian']").prop({checked: false})
+        }
+        if (value == "vegan") {
+          $(".diets-checkbox[value='vegetarian']").prop({checked: false})
+          $(".diets-checkbox[value='dairy-free']").prop({checked: true})
+          $(".diets-checkbox[value='pork-free']").prop({checked: true})
+        }
+        if ($(this).hasClass("js_checkbox-set-with-default")) {
+          var set = $("." + $(this).data("set") + "-checkbox");
+          var setChecked = $("." + $(this).data("set") + "-checkbox:checked");
+          var setDefault = set.first();
+          if (setChecked.length == 0) {
+            setDefault.prop({checked: true});
+          } else if (setDefault.is($(this))) {
+            set.prop({checked: false});
+            setDefault.prop({checked: true});
+          } else {
+            setDefault.prop({checked: false});
+          }
+        }
+        var combinator = (name == "allergens") ? " or " : " and ";
+        var summary = $("#summary-" + name + "-exist");
         var selectedItems = [];
-        $("." + name + "-checkbox:checked").each(function(){
+        $("." + name + "-checkbox:checked").not("[data-default='true']").each(function(){
           selectedItems.push($(this).attr("value"));
         })
         var itemsJoined;
-        if (selectedItems.length == 1) {
+        if (selectedItems.length == 0) {
+          summary.hide();
+        } else if (selectedItems.length == 1) {
+          summary.show();
           itemsJoined = selectedItems.join(", ")
         } else {
+          summary.show();
           var lastItem = selectedItems.pop();
-          itemsJoined = selectedItems.join(", ") + " and " + lastItem;
+          itemsJoined = selectedItems.join(", ") + combinator + lastItem;
         }
-        $("#summary-" + name + "").text(itemsJoined);
+        $("#summary-" + name).text(itemsJoined);
       }
     })
   })
