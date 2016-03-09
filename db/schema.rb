@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160225212929) do
+ActiveRecord::Schema.define(version: 20160309004439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,30 @@ ActiveRecord::Schema.define(version: 20160225212929) do
   end
 
   add_index "legacy_orders", ["email"], name: "index_legacy_orders_on_email", using: :btree
+
+  create_table "meal_preferences", force: :cascade do |t|
+    t.boolean  "diet_vegetarian"
+    t.boolean  "diet_beef"
+    t.boolean  "diet_lamb"
+    t.boolean  "diet_poultry"
+    t.boolean  "diet_pork"
+    t.boolean  "diet_fish"
+    t.boolean  "diet_seafood"
+    t.boolean  "allergen_none"
+    t.boolean  "allergen_eggs"
+    t.boolean  "allergen_fish"
+    t.boolean  "allergen_milk"
+    t.boolean  "allergen_peanuts"
+    t.boolean  "allergen_shellfish"
+    t.boolean  "allergen_soybeans"
+    t.boolean  "allergen_tree_nuts"
+    t.boolean  "allergen_wheat_gluten"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "spree_user_id"
+  end
+
+  add_index "meal_preferences", ["spree_user_id"], name: "index_meal_preferences_on_spree_user_id", using: :btree
 
   create_table "spree_addresses", force: :cascade do |t|
     t.string   "firstname"
@@ -266,6 +290,30 @@ ActiveRecord::Schema.define(version: 20160225212929) do
   end
 
   add_index "spree_log_entries", ["source_id", "source_type"], name: "index_spree_log_entries_on_source_id_and_source_type", using: :btree
+
+  create_table "spree_meal_preferences", force: :cascade do |t|
+    t.boolean  "diet_vegetarian"
+    t.boolean  "diet_beef"
+    t.boolean  "diet_lamb"
+    t.boolean  "diet_poultry"
+    t.boolean  "diet_pork"
+    t.boolean  "diet_fish"
+    t.boolean  "diet_seafood"
+    t.boolean  "allergen_none"
+    t.boolean  "allergen_eggs"
+    t.boolean  "allergen_fish"
+    t.boolean  "allergen_milk"
+    t.boolean  "allergen_peanuts"
+    t.boolean  "allergen_shellfish"
+    t.boolean  "allergen_soybeans"
+    t.boolean  "allergen_tree_nuts"
+    t.boolean  "allergen_wheat_gluten"
+    t.integer  "spree_user_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "spree_meal_preferences", ["spree_user_id"], name: "index_spree_meal_preferences_on_spree_user_id", using: :btree
 
   create_table "spree_option_type_prototypes", force: :cascade do |t|
     t.integer  "prototype_id"
@@ -1253,7 +1301,9 @@ ActiveRecord::Schema.define(version: 20160225212929) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "meal_preferences", "spree_users"
   add_foreign_key "spree_adjustments", "spree_orders", column: "order_id", name: "fk_spree_adjustments_order_id", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "spree_meal_preferences", "spree_users"
   add_foreign_key "spree_product_promotion_rules", "spree_products", column: "product_id"
   add_foreign_key "spree_product_promotion_rules", "spree_promotion_rules", column: "promotion_rule_id"
   add_foreign_key "spree_prototype_taxons", "spree_prototypes", column: "prototype_id"

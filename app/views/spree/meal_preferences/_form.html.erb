@@ -1,0 +1,37 @@
+<% if @meal_preference.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@meal_preference.errors.count, "error") %> prohibited
+      this from being saved:
+    </h2>
+    <ul>
+      <% @meal_preference.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h3>Diets</h3>
+<p><%= f.check_box :diet_vegetarian %> <%= f.label :diet_vegetarian %></p>
+<p><%= f.check_box :diet_beef %> <%= f.label :diet_beef %></p>
+<p><%= f.check_box :diet_lamb %> <%= f.label :diet_lamb %></p>
+<p><%= f.check_box :diet_poultry %> <%= f.label :diet_poultry %></p>
+<p><%= f.check_box :diet_pork %> <%= f.label :diet_pork %></p>
+<p><%= f.check_box :diet_fish %> <%= f.label :diet_fish %></p>
+<p><%= f.check_box :diet_seafood %> <%= f.label :diet_seafood %></p>
+
+<h3>Allergens</h3>
+<p><%= f.check_box :allergen_none %> <%= f.label :allergen_none %></p>
+<p><%= f.check_box :allergen_eggs %> <%= f.label :allergen_eggs %></p>
+<p><%= f.check_box :allergen_fish %> <%= f.label :allergen_fish %></p>
+<p><%= f.check_box :allergen_milk %> <%= f.label :allergen_milk %></p>
+<p><%= f.check_box :allergen_peanuts %> <%= f.label :allergen_peanuts %></p>
+<p><%= f.check_box :allergen_shellfish %> <%= f.label :allergen_shellfish %></p>
+<p><%= f.check_box :allergen_soybeans %> <%= f.label :allergen_soybeans %></p>
+<p><%= f.check_box :allergen_tree_nuts %> <%= f.label :allergen_tree_nuts %></p>
+<p><%= f.check_box :allergen_wheat_gluten %> <%= f.label :allergen_wheat_gluten %></p>
+
+<p>
+  <%= f.submit %>
+</p>
