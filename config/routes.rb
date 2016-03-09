@@ -34,14 +34,17 @@ Rails.application.routes.draw do
     get 'raw_reports/outbound_shipments'
   end
 
-  resources :spree_meal_preferences
-
   # This line mounts Spree's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
   #
   # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
   mount Spree::Core::Engine, :at => '/'
+
+  # Load custom Spree routes
+  Spree::Core::Engine.add_routes do
+    resources :meal_preferences
+  end
 
   # Fall back to static pages
   get '/:page', to: 'static_pages#show', as: 'static_page', constraints: lambda { |req|
