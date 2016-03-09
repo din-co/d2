@@ -15,7 +15,7 @@ module Spree
 
     def create
       @meal_preference = MealPreference.new(meal_preference_params)
-      @meal_preference.spree_user_id = spree_current_user.id
+      @meal_preference.user_id = spree_current_user.id
 
       if @meal_preference.save
         redirect_to @meal_preference

@@ -17,7 +17,7 @@ class CreateSpreeMealPreferences < ActiveRecord::Migration
       t.boolean :allergen_soybeans
       t.boolean :allergen_tree_nuts
       t.boolean :allergen_wheat_gluten
-      t.references :spree_user, index: true, foreign_key: true
+      t.references :user
 
       t.timestamps null: false
     end

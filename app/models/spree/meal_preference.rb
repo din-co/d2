@@ -1,7 +1,6 @@
 module Spree
   class Spree::MealPreference < Spree::Base
-    belongs_to :spree_user
-    # belongs_to :spree_user, :class_name => 'Spree::User'
+    belongs_to :user, class_name: Spree::UserClassHandle.new
 
     validate :vegetarian_and_other_diet
     validate :allergens_and_no_allergen

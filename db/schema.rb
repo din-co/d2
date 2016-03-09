@@ -308,12 +308,10 @@ ActiveRecord::Schema.define(version: 20160309004439) do
     t.boolean  "allergen_soybeans"
     t.boolean  "allergen_tree_nuts"
     t.boolean  "allergen_wheat_gluten"
-    t.integer  "spree_user_id"
+    t.integer  "user_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
-
-  add_index "spree_meal_preferences", ["spree_user_id"], name: "index_spree_meal_preferences_on_spree_user_id", using: :btree
 
   create_table "spree_option_type_prototypes", force: :cascade do |t|
     t.integer  "prototype_id"
@@ -1303,7 +1301,6 @@ ActiveRecord::Schema.define(version: 20160309004439) do
 
   add_foreign_key "meal_preferences", "spree_users"
   add_foreign_key "spree_adjustments", "spree_orders", column: "order_id", name: "fk_spree_adjustments_order_id", on_update: :restrict, on_delete: :restrict
-  add_foreign_key "spree_meal_preferences", "spree_users"
   add_foreign_key "spree_product_promotion_rules", "spree_products", column: "product_id"
   add_foreign_key "spree_product_promotion_rules", "spree_promotion_rules", column: "promotion_rule_id"
   add_foreign_key "spree_prototype_taxons", "spree_prototypes", column: "prototype_id"
