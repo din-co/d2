@@ -59,17 +59,17 @@
     <table class="table table-condensed table-striped">
       <thead>
       <tr>
-        <th class="order-number"><%= I18n.t(:number, :scope => 'activerecord.attributes.spree/order') %></th>
-        <th class="order-date"><%= Spree.t(:date) %></th>
-        <th class="order-total"><%= Spree.t(:total) %></th>
+        <th><%= I18n.t(:number, :scope => 'activerecord.attributes.spree/order') %></th>
+        <th class="text-center"><%= Spree.t(:date) %></th>
+        <th class="text-right"><%= Spree.t(:total) %></th>
       </tr>
       </thead>
       <tbody>
       <% @orders.each do |order| %>
         <tr>
-          <td class="order-number"><%= link_to order.number, order_url(order) %></td>
-          <td class="order-date"><%= l order.completed_at.to_date %></td>
-          <td class="order-total"><%= order.display_total %></td>
+          <td><%= link_to order.number, order_url(order) %></td>
+          <td class="text-center"><%= l order.completed_at.to_date %></td>
+          <td class="text-right"><%= order.display_total %></td>
         </tr>
       <% end %>
       </tbody>
