@@ -1,16 +1,7 @@
 module Spree
   class MealPreferencesController < Spree::StoreController
-  # def index, show, new, edit, create, update, destroy
-    def show
-      @meal_preference = MealPreference.find(params[:id])
-    end
-
-    def new
-      @meal_preference = MealPreference.new
-    end
-
-    def edit
-      @meal_preference = MealPreference.find(params[:id])
+    def index
+      @meal_preference = spree_current_user.meal_preference
     end
 
     def create
@@ -18,9 +9,9 @@ module Spree
       @meal_preference.user_id = spree_current_user.id
 
       if @meal_preference.save
-        redirect_to @meal_preference
+        redirect_to spree.account_path
       else
-        render 'new'
+        render 'index'
       end
     end
 
@@ -28,9 +19,9 @@ module Spree
       @meal_preference = MealPreference.find(params[:id])
 
       if @meal_preference.update(meal_preference_params)
-        redirect_to @meal_preference
+        redirect_to spree.account_path
       else
-        render 'edit'
+        render 'index'
       end
     end
 

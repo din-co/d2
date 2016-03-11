@@ -1,0 +1,13 @@
+<div class="container container--main">
+  <h1>Meal Preferences</h1>
+
+  <% if @meal_preference.blank? %>
+    <%= form_for :meal_preference, url: meal_preferences_path do |f| %>
+      <%= render partial: 'form', locals: {f: f} %>
+    <% end %>
+  <% else -%>
+    <%= form_for :meal_preference, url: meal_preference_path(@meal_preference), method: :patch do |f| %>
+      <%= render partial: 'form', locals: {f: f} %>
+    <% end %>
+  <% end -%>
+</div>

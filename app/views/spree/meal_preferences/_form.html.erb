@@ -1,4 +1,4 @@
-<% if @meal_preference.errors.any? %>
+<% if @meal_preference.present? && @meal_preference.errors.any? %>
   <div id="error_explanation">
     <h2>
       <%= pluralize(@meal_preference.errors.count, "error") %> prohibited
