@@ -30,8 +30,10 @@
       diets.push("seafood")       if mp.diet_seafood
       diets.push("tofu")          if mp.diet_tofu
       diets.push("tempeh")        if mp.diet_tempeh
+      if diets.length == 0
+        diets.push("vegetarian")
+      end
 
-      allergens.push("none")      if mp.allergen_none
       allergens.push("eggs")      if mp.allergen_eggs
       allergens.push("fish")      if mp.allergen_fish
       allergens.push("milk")      if mp.allergen_milk
@@ -43,10 +45,13 @@
     end
   %>
   <% if mp %>
-    <p><strong>Diets:</strong> <%= diets.join(", ") %></p>
-    <p><strong>Allergens:</strong> <%= allergens.join(", ") %></p>
+    <ul class="list-unstyled">
+      <li><strong>I enjoy eating:</strong> <%= diets.join(", ") %></li>
+      <% if allergens.length != 0 %>
+        <li><strong>I do not eat:</strong> <%= allergens.join(", ") %></li>
+      <% end -%>
+    </ul>
   <% end -%>
-  <p><%= link_to "edit", meal_preferences_path %></p>
 
 
   <h3><%= Spree.t(:orders) %></h3>
