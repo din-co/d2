@@ -1,5 +1,8 @@
 module Spree
   class MealPreferencesController < Spree::StoreController
+
+    # before_action :vegetarian_and_no_soy, only: [:update, :create]
+
     def index
       @meal_preference = spree_current_user.meal_preference
     end
@@ -26,8 +29,17 @@ module Spree
     end
 
     private
+
       def meal_preference_params
         params.require(:meal_preference).permit(:id, :diet_beef, :diet_lamb, :diet_pork, :diet_poultry, :diet_rabbit, :diet_fish, :diet_seafood, :diet_tofu, :diet_tempeh, :allergen_none, :allergen_eggs, :allergen_fish, :allergen_milk, :allergen_peanuts, :allergen_shellfish, :allergen_soybeans, :allergen_tree_nuts, :allergen_wheat_gluten)
       end
+
+      # def vegetarian_and_no_soy
+      #   if @meal_preference.allergen_soybeans && (@meal_preference.diet_tofu || @meal_preference.diet_tempeh)
+      #     flash[:error] = "If you don’t eat soybeans, then you probably shouldn’t select tofu or tempeh."
+      #     redirect_to meal_preferences_path
+      #   end
+      # end
+
   end
 end

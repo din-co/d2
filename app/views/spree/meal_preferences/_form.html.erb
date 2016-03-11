@@ -1,14 +1,10 @@
 <% if @meal_preference.present? && @meal_preference.errors.any? %>
   <div id="error_explanation">
-    <h2>
-      <%= pluralize(@meal_preference.errors.count, "error") %> prohibited
-      this from being saved:
-    </h2>
-    <ul>
+    <div class="bg-danger flash">
       <% @meal_preference.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+        <p><%= msg %></p>
       <% end %>
-    </ul>
+    </div>
   </div>
 <% end %>
 
@@ -22,8 +18,12 @@
     <div class="checkbox"><label><%= f.check_box :diet_rabbit, checked: (@meal_preference.presence.try(:diet_rabbit).nil? ? true : @meal_preference.presence.try(:diet_rabbit)) %> rabbit</label></div>
     <div class="checkbox"><label><%= f.check_box :diet_fish, checked: (@meal_preference.presence.try(:diet_fish).nil? ? true : @meal_preference.presence.try(:diet_fish)) %> fish</label></div>
     <div class="checkbox"><label><%= f.check_box :diet_seafood, checked: (@meal_preference.presence.try(:diet_seafood).nil? ? true : @meal_preference.presence.try(:diet_seafood)) %> seafood</label></div>
-    <div class="checkbox"><label><%= f.check_box :diet_tofu, checked: (@meal_preference.presence.try(:diet_tofu).nil? ? true : @meal_preference.presence.try(:diet_tofu)) %> tofu</label></div>
-    <div class="checkbox"><label><%= f.check_box :diet_tempeh, checked: (@meal_preference.presence.try(:diet_tempeh).nil? ? true : @meal_preference.presence.try(:diet_tempeh)) %> tempeh</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_tofu, checked: (@meal_preference.presence.try(:diet_tofu).nil? ? true : @meal_preference.presence.try(:diet_tofu)), class: "vegetarian-diet" %> tofu</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_tempeh, checked: (@meal_preference.presence.try(:diet_tempeh).nil? ? true : @meal_preference.presence.try(:diet_tempeh)), class: "vegetarian-diet" %> tempeh</label></div>
+    <p>
+      <a href="" class="set-diet-vegetarian btn btn-xs btn-success">I’m vegetarian</a>
+      <a href="" class="reset-diets btn btn-xs btn-default">reset</a>
+    </p>
   </div>
   <div class="col-sm-6">
     <h3>I can’t eat these foods:</h3>
@@ -53,6 +53,20 @@ $(function(){
     } else {
       noAllergens.prop({checked: false});
     }
+    if (allergens.filter(":checked").length == 0) {
+      noAllergens.prop({checked: true});
+    }
+  })
+  var diets = $("[name^='meal_preference[diet']")
+  var vegetarianDiets = $(".vegetarian-diet")
+  $(".set-diet-vegetarian").click(function(e){
+    e.preventDefault();
+    diets.not(vegetarianDiets).prop({checked: false})
+    vegetarianDiets.prop({checked: true})
+  })
+  $(".reset-diets").click(function(e){
+    e.preventDefault();
+    diets.prop({checked: true})
   })
 })
 </script>
