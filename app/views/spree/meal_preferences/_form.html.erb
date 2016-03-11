@@ -12,26 +12,47 @@
   </div>
 <% end %>
 
-<h3>Diets</h3>
-<p><%= f.check_box :diet_vegetarian %> <%= f.label :diet_vegetarian %></p>
-<p><%= f.check_box :diet_beef %> <%= f.label :diet_beef %></p>
-<p><%= f.check_box :diet_lamb %> <%= f.label :diet_lamb %></p>
-<p><%= f.check_box :diet_poultry %> <%= f.label :diet_poultry %></p>
-<p><%= f.check_box :diet_pork %> <%= f.label :diet_pork %></p>
-<p><%= f.check_box :diet_fish %> <%= f.label :diet_fish %></p>
-<p><%= f.check_box :diet_seafood %> <%= f.label :diet_seafood %></p>
-
-<h3>Allergens</h3>
-<p><%= f.check_box :allergen_none %> <%= f.label :allergen_none %></p>
-<p><%= f.check_box :allergen_eggs %> <%= f.label :allergen_eggs %></p>
-<p><%= f.check_box :allergen_fish %> <%= f.label :allergen_fish %></p>
-<p><%= f.check_box :allergen_milk %> <%= f.label :allergen_milk %></p>
-<p><%= f.check_box :allergen_peanuts %> <%= f.label :allergen_peanuts %></p>
-<p><%= f.check_box :allergen_shellfish %> <%= f.label :allergen_shellfish %></p>
-<p><%= f.check_box :allergen_soybeans %> <%= f.label :allergen_soybeans %></p>
-<p><%= f.check_box :allergen_tree_nuts %> <%= f.label :allergen_tree_nuts %></p>
-<p><%= f.check_box :allergen_wheat_gluten %> <%= f.label :allergen_wheat_gluten %></p>
+<div class="row">
+  <div class="col-sm-6">
+    <h3>I enjoy meals with:</h3>
+    <div class="checkbox"><label><%= f.check_box :diet_beef %> beef</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_lamb %> lamb</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_pork %> pork</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_poultry %> poultry</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_rabbit %> rabbit</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_fish %> fish</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_seafood %> seafood</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_tofu %> tofu</label></div>
+    <div class="checkbox"><label><%= f.check_box :diet_tempeh %> tempeh</label></div>
+  </div>
+  <div class="col-sm-6">
+    <h3>I can’t eat these foods:</h3>
+    <div class="checkbox"><label><%= f.check_box :allergen_none %> none</label></div>
+    <div class="checkbox"><label><%= f.check_box :allergen_eggs %> eggs</label></div>
+    <div class="checkbox"><label><%= f.check_box :allergen_fish %> fish</label></div>
+    <div class="checkbox"><label><%= f.check_box :allergen_milk %> milk</label></div>
+    <div class="checkbox"><label><%= f.check_box :allergen_peanuts %> peanuts</label></div>
+    <div class="checkbox"><label><%= f.check_box :allergen_shellfish %> shellfish</label></div>
+    <div class="checkbox"><label><%= f.check_box :allergen_soybeans %> soybeans</label></div>
+    <div class="checkbox"><label><%= f.check_box :allergen_tree_nuts %> tree nuts</label></div>
+    <div class="checkbox"><label><%= f.check_box :allergen_wheat_gluten %> wheat/gluten</label></div>
+  </div>
+</div>
 
 <p>
-  <%= f.submit %>
+  <%= f.submit "Save Meal Preferences", :class => 'btn btn-primary' %>
 </p>
+
+<script type="text/javascript">
+$(function(){
+  var allergens = $("[name^='meal_preference[allergen']")
+  var noAllergens = $("#meal_preference_allergen_none")
+  allergens.click(function(){
+    if ($(this).is(noAllergens) && $(this)[0].checked) {
+      allergens.not(noAllergens).prop({checked: false});
+    } else {
+      noAllergens.prop({checked: false});
+    }
+  })
+})
+</script>

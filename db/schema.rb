@@ -292,13 +292,15 @@ ActiveRecord::Schema.define(version: 20160309004439) do
   add_index "spree_log_entries", ["source_id", "source_type"], name: "index_spree_log_entries_on_source_id_and_source_type", using: :btree
 
   create_table "spree_meal_preferences", force: :cascade do |t|
-    t.boolean  "diet_vegetarian"
     t.boolean  "diet_beef"
     t.boolean  "diet_lamb"
-    t.boolean  "diet_poultry"
     t.boolean  "diet_pork"
+    t.boolean  "diet_poultry"
+    t.boolean  "diet_rabbit"
     t.boolean  "diet_fish"
     t.boolean  "diet_seafood"
+    t.boolean  "diet_tofu"
+    t.boolean  "diet_tempeh"
     t.boolean  "allergen_none"
     t.boolean  "allergen_eggs"
     t.boolean  "allergen_fish"

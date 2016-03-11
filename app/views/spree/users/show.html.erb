@@ -6,8 +6,44 @@
     <%= link_to Spree.t(:logout), spree.logout_path, class: "btn btn-danger btn-xs" %>
   </p>
 
-  <h3><%= Spree.t(:orders) %></h3>
+  <%= spree_current_user.meal_preference.inspect %>
 
+  <h3>Meal Preferences</h3>
+  <%
+    mp = spree_current_user.meal_preference
+    diets = []
+    allergens = []
+
+    if mp
+      diets.push("beef")          if mp.diet_beef
+      diets.push("lamb")          if mp.diet_lamb
+      diets.push("pork")          if mp.diet_pork
+      diets.push("poultry")       if mp.diet_poultry
+      diets.push("rabbit")        if mp.diet_rabbit
+      diets.push("fish")          if mp.diet_fish
+      diets.push("seafood")       if mp.diet_seafood
+      diets.push("tofu")          if mp.diet_tofu
+      diets.push("tempeh")        if mp.diet_tempeh
+
+      allergens.push("none")      if mp.allergen_none
+      allergens.push("eggs")      if mp.allergen_eggs
+      allergens.push("fish")      if mp.allergen_fish
+      allergens.push("milk")      if mp.allergen_milk
+      allergens.push("peanuts")   if mp.allergen_peanuts
+      allergens.push("shellfish") if mp.allergen_shellfish
+      allergens.push("soybeans")  if mp.allergen_soybeans
+      allergens.push("nuts")      if mp.allergen_tree_nuts
+      allergens.push("gluten")    if mp.allergen_wheat_gluten
+    end
+  %>
+  <% if mp %>
+    <p><strong>Diets:</strong> <%= diets.join(", ") %></p>
+    <p><strong>Allergens:</strong> <%= allergens.join(", ") %></p>
+  <% end -%>
+  <p><%= link_to "edit", meal_preferences_path %></p>
+
+
+  <h3><%= Spree.t(:orders) %></h3>
   <% if @orders.present? %>
     <table class="table table-condensed table-striped">
       <thead>
