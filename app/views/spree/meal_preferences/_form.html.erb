@@ -21,8 +21,8 @@
     <div class="checkbox"><label><%= f.check_box :diet_tofu, checked: (@meal_preference.presence.try(:diet_tofu).nil? ? true : @meal_preference.presence.try(:diet_tofu)), class: "vegetarian-diet" %> tofu</label></div>
     <div class="checkbox"><label><%= f.check_box :diet_tempeh, checked: (@meal_preference.presence.try(:diet_tempeh).nil? ? true : @meal_preference.presence.try(:diet_tempeh)), class: "vegetarian-diet" %> tempeh</label></div>
     <p>
-      <a href="" class="set-diet-vegetarian btn btn-xs btn-success">I’m vegetarian</a>
-      <a href="" class="reset-diets btn btn-xs btn-default">reset</a>
+      <a href="" class="set-diet-vegetarian btn btn-xs btn-info">I’m vegetarian</a>
+      <a href="" class="reset-diets btn btn-xs btn-info">All</a>
     </p>
   </div>
   <div class="col-sm-6">
