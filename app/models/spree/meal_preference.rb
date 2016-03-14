@@ -1,5 +1,5 @@
 module Spree
-  class Spree::MealPreference < Spree::Base
+  class MealPreference < Spree::Base
     belongs_to :user, class_name: Spree::UserClassHandle.new
 
     validate :vegetarian_and_no_soy
