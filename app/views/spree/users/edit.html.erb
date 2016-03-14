@@ -1,8 +1,33 @@
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @user } %>
 <div class="container container--main">
-  <h1><%= Spree.t(:editing_user) %></h1>
+  <h1><%= Spree.t(:account_settings) %></h1>
   <%= form_for Spree::User.new, :as => @user, :url => spree.user_path(@user), :method => :put do |f| %>
-    <%= render :partial => 'spree/shared/user_form', :locals => { :f => f } %>
-    <%= f.submit Spree.t(:update), :class => 'btn btn-primary' %>
+    <div class="form-group">
+      <%= f.label :email, Spree.t(:email) %>
+      <%= f.email_field :email, :class => 'form-control' %>
+    </div>
+    <a href="#" id="show-change-password-form">change password</a>
+    <div class="row" id="change-password-form" style="display: none">
+      <div class="col-sm-6">
+        <%= f.label :password, Spree.t(:new_password) %>
+        <%= f.password_field :password, :class => 'form-control' %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.label :password_confirmation, Spree.t(:confirm_new_password) %>
+        <%= f.password_field :password_confirmation, :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="form-footer">
+      <%= f.submit Spree.t(:update), :class => 'btn btn-primary' %>
+    </div>
   <% end %>
 </div>
+
+<script>
+  $(function() {
+    $("#show-change-password-form").click(function(){
+      $(this).remove();
+      $("#change-password-form").show();
+    })
+  })
+</script>
