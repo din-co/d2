@@ -1,58 +1,57 @@
 <div class="container container--main">
   <h1>
-    <%= "Din Account" || Spree.t(:account) %>
-    <%= link_to Spree.t(:edit), spree.edit_account_path, class: "btn btn-primary btn-xs" %>
-    <%= link_to Spree.t(:logout), spree.logout_path, class: "btn btn-default btn-xs" %>
+    <%= "Your Account" || Spree.t(:account) %>
+    <%= link_to Spree.t(:logout), spree.logout_path, class: "btn btn-default btn-xs btn-info" %>
   </h1>
 
-  <div class="account-section">
+  <p>
+    <%= @user.email %> <%= link_to Spree.t(:edit), spree.edit_account_path, class: "btn btn-primary btn-xs" %>
+  </p>
+
+  <div class="page-section">
+    <h4>
+      Food Preferences
+      <%= link_to "Edit", meal_preferences_path, class: "btn btn-xs btn-primary" %>
+    </h4>
+    <%
+      mp = spree_current_user.meal_preference
+      diets = []
+      allergens = []
+
+      if mp
+        diets.push("beef")          if mp.diet_beef
+        diets.push("lamb")          if mp.diet_lamb
+        diets.push("pork")          if mp.diet_pork
+        diets.push("poultry")       if mp.diet_poultry
+        diets.push("rabbit")        if mp.diet_rabbit
+        diets.push("fish")          if mp.diet_fish
+        diets.push("seafood")       if mp.diet_seafood
+        diets.push("tofu")          if mp.diet_tofu
+        diets.push("tempeh")        if mp.diet_tempeh
+        if diets.length == 0
+          diets.push("vegetarian")
+        end
+
+        allergens.push("eggs")      if mp.allergen_eggs
+        allergens.push("fish")      if mp.allergen_fish
+        allergens.push("milk")      if mp.allergen_milk
+        allergens.push("peanuts")   if mp.allergen_peanuts
+        allergens.push("shellfish") if mp.allergen_shellfish
+        allergens.push("soybeans")  if mp.allergen_soybeans
+        allergens.push("nuts")      if mp.allergen_tree_nuts
+        allergens.push("gluten")    if mp.allergen_wheat_gluten
+      end
+    %>
     <p>
-      <%= @user.email %>
+      <% if mp %>
+        <strong>I enjoy eating:</strong> <%= diets.join(", ") %>
+        <% if allergens.length != 0 %>
+          <br>
+          <strong>I do not eat:</strong> <%= allergens.join(", ") %>
+        <% end -%>
+      <% end -%>
     </p>
   </div>
-
-  <h3>
-    Food Preferences
-    <%= link_to "Edit", meal_preferences_path, class: "btn btn-xs btn-primary" %>
-  </h3>
-  <%
-    mp = spree_current_user.meal_preference
-    diets = []
-    allergens = []
-
-    if mp
-      diets.push("beef")          if mp.diet_beef
-      diets.push("lamb")          if mp.diet_lamb
-      diets.push("pork")          if mp.diet_pork
-      diets.push("poultry")       if mp.diet_poultry
-      diets.push("rabbit")        if mp.diet_rabbit
-      diets.push("fish")          if mp.diet_fish
-      diets.push("seafood")       if mp.diet_seafood
-      diets.push("tofu")          if mp.diet_tofu
-      diets.push("tempeh")        if mp.diet_tempeh
-      if diets.length == 0
-        diets.push("vegetarian")
-      end
-
-      allergens.push("eggs")      if mp.allergen_eggs
-      allergens.push("fish")      if mp.allergen_fish
-      allergens.push("milk")      if mp.allergen_milk
-      allergens.push("peanuts")   if mp.allergen_peanuts
-      allergens.push("shellfish") if mp.allergen_shellfish
-      allergens.push("soybeans")  if mp.allergen_soybeans
-      allergens.push("nuts")      if mp.allergen_tree_nuts
-      allergens.push("gluten")    if mp.allergen_wheat_gluten
-    end
-  %>
-  <% if mp %>
-    <ul class="list-unstyled">
-      <li><strong>I enjoy eating:</strong> <%= diets.join(", ") %></li>
-      <% if allergens.length != 0 %>
-        <li><strong>I do not eat:</strong> <%= allergens.join(", ") %></li>
-      <% end -%>
-    </ul>
-  <% end -%>
-
 
   <h3><%= Spree.t(:orders) %></h3>
   <% if @orders.present? %>
