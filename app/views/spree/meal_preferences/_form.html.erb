@@ -1,13 +1,3 @@
-<% if @meal_preference.present? && @meal_preference.errors.any? %>
-  <div id="error_explanation">
-    <div class="bg-danger flash">
-      <% @meal_preference.errors.full_messages.each do |msg| %>
-        <p><%= msg %></p>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-
 <div class="row form-group">
   <div class="col-sm-6">
     <h3>My diet includes:</h3>

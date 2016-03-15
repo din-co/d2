@@ -16,6 +16,7 @@ module Spree
       if @meal_preference.save
         redirect_to spree.account_path
       else
+        flash.now[:error] = @meal_preference.errors.full_messages.to_sentence
         render 'index'
       end
     end
@@ -26,6 +27,7 @@ module Spree
       if @meal_preference.update(meal_preference_params)
         redirect_to spree.account_path
       else
+        flash.now[:error] = @meal_preference.errors.full_messages.to_sentence
         render 'index'
       end
     end
