@@ -8,6 +8,22 @@ module Spree
       self.class.allergens.none? { |allergen| send(allergen) }
     end
 
+    def diet_name(diet)
+      diet.to_s.sub(/^diet_/, '')
+    end
+
+    def allergen_name(allergen)
+      allergen = allergen.to_s
+      case allergen
+      when "allergen_wheat_gluten"
+        "wheat/gluten"
+      when "allergen_tree_nuts"
+        "tree nuts"
+      else
+        allergen.sub(/^allergen_/, '')
+      end
+    end
+
     def self.diets
       attribute_names.select { |name| name.start_with?("diet_") }.map(&:to_sym)
     end
