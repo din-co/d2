@@ -1,6 +1,8 @@
 module Spree
   class MealPreferencesController < Spree::StoreController
 
+    before_action :authorize_user
+
     # before_action :vegetarian_and_no_soy, only: [:update, :create]
 
     def index
@@ -40,6 +42,14 @@ module Spree
       #     redirect_to meal_preferences_path
       #   end
       # end
+
+      def authorize_user
+        unless spree_current_user.present?
+          store_location
+          redirect_to login_path
+          return
+        end
+      end
 
   end
 end
