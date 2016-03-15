@@ -22,7 +22,7 @@ module Spree
     end
 
     def update
-      @meal_preference = MealPreference.find(params[:id])
+      @meal_preference = spree_current_user.meal_preference
 
       if @meal_preference.update(meal_preference_params)
         redirect_to spree.account_path
