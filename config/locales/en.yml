@@ -38,9 +38,12 @@ en:
     next_available: Available on %{date}
     not_currently_available: "Not currently available to order"
     forgot: "Forgot?"
+    account_settings: "Account Settings"
     password_reset: "Password Reset"
     reset_password: "Reset Password"
     confirm_password: "Confirm Password"
+    new_password: "New Password"
+    confirm_new_password: "Confirm New Password"
     send_link_to_reset_password: "Send Link to Reset Password"
     create_account: "Create Account"
     create_a_new_account: "Sign Up"
