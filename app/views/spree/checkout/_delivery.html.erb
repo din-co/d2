@@ -22,7 +22,7 @@
         </p>
       <% elsif @order.shipping_promotion_calculator.present? %>
         <p>
-          <span class="delivery-window--delivery-discount">Congratulations! Your order qualifies for <strong><%= @order.discounted_shipping_cost %> Shipping</strong>!</span>
+          <span class="delivery-window--delivery-discount">Congratulations! Your order qualifies for <strong><%= @order.discounted_shipping_cost %> delivery</strong>!</span>
         </p>
       <% end %>
     <% end -%>
