@@ -53,30 +53,6 @@ ActiveRecord::Schema.define(version: 20160309004439) do
 
   add_index "legacy_orders", ["email"], name: "index_legacy_orders_on_email", using: :btree
 
-  create_table "meal_preferences", force: :cascade do |t|
-    t.boolean  "diet_vegetarian"
-    t.boolean  "diet_beef"
-    t.boolean  "diet_lamb"
-    t.boolean  "diet_poultry"
-    t.boolean  "diet_pork"
-    t.boolean  "diet_fish"
-    t.boolean  "diet_seafood"
-    t.boolean  "allergen_none"
-    t.boolean  "allergen_eggs"
-    t.boolean  "allergen_fish"
-    t.boolean  "allergen_milk"
-    t.boolean  "allergen_peanuts"
-    t.boolean  "allergen_shellfish"
-    t.boolean  "allergen_soybeans"
-    t.boolean  "allergen_tree_nuts"
-    t.boolean  "allergen_wheat_gluten"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.integer  "spree_user_id"
-  end
-
-  add_index "meal_preferences", ["spree_user_id"], name: "index_meal_preferences_on_spree_user_id", using: :btree
-
   create_table "spree_addresses", force: :cascade do |t|
     t.string   "firstname"
     t.string   "lastname"
@@ -292,28 +268,30 @@ ActiveRecord::Schema.define(version: 20160309004439) do
   add_index "spree_log_entries", ["source_id", "source_type"], name: "index_spree_log_entries_on_source_id_and_source_type", using: :btree
 
   create_table "spree_meal_preferences", force: :cascade do |t|
-    t.boolean  "diet_beef"
-    t.boolean  "diet_lamb"
-    t.boolean  "diet_pork"
-    t.boolean  "diet_poultry"
-    t.boolean  "diet_rabbit"
-    t.boolean  "diet_fish"
-    t.boolean  "diet_seafood"
-    t.boolean  "diet_tofu"
-    t.boolean  "diet_tempeh"
-    t.boolean  "allergen_none"
-    t.boolean  "allergen_eggs"
-    t.boolean  "allergen_fish"
-    t.boolean  "allergen_milk"
-    t.boolean  "allergen_peanuts"
-    t.boolean  "allergen_shellfish"
-    t.boolean  "allergen_soybeans"
-    t.boolean  "allergen_tree_nuts"
-    t.boolean  "allergen_wheat_gluten"
     t.integer  "user_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.boolean  "diet_beef",             default: true,  null: false
+    t.boolean  "diet_lamb",             default: true,  null: false
+    t.boolean  "diet_pork",             default: true,  null: false
+    t.boolean  "diet_poultry",          default: true,  null: false
+    t.boolean  "diet_rabbit",           default: true,  null: false
+    t.boolean  "diet_fish",             default: true,  null: false
+    t.boolean  "diet_seafood",          default: true,  null: false
+    t.boolean  "diet_tofu",             default: true,  null: false
+    t.boolean  "diet_tempeh",           default: true,  null: false
+    t.boolean  "allergen_none",         default: true,  null: false
+    t.boolean  "allergen_eggs",         default: false, null: false
+    t.boolean  "allergen_fish",         default: false, null: false
+    t.boolean  "allergen_milk",         default: false, null: false
+    t.boolean  "allergen_peanuts",      default: false, null: false
+    t.boolean  "allergen_shellfish",    default: false, null: false
+    t.boolean  "allergen_soybeans",     default: false, null: false
+    t.boolean  "allergen_tree_nuts",    default: false, null: false
+    t.boolean  "allergen_wheat_gluten", default: false, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
+
+  add_index "spree_meal_preferences", ["user_id"], name: "index_spree_meal_preferences_on_user_id", using: :btree
 
   create_table "spree_option_type_prototypes", force: :cascade do |t|
     t.integer  "prototype_id"
@@ -1301,7 +1279,6 @@ ActiveRecord::Schema.define(version: 20160309004439) do
     t.datetime "updated_at"
   end
 
-  add_foreign_key "meal_preferences", "spree_users"
   add_foreign_key "spree_adjustments", "spree_orders", column: "order_id", name: "fk_spree_adjustments_order_id", on_update: :restrict, on_delete: :restrict
   add_foreign_key "spree_product_promotion_rules", "spree_products", column: "product_id"
   add_foreign_key "spree_product_promotion_rules", "spree_promotion_rules", column: "promotion_rule_id"
