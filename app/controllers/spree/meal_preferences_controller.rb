@@ -22,7 +22,7 @@ module Spree
       end
 
       def meal_preference_params
-        params.require(:meal_preference).permit(:diet_beef, :diet_lamb, :diet_pork, :diet_poultry, :diet_rabbit, :diet_fish, :diet_seafood, :diet_tofu, :diet_tempeh, :allergen_none, :allergen_eggs, :allergen_fish, :allergen_milk, :allergen_peanuts, :allergen_shellfish, :allergen_soybeans, :allergen_tree_nuts, :allergen_wheat_gluten)
+        params.require(:meal_preference).permit(Spree::MealPreference.diets + Spree::MealPreference.allergens)
       end
 
       # def vegetarian_and_no_soy

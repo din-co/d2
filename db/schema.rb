@@ -278,7 +278,6 @@ ActiveRecord::Schema.define(version: 20160309004439) do
     t.boolean  "diet_seafood",          default: true,  null: false
     t.boolean  "diet_tofu",             default: true,  null: false
     t.boolean  "diet_tempeh",           default: true,  null: false
-    t.boolean  "allergen_none",         default: true,  null: false
     t.boolean  "allergen_eggs",         default: false, null: false
     t.boolean  "allergen_fish",         default: false, null: false
     t.boolean  "allergen_milk",         default: false, null: false

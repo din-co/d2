@@ -3,7 +3,18 @@ module Spree
     belongs_to :user, class_name: Spree::UserClassHandle.new
 
     validate :vegetarian_and_no_soy
-    validate :allergens_and_no_allergen
+
+    def allergen_none
+      self.class.allergens.none? { |allergen| send(allergen) }
+    end
+
+    def self.diets
+      attribute_names.select { |name| name.start_with?("diet_") }.map(&:to_sym)
+    end
+
+    def self.allergens
+      attribute_names.select { |name| name.start_with?("allergen_") }.map(&:to_sym)
+    end
 
   private
 
@@ -12,12 +23,5 @@ module Spree
         errors.add(:base, "If you don’t eat soybeans, then you probably shouldn’t select tofu or tempeh.")
       end
     end
-
-    def allergens_and_no_allergen
-      unless allergen_none ^ (allergen_eggs || allergen_fish || allergen_milk || allergen_peanuts || allergen_shellfish || allergen_soybeans || allergen_tree_nuts || allergen_wheat_gluten)
-        errors.add(:base, 'Please select "none" or specific allergens, not both.')
-      end
-    end
-
   end
 end

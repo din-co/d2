@@ -13,7 +13,6 @@ class CreateSpreeMealPreferences < ActiveRecord::Migration
       t.boolean :diet_tofu, default: true, null: false
       t.boolean :diet_tempeh, default: true, null: false
 
-      t.boolean :allergen_none, default: true, null: false
       t.boolean :allergen_eggs, default: false, null: false
       t.boolean :allergen_fish, default: false, null: false
       t.boolean :allergen_milk, default: false, null: false
