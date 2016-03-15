@@ -20,10 +20,10 @@
         allergens = Spree::MealPreference.allergens.select { |allergen| mp.send(allergen) }.map { |allergen| mp.allergen_name(allergen) }
       %>
       <p>
-        <strong>My diet includes:</strong> <%= diets.to_sentence.presence || "vegetarian" %>
+        My diet includes <strong><%= diets.to_sentence.presence || "vegetarian" %></strong>.
         <% if allergens.present? %>
           <br>
-          <strong>I am allergic to:</strong> <%= allergens.to_sentence %>
+          I am allergic to <strong><%= allergens.to_sentence %></strong>.
         <% end -%>
       </p>
     <% end -%>

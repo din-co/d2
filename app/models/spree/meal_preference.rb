@@ -3,6 +3,8 @@ module Spree
     belongs_to :user, class_name: Spree::UserClassHandle.new
 
     validate :vegetarian_and_no_soy
+    validate :so_long_thanks_for_all_the_fish
+    validate :seafood_and_shellfish
 
     def allergen_none
       self.class.allergens.none? { |allergen| send(allergen) }
@@ -37,6 +39,18 @@ module Spree
     def vegetarian_and_no_soy
       if allergen_soybeans && (diet_tofu || diet_tempeh)
         errors.add(:base, "If you don’t eat soybeans, then you probably shouldn’t select tofu or tempeh.")
+      end
+    end
+
+    def so_long_thanks_for_all_the_fish
+      if diet_fish && allergen_fish
+        errors.add(:base, "Hmmm… If you’e allergic to fish, but you eat fish anyway… you’re loco amigo.")
+      end
+    end
+
+    def seafood_and_shellfish
+      if diet_seafood && allergen_shellfish
+        errors.add(:base, 'If you’re allergic to shellfish, but you eat seafood, please select "fish" instead of "seafood".')
       end
     end
   end

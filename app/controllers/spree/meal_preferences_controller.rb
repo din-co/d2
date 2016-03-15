@@ -8,7 +8,7 @@ module Spree
       if @meal_preference.update_attributes(meal_preference_params)
         redirect_to spree.account_path
       else
-        flash.now[:error] = @meal_preference.errors.full_messages.to_sentence
+        flash.now[:error] = @meal_preference.errors.full_messages.join(" ")
         render 'index'
       end
     end
