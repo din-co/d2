@@ -24,6 +24,7 @@ en:
     formats:
       delivery_window_date: "%A, %b %d"
   spree:
+    allergen_warning: "Food Allergy Notice: Our meals are prepared in restaurant kitchens that may contain tree nuts, peanuts, fish, shellfish, dairy, soy, eggs, and wheat. Though best practices are used when preparing the meal, inadvertent cross-contamination may occur. We cannot guarantee the complete absence of allergens."
     delivery_window: "Delivery Window"
     delivery_window_required: "A valid delivery window must be selected"
     no_available_delivery_windows: "We're sorry, there are no more deliveries available today"

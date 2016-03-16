@@ -44,7 +44,7 @@ module Spree
 
     def so_long_thanks_for_all_the_fish
       if diet_fish && allergen_fish
-        errors.add(:base, "Hmmm… If you’e allergic to fish, but you eat fish anyway… you’re loco amigo.")
+        errors.add(:base, "Hmmm… If you’re allergic to fish, but you eat fish anyway… you’re loco amigo.")
       end
     end
 
