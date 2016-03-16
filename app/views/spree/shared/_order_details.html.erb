@@ -2,7 +2,7 @@
   <div class="col-sm-6">
     <h3><%= Spree.t(:billing) %></h3>
     <p>
-      <%= render :partial => 'spree/shared/address', :locals => { :address => order.bill_address } %>
+      <%= render :partial => 'spree/shared/vcard', :locals => { :address => order.bill_address } %>
       <%= link_to Spree.t(:change), checkout_state_path(:address), class: "edit-link" unless order.completed? %>
     </p>
     <p>
@@ -17,7 +17,7 @@
     <div class="col-sm-6">
       <h3><%= Spree.t(:delivery) %></h3>
       <p>
-        <%= render :partial => 'spree/shared/address', :locals => { :address => order.ship_address } %>
+        <%= render :partial => 'spree/shared/vcard', :locals => { :address => order.ship_address } %>
         <%= link_to Spree.t(:change), checkout_state_path(:address), class: "edit-link" unless order.completed? %>
       </p>
       <% if order.special_instructions.present? %>

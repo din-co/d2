@@ -1,0 +1,25 @@
+<span class="address vcard">
+
+  <span class="fn"><%= address.full_name %></span>
+  <% unless address.company.blank? %>
+    <span class="org">
+      <%= address.company %>
+    </span>
+  <% end %>
+
+  <%= render :partial => 'spree/shared/address', :locals => { :address => address } %>
+
+  <% unless address.phone.blank? %>
+    <span class="tel">
+    <%= format_phone_number(address.phone) %>
+    </span>
+  <% end %>
+
+  <% unless address.alternative_phone.blank? %>
+    <span class="alternative-phone tel">
+      <span class="type"><%= Spree.t(:alternative_phone) %></span>
+      <%= format_phone_number(address.alternative_phone) %>
+    </span>
+  <% end %>
+
+</span>
