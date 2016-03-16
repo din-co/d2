@@ -41,6 +41,11 @@ Rails.application.routes.draw do
   # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
   mount Spree::Core::Engine, :at => '/'
 
+  # Load custom Spree routes
+  Spree::Core::Engine.add_routes do
+    resources :meal_preferences, only: [:index, :create]
+  end
+
   # Fall back to static pages
   get '/:page', to: 'static_pages#show', as: 'static_page', constraints: lambda { |req|
       Rails.configuration.x.static_pages.include? req.path_parameters[:page]

@@ -1,28 +1,50 @@
 <div class="container container--main">
-  <h1><%= Spree.t(:account) %></h1>
+  <h1>
+    <%= "Your Account" || Spree.t(:account) %>
+    <%= link_to Spree.t(:logout), spree.logout_path, class: "btn btn-default btn-xs btn-info" %>
+  </h1>
+
   <p>
-    <%= @user.email %>
-    <%= link_to Spree.t(:edit), spree.edit_account_path, class: "btn btn-default btn-xs" %>
-    <%= link_to Spree.t(:logout), spree.logout_path, class: "btn btn-danger btn-xs" %>
+    <%= @user.email %> <%= link_to Spree.t(:edit), spree.edit_account_path, class: "btn btn-primary btn-xs" %>
   </p>
 
-  <h3><%= Spree.t(:orders) %></h3>
+  <div class="page-section">
+    <h4>
+      Meal Preferences
+      <%= link_to "Edit", meal_preferences_path, class: "btn btn-xs btn-primary" %>
+    </h4>
+    <%
+      mp = spree_current_user.meal_preference
+      if mp
+        diets = Spree::MealPreference.diets.select { |diet| mp.send(diet) }.map { |diet| mp.diet_name(diet) }
+        allergens = Spree::MealPreference.allergens.select { |allergen| mp.send(allergen) }.map { |allergen| mp.allergen_name(allergen) }
+      %>
+      <p>
+        My diet includes <strong><%= diets.to_sentence.presence || "vegetarian" %></strong>.
+        <% if allergens.present? %>
+          <br>
+          I am allergic to <strong><%= allergens.to_sentence %></strong>.
+        <% end -%>
+      </p>
+    <% end -%>
+  </div>
 
+  <h3><%= Spree.t(:orders) %></h3>
   <% if @orders.present? %>
     <table class="table table-condensed table-striped">
       <thead>
       <tr>
-        <th class="order-number"><%= I18n.t(:number, :scope => 'activerecord.attributes.spree/order') %></th>
-        <th class="order-date"><%= Spree.t(:date) %></th>
-        <th class="order-total"><%= Spree.t(:total) %></th>
+        <th><%= I18n.t(:number, :scope => 'activerecord.attributes.spree/order') %></th>
+        <th class="text-center"><%= Spree.t(:date) %></th>
+        <th class="text-right"><%= Spree.t(:total) %></th>
       </tr>
       </thead>
       <tbody>
       <% @orders.each do |order| %>
         <tr>
-          <td class="order-number"><%= link_to order.number, order_url(order) %></td>
-          <td class="order-date"><%= l order.completed_at.to_date %></td>
-          <td class="order-total"><%= order.display_total %></td>
+          <td><%= link_to order.number, order_url(order) %></td>
+          <td class="text-center"><%= l order.completed_at.to_date %></td>
+          <td class="text-right"><%= order.display_total %></td>
         </tr>
       <% end %>
       </tbody>
