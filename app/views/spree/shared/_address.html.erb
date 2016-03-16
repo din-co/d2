@@ -27,13 +27,13 @@
   </span>
   <% unless address.phone.blank? %>
     <span class="tel">
-      <%= address.phone %>
+    <%= format_phone_number(address.phone) %>
     </span>
   <% end %>
   <% unless address.alternative_phone.blank? %>
     <span class="alternative-phone tel">
       <span class="type"><%= Spree.t(:alternative_phone) %></span>
-      <%= address.alternative_phone %>
+      <%= format_phone_number(address.alternative_phone) %>
     </span>
   <% end %>
 </span>
