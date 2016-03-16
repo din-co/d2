@@ -1,9 +1,9 @@
 class CreateProduct
-  def self.create!(name, price, desc=nil)
+  def self.create!(name, price, options = {})
     product = Spree::Product.create!({
       name: name,
       price: price,
-      description: desc,
+      description: options[:desc],
       available_on: 1.day.ago,
       shipping_category: shipping_category,
     })
@@ -11,19 +11,21 @@ class CreateProduct
     # Create stock
     stock_location.move(product.stock_items.first.variant, 10, Spree::User.admin.first)
 
-    # Add a chef Taxon
-    product.classifications.create!(taxon: Spree::Taxon.chefs.random.first)
+    allergens = if options[:allergens].present?
+      Spree::Taxon.allergens.where(name: options[:allergens].map(&:name))
+    else
+      Spree::Taxon.allergens.random.limit(3)
+    end
 
-    # Add a restaurant Taxon
-    product.classifications.create!(taxon: Spree::Taxon.restaurants.random.first)
-
-    # Add 3 each diets, allergens, pantry, equipment
+    # Add a restaurant, chef, 3 diets, 3 pantry, 3 equipment, and allergen taxons
     [
+      Spree::Taxon.chefs.random.first,
+      Spree::Taxon.restaurants.random.first
       Spree::Taxon.pages.find_by!(name: "Home"),
       Spree::Taxon.diets.random.limit(3),
-      Spree::Taxon.allergens.random.limit(3),
       Spree::Taxon.pantry.random.limit(3),
       Spree::Taxon.equipment.random.limit(3),
+      allergens,
     ].flatten.each do |taxon|
       product.classifications.create!(taxon: taxon)
     end
