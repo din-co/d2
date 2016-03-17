@@ -13,9 +13,11 @@ module Spree
 
       def edit
         super
-        if promotion = session[:page_promotion]
-          session[:page_promotion] = nil
-          Spree::PromotionHandler::Page.new(@order, promotion).activate
+        if promo_path = cookies.signed[:page_promotion].presence
+          cookies.delete(:page_promotion)
+          if (promo = Spree::Promotion.active.find_by(path: promo_path)) && promo.user != spree_current_user
+            Spree::PromotionHandler::Page.new(@order, promo.path).activate
+          end
         end
         @products_not_in_order = Spree::Taxon.homepage.products.where.not(id: @order.product_ids)
       end

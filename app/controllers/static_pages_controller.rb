@@ -7,8 +7,8 @@ class StaticPagesController < Spree::StoreController
         if promo.user_id == spree_current_user.try(:id)
           flash[:notice] = "Thanks for testing your personal link. It works!"
         else
-          session[:page_promotion] = params[:path]
           flash[:notice] = "Congratulations! You qualify for #{promo.description}, #{promo.name}"
+          cookies.permanent.signed[:page_promotion] = promo.path
         end
       end
       redirect_to root_path
