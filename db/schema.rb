@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317225319) do
-
+ActiveRecord::Schema.define(version: 20160317193039) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -637,6 +636,7 @@ ActiveRecord::Schema.define(version: 20160317225319) do
     t.integer  "promotion_category_id"
     t.integer  "per_code_usage_limit"
     t.boolean  "apply_automatically",   default: false
+    t.integer  "user_id"
   end
 
   add_index "spree_promotions", ["advertise"], name: "index_spree_promotions_on_advertise", using: :btree
@@ -644,8 +644,10 @@ ActiveRecord::Schema.define(version: 20160317225319) do
   add_index "spree_promotions", ["code"], name: "index_spree_promotions_on_code", using: :btree
   add_index "spree_promotions", ["expires_at"], name: "index_spree_promotions_on_expires_at", using: :btree
   add_index "spree_promotions", ["id", "type"], name: "index_spree_promotions_on_id_and_type", using: :btree
+  add_index "spree_promotions", ["path"], name: "index_spree_promotions_on_path", unique: true, using: :btree
   add_index "spree_promotions", ["promotion_category_id"], name: "index_spree_promotions_on_promotion_category_id", using: :btree
   add_index "spree_promotions", ["starts_at"], name: "index_spree_promotions_on_starts_at", using: :btree
+  add_index "spree_promotions", ["user_id"], name: "index_spree_promotions_on_user_id", using: :btree
 
   create_table "spree_properties", force: :cascade do |t|
     t.string   "name"
