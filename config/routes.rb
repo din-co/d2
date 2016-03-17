@@ -51,7 +51,7 @@ Rails.application.routes.draw do
   end
 
   # Fall back to static pages
-  get '/:page', to: 'static_pages#show', as: 'static_page'
+  get '/:path', to: 'static_pages#show', as: 'static_page'
   # , constraints: lambda { |req|
   #     Rails.configuration.x.static_pages.include? req.path_parameters[:page]
   # }

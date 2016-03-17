@@ -3,9 +3,13 @@ class StaticPagesController < Spree::StoreController
     if defined_static_page?
       render template: template_path
     elsif active_promotion?
-      if promo = Spree::Promotion.active.find_by(path: params[:page])
-        session[:page_promotion] = params[:page]
-        flash[:notice] = "Congratulations! You qualify for #{promo.description}, #{promo.name}"
+      if promo = Spree::Promotion.active.find_by(path: params[:path])
+        if promo.user_id == spree_current_user.try(:id)
+          flash[:notice] = "Thanks for testing your personal link. It works!"
+        else
+          session[:page_promotion] = params[:path]
+          flash[:notice] = "Congratulations! You qualify for #{promo.description}, #{promo.name}"
+        end
       end
       redirect_to root_path
     else
@@ -19,7 +23,7 @@ class StaticPagesController < Spree::StoreController
   end
 
   def defined_static_page?
-    Rails.configuration.x.static_pages.include?(params[:page]) &&
+    Rails.configuration.x.static_pages.include?(params[:path]) &&
     File.exist?(template_file)
   end
 
@@ -28,7 +32,7 @@ class StaticPagesController < Spree::StoreController
   end
 
   def template_path
-    "static_pages/#{params[:page]}.html.erb"
+    "static_pages/#{params[:path]}.html.erb"
   end
 
   def template_file
