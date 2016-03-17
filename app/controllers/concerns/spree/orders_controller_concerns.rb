@@ -13,6 +13,10 @@ module Spree
 
       def edit
         super
+        if promotion = session[:page_promotion]
+          session[:page_promotion] = nil
+          Spree::PromotionHandler::Page.new(@order, promotion).activate
+        end
         @products_not_in_order = Spree::Taxon.homepage.products.where.not(id: @order.product_ids)
       end
 

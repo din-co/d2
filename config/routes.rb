@@ -51,9 +51,10 @@ Rails.application.routes.draw do
   end
 
   # Fall back to static pages
-  get '/:page', to: 'static_pages#show', as: 'static_page', constraints: lambda { |req|
-      Rails.configuration.x.static_pages.include? req.path_parameters[:page]
-  }
+  get '/:page', to: 'static_pages#show', as: 'static_page'
+  # , constraints: lambda { |req|
+  #     Rails.configuration.x.static_pages.include? req.path_parameters[:page]
+  # }
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
