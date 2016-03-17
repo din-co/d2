@@ -73,6 +73,13 @@
     </p>
   </div>
 
+  <div class="page-section">
+    <% if promo = @user.personal_referral_promo %>
+      <h2>Share the Din Love</h1>
+      <p>Give a friend <strong><%= promo.description.sub(/your/, 'their') %></strong> by having them visit your personal referral link: <%= link_to(nil, root_url + promo.path) %></p>
+    <% end %>
+  </div>
+
   <h3><%= Spree.t(:orders) %></h3>
   <% if @orders.present? %>
     <table class="table table-condensed table-striped">
