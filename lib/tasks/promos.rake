@@ -3,7 +3,7 @@ namespace :promos do
   task :personal_referral => [:environment] do
     require 'factory_girl'
     require Rails.root.join('spec/support/factories/promotion_factory')
-    personal_referral = Spree::PromotionCategory.find_by!(name: "Personal Referral")
+    personal_referral = Spree::PromotionCategory.find_or_create_by!(name: "Personal Referral")
     Spree::User.find(Spree::Order.uniq.pluck(:user_id)).each do |user|
       if promo = Spree::Promotion.find_by(promotion_category: personal_referral, user: user)
         Rails.logger.info "Skipping user #{user.id}: already has a personal referral promo: #{promo.path}"
