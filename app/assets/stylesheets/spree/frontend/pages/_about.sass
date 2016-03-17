@@ -1,0 +1,51 @@
+$about-mobile-width: 500px
+$about-step-size: 36px
+.about-steps
+  counter-reset: about-step
+  display: flex
+  flex-direction: column
+  margin: $about-step-size 0
+  @media (min-width: $about-mobile-width)
+    flex-direction: row
+
+.tacolicious-kale-salad
+  border: 1px solid $din-color-dark-tan
+  border-radius: 3px
+  @media (min-width: $about-mobile-width)
+    width: 47vw
+    float: right
+    margin: 0 0 1em 1em
+  @media (min-width: 768px)
+    width: 40vw
+
+.about-block
+  position: relative
+  margin: $about-step-size/2 0
+  border-radius: 10px
+  border: 1px solid $din-color-dark-tan
+  padding: $about-step-size/1.5 $about-step-size/2 $about-step-size/2
+  background: white
+  text-align: center
+  &:before
+    counter-increment: about-step
+    content: counter(about-step)
+    position: absolute
+    left: 50%
+    top: -($about-step-size/2)
+    margin-left: -($about-step-size/2)
+    display: block
+    width: $about-step-size
+    height: $about-step-size
+    border: 1px solid $din-color-dark-tan
+    border-radius: 50%
+    background: white
+    line-height: $about-step-size - 1px // adjust line-height to vertically center
+    text-align: center
+  @media (min-width: $about-mobile-width)
+    margin: $about-step-size/2 2vw
+  &:first-child
+    @media (min-width: $about-mobile-width)
+      margin-left: 0
+  &:last-child
+    @media (min-width: $about-mobile-width)
+      margin-right: 0
