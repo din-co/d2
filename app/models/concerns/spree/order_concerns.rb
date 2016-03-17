@@ -95,7 +95,7 @@ module Spree
           order_number:    number,
           tag_number:      1,
           total_tags:      total_tags,
-          name:            "#{ship_address.firstname} #{ship_address.lastname}"
+          name:            "#{ship_address.firstname} #{ship_address.lastname}",
           address1:        ship_address.address1,
           address2:        ship_address.address2,
           city:            ship_address.city,
