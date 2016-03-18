@@ -6,27 +6,27 @@ RSpec.describe StaticPagesController, type: :controller do
   end
 
   it "should get about" do
-    get :show, page: :about
+    get :show, path: :about
     assert_response :success
   end
 
   it "should get help" do
-    get :show, page: :help
+    get :show, path: :help
     assert_response :success
   end
 
   it "should get faq" do
-    get :show, page: :faq
+    get :show, path: :faq
     assert_response :success
   end
 
   it "should get terms" do
-    get :show, page: :terms
+    get :show, path: :terms
     assert_response :success
   end
 
   it "should get privacy" do
-    get :show, page: :privacy
+    get :show, path: :privacy
     assert_response :success
   end
 end
