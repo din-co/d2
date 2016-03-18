@@ -102,13 +102,13 @@
   <tfoot>
     <% if @order.adjustments.nonzero.exists? || @order.line_item_adjustments.nonzero.exists? || @order.shipment_adjustments.nonzero.exists? || @order.shipments.any? %>
       <tr class="cart-subtotal subtotal-row">
-        <td colspan="4"><%= Spree.t(:cart_subtotal, :count => @order.line_items.sum(:quantity)) %></th>
+        <td colspan="4"><%= Spree.t(:cart_subtotal, :count => @order.line_items.sum(:quantity)) %></td>
         <td><%= order_form.object.display_item_total %></td>
       </tr>
       <%= render "spree/orders/adjustments" %>
     <% end %>
     <tr class="cart-total total-row">
-      <td colspan="4"><%= Spree.t(:total) %></th>
+      <td colspan="4"><%= Spree.t(:total) %></td>
       <td><%= order_form.object.display_total %></td>
     </tr>
   </tfoot>
