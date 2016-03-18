@@ -4,10 +4,10 @@ class StaticPagesController < Spree::StoreController
       render template: template_path
     elsif active_promotion?
       if promo = Spree::Promotion.active.find_by(path: params[:path])
+        flash[:notice] = "Congratulations! You qualify for #{promo.description}, #{promo.name}."
         if promo.user_id == spree_current_user.try(:id)
-          flash[:notice] = "Thanks for testing your personal link. It works!"
+          flash[:notice] = "People you share with will see: #{flash[:notice]}"
         else
-          flash[:notice] = "Congratulations! You qualify for #{promo.description}, #{promo.name}"
           cookies.permanent.signed[:page_promotion] = promo.path
         end
       end

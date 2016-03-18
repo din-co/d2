@@ -17,6 +17,10 @@
 
   <h1><%= Spree.t(:cart) %></h1>
 
+  <% if @promo %>
+    <p>Continue checkout to claim <%= @promo.description %>, <%= @promo.name %>.</p>
+  <% end %>
+
   <%= form_for @order, url: update_cart_path, html: {id: 'update-cart'} do |order_form| %>
     <%= render :partial => 'form', :locals => { :order_form => order_form } %>
     <div>
