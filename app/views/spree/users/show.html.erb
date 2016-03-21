@@ -80,6 +80,36 @@
     <% end %>
   </div>
 
+  <div class="page-section">
+    <h4>
+      Subscription
+      <% if @user.meal_subscription.present? %>
+        <%= link_to "Edit", account_meal_subscription_path, class: "btn btn-xs btn-primary" %>
+      <% end -%>
+    </h4>
+    <p>
+      <% if meal_subscription = @user.meal_subscription %>
+        <% if meal_subscription.status == "disabled" %>
+          Subscription is disabled.
+        <% else -%>
+          <%= meal_subscription.meal_count %> meals, delivered every <%= meal_subscription.delivery_day.titleize %>, <%= meal_subscription.delivery_window %>.
+        <% end -%>
+      <% else -%>
+        <% if @user.default_address && @user.meal_preference && @user.credit_cards.default %>
+          Become a Din Regular. <%= link_to "Create a subscription", account_meal_subscription_path %>
+        <% else
+          todo = []
+          todo.push(link_to "setup meal preferences", account_meal_preference_path) unless @user.meal_preference
+          todo.push(link_to "add a delivery address", account_address_path) unless @user.credit_cards.default
+          todo.push(link_to "add a payment method.", "#payment_method") unless @user.credit_cards.default
+        -%>
+          To become a Din Regular, please
+          <%= "#{todo.to_sentence}.".html_safe %>
+        <% end -%>
+      <% end -%>
+    </p>
+  </div>
+
   <h3><%= Spree.t(:orders) %></h3>
   <% if @orders.present? %>
     <table class="table table-condensed table-striped">

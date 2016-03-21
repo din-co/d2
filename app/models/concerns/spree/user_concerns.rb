@@ -5,7 +5,8 @@ module Spree
     included do
       prepend(InstanceMethods)
 
-      has_one :meal_preference, class_name: 'Spree::MealPreference' #, dependent: :destroy
+      has_one :meal_preference, class_name: 'Spree::MealPreference'
+      has_one :meal_subscription, class_name: 'Spree::MealSubscription'
       has_one :personal_referral_promo, -> { where(promotion_category: Spree.user_class.personal_referral_category) }, class_name: 'Spree::Promotion'
 
       PERSONAL_REFERRAL_PROMO_AMOUNT = 30

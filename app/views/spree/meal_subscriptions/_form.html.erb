@@ -1,0 +1,59 @@
+<h3>Subscription</h3>
+<div class="radio"><label><%= f.radio_button :status, :enabled %> Enabled</label></div>
+<div class="radio"><label><%= f.radio_button :status, :disabled %> Disabled</label></div>
+
+<h3>Delivery Day of Week</h3>
+<div class="radio"><label><%= f.radio_button :delivery_day, :monday %> Monday</label></div>
+<div class="radio"><label><%= f.radio_button :delivery_day, :tuesday %> Tuesday</label></div>
+<div class="radio"><label><%= f.radio_button :delivery_day, :wednesday %> Wednesday</label></div>
+
+<h3>Delivery Window</h3>
+<% delivery_address_formatted = render :partial => 'spree/shared/address', :locals => { :address => spree_current_user.default_address } %>
+<p>
+  For delivery to
+  <strong><%= delivery_address_formatted %></strong>
+  (<a href="#">change</a>)
+  and with $5 off orders over $60.
+  <% if delivery_zone.try(:name) != "San Francisco" %>
+    Additional delivery windows are available within San Francisco.
+  <% end -%>
+</p>
+<% if delivery_zone.blank? %>
+  <p>
+    Your delivery address
+    (<%= delivery_address_formatted %> <a href="#">change</a>)
+    is not in Din’s delivery area.</p>
+<% else %>
+  <% delivery_zone.delivery_windows.each do |delivery_window| %>
+    <div class="radio">
+      <label>
+        <%= f.radio_button :delivery_window_id, delivery_window.id %>
+        <strong class="delivery-window__name"><%= delivery_window %></strong>
+        <% discounted_delivery_cost = (delivery_window.cost - 5.0)%>
+        <del class="label label-shipping"><%= delivery_window.display_cost %></del>
+        <%= discounted_delivery_cost <= 0 ? 'FREE' : Spree::Money.new(discounted_delivery_cost) %>
+      </label>
+    </div>
+  <% end %>
+<% end -%>
+
+<h3>Number of Meals</h3>
+<div class="form-inline">
+  <%= f.select :meal_count, f.object.valid_meal_counts.map { |n| [pluralize(n, 'meal'), n] }, {}, class: "form-control" %>
+  <em>Each meal is 2 servings.</em>
+</div>
+
+<h3>Suggested Meals Notification</h3>
+<p>Three days before your scheduled delivery we will send suggested meals via email to <strong class="text-nowrap"><%= spree_current_user.email %></strong>. You may additionally receive suggested meals via:</p>
+<div class="checkbox">
+  <label>
+    <%= f.check_box :notification_sms %>
+    text message to
+    <%= format_phone_number(spree_current_user.default_address.phone) %>
+  </label>
+</div>
+
+<div class="form-group form-footer">
+  <p><em>Updates to subscription settings do not affect subscription orders in progress. You may cancel or change orders in progress by contacting support.</em></p>
+  <%= f.submit "Save Subscription Settings", :class => 'btn btn-primary' %>
+</div>

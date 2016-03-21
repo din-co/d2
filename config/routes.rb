@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   # Load custom Spree routes
   Spree::Core::Engine.add_routes do
     namespace :account, module: :user do
+      resource :meal_subscription, path: "subscription", only: [:show, :create]
       resource :meal_preference, path: "preferences", only: [:show, :create]
       resource :address, only: [:show, :create]
       resource :cards, only: [:show, :create]
