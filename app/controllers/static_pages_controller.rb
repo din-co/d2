@@ -2,16 +2,6 @@ class StaticPagesController < Spree::StoreController
   def show
     if defined_static_page?
       render template: template_path
-    elsif active_promotion?
-      if promo = Spree::Promotion.active.find_by(path: params[:path])
-        flash[:notice] = "Congratulations! You qualify for #{promo.description}, #{promo.name}."
-        if promo.user_id == spree_current_user.try(:id)
-          flash[:notice] = "People you share with will see: #{flash[:notice]}"
-        else
-          cookies.permanent.signed[:page_promotion] = promo.path
-        end
-      end
-      redirect_to root_path
     else
       render file: 'public/404.html'
     end
@@ -19,16 +9,11 @@ class StaticPagesController < Spree::StoreController
 
   private
   def valid_page?
-    defined_static_page? || active_promotion?
+    defined_static_page? && File.exist?(template_file)
   end
 
   def defined_static_page?
-    Rails.configuration.x.static_pages.include?(params[:path]) &&
-    File.exist?(template_file)
-  end
-
-  def active_promotion?
-    Spree::Promotion.where(path: params[:path]).exists?
+    Rails.configuration.x.static_pages.include?(params[:path])
   end
 
   def template_path
