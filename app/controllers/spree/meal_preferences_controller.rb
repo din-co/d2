@@ -10,7 +10,7 @@ module Spree
         redirect_to spree.account_path
       else
         flash.now[:error] = @meal_preference.errors.full_messages.join(" ")
-        render 'index'
+        render 'show'
       end
     end
 
