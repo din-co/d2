@@ -41,4 +41,8 @@
     <%= form.label :zipcode, Spree.t(:zip) %>
     <%= form.text_field :zipcode, class: "form-control" %>
   </div>
+  <div class="form-group col-sm-12" id=<%="#{address_id}delivery_instructions" %>>
+    <%= form.label :delivery_instructions, Spree.t(:delivery_instructions) %>
+    <%= form.text_field :delivery_instructions, placeholder: Spree.t(:delivery_instructions_placeholder), class: "form-control" %>
+  </div>
 </div>

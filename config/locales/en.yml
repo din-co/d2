@@ -69,7 +69,7 @@ en:
     street_address_2: "Apt/Suite"
     the_din_team: The Din team
     delivery_instructions: "Delivery Instructions"
-    delivery_instructions_placeholder: "Delivery Instructions (e.g. leave at the front door)"
+    delivery_instructions_placeholder: "Door code? Other special instructions?"
     login: Sign In
     logout: Sign Out
     out_of_stock: Sold Out
