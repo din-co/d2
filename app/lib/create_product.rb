@@ -12,7 +12,7 @@ class CreateProduct
     stock_location.move(product.stock_items.first.variant, 10, Spree::User.admin.first)
 
     allergens = if options[:allergens].present?
-      Spree::Taxon.allergens.where(name: options[:allergens].map(&:name))
+      Spree::Taxon.allergens.where(name: options[:allergens])
     else
       Spree::Taxon.allergens.random.limit(3)
     end
