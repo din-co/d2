@@ -1,7 +1,6 @@
 module Spree
   class User::AddressesController < Spree::StoreController
     include ControllerHelpers::UserAuth
-
     before_action :authorize_user
 
     def show
@@ -14,7 +13,7 @@ module Spree
         flash[:success] = "Delivery address updated."
         redirect_to spree.account_path
       else
-        flash.now[:error] = @address.errors.full_messages.join(" ")
+        flash.now[:error] = "#{@address.errors.full_messages.to_sentence}."
         render 'show'
       end
     end
