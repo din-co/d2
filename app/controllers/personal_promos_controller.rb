@@ -8,6 +8,7 @@ class PersonalPromosController < Spree::StoreController
       else
         cookies.permanent.signed[:page_promotion] = promo.path
       end
+      redirect_to root_url
     else
       render file: 'public/404.html'
     end

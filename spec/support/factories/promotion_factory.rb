@@ -11,7 +11,6 @@ FactoryGirl.define do
     path { [user_id, from.parameterize, weighted_order_adjustment_amount.to_s].compact.join('-') }
     after(:create) do |promotion, evaluator|
       promotion.rules << Spree::Promotion::Rules::FirstOrder.create!(promotion: promotion)
-      promotion.rules << Spree::Promotion::Rules::OneUsePerUser.create!(promotion: promotion)
       promotion.save!
     end
   end

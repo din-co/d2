@@ -76,7 +76,7 @@
   <div class="page-section">
     <% if @personal_referral_promo %>
       <h2>Share the Din Love</h2>
-      <p>Give a friend <strong><%= @personal_referral_promo.description.sub(/your/, 'their') %></strong> by having them visit your personal referral link: <%= link_to(nil, root_url + @personal_referral_promo.path) %></p>
+      <p>Give a friend <strong><%= @personal_referral_promo.description.sub(/your/, 'their') %></strong> by having them visit your personal referral link: <%= link_to(nil, main_app.personal_promo_url(@personal_referral_promo.path)) %></p>
     <% end %>
   </div>
 

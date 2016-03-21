@@ -50,7 +50,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/p/:personal_promo', to: 'personal_promos#show', as: 'personal_promo', constraints lambda { |req|
+  get '/p/:personal_promo', to: 'personal_promos#show', as: 'personal_promo', constraints: lambda { |req|
     Spree::Promotion.where(path: req.path_parameters[:personal_promo]).exists?
   }
 
