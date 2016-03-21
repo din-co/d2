@@ -11,14 +11,15 @@
   <div class="page-section">
     <h4>
       Meal Preferences
-      <%= link_to "Edit", meal_preferences_path, class: "btn btn-xs btn-primary" %>
+      <% if @user.meal_preference %>
+        <%= link_to "Edit", meal_preferences_path, class: "btn btn-xs btn-primary" %>
+      <% end -%>
     </h4>
     <%
-      mp = spree_current_user.meal_preference
-      if mp
+      if mp = @user.meal_preference
         diets = Spree::MealPreference.diets.select { |diet| mp.send(diet) }.map { |diet| mp.diet_name(diet) }
         allergens = Spree::MealPreference.allergens.select { |allergen| mp.send(allergen) }.map { |allergen| mp.allergen_name(allergen) }
-      %>
+    %>
       <p>
         My diet includes <strong><%= diets.to_sentence.presence || "vegetarian" %></strong>.
         <% if allergens.present? %>
@@ -26,6 +27,8 @@
           I am allergic to <strong><%= allergens.to_sentence %></strong>.
         <% end -%>
       </p>
+    <% else -%>
+      <p>What foods do you enjoy? <%= link_to "Add your meal preferences", meal_preferences_path %></p>
     <% end -%>
   </div>
 
@@ -36,8 +39,12 @@
     </h4>
     <% if @user.default_address.present? %>
       <p>
+        <span class="fn"><%= @user.default_address.full_name %></span>,
         <%= render :partial => 'spree/shared/address', :locals => { :address => @user.default_address } %>
-        <em><%= @user.default_address.delivery_instructions %></em>
+        <% if delivery_instructions = @user.default_address.delivery_instructions %>
+          <br>
+          <em><%= delivery_instructions %></em>
+        <% end -%>
       </p>
     <% end -%>
   </div>
