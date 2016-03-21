@@ -1,5 +1,6 @@
 module Spree
   class MealPreferencesController < Spree::StoreController
+    include ControllerHelpers::UserAuth
 
     before_action :authorize_user
     before_action :set_meal_preference
@@ -21,14 +22,6 @@ module Spree
 
       def meal_preference_params
         params.require(:meal_preference).permit(Spree::MealPreference.diets + Spree::MealPreference.allergens)
-      end
-
-      def authorize_user
-        unless spree_current_user.present?
-          store_location
-          redirect_to login_path
-          return
-        end
       end
 
   end

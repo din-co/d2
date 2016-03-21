@@ -29,6 +29,19 @@
     <% end -%>
   </div>
 
+  <div class="page-section">
+    <h4>
+      Delivery Address
+      <%= link_to "Edit", account_address_path, class: "btn btn-xs btn-primary" %>
+    </h4>
+    <% if @user.default_address.present? %>
+      <p>
+        <%= render :partial => 'spree/shared/address', :locals => { :address => @user.default_address } %>
+        <em><%= @user.default_address.delivery_instructions %></em>
+      </p>
+    <% end -%>
+  </div>
+
   <h3><%= Spree.t(:orders) %></h3>
   <% if @orders.present? %>
     <table class="table table-condensed table-striped">
