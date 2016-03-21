@@ -1,0 +1,8 @@
+<div class="container container--main">
+  <h1>Delivery Address</h1>
+  <%= form_for @address, url: account_address_path, method: :post do |f| %>
+    <%= render :partial => 'spree/address/form', :locals => { :form => f, :address_type => 'shipping', :address => @address } %>
+    <%= submit_tag "Update Delivery Address", :class => 'btn btn-primary' %>
+  <% end %>
+</div>
+

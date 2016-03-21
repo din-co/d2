@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   # Load custom Spree routes
   Spree::Core::Engine.add_routes do
     resources :meal_preferences, only: [:index, :create]
+    namespace :account, module: :user do
+      resource :address, only: [:show, :create]
+    end
   end
 
   # Fall back to static pages
