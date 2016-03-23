@@ -76,7 +76,7 @@
   <tfoot>
     <tr class="subtotal-row">
       <td colspan="4"><%= Spree.t(:subtotal) %></td>
-      <td class="total"><%= order.display_item_total.to_html %></td>
+      <td class="order-table__total"><%= order.display_item_total.to_html %></td>
     </tr>
     <% order.shipments.group_by { |s| s.selected_shipping_rate.name }.each do |name, shipments| %>
       <tr>
@@ -88,7 +88,7 @@
           </em>
           <%= link_to Spree.t(:change), checkout_state_path(:delivery) unless order.completed? %>
         </td>
-        <td class="total"><span><%= Spree::Money.new(shipments.sum(&:discounted_cost), currency: order.currency).to_html %></span></td>
+        <td class="order-table__total"><%= Spree::Money.new(shipments.sum(&:discounted_cost), currency: order.currency).to_html %></td>
       </tr>
     <% end %>
     <% if order.line_item_adjustments.exists? %>
@@ -96,7 +96,7 @@
         <% order.all_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
           <tr>
             <td colspan="4"><%= Spree.t(:promotion) %>: <strong><%= label %></strong></td>
-            <td class="total"><span><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></span></td>
+            <td class="order-table__total"><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></td>
           </tr>
         <% end %>
       <% end %>
@@ -105,28 +105,28 @@
       <% order.all_adjustments.tax.group_by(&:label).each do |label, adjustments| %>
         <tr class="total">
           <td colspan="4"><%= Spree.t(:tax) %>: <strong><%= label %></strong></td>
-          <td class="total"><span><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></span></td>
+          <td class="order-table__total"><%= Spree::Money.new(adjustments.sum(&:amount), currency: order.currency) %></td>
         </tr>
       <% end %>
     <% end %>
     <% if order.total_applicable_store_credit > 0.0 %>
       <tr class="total">
         <td colspan='4'><%= Spree.t("store_credit.store_credit") %>:</td>
-        <td class='total'><span><%= order.display_total_applicable_store_credit.to_html %></span></td>
+        <td class='order-table__total'><%= order.display_total_applicable_store_credit.to_html %></td>
       </tr>
     <% end %>
     <% if order.adjustments.present? %>
       <% order.adjustments.eligible.each do |adjustment| %>
       <% next if (adjustment.source_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
-        <tr class="total">
-          <td colspan="4"><strong><%= adjustment.label %></strong></td>
-          <td class="total"><span><%= adjustment.display_amount.to_html %></span></td>
+        <tr>
+          <td colspan="4"><%= adjustment.label %></td>
+          <td class="order-table__total"><span><%= adjustment.display_amount.to_html %></span></td>
         </tr>
       <% end %>
     <% end -%>
     <tr class="total-row">
       <td colspan="4"><%= Spree.t(:order_total) %></td>
-      <td class="total" id="order_total"><%= order.display_order_total_after_store_credit.to_html %></td>
+      <td class="order-table__total" id="order_total"><%= order.display_order_total_after_store_credit.to_html %></td>
     </tr>
   </tfoot>
 </table>
