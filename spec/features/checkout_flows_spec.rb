@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Checkout flow:" do
   let(:address) { FactoryGirl.build_stubbed(:address) }
-  let(:product) { CreateProduct.create!("Gulf White Shrimp + Caesar + Chicories + Avocado", 30.00, <<-TXT.strip_heredoc) }
+  let(:product) { CreateProduct.create!("Gulf White Shrimp + Caesar + Chicories + Avocado", 30.00, allergens: %w[shellfish], desc: <<-TXT.strip_heredoc) }
     These shrimp are caught from healthy stocks using trawls that allow sea turtles to escape. By buying these shrimp, we are supporting fisheries badly damaged in Hurricane Katrina. Cooling avocado contrasts spicy harissa, a North African condiment, on a salad of bitter greens, all assertive flavors held in perfect balance.
   TXT
 
