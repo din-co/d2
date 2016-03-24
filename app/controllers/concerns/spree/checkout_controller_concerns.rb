@@ -4,11 +4,14 @@ module Spree
 
     included do
       prepend(InstanceMethods)
+      include ControllerHelpers::Promotions
 
       helper_method :payment_error_message
 
       before_filter :assign_shipping_rate_of_delivery_window, only: :update, if: Proc.new { params['state'] == 'delivery' }
       before_filter :ensure_order_valid, only: :update, if: Proc.new { params['state'] == 'delivery' }
+
+      before_action :apply_page_promotion, only: [:edit, :update]
 
       rescue_from Spree::Core::GatewayError, :with => :rescue_from_spree_gateway_error
     end

@@ -293,6 +293,20 @@ ActiveRecord::Schema.define(version: 20160317225319) do
 
   add_index "spree_meal_preferences", ["user_id"], name: "index_spree_meal_preferences_on_user_id", using: :btree
 
+  create_table "spree_meal_subscriptions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "status",             default: 0,    null: false
+    t.integer  "delivery_day",       default: 0,    null: false
+    t.integer  "delivery_window_id",                null: false
+    t.integer  "meal_count",         default: 2,    null: false
+    t.boolean  "notification_sms",   default: true, null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "spree_meal_subscriptions", ["delivery_window_id"], name: "index_spree_meal_subscriptions_on_delivery_window_id", using: :btree
+  add_index "spree_meal_subscriptions", ["user_id"], name: "index_spree_meal_subscriptions_on_user_id", using: :btree
+
   create_table "spree_option_type_prototypes", force: :cascade do |t|
     t.integer  "prototype_id"
     t.integer  "option_type_id"
@@ -637,6 +651,7 @@ ActiveRecord::Schema.define(version: 20160317225319) do
     t.integer  "promotion_category_id"
     t.integer  "per_code_usage_limit"
     t.boolean  "apply_automatically",   default: false
+    t.integer  "user_id"
   end
 
   add_index "spree_promotions", ["advertise"], name: "index_spree_promotions_on_advertise", using: :btree
@@ -644,8 +659,10 @@ ActiveRecord::Schema.define(version: 20160317225319) do
   add_index "spree_promotions", ["code"], name: "index_spree_promotions_on_code", using: :btree
   add_index "spree_promotions", ["expires_at"], name: "index_spree_promotions_on_expires_at", using: :btree
   add_index "spree_promotions", ["id", "type"], name: "index_spree_promotions_on_id_and_type", using: :btree
+  add_index "spree_promotions", ["path"], name: "index_spree_promotions_on_path", unique: true, using: :btree
   add_index "spree_promotions", ["promotion_category_id"], name: "index_spree_promotions_on_promotion_category_id", using: :btree
   add_index "spree_promotions", ["starts_at"], name: "index_spree_promotions_on_starts_at", using: :btree
+  add_index "spree_promotions", ["user_id", "promotion_category_id"], name: "index_spree_promotions_on_user_id_and_promotion_category_id", unique: true, using: :btree
 
   create_table "spree_properties", force: :cascade do |t|
     t.string   "name"

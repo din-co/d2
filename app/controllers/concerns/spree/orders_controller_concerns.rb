@@ -4,6 +4,7 @@ module Spree
 
     included do
       prepend(InstanceMethods)
+      include ControllerHelpers::Promotions
 
       before_filter :redirect_empty_order_to_menu, only: :edit
       before_filter :disallow_out_of_stock_items, only: :populate
@@ -13,6 +14,7 @@ module Spree
 
       def edit
         super
+        apply_page_promotion
         @products_not_in_order = Spree::Taxon.homepage.products.where.not(id: @order.product_ids)
       end
 

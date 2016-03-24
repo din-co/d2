@@ -50,9 +50,13 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/p/:personal_promo', to: 'personal_promos#show', as: 'personal_promo', constraints: lambda { |req|
+    Spree::Promotion.where(path: req.path_parameters[:personal_promo]).exists?
+  }
+
   # Fall back to static pages
-  get '/:page', to: 'static_pages#show', as: 'static_page', constraints: lambda { |req|
-      Rails.configuration.x.static_pages.include? req.path_parameters[:page]
+  get '/:path', to: 'static_pages#show', as: 'static_page', constraints: lambda { |req|
+    Rails.configuration.x.static_pages.include? req.path_parameters[:page]
   }
 
   # You can have the root of your site routed with "root"

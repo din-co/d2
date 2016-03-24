@@ -192,8 +192,10 @@ delivery_windows.each do |d|
   shipping_method = Spree::ShippingMethod.create!(name: "#{d[:window][:duration]}-Hour Window", code: d[:zones].map(&:name).join(", ")) do |sm|
     sm.shipping_categories = [standard_shipping_category]
     sm.build_calculator({
-      type: "Spree::Calculator::Shipping::FlatRate",
-      preferred_amount: d[:window][:cost],
+      type: "Spree::Calculator::Shipping::PriceSack",
+      preferred_minimal_amount: 60,
+      preferred_normal_amount: d[:window][:cost],
+      preferred_discount_amount: [d[:window][:cost] - 5, 0].max,
       preferred_currency: d[:window][:currency],
     })
     d[:zones].each do |z|

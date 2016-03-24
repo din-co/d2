@@ -15,7 +15,7 @@
     end
   %>
   <div class="page-section">
-    <h4>
+    <h3>
       Meal Preferences
       <% if mp %>
         <%= link_to "Edit", account_meal_preference_path, class: "btn btn-xs btn-primary" %>
@@ -71,6 +71,13 @@
         How would you like to be billed? <%= link_to "add payment card", account_cards_path %>
       <% end -%>
     </p>
+  </div>
+
+  <div class="page-section">
+    <% if @personal_referral_promo %>
+      <h2>Share the Din Love</h2>
+      <p>Give a friend <strong><%= @personal_referral_promo.description.sub(/your/, 'their') %></strong> by having them visit your personal referral link: <%= link_to(nil, main_app.personal_promo_url(@personal_referral_promo.path)) %></p>
+    <% end %>
   </div>
 
   <h3><%= Spree.t(:orders) %></h3>
