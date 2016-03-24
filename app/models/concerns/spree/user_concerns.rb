@@ -2,15 +2,6 @@ module Spree
   module UserConcerns
     extend ActiveSupport::Concern
 
-    included do
-      prepend(InstanceMethods)
-
-      has_one :meal_preference, class_name: 'Spree::MealPreference' #, dependent: :destroy
-      has_one :personal_referral_promo, -> { where(promotion_category: Spree.user_class.personal_referral_category) }, class_name: 'Spree::Promotion'
-
-      PERSONAL_REFERRAL_PROMO_AMOUNT = 30
-    end
-
     class_methods do
       def generate_random_code
         Array.new(3) { sample_characters.sample }.join
@@ -25,7 +16,20 @@ module Spree
       end
     end
 
+    included do
+      prepend(InstanceMethods)
+
+      has_one :meal_preference, class_name: 'Spree::MealPreference'
+      has_one :meal_subscription, class_name: 'Spree::MealSubscription'
+      has_one :personal_referral_promo, -> { where(promotion_category: Spree.user_class.personal_referral_category) }, class_name: 'Spree::Promotion'
+
+      PERSONAL_REFERRAL_PROMO_AMOUNT = 30
+    end
+
     module InstanceMethods
+      def default_credit_card
+        credit_cards.default.where(payment_method: Spree::PaymentMethod.find_by!(name: "Stripe")).first
+      end
       def ensure_personal_referral_promo
         return personal_referral_promo if personal_referral_promo.present?
         transaction do
