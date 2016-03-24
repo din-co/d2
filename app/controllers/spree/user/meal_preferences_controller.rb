@@ -1,5 +1,5 @@
 module Spree
-  class MealPreferencesController < Spree::StoreController
+  class User::MealPreferencesController < Spree::StoreController
     include ControllerHelpers::UserAuth
 
     before_action :authorize_user
