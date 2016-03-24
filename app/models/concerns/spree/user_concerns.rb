@@ -27,6 +27,9 @@ module Spree
     end
 
     module InstanceMethods
+      def default_credit_card
+        credit_cards.default.where(payment_method: Spree::PaymentMethod.find_by!(name: "Stripe")).first
+      end
       def ensure_personal_referral_promo
         return personal_referral_promo if personal_referral_promo.present?
         transaction do
