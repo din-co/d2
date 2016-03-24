@@ -1,5 +1,6 @@
 module Spree
   class MealSubscriptionsController < Spree::StoreController
+    include ControllerHelpers::UserAuth
 
     before_action :authorize_user
     before_action :set_meal_subscription
@@ -22,21 +23,12 @@ module Spree
     end
 
     def delivery_zone
-      Spree::Zone.match(spree_current_user.default_address)
+      Spree::Zone.match(@user.default_address)
     end
 
     def set_meal_subscription
-      @meal_subscription = spree_current_user.meal_subscription || spree_current_user.build_meal_subscription
+      @meal_subscription = @user.meal_subscription || @user.build_meal_subscription
       @meal_subscription.delivery_window ||= delivery_zone.try(:delivery_windows).try(:first)
     end
-
-    def authorize_user
-      unless spree_current_user.present?
-        store_location
-        redirect_to login_path
-        return
-      end
-    end
-
   end
 end
