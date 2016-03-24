@@ -90,7 +90,7 @@
           <%= meal_subscription.meal_count %> meals, delivered every <%= meal_subscription.delivery_day.titleize %>, <%= meal_subscription.delivery_window %>.
         <% end -%>
       <% else -%>
-        <% if @user.default_address && @user.meal_preference && @user.credit_cards.default %>
+        <% if meal_preference && delivery_address && credit_card %>
           Become a Din Regular. <%= link_to "Create a subscription", account_meal_subscription_path %>
         <% else
           todo = []
