@@ -6,7 +6,7 @@
     We do our best to accommodate your meal preferences, though we may not always be able to accommodate all dietary preferences and allergies.
   </p>
 
-  <%= form_for @meal_preference, url: meal_preferences_path, method: :post do |f| %>
+  <%= form_for @meal_preference, url: account_meal_preference_path, method: :post do |f| %>
     <%= render partial: 'form', locals: {f: f} %>
   <% end %>
 

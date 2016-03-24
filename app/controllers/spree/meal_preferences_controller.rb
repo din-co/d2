@@ -10,14 +10,14 @@ module Spree
         redirect_to spree.account_path
       else
         flash.now[:error] = @meal_preference.errors.full_messages.join(" ")
-        render 'index'
+        render 'show'
       end
     end
 
     private
 
       def set_meal_preference
-        @meal_preference = spree_current_user.meal_preference || spree_current_user.build_meal_preference
+        @meal_preference = spree_current_user.meal_preference || spree_current_user.create_meal_preference
       end
 
       def meal_preference_params

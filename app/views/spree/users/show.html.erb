@@ -8,17 +8,20 @@
     <%= @user.email %> <%= link_to Spree.t(:edit), spree.edit_account_path, class: "btn btn-primary btn-xs" %>
   </p>
 
+  <%
+    if mp = @user.meal_preference
+      diets = Spree::MealPreference.diets.select { |diet| mp.send(diet) }.map { |diet| mp.diet_name(diet) }
+      allergens = Spree::MealPreference.allergens.select { |allergen| mp.send(allergen) }.map { |allergen| mp.allergen_name(allergen) }
+    end
+  %>
   <div class="page-section">
     <h4>
       Meal Preferences
-      <%= link_to "Edit", meal_preferences_path, class: "btn btn-xs btn-primary" %>
+      <% if mp %>
+        <%= link_to "Edit", account_meal_preference_path, class: "btn btn-xs btn-primary" %>
+      <% end -%>
     </h4>
-    <%
-      mp = spree_current_user.meal_preference
-      if mp
-        diets = Spree::MealPreference.diets.select { |diet| mp.send(diet) }.map { |diet| mp.diet_name(diet) }
-        allergens = Spree::MealPreference.allergens.select { |allergen| mp.send(allergen) }.map { |allergen| mp.allergen_name(allergen) }
-      %>
+    <% if mp %>
       <p>
         My diet includes <strong><%= diets.to_sentence.presence || "vegetarian" %></strong>.
         <% if allergens.present? %>
@@ -26,20 +29,31 @@
           I am allergic to <strong><%= allergens.to_sentence %></strong>.
         <% end -%>
       </p>
+    <% else -%>
+      <p>What foods do you enjoy? <%= link_to "Add your meal preferences", account_meal_preference_path %></p>
     <% end -%>
   </div>
 
+  <%
+    delivery_address = @user.default_address.presence
+  %>
   <div class="page-section">
     <h4>
       Delivery Address
-      <%= link_to "Edit", account_address_path, class: "btn btn-xs btn-primary" %>
+      <% if delivery_address %>
+        <%= link_to "Edit", account_address_path, class: "btn btn-xs btn-primary" %>
+      <% end -%>
     </h4>
-    <% if @user.default_address.present? %>
-      <p>
-        <%= render :partial => 'spree/shared/address', :locals => { :address => @user.default_address } %>
-        <em><%= @user.default_address.delivery_instructions %></em>
-      </p>
-    <% end -%>
+    <p>
+      <% if delivery_address %>
+        <%= render :partial => 'spree/shared/vcard', :locals => { :address => @user.default_address } %>
+        <% if delivery_instructions = @user.default_address.delivery_instructions %>
+          <em><%= delivery_instructions %></em>
+        <% end -%>
+      <% else -%>
+        Where should we delivery your meals? <%= link_to "add delivery address", account_address_path%>
+      <% end -%>
+    </p>
   </div>
 
   <h3><%= Spree.t(:orders) %></h3>

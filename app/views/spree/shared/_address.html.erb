@@ -1,39 +1,20 @@
-<span class="address vcard">
-  <span class="fn"><%= address.full_name %></span>
-  <% unless address.company.blank? %>
-    <span class="org">
-      <%= address.company %>
+<span class="adr">
+  <span class="street-address">
+    <span class="street-address-line">
+      <%= address.address1 %><% unless address.address2.blank? %>,<% end -%>
     </span>
-  <% end %>
-  <span class="adr">
-    <span class="street-address">
+    <% unless address.address2.blank? %>
       <span class="street-address-line">
-        <%= address.address1 %><% unless address.address2.blank? %>,<% end -%>
+        <%= address.address2 %>,
       </span>
-      <% unless address.address2.blank? %>
-        <span class="street-address-line">
-          <%= address.address2 %>,
-        </span>
-      <% end %>
-    </span>
-    <span class="local">
-      <span class="locality"><%= address.city %></span>
-      <span class="region"><%= address.state_text %></span>
-      <span class="postal-code"><%= address.zipcode %></span>
-      <% if false %>
-        <span class="country-name"><%= address.country.try(:name) %></span>
-      <% end -%>
-    </span>
+    <% end %>
   </span>
-  <% unless address.phone.blank? %>
-    <span class="tel">
-    <%= format_phone_number(address.phone) %>
-    </span>
-  <% end %>
-  <% unless address.alternative_phone.blank? %>
-    <span class="alternative-phone tel">
-      <span class="type"><%= Spree.t(:alternative_phone) %></span>
-      <%= format_phone_number(address.alternative_phone) %>
-    </span>
-  <% end %>
+  <span class="local">
+    <span class="locality"><%= address.city %></span>
+    <span class="region"><%= address.state_text %></span>
+    <span class="postal-code"><%= address.zipcode %></span>
+    <% if false %>
+      <span class="country-name"><%= address.country.try(:name) %></span>
+    <% end -%>
+  </span>
 </span>
