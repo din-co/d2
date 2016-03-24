@@ -1,5 +1,6 @@
 require 'stripe'
-Stripe.api_version = "2015-10-16"
+Stripe.api_version = "2016-03-07"
+Stripe.api_key = Spree::PaymentMethod.find_by!(name: "Stripe").preferred_secret_key
 
 class StripeCustomer
   def initialize(customer_id)

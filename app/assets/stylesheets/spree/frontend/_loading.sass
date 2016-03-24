@@ -1,0 +1,20 @@
+$loader-size: 36px
+$loader-width: 6px
+.loader-quart
+  color: darken($din-color-dark-tan, 30%)
+  &:before
+    content: ""
+    display: inline-block
+    width: $loader-size
+    height: $loader-size
+    vertical-align: middle
+    border-radius: $loader-size
+    border: $loader-width solid $din-color-tan
+    border-top-color: $din-color-dark-tan
+    +animation(loader-quart .95s linear infinite)
+
+@keyframes loader-quart
+  from
+    +rotate(1deg)
+  to
+    +rotate(360deg)

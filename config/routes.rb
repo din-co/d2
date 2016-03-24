@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     namespace :account, module: :user do
       resource :meal_preference, path: "preferences", only: [:show, :create]
       resource :address, only: [:show, :create]
+      resource :cards, only: [:show, :create]
     end
   end
 
