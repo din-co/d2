@@ -39,7 +39,7 @@
     </div>
 
     <div class="form-group">
-      <%= f.submit "Save Meal Preferences", :class => 'btn btn-primary' %>
+      <%= f.submit "Save Meal Preferences", id: "save-prefs-button", class: 'btn btn-primary', disabled: "disabled" %>
     </div>
 
   <% end %>
@@ -48,6 +48,10 @@
 </div>
 <script type="text/javascript">
 $(function(){
+  function enableSubmit() {
+    $("#save-prefs-button").prop({disabled: false});
+  }
+  $("form").change(enableSubmit);
   var allergens = $("[name^='meal_preference[allergen']")
   var noAllergens = $("#meal_preference_allergen_none")
   allergens.click(function(){
@@ -64,11 +68,13 @@ $(function(){
   var vegetarianDiets = $(".vegetarian-diet")
   $(".set-diet-vegetarian").click(function(e){
     e.preventDefault();
+    enableSubmit();
     diets.not(vegetarianDiets).prop({checked: false})
     vegetarianDiets.prop({checked: true})
   })
   $(".reset-diets").click(function(e){
     e.preventDefault();
+    enableSubmit();
     diets.prop({checked: true})
   })
 })
