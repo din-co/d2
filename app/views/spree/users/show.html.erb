@@ -8,18 +8,20 @@
     <%= @user.email %> <%= link_to Spree.t(:edit), spree.edit_account_path, class: "btn btn-primary btn-xs" %>
   </p>
 
+  <%
+    if mp = @user.meal_preference
+      diets = Spree::MealPreference.diets.select { |diet| mp.send(diet) }.map { |diet| mp.diet_name(diet) }
+      allergens = Spree::MealPreference.allergens.select { |allergen| mp.send(allergen) }.map { |allergen| mp.allergen_name(allergen) }
+    end
+  %>
   <div class="page-section">
     <h4>
       Meal Preferences
-      <% if @user.meal_preference %>
+      <% if mp %>
         <%= link_to "Edit", account_meal_preference_path, class: "btn btn-xs btn-primary" %>
       <% end -%>
     </h4>
-    <%
-      if mp = @user.meal_preference
-        diets = Spree::MealPreference.diets.select { |diet| mp.send(diet) }.map { |diet| mp.diet_name(diet) }
-        allergens = Spree::MealPreference.allergens.select { |allergen| mp.send(allergen) }.map { |allergen| mp.allergen_name(allergen) }
-    %>
+    <% if mp %>
       <p>
         My diet includes <strong><%= diets.to_sentence.presence || "vegetarian" %></strong>.
         <% if allergens.present? %>
