@@ -91,14 +91,14 @@
         <% end -%>
       <% else -%>
         <% if meal_preference && delivery_address && credit_card %>
-          Become a Din Regular. <%= link_to "Create a subscription", account_meal_subscription_path %>
+          Become a Din Regular. <%= link_to "create a subscription", account_meal_subscription_path %>
         <% else
           todo = []
           todo.push(link_to "add meal preferences", account_meal_preference_path) unless meal_preference
           todo.push(link_to "add delivery address", account_address_path) unless delivery_address
           todo.push(link_to "add payment method", account_cards_path) unless credit_card
         -%>
-          Become a Din Regular: <%= todo.to_sentence.html_safe %>.
+          Before you can become a regular, <%= todo.to_sentence.html_safe %>.
         <% end -%>
       <% end -%>
     </p>
