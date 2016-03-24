@@ -30,7 +30,7 @@
         <% end -%>
       </p>
     <% else -%>
-      <p>What foods do you enjoy? <%= link_to "Add your meal preferences", account_meal_preference_path %></p>
+      <p>What foods do you enjoy? <%= link_to "add meal preferences", account_meal_preference_path %></p>
     <% end -%>
   </div>
 
@@ -56,6 +56,23 @@
     </p>
   </div>
 
+  <div class="page-section">
+    <h4>
+      Payment Card
+      <% if @credit_card %>
+        <%= link_to "Edit", account_cards_path, class: "btn btn-xs btn-primary" %>
+      <% end -%>
+    </h4>
+    <p>
+      <% if @credit_card %>
+        <%= Spree.t(@credit_card.cc_type) %>
+        <small><%= @credit_card.last_digits %> <%= "#{@credit_card.month}/#{@credit_card.year}" %></small>
+      <% else -%>
+        How would you like to be billed? <%= link_to "add payment card", account_cards_path %>
+      <% end -%>
+    </p>
+  </div>
+
   <h3><%= Spree.t(:orders) %></h3>
   <% if @orders.present? %>
     <table class="table table-condensed table-striped">
@@ -77,6 +94,6 @@
       </tbody>
     </table>
   <% else %>
-    <p>No orders yet. <%= link_to "View the menu.", spree.root_path(anchor: "menu") %></p>
+    <p>No orders yet. <%= link_to "view menu", spree.root_path(anchor: "menu") %></p>
   <% end %>
 </div>
