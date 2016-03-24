@@ -56,6 +56,18 @@ Spree::Taxon.find_or_create_by!(name: "peanuts", parent_id: taxon_allergens.id, 
 Spree::Taxon.find_or_create_by!(name: "wheat", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
 Spree::Taxon.find_or_create_by!(name: "soybeans", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
 
+taxonomy_proteins = Spree::Taxonomy.find_or_create_by!(name: 'Proteins')
+taxon_proteins = Spree::Taxon.find_or_create_by!(name: 'Proteins', taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "beef", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "lamb", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "pork", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "poultry", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "rabbit", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "seafood", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "fish", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "tofu", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+Spree::Taxon.find_or_create_by!(name: "tempeh", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
+
 taxonomy_pantry = Spree::Taxonomy.find_or_create_by!(name: 'Pantry')
 taxon_pantry = Spree::Taxon.find_or_create_by!(name: 'Pantry', taxonomy_id: taxonomy_pantry.id)
 Spree::Taxon.find_or_create_by!(name: "high-heat oil", parent_id: taxon_pantry.id, taxonomy_id: taxonomy_pantry.id) do |t|

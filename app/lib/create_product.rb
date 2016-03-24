@@ -1,9 +1,9 @@
 class CreateProduct
-  def self.create!(name, price, desc=nil)
+  def self.create!(name, price, options = {})
     product = Spree::Product.create!({
       name: name,
       price: price,
-      description: desc,
+      description: options[:desc],
       available_on: 1.day.ago,
       shipping_category: shipping_category,
     })
@@ -11,34 +11,36 @@ class CreateProduct
     # Create stock
     stock_location.move(product.stock_items.first.variant, 10, Spree::User.admin.first)
 
-    # Add a chef Taxon
-    product.classifications.create!(taxon: Spree::Taxon.chefs.random.first)
+    allergens = if options[:allergens].present?
+      Spree::Taxon.allergens.where(name: options[:allergens])
+    else
+      Spree::Taxon.allergens.random.limit(3)
+    end
 
-    # Add a restaurant Taxon
-    product.classifications.create!(taxon: Spree::Taxon.restaurants.random.first)
-
-    # Add 3 each diets, allergens, pantry, equipment
+    # Add a restaurant, chef, 3 diets, 3 pantry, 3 equipment, and allergen taxons
     [
+      Spree::Taxon.chefs.random.first,
+      Spree::Taxon.restaurants.random.first,
       Spree::Taxon.pages.find_by!(name: "Home"),
       Spree::Taxon.diets.random.limit(3),
-      Spree::Taxon.allergens.random.limit(3),
       Spree::Taxon.pantry.random.limit(3),
       Spree::Taxon.equipment.random.limit(3),
+      allergens,
     ].flatten.each do |taxon|
       product.classifications.create!(taxon: taxon)
     end
 
     # Add properties
-    product.product_properties.create!(value: "A tagline adds more clarity to the name of the dish.", property: Spree::Property.find_by!(name: 'tagline'))
-    product.product_properties.create!(value: "23", property: Spree::Property.find_by!(name: 'time-minutes'))
-    product.product_properties.create!(value: "3", property: Spree::Property.find_by!(name: 'shelf-life-days'))
-    product.product_properties.create!(value: <<-HTML.strip_heredoc, property: Spree::Property.find_by!(name: 'components'))
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'tagline'), value: "A tagline adds more clarity to the name of the dish.")
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'time-minutes'), value: "23")
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'shelf-life-days'), value: "3")
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'components'), value: <<-HTML.strip_heredoc)
       <li>Hodo Soy tofu</li>
       <li>shallot</li>
       <li>vegetable stock</li>
       <li>coconut milk</li>
     HTML
-    product.product_properties.create!(value: <<-HTML.strip_heredoc, property: Spree::Property.find_by!(name: 'directions'))
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'directions'), value: <<-HTML.strip_heredoc)
       <li>Lorem ipsum Excepteur commodo do non ea Excepteur dolore incididunt incididunt in fugiat et qui magna aute <b>high-heat oil</b>.</li>
       <li>Thinly slice the <b>shallot</b>. Add to the saucepan and cook until translucent.</li>
       <li>Add <b>diced pumpkin</b>. Cook for 3 minutes.</li>
@@ -48,20 +50,20 @@ class CreateProduct
         <em>Removing from heat decreases the chance of a flare up if the oil splatters and catches fire.</em>
       </li>
     HTML
-    product.product_properties.create!(value: <<-HTML.strip_heredoc, property: Spree::Property.find_by!(name: 'ingredients'))
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'ingredients'), value: <<-HTML.strip_heredoc)
       Salt, fat, acid, heat, lorem ipsum, Exercitation, pariatur magna, sunt, dolore ut sed, dolore non qui,
       ex deserunt, officia Ut, velit esse, ut, ullamco Excepteur, irure id, enim Duis consectetur,
       ut ut minim Ut sint eiusmod ut aute.
     HTML
-    product.product_properties.create!(value: <<-HTML.strip_heredoc, property: Spree::Property.find_by!(name: 'callout-1'))
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'callout-1'), value: <<-HTML.strip_heredoc)
       <h3>You got called out!</h3>
       <p>Some <b>interesting</b> content in a paragraph.<p>
     HTML
-    product.product_properties.create!(value: <<-HTML.strip_heredoc, property: Spree::Property.find_by!(name: 'callout-2'))
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'callout-2'), value: <<-HTML.strip_heredoc)
       <h3>Calling you out again</h3>
       <p>Some <b>interesting</b> content in a paragraph.<p>
     HTML
-    product.product_properties.create!(value: <<-HTML.strip_heredoc, property: Spree::Property.find_by!(name: 'sidebar'))
+    product.product_properties.create!(property: Spree::Property.find_by!(name: 'sidebar'), value: <<-HTML.strip_heredoc)
       <h3>Hey, it's a sidebar!</h3>
       <p>Some <b>interesting</b> content in a paragraph.<p>
       <ul>

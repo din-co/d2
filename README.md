@@ -70,7 +70,7 @@ Your choice: `heroku local --port 3000 --procfile Procfile.dev` to see the websi
     You must have restaurant and chef taxons for this to work. If you used `INCLUDE_SAMPLES=true` above, then you will have sample restaurant and chef taxons.
 
     ```console
-    $ bin/rails r 'CreateProduct.create!("Your Product Name", 30, "Description.")'
+    $ bin/rails r 'CreateProduct.create!("Your Product Name", 30, desc: "Description.", allergens: ["peanuts"])'
     ```
 
 3. Start server (also starts mailcatcher).
