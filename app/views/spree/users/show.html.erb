@@ -34,21 +34,26 @@
     <% end -%>
   </div>
 
+  <%
+    delivery_address = @user.default_address.presence
+  %>
   <div class="page-section">
     <h4>
       Delivery Address
-      <%= link_to "Edit", account_address_path, class: "btn btn-xs btn-primary" %>
+      <% if delivery_address %>
+        <%= link_to "Edit", account_address_path, class: "btn btn-xs btn-primary" %>
+      <% end -%>
     </h4>
-    <% if @user.default_address.present? %>
-      <p>
-        <span class="fn"><%= @user.default_address.full_name %></span>,
-        <%= render :partial => 'spree/shared/address', :locals => { :address => @user.default_address } %>
+    <p>
+      <% if delivery_address %>
+        <%= render :partial => 'spree/shared/vcard', :locals => { :address => @user.default_address } %>
         <% if delivery_instructions = @user.default_address.delivery_instructions %>
-          <br>
           <em><%= delivery_instructions %></em>
         <% end -%>
-      </p>
-    <% end -%>
+      <% else -%>
+        Where should we delivery your meals? <%= link_to "add delivery address", account_address_path%>
+      <% end -%>
+    </p>
   </div>
 
   <h3><%= Spree.t(:orders) %></h3>
