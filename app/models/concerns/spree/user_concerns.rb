@@ -2,16 +2,6 @@ module Spree
   module UserConcerns
     extend ActiveSupport::Concern
 
-    included do
-      prepend(InstanceMethods)
-
-      has_one :meal_preference, class_name: 'Spree::MealPreference'
-      has_one :meal_subscription, class_name: 'Spree::MealSubscription'
-      has_one :personal_referral_promo, -> { where(promotion_category: Spree.user_class.personal_referral_category) }, class_name: 'Spree::Promotion'
-
-      PERSONAL_REFERRAL_PROMO_AMOUNT = 30
-    end
-
     class_methods do
       def generate_random_code
         Array.new(3) { sample_characters.sample }.join
@@ -24,6 +14,16 @@ module Spree
       def personal_referral_category
         Spree::PromotionCategory.find_or_create_by!(name: "Personal Referral")
       end
+    end
+
+    included do
+      prepend(InstanceMethods)
+
+      has_one :meal_preference, class_name: 'Spree::MealPreference'
+      has_one :meal_subscription, class_name: 'Spree::MealSubscription'
+      has_one :personal_referral_promo, -> { where(promotion_category: Spree.user_class.personal_referral_category) }, class_name: 'Spree::Promotion'
+
+      PERSONAL_REFERRAL_PROMO_AMOUNT = 30
     end
 
     module InstanceMethods
