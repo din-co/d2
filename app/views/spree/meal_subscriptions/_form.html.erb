@@ -12,7 +12,7 @@
 <p>
   For delivery to
   <strong><%= delivery_address_formatted %></strong>
-  (<a href="#">change</a>)
+  (<%= link_to "change", account_address_path %>)
   and with $5 off orders over $60.
   <% if delivery_zone.try(:name) != "San Francisco" %>
     Additional delivery windows are available within San Francisco.
@@ -21,7 +21,7 @@
 <% if delivery_zone.blank? %>
   <p>
     Your delivery address
-    (<%= delivery_address_formatted %> <a href="#">change</a>)
+    (<%= delivery_address_formatted %> <%= link_to "change", account_address_path %>)
     is not in Din’s delivery area.</p>
 <% else %>
   <% delivery_zone.delivery_windows.each do |delivery_window| %>
