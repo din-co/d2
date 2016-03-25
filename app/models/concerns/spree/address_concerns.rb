@@ -7,6 +7,8 @@ module Spree
 
       belongs_to :postal_code, class_name: "Spree::PostalCode"
       before_validation :associate_postal_code, if: Proc.new { |addr| addr.postal_code_id.blank? || addr.zipcode_changed? }
+
+      validate :shipping_validate, on: :shipping
     end
 
     module InstanceMethods
@@ -17,6 +19,13 @@ module Spree
 
     private
 
+    def shipping_validate
+      if postal_code.blank? || Spree::Zone.match(self).blank?
+        errors.add :base, Spree.t(:unsupported_delivery_location, locations: Spree::Zone.pluck(:name).to_sentence)
+      end
+    end
+
+    # Overrides original method
     def postal_code_validate
       super
       # ensure associated postal_code belongs to country

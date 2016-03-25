@@ -31,6 +31,8 @@ module Spree
       }
 
       attr_reader :shipping_promotion_calculator # set once shipping_promotion_minimal_calculator is called
+
+      public :use_billing?
     end
 
     class_methods do
@@ -171,10 +173,15 @@ module Spree
     private
 
     def validate_ship_address
-      # FIXME: should probably check that the address is in a Zone, not depend on the
-      # existence of a postal code, even if that's how it works right now.
-      if ship_address.present? && ship_address.valid? && ship_address.postal_code.blank?
-        errors.add :ship_address, Spree.t(:unsupported_delivery_location)
+      if ship_address.present?
+        unless ship_address.valid?
+          ship_address.errors.each { |attr, err| errors.add :ship_address, err }
+          return
+        end
+        unless ship_address.valid?(:shipping)
+          ship_address.errors.each { |attr, err| errors.add :ship_address, err }
+          return
+        end
       end
     end
 
