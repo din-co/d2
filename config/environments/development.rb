@@ -45,4 +45,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # enables or disables reloading of classes only when tracked files change.
+  # By default tracks everything on autoload paths and is set to true.
+  # If config.cache_classes is true, this option is ignored.
+  config.reload_classes_only_on_change = false
 end
