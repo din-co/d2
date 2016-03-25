@@ -49,7 +49,7 @@
   <label>
     <%= f.check_box :notification_sms %>
     text message to
-    <%= format_phone_number(spree_current_user.default_address.phone) %>
+    <%= format_phone_number(spree_current_user.default_address.phone) %> (<%= link_to "change", account_address_path %>)
   </label>
 </div>
 
