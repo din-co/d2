@@ -1,11 +1,12 @@
 <h3>Status</h3>
-<div class="radio"><label><%= f.radio_button :status, :enabled %> Enabled</label></div>
-<div class="radio"><label><%= f.radio_button :status, :disabled %> Disabled</label></div>
+<% f.object.class.statuses.each do |status, value| %>
+  <div class="radio"><label><%= f.radio_button :status, value %> <%= status.to_s.humanize %></label></div>
+<% end -%>
 
 <h3>Delivery Day</h3>
-<div class="radio"><label><%= f.radio_button :delivery_day, :monday %> Monday</label></div>
-<div class="radio"><label><%= f.radio_button :delivery_day, :tuesday %> Tuesday</label></div>
-<div class="radio"><label><%= f.radio_button :delivery_day, :wednesday %> Wednesday</label></div>
+<% f.object.class.delivery_days.each do |day, value| %>
+  <div class="radio"><label><%= f.radio_button :delivery_day, value %> <%= day.to_s.pluralize.humanize %></label></div>
+<% end -%>
 
 <h3>Delivery Window</h3>
 <% delivery_address_formatted = render :partial => 'spree/shared/address', :locals => { :address => spree_current_user.default_address } %>
