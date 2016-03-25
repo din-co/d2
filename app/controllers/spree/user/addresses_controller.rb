@@ -8,7 +8,20 @@ module Spree
     end
 
     def create
-      @address = spree_current_user.save_in_address_book(address_params.merge(country_id: Spree::Config[:default_country_id]), true)
+      @address = Spree::Address.new(address_params)
+      unless @address.valid?
+        flash.now[:error] = "#{@address.errors.full_messages.to_sentence}."
+        render 'show'
+        return
+      end
+
+      unless @address.valid?(:shipping)
+        flash.now[:error] = "#{@address.errors.full_messages.to_sentence}."
+        render 'show'
+        return
+      end
+
+      @address = spree_current_user.save_in_address_book(@address.attributes, true)
       if @address.persisted?
         flash[:success] = "Delivery address updated."
         redirect_to spree.account_path
@@ -21,7 +34,10 @@ module Spree
     private
 
       def address_params
-        params.require(:address).permit(:firstname, :lastname, :phone, :company, :address1, :address2, :city, :state, :zipcode, :delivery_instructions, :country_id, :state_id)
+        params
+          .require(:address)
+          .permit(:firstname, :lastname, :phone, :company, :address1, :address2, :city, :state, :zipcode, :delivery_instructions, :country_id, :state_id)
+          .merge(country_id: Spree::Config[:default_country_id])
       end
 
   end
