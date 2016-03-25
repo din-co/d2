@@ -21,7 +21,7 @@ module Spree
 
     def shipping_validate
       if postal_code.blank? || Spree::Zone.match(self).blank?
-        errors.add :base, Spree.t(:unsupported_delivery_location, locations: Spree::Zone.all.map(&:name).to_sentence)
+        errors.add :base, Spree.t(:unsupported_delivery_location, locations: Spree::Zone.pluck(:name).to_sentence)
       end
     end
 

@@ -31,6 +31,8 @@ module Spree
       }
 
       attr_reader :shipping_promotion_calculator # set once shipping_promotion_minimal_calculator is called
+
+      public :use_billing?
     end
 
     class_methods do
@@ -172,8 +174,14 @@ module Spree
 
     def validate_ship_address
       if ship_address.present?
-        return unless ship_address.valid?
-        return unless ship_address.valid?(:shipping)
+        unless ship_address.valid?
+          ship_address.errors.each { |attr, err| errors.add :ship_address, err }
+          return
+        end
+        unless ship_address.valid?(:shipping)
+          ship_address.errors.each { |attr, err| errors.add :ship_address, err }
+          return
+        end
       end
     end
 
