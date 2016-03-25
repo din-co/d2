@@ -54,7 +54,7 @@
 </div>
 
 <div class="form-group form-footer">
-  <% if @user.meal_subscription.new_record? %>
+  <% if !@user.meal_subscription.new_record? %>
     <p>
       <em>Updates to subscription settings do not affect subscription orders which are in progress.</em>
       <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
