@@ -171,10 +171,9 @@ module Spree
     private
 
     def validate_ship_address
-      # FIXME: should probably check that the address is in a Zone, not depend on the
-      # existence of a postal code, even if that's how it works right now.
-      if ship_address.present? && ship_address.valid? && ship_address.postal_code.blank?
-        errors.add :ship_address, Spree.t(:unsupported_delivery_location)
+      if ship_address.present?
+        return unless ship_address.valid?
+        return unless ship_address.valid?(:shipping)
       end
     end
 
