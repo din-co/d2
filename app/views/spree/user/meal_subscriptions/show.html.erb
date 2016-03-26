@@ -6,13 +6,13 @@
     <p>Three days before your delivery day, Din will suggest meals via email (and optionally text message). Suggested meals will match your <%= link_to "meal preferences", account_meal_preference_path %>. </p>
 
     <h4>If you’re excited about the suggested meals, do nothing. </h4>
-    <p>The suggested meals will arrive on your delivery day. You will be billed at 5pm the night before your delivery.</p>
+    <p>The suggested meals will arrive on your delivery day. You will be billed the day before your delivery.</p>
 
     <h4>Want to change the suggested meals, or cancel a delivery? </h4>
-    <p>You may change or cancel your order until 5pm the night before your selected delivery, when your order is processed.</p>
+    <p>You may change or cancel a delivery until 5pm the day before your scheduled delivery.</p>
 
     <h4>How much does subscription cost?</h4>
-    <p>There is no cost for a subscription other than the cost of meals. Meal prices are set by our restaurant partners and average about $32 ($16/serving). The price of each meal will be included in the email and text message with suggested meals each week.</p>
+    <p>There is no cost for a subscription other than the cost of meals. Meal prices are set by our restaurant partners and average about $32 ($16/serving). The price of each meal will be included in the email and text message with suggested meals each week. Order over $60 receive $5 off delivery.</p>
   <% end -%>
 
   <% if @user.meal_subscription.new_record? %>

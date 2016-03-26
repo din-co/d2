@@ -1,8 +1,27 @@
 // Bootstrap Additions
-.table--vertical-middle > thead > tr > th,
-.table--vertical-middle > thead > tr > td,
-.table--vertical-middle > tbody > tr > th,
-.table--vertical-middle > tbody > tr > td,
-.table--vertical-middle > tfoot > tr > th,
-.table--vertical-middle > tfoot > tr > td
-  vertical-align: middle
+
+.table--vertical-middle
+  > thead,
+  > tbody,
+  > tfoot
+    > tr
+      > th,
+      > td
+        vertical-align: middle
+
+.table--radio-list
+  width: auto
+  margin-bottom: 0
+  > thead,
+  > tbody,
+  > tfoot
+    > tr
+      > th,
+        padding: 0 ($table-condensed-cell-padding * 2) 1px 0
+        border: none
+        vertical-align: bottom
+      > td
+        padding: 0 ($table-condensed-cell-padding * 2) 5px 0
+        border: none
+  .radio
+    margin: 0
