@@ -4,7 +4,7 @@ module Spree
     belongs_to :delivery_window
 
     def self.valid_meal_counts
-      @valid_meal_counts ||= (1..6).to_a
+      @valid_meal_counts ||= (2..6).to_a
     end
 
     validates :user_id, :status, :delivery_day, :delivery_window_id, :meal_count, presence: true
