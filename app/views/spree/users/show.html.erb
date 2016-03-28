@@ -5,7 +5,9 @@
   </h1>
 
   <p>
-    <%= @user.email %> <%= link_to Spree.t(:edit), spree.edit_account_path, class: "btn btn-primary btn-xs" %>
+    <%= @user.email %>
+    <br>
+    <%= link_to "edit", spree.edit_account_path, class: "btn btn-xs btn-info" %>
   </p>
 
   <%
@@ -17,9 +19,6 @@
   <div class="page-section">
     <h4>
       Meal Preferences
-      <% if meal_preference %>
-        <%= link_to "Edit", account_meal_preference_path, class: "btn btn-xs btn-primary" %>
-      <% end -%>
     </h4>
     <% if meal_preference %>
       <p>
@@ -28,6 +27,8 @@
           <br>
           I am allergic to <strong><%= allergens.to_sentence %></strong>.
         <% end -%>
+        <br>
+        <%= link_to "edit", account_meal_preference_path, class: "btn btn-xs btn-info" %>
       </p>
     <% else -%>
       <p>What foods do you enjoy? <%= link_to "add meal preferences", account_meal_preference_path %></p>
@@ -40,16 +41,14 @@
   <div class="page-section">
     <h4>
       Delivery Address
-      <% if delivery_address %>
-        <%= link_to "Edit", account_address_path, class: "btn btn-xs btn-primary" %>
-      <% end -%>
     </h4>
     <p>
       <% if delivery_address %>
         <%= render :partial => 'spree/shared/vcard', :locals => { :address => @user.default_address } %>
-        <% if delivery_instructions = @user.default_address.delivery_instructions %>
-          <em><%= delivery_instructions %></em>
+        <% if delivery_instructions = @user.default_address.delivery_instructions.presence %>
+          <em>[<%= delivery_instructions %>]</em>
         <% end -%>
+        <%= link_to "edit", account_address_path, class: "btn btn-xs btn-info" %>
       <% else -%>
         Where should we deliver your meals? <%= link_to "add delivery address", account_address_path%>
       <% end -%>
@@ -60,14 +59,13 @@
   <div class="page-section">
     <h4>
       Payment Card
-      <% if credit_card %>
-        <%= link_to "Edit", account_cards_path, class: "btn btn-xs btn-primary" %>
-      <% end -%>
     </h4>
     <p>
       <% if credit_card %>
         <%= Spree.t(credit_card.cc_type) %>
         <small><%= credit_card.last_digits %> <%= "#{credit_card.month}/#{credit_card.year}" %></small>
+        <br>
+        <%= link_to "edit", account_cards_path, class: "btn btn-xs btn-info" %>
       <% else -%>
         How would you like to be billed? <%= link_to "add payment card", account_cards_path %>
       <% end -%>
@@ -78,9 +76,6 @@
   <div class="page-section">
     <h4>
       Subscription
-      <% if meal_subscription %>
-        <%= link_to "Edit", account_meal_subscription_path, class: "btn btn-xs btn-primary" %>
-      <% end -%>
     </h4>
     <p>
       <% if meal_subscription %>
@@ -89,6 +84,8 @@
         <% else -%>
           <%= meal_subscription.meal_count %> meals, delivered every <%= meal_subscription.delivery_day.titleize %>, <%= meal_subscription.delivery_window %>.
         <% end -%>
+        <br>
+        <%= link_to "edit", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
       <% else -%>
         <% if meal_preference && delivery_address && credit_card %>
           Become a Din Regular. <%= link_to "create a subscription", account_meal_subscription_path %>
