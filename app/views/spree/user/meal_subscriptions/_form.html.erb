@@ -4,7 +4,7 @@
   <div class="radio-inline"><label style="font-weight: normal"><%= f.radio_button :status, status %> <%= status.to_s.humanize %></label></div>
 <% end -%>
 <% if !@user.meal_subscription.new_record? %>
-  <p id="disable-warning">
+  <p id="disable-warning" style="display:none">
     <em>Updates to subscription settings do not affect subscription orders which are in progress.</em>
     <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
   </p>
@@ -15,7 +15,7 @@
 <div class="form-inline">
   <p>
     <%= f.select :meal_count, f.object.valid_meal_counts.map { |n| [pluralize(n, 'meal'), n] }, {}, class: "form-control input-sm" %>
-    to <strong><%= delivery_address_formatted %></strong> (<%= link_to "change", account_address_path %>) on:
+    to <strong><%= delivery_address_formatted %></strong> <small>(<%= link_to "change", account_address_path %>)</small> on:
   </p>
 </div>
 
@@ -26,7 +26,7 @@
 <% if delivery_zone.blank? %>
   <p>
     Your delivery address
-    (<%= delivery_address_formatted %> <%= link_to "change", account_address_path %>)
+    <small>(<%= delivery_address_formatted %> <%= link_to "change", account_address_path %>)</small>
     is not in Din’s delivery area.</p>
 <% else %>
   <table class="table table--radio-list">
@@ -61,7 +61,7 @@
   <label>
     <%= f.check_box :notification_sms %>
     text message to
-    <%= format_phone_number(spree_current_user.default_address.phone) %> (<%= link_to "change", account_address_path %>)
+    <%= format_phone_number(spree_current_user.default_address.phone) %> <small>(<%= link_to "change", account_address_path %>)</small>
   </label>
 </div>
 
