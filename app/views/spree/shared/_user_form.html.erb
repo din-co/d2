@@ -5,7 +5,8 @@
 <div class="row">
   <div class="col-sm-6">
     <%= f.label :password, Spree.t(:password) %>
-    <%= f.password_field :password, :class => 'form-control' %>
+    <%= f.password_field :password, :class => "form-control", "aria-describedby": aria_label("password") %>
+    <span id="<%= aria_label("password") %>" class="help-block">Passwords must be <%= Devise.password_length.min %> or more characters.</span>
   </div>
   <div class="col-sm-6">
     <%= f.label :password_confirmation, Spree.t(:confirm_password) %>
