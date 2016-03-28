@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317225319) do
+ActiveRecord::Schema.define(version: 20160328220658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -278,7 +278,6 @@ ActiveRecord::Schema.define(version: 20160317225319) do
     t.boolean  "diet_fish",             default: true,  null: false
     t.boolean  "diet_seafood",          default: true,  null: false
     t.boolean  "diet_tofu",             default: true,  null: false
-    t.boolean  "diet_tempeh",           default: true,  null: false
     t.boolean  "allergen_eggs",         default: false, null: false
     t.boolean  "allergen_fish",         default: false, null: false
     t.boolean  "allergen_milk",         default: false, null: false
