@@ -46,7 +46,8 @@
       <% if delivery_address %>
         <%= render :partial => 'spree/shared/vcard', :locals => { :address => @user.default_address } %>
         <% if delivery_instructions = @user.default_address.delivery_instructions.presence %>
-          <em>[<%= delivery_instructions %>]</em>
+          <em><%= delivery_instructions %></em>
+          <br>
         <% end -%>
         <%= link_to "edit", account_address_path, class: "btn btn-xs btn-info" %>
       <% else -%>
