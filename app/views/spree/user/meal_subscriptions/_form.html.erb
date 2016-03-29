@@ -51,13 +51,22 @@
 <% end -%>
 
 <h3>Notifications</h3>
-<p>Three days before your delivery we will send suggested meals via email to <strong class="text-nowrap"><%= spree_current_user.email %></strong>. You may additionally receive suggested meals via:</p>
-<div class="checkbox">
-  <label>
-    <%= f.check_box :notification_sms %>
-    text message to
-    <%= format_phone_number(spree_current_user.default_address.phone) %> <small>(<%= link_to "change", account_address_path %>)</small>
-  </label>
+<p>Four days before your delivery we will send your menu via:</p>
+<div class="checkbox-group">
+  <div class="checkbox">
+    <label>
+      <%= f.check_box :notification_email %>
+      <strong>text message</strong> to
+      <%= format_phone_number(spree_current_user.default_address.phone) %> <small>(<%= link_to "change", account_address_path %>)</small>
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <%= f.check_box :notification_sms %>
+      <strong>email</strong> to
+      <%= spree_current_user.email %> <small>(<%= link_to "change", edit_account_path %>)</small>
+    </label>
+  </div>
 </div>
 
 <div class="form-group form-footer">
