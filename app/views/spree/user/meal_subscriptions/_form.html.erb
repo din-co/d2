@@ -1,9 +1,9 @@
-<br>
-<div><strong>Subscription Status</strong></div>
-<% f.object.class.statuses.each do |status, _| %>
-  <div class="radio-inline"><label style="font-weight: normal"><%= f.radio_button :status, status %> <%= status.to_s.humanize %></label></div>
-<% end -%>
-<% if !@user.meal_subscription.new_record? %>
+
+<% unless @user.meal_subscription.new_record? %>
+  <h5>Subscription Status</h5>
+  <% f.object.class.statuses.each do |status, _| %>
+    <div class="radio-inline"><label style="font-weight: normal"><%= f.radio_button :status, status %> <%= status.to_s.humanize %></label></div>
+  <% end -%>
   <p id="disable-warning" style="display:none">
     <em>Updates to subscription settings do not affect subscription orders which are in progress.</em>
     <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.

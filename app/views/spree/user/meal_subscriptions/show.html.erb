@@ -36,7 +36,7 @@
   <% if @user.meal_subscription.new_record? %>
     <%= yield :subscription_details %>
   <% else -%>
-    Learn about <a href="#how-it-works">how subscription works</a>.
+    <p>Learn about <a href="#how-it-works">how subscription works</a>.</p>
   <% end -%>
 
   <%= form_for @meal_subscription, url: account_meal_subscription_path, method: :post, html: {id: "edit", class: "page-anchor"} do |f| %>
