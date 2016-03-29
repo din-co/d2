@@ -70,8 +70,9 @@
 </div>
 
 <div class="form-group form-footer">
-  <%= f.submit "Save Subscription Settings", :class => 'btn btn-primary' %>
+  <%= f.submit @user.meal_subscription.new_record? ? "Create Subscription" : "Update Subscription", :class => 'btn btn-primary' %>
 </div>
+
 <script>
   $(function(){
     $("[name='meal_subscription[status]']").click(function(){
