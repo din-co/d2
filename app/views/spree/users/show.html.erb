@@ -82,7 +82,16 @@
         <% if meal_subscription.status == "disabled" %>
           Subscription is disabled.
         <% else -%>
-          <%= meal_subscription.meal_count %> meals, delivered every <%= meal_subscription.delivery_day.titleize %>, <%= meal_subscription.delivery_window %>.
+          <%
+            notification = []
+            notification.push(@user.email) if meal_subscription.notification_sms
+            notification.push("<span class=\"text-nowrap\">#{format_phone_number(delivery_address.phone)}</span>") if meal_subscription.notification_email
+          %>
+          <%= meal_subscription.meal_count %> meals,
+          delivered every <%= meal_subscription.delivery_day.titleize %>,
+          <%= meal_subscription.delivery_window %>.
+          <br>
+          On [insert day here] your menu will be sent to <%= notification.to_sentence.html_safe %>.
         <% end -%>
         <br>
         <%= link_to "edit", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
