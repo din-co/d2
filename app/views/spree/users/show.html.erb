@@ -20,19 +20,19 @@
     <h4>
       Meal Preferences
     </h4>
-    <% if meal_preference %>
-      <p>
+    <p>
+      <% if meal_preference %>
         My diet includes <strong><%= diets.to_sentence.presence || "vegetarian" %></strong>.
         <% if allergens.present? %>
           <br>
           I am allergic to <strong><%= allergens.to_sentence %></strong>.
         <% end -%>
-        <br>
-        <%= link_to "edit", account_meal_preference_path, class: "btn btn-xs btn-info" %>
-      </p>
-    <% else -%>
-      <p>What foods do you enjoy? <%= link_to "add meal preferences", account_meal_preference_path %></p>
-    <% end -%>
+      <% else -%>
+        What foods do you enjoy?
+      <% end -%>
+      <br>
+      <%= link_to meal_preference ? "edit" : "add meal preferences", account_meal_preference_path, class: "btn btn-xs btn-info" %>
+    </p>
   </div>
 
   <%
@@ -46,13 +46,13 @@
       <% if delivery_address %>
         <%= render :partial => 'spree/shared/vcard', :locals => { :address => @user.default_address } %>
         <% if delivery_instructions = @user.default_address.delivery_instructions.presence %>
-          <em><%= delivery_instructions %></em>
-          <br>
+          <span class="delivery-instructions"><%= delivery_instructions %></span>
         <% end -%>
-        <%= link_to "edit", account_address_path, class: "btn btn-xs btn-info" %>
       <% else -%>
-        Where should we deliver your meals? <%= link_to "add delivery address", account_address_path%>
+        Where should we deliver your meals?
       <% end -%>
+      <br>
+      <%= link_to delivery_address ? "edit" : "add delivery address", account_address_path, class: "btn btn-xs btn-info" %>
     </p>
   </div>
 
@@ -65,11 +65,11 @@
       <% if credit_card %>
         <%= Spree.t(credit_card.cc_type) %>
         <small><%= credit_card.last_digits %> <%= "#{credit_card.month}/#{credit_card.year}" %></small>
-        <br>
-        <%= link_to "edit", account_cards_path, class: "btn btn-xs btn-info" %>
       <% else -%>
-        How would you like to be billed? <%= link_to "add payment card", account_cards_path %>
+        How would you like to be billed?
       <% end -%>
+      <br>
+      <%= link_to credit_card ? "edit" : "add payment card", account_cards_path %>
     </p>
   </div>
 
@@ -89,14 +89,14 @@
         <%= link_to "edit", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
       <% else -%>
         <% if meal_preference && delivery_address && credit_card %>
-          Become a Din Regular. <%= link_to "create a subscription", account_meal_subscription_path %>
+          Become a Din subscriber. <%= link_to "create a subscription", account_meal_subscription_path %>
         <% else
           todo = []
           todo.push(link_to "add meal preferences", account_meal_preference_path) unless meal_preference
           todo.push(link_to "add delivery address", account_address_path) unless delivery_address
           todo.push(link_to "add payment method", account_cards_path) unless credit_card
         -%>
-          Before you can become a regular, <%= todo.to_sentence.html_safe %>.
+          In order to subscribe, <%= todo.to_sentence.html_safe %>.
         <% end -%>
       <% end -%>
     </p>
