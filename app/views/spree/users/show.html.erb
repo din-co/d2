@@ -50,6 +50,7 @@
         <% end -%>
       <% else -%>
         Where would you like your meals delivered?
+        <br>
       <% end -%>
       <%= link_to delivery_address ? "edit" : "add delivery address", account_address_path, class: "btn btn-xs btn-info" %>
     </p>
