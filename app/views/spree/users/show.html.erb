@@ -87,9 +87,9 @@
             notification.push(@user.email) if meal_subscription.notification_sms
             notification.push("<span class=\"text-nowrap\">#{format_phone_number(delivery_address.phone)}</span>") if meal_subscription.notification_email
           %>
-          <%= meal_subscription.meal_count %> meals,
-          delivered every <%= meal_subscription.delivery_day.titleize %>,
-          <%= meal_subscription.delivery_window %>.
+          <%= meal_subscription.meal_count %> meals, delivered on
+          <%= meal_subscription.delivery_day.titleize.pluralize %>
+          between <%= meal_subscription.delivery_window %>.
           <br>
           On [insert day here] your menu will be sent to <%= notification.to_sentence.html_safe %>.
         <% end -%>
