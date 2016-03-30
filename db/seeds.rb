@@ -5,7 +5,7 @@
 # the same name in #{Rails.root}/db/default/spree/ (which we do).
 Spree::Core::Engine.load_seed if defined?(Spree::Core)
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
-Spree::Config[:default_country_id] = Spree::Country.find_by!(iso3: "USA").id
+Spree::Config[:default_country_id] = Spree::Country.find_by!(iso: "US").id
 
 # Create Taxons
 taxonomy_pages = Spree::Taxonomy.find_or_create_by!(name: 'Pages')
@@ -180,10 +180,7 @@ dish.properties += [
 usa = Spree::Country.find_by(iso: 'US') || Spree::Country.default
 
 # Default stock location to hold stocks of products
-Spree::StockLocation.find_or_create_by!(name: 'Default') do |s|
-  s.default = true
-  s.country = usa
-end
+Spree::StockLocation.find_or_create_by!(name: 'Default', default: true, country: usa)
 
 # Shipping Zones, Categories and Methods required to create products
 standard_shipping_category = Spree::ShippingCategory.find_or_create_by!(name: "Dish - standard")

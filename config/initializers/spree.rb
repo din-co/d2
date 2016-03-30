@@ -57,7 +57,7 @@ Spree.config do |config|
 end
 
 Spree::Config[:default_country_id] = begin
-  (Spree::Country.find_by(iso3: "USA") || Spree::Country.first).try!(:id)
+  (Spree::Country.find_by(iso: "US") || Spree::Country.first).try!(:id)
 rescue ActiveRecord::StatementInvalid => e
   Rails.logger.error e.message
   1
