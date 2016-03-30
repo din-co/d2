@@ -1,7 +1,6 @@
 <div class="container container--main">
   <h1>Payment Card</h1>
 
-  <p>Card payments powered by <strong>Stripe</strong>.</p>
   <% if @credit_card %>
     <h4>Current Card</h4>
     <p>
@@ -14,9 +13,10 @@
   <% end -%>
   <script type="text/javascript" src="https://checkout.stripe.com/checkout.js"></script>
   <p>
-    <button id="change-payment-card" class="btn btn-info"><%= @credit_card ? "Change Card" : "Add Card" %></button>
-    <span id="change-payment-card-loading" style="display: none"><span class="loader-quart"> Loading…</span></span>
+    <button id="change-payment-card" style="display: none" class="btn btn-info"><%= @credit_card ? "Change Card" : "Add Card" %></button>
+    <span id="change-payment-card-loading"><span class="loader-quart"> Loading…</span></span>
   </p>
+  <p><small>Card payments powered by <strong>Stripe</strong>.</small></p>
 
 </div>
 
@@ -40,26 +40,8 @@
 
 <script>
   $(function(){
+    disableLoading();
     var formSubmitted = false;
-    function enableLoading() {
-      $("#change-payment-card").hide();
-      $("#change-payment-card-loading").show();
-    }
-    function disableLoading() {
-      $("#change-payment-card").show();
-      $("#change-payment-card-loading").hide();
-    }
-    function stripeOpened() {
-      $("#change-payment-card").hide();
-      $("#change-payment-card-loading").hide();
-    }
-    function stripeClosed() {
-      if (formSubmitted) {
-        enableLoading();
-      } else {
-        disableLoading();
-      }
-    }
     var stripeAddCard = StripeCheckout.configure({
       key: '<%= @payment_method.preferred_publishable_key %>',
       locale: 'auto',
@@ -101,5 +83,25 @@
       enableLoading(); // trigger ui change sooner.
       stripeAddCard.open();
     });
+    function enableLoading() {
+      $("#change-payment-card").hide();
+      $("#change-payment-card-loading").show();
+    }
+    function disableLoading() {
+      $("#change-payment-card").show();
+      $("#change-payment-card-loading").hide();
+      console.log("disableLoading")
+    }
+    function stripeOpened() {
+      $("#change-payment-card").hide();
+      $("#change-payment-card-loading").hide();
+    }
+    function stripeClosed() {
+      if (formSubmitted) {
+        enableLoading();
+      } else {
+        disableLoading();
+      }
+    }
   })
 </script>
