@@ -7,36 +7,26 @@ module Spree
     end
 
     module InstanceMethods
+      delegate :restaurants, :chefs, :diets, :allergens, :proteins, :pantry, :equipment, :pages, to: :taxons
+
       def restaurant
-        taxons.restaurants.first
+        restaurants.first
       end
 
       def chef
-        taxons.chefs.first
-      end
-
-      def diets
-        taxons.diets
-      end
-
-      def allergens
-        taxons.allergens
-      end
-
-      def pantry
-        taxons.pantry
-      end
-
-      def equipment
-        taxons.equipment
-      end
-
-      def pages
-        taxons.pages
+        chefs.first
       end
 
       def on_home_page?
         pages.find_by(name: "Home").present?
+      end
+
+      def contains_allergens(allergen_names)
+        allergens.where(name: allergen_names).pluck(:name)
+      end
+
+      def contains_proteins(protein_names)
+        proteins.where(name: protein_names).pluck(:name)
       end
     end
   end

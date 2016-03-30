@@ -78,9 +78,9 @@ RSpec.configure do |config|
       MSG
     end
     DatabaseCleaner.clean_with(:truncation)
+
     Rails.application.load_tasks # required for db/seeds due to Spree engines
     ENV['INCLUDE_SAMPLES'] = '1'
-    require_relative '../db/seeds.rb' # TODO: can we do this faster by using `db:test:prepare` and transactions?
   end
 
   config.before(:each) do
@@ -88,6 +88,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each, type: :feature) do
+    require Rails.root.join('db/seeds')
+
     # :rack_test driver's Rack app under test shares database connection
     # with the specs, so continue to use transaction strategy for speed.
     driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
