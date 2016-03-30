@@ -53,7 +53,7 @@ Spree::Taxon.find_or_create_by!(name: "fish", parent_id: taxon_allergens.id, tax
 Spree::Taxon.find_or_create_by!(name: "shellfish", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
 Spree::Taxon.find_or_create_by!(name: "tree nuts", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
 Spree::Taxon.find_or_create_by!(name: "peanuts", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
-Spree::Taxon.find_or_create_by!(name: "wheat", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
+Spree::Taxon.find_or_create_by!(name: "wheat/gluten", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
 Spree::Taxon.find_or_create_by!(name: "soybeans", parent_id: taxon_allergens.id, taxonomy_id: taxonomy_allergens.id)
 
 taxonomy_proteins = Spree::Taxonomy.find_or_create_by!(name: 'Proteins')
