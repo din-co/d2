@@ -5,7 +5,6 @@ FactoryGirl.define do
     trait :soy_allergy do
       allergen_soybeans true
       diet_tofu false
-      diet_tempeh false
     end
     trait :shellfish_allergy do
       allergen_shellfish true

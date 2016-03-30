@@ -43,10 +43,10 @@ RSpec.describe Spree::MealPreference, type: :model, subscription_data: true do
   end
 
   describe 'no pork or shellfish' do
-    subject { no_pork_shellfish_mp }
+    subject { no_pork_fish_mp }
     it { is_expected.to     be_allowed braised_veg }
     it { is_expected.to_not be_allowed breakfast_sandwich }
-    it { is_expected.to     be_allowed sauteed_fish }
+    it { is_expected.to_not be_allowed sauteed_fish }
     it { is_expected.to     be_allowed tofu_fried_rice }
   end
 

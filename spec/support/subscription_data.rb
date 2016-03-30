@@ -13,7 +13,7 @@ RSpec.shared_context "meal preferences and meals", subscription_data: true do
   let(:strict_diet_mp)            { FactoryGirl.create(:strict_diet) }
   let(:pescatarian_mp)            { FactoryGirl.create(:meal_preference, :pescatarian) }
   let(:no_beef_pork_shellfish_mp) { FactoryGirl.create(:meal_preference, :shellfish_allergy, diet_pork: false, diet_beef: false) }
-  let(:no_pork_shellfish_mp)      { FactoryGirl.create(:meal_preference, :shellfish_allergy, diet_pork: false) }
+  let(:no_pork_fish_mp)           { FactoryGirl.create(:meal_preference, :fish_allergy, diet_pork: false) }
   let(:no_shellfish_mp)           { FactoryGirl.create(:meal_preference, :shellfish_allergy) }
   let(:default_mp)                { FactoryGirl.create(:meal_preference) }
 end
