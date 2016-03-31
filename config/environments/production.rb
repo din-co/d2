@@ -71,6 +71,9 @@ Rails.application.configure do
 
   ::TRUE_PRODUCTION_INSTANCE = (canonical_domain == 'din.co' && ENV['EMAIL_HOST'] == 'din.co')
 
+  # Show full error reports in staging environments to aid debugging.
+  config.consider_all_requests_local = ! ::TRUE_PRODUCTION_INSTANCE
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
