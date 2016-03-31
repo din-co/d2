@@ -73,6 +73,7 @@
     </p>
   </div>
 
+<% if false # hide subscription stuff for now %>
   <% meal_subscription = @user.meal_subscription %>
   <div class="page-section">
     <h4>
@@ -110,6 +111,7 @@
       <% end -%>
     </p>
   </div>
+<% end %>
 
   <div class="page-section">
     <% if @personal_referral_promo %>
