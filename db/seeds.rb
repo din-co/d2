@@ -66,7 +66,6 @@ Spree::Taxon.find_or_create_by!(name: "rabbit", parent_id: taxon_proteins.id, ta
 Spree::Taxon.find_or_create_by!(name: "seafood", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
 Spree::Taxon.find_or_create_by!(name: "fish", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
 Spree::Taxon.find_or_create_by!(name: "tofu", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
-Spree::Taxon.find_or_create_by!(name: "tempeh", parent_id: taxon_proteins.id, taxonomy_id: taxonomy_proteins.id)
 
 taxonomy_pantry = Spree::Taxonomy.find_or_create_by!(name: 'Pantry')
 taxon_pantry = Spree::Taxon.find_or_create_by!(name: 'Pantry', taxonomy_id: taxonomy_pantry.id)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317225319) do
+ActiveRecord::Schema.define(version: 20160329000951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -278,7 +278,6 @@ ActiveRecord::Schema.define(version: 20160317225319) do
     t.boolean  "diet_fish",             default: true,  null: false
     t.boolean  "diet_seafood",          default: true,  null: false
     t.boolean  "diet_tofu",             default: true,  null: false
-    t.boolean  "diet_tempeh",           default: true,  null: false
     t.boolean  "allergen_eggs",         default: false, null: false
     t.boolean  "allergen_fish",         default: false, null: false
     t.boolean  "allergen_milk",         default: false, null: false
@@ -302,6 +301,7 @@ ActiveRecord::Schema.define(version: 20160317225319) do
     t.boolean  "notification_sms",   default: true, null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.boolean  "notification_email", default: true, null: false
   end
 
   add_index "spree_meal_subscriptions", ["delivery_window_id"], name: "index_spree_meal_subscriptions_on_delivery_window_id", using: :btree

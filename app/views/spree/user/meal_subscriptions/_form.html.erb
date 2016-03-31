@@ -1,12 +1,14 @@
-<br>
-<div><strong>Subscription Status</strong></div>
-<% f.object.class.statuses.each do |status, _| %>
-  <div class="radio-inline"><label style="font-weight: normal"><%= f.radio_button :status, status %> <%= status.to_s.humanize %></label></div>
-<% end -%>
-<% if !@user.meal_subscription.new_record? %>
-  <p id="disable-warning" style="display:none">
-    <em>Updates to subscription settings do not affect subscription orders which are in progress.</em>
-    <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
+
+<% unless @user.meal_subscription.new_record? %>
+  <h5>Subscription Status</h5>
+  <% f.object.class.statuses.each do |status, _| %>
+    <div class="radio-inline"><label style="font-weight: normal"><%= f.radio_button :status, status %> <%= status.to_s.humanize %></label></div>
+  <% end -%>
+  <p id="pause-warning" style="display:none">
+    <small>
+      <em>Updates to subscription settings do not affect subscription orders which are in progress.</em>
+      <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
+    </small>
   </p>
 <% end -%>
 
@@ -19,9 +21,12 @@
   </p>
 </div>
 
-<% f.object.class.delivery_days.each do |day, _| %>
-  <div class="radio"><label><%= f.radio_button :delivery_day, day %> <%= day.to_s.pluralize.humanize %></label></div>
-<% end -%>
+<h5>Delivery Day</h5>
+<div class="radio-group">
+  <% f.object.class.delivery_days.each do |day, _| %>
+    <div class="radio"><label><%= f.radio_button :delivery_day, day %> <%= day.to_s.pluralize.humanize %></label></div>
+  <% end -%>
+</div>
 
 <% if delivery_zone.blank? %>
   <p>
@@ -29,53 +34,62 @@
     <small>(<%= delivery_address_formatted %> <%= link_to "change", account_address_path %>)</small>
     is not in Din’s delivery area.</p>
 <% else %>
-  <table class="table table--radio-list">
-    <tr>
-      <th class="text-nowrap"><small>Delivery Window</small></th>
-      <th><small>$5 off shipping <span style="font-weight: normal" class="text-nowrap">on orders over $60</span></small></th>
-    </tr>
+  <h5>Delivery Time</h5>
+  <div class="radio-group">
     <% delivery_zone.delivery_windows.each do |delivery_window| %>
-      <tr>
-        <td class="text-nowrap">
-          <div class="radio">
-            <label>
-              <%= f.radio_button :delivery_window_id, delivery_window.id %>
-              <%= delivery_window %>
-              <span class="label label-shipping"><%= delivery_window.display_cost %></span>
-            </label>
-          </div>
-        </td>
-        <% discounted_delivery_cost = (delivery_window.cost - 5.0)%>
-        <td><%= f.label :delivery_window_id, discounted_delivery_cost <= 0 ? 'FREE' : Spree::Money.new(discounted_delivery_cost), class: "label label-discounted-shipping", value: delivery_window.id %></td>
-      </tr>
+      <div class="radio">
+        <label>
+          <%= f.radio_button :delivery_window_id, delivery_window.id %>
+          <%= delivery_window %>
+          <% discounted_delivery_cost = (delivery_window.cost - 5.0)%>
+          <span class="label label-shipping"><%= discounted_delivery_cost <= 0 ? 'FREE' : Spree::Money.new(discounted_delivery_cost) %></span>
+        </label>
+      </div>
     <% end %>
-  </table>
+  </div>
   <% if delivery_zone.try(:name) != "San Francisco" %>
     <p><small>Additional delivery windows are available within San Francisco.</small></p>
   <% end -%>
 <% end -%>
 
 <h3>Notifications</h3>
-<p>Three days before your delivery we will send suggested meals via email to <strong class="text-nowrap"><%= spree_current_user.email %></strong>. You may additionally receive suggested meals via:</p>
-<div class="checkbox">
-  <label>
-    <%= f.check_box :notification_sms %>
-    text message to
-    <%= format_phone_number(spree_current_user.default_address.phone) %> <small>(<%= link_to "change", account_address_path %>)</small>
-  </label>
+<p>Four days before your delivery we will send your menu via:</p>
+<div class="checkbox-group">
+  <div class="checkbox">
+    <label>
+      <%= f.check_box :notification_email %>
+      <strong>text message</strong> to
+      <%= format_phone_number(spree_current_user.default_address.phone) %> <small>(<%= link_to "change", account_address_path %>)</small>
+    </label>
+  </div>
+  <div class="checkbox">
+    <label>
+      <%= f.check_box :notification_sms %>
+      <strong>email</strong> to
+      <%= spree_current_user.email %> <small>(<%= link_to "change", edit_account_path %>)</small>
+    </label>
+  </div>
 </div>
 
 <div class="form-group form-footer">
-  <%= f.submit "Save Subscription Settings", :class => 'btn btn-primary' %>
+  <%= f.submit @user.meal_subscription.new_record? ? "Create Subscription" : "Update Subscription", :class => 'btn btn-primary' %>
 </div>
+
 <script>
   $(function(){
     $("[name='meal_subscription[status]']").click(function(){
-      if ($(this).val() == "disabled") {
-        $("#disable-warning").show()
+      if ($(this).val() == "paused") {
+        $("#pause-warning").show()
       } else {
-        $("#disable-warning").hide()
+        $("#pause-warning").hide()
       }
     })
+    var $notificationTypes = $("#meal_subscription_notification_sms, #meal_subscription_notification_email")
+    $notificationTypes.change(function(){
+      if (!$(this).prop("checked")) {
+        $notificationTypes.not($(this)).prop({checked: true});
+      }
+    })
+
   })
 </script>

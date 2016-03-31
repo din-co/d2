@@ -27,7 +27,7 @@ module Spree
     end
 
     def meal_subscription_params
-      params.require(:meal_subscription).permit(:status, :delivery_day, :delivery_window_id, :meal_count, :notification_sms)
+      params.require(:meal_subscription).permit(:status, :delivery_day, :delivery_window_id, :meal_count, :notification_sms, :notification_email)
     end
 
     def delivery_zone

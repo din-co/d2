@@ -49,6 +49,10 @@ module ApplicationHelper
     number_to_phone(phone_number.gsub(/\D/, ''), delimiter: "-")
   end
 
+  def aria_label(label, suffix="-aria-label")
+    "#{label}#{suffix}"
+  end
+
   # Renders the A/B test's javascript when between options[:start] and options[:end]. If
   # either is omitted it defaults to Time.zone.now yielding an active test in production.
   # Tests are always active in pre-production environments. The helper exposes local vars
