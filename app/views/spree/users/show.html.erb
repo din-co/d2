@@ -73,7 +73,7 @@
     </p>
   </div>
 
-<% if false # hide subscription stuff for now %>
+<% if cookies[:subscription_preview].present? # hide subscription unless we tell people about it %>
   <% meal_subscription = @user.meal_subscription %>
   <div class="page-section">
     <h4>
