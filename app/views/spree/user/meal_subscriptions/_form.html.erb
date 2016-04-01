@@ -1,7 +1,7 @@
 
 <% unless @user.meal_subscription.new_record? %>
   <h5>Subscription Status</h5>
-  <% f.object.class.statuses.each do |status, _| %>
+  <% Spree::MealSubscription.statuses.each do |status, _| %>
     <div class="radio-inline"><label style="font-weight: normal"><%= f.radio_button :status, status %> <%= status.to_s.humanize %></label></div>
   <% end -%>
   <p id="pause-warning" style="display:none">
@@ -16,15 +16,42 @@
 <% delivery_address_formatted = render :partial => 'spree/shared/address', :locals => { :address => spree_current_user.default_address } %>
 <div class="form-inline">
   <p>
-    <%= f.select :meal_count, f.object.valid_meal_counts.map { |n| [pluralize(n, 'meal'), n] }, {}, class: "form-control input-sm" %>
+    <%= f.select :meal_count, f.object.valid_meal_counts.map { |n| [pluralize(n, 'meal'), n] }, {}, class: "form-control form-control--inline input-sm" %>
     to <strong><%= delivery_address_formatted %></strong> <small>(<%= link_to "change", account_address_path %>)</small> on:
   </p>
 </div>
 
 <h5>Delivery Day</h5>
 <div class="radio-group">
-  <% f.object.class.delivery_days.each do |day, _| %>
-    <div class="radio"><label><%= f.radio_button :delivery_day, day %> <%= day.to_s.pluralize.humanize %></label></div>
+  <% earliest_start_day = 7.days.from_now %>
+  <% first_start_date = true %>
+  <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
+    <div class="radio">
+      <label class="delivery-day-label">
+        <%= f.radio_button :delivery_day, day, class: "delivery-day" %>
+        <%= day.to_s.pluralize.humanize %>
+      </label>
+      <% if @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > 7.days.from_now %>
+        <div style="<%= "display: none" unless f.object.delivery_day == day %>" id="<%= "#{day}-start-dates" %>" class="start-dates"
+          ><div class="start-dates__prefix">Beginning on</div>
+          <% next_start_date = earliest_start_day.next_week(day.to_sym) %>
+          <% 3.times do |n| %>
+            <label class="start-date">
+              <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date", checked: first_start_date %>
+              <% first_start_date = false %>
+              <%= next_start_date.to_s(:ordinal_month_day) %>
+            </label>
+            <% next_start_date = next_start_date.next_week(day.to_sym) %>
+          <% end -%>
+        </div>
+      <% else -%>
+        <% if f.object.delivery_day == day %>
+          <em><%= Time.now.next_week(day.to_sym).to_s(:ordinal_month_day) %> is your next delivery.</em>
+        <% else -%>
+          <span style="display: none" id="<%= "#{day}-effective-date" %>" class="effective-date">beginning on: <%= earliest_start_day.next_week(day.to_sym).to_s(:ordinal_month_day) %></span>
+        <% end -%>
+      <% end -%>
+    </div>
   <% end -%>
 </div>
 
@@ -90,6 +117,11 @@
         $notificationTypes.not($(this)).prop({checked: true});
       }
     })
-
+    $(".delivery-day").click(function(){
+      var day = $(this).val();
+      $(".start-dates, .effective-date").hide();
+      $("#" + day + "-start-dates, #" + day + "-effective-date").show();
+      $("." + day + "-start-date").first().prop({checked: true});
+    })
   })
 </script>
