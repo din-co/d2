@@ -38,7 +38,7 @@ module Spree
 
     def vegetarian_and_no_soy
       if allergen_soybeans && (diet_tofu)
-        errors.add(:base, "If you don’t eat soybeans, then you probably shouldn’t select tofu or tempeh.")
+        errors.add(:base, "If you don’t eat soybeans, then you probably shouldn’t select tofu.")
       end
     end
 
