@@ -1,0 +1,42 @@
+
+.delivery-day-label
+  @media (max-width: 768px)
+    display: block
+
+.start-dates
+  display: inline-block
+  margin-left: 20px
+  background: $din-color-tan
+  border-radius: 5px
+  padding: 4px 8px
+  @media (min-width: 768px)
+    display: inline
+    margin-left: 5px
+    padding: 7px 9px
+
+.start-dates__prefix
+  font-size: 14px
+  font-weight: 600
+  line-height: 1.1
+  @media (min-width: 768px)
+    display: inline
+    font-weight: normal
+    text-transform: lowercase
+  &:after
+    @media (min-width: 768px)
+      content: ":"
+
+.start-date
+  display: block
+  white-space: nowrap
+  @media (min-width: 768px)
+    display: inline
+    margin-left: 7px
+  input[type="radio"],
+  input[type="checkbox"]
+    margin-left: -19px
+
+.effective-date
+  background: $din-color-tan
+  border-radius: 5px
+  padding: 7px 9px

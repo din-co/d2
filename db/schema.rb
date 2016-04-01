@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329000951) do
+ActiveRecord::Schema.define(version: 20160401182840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -295,13 +295,14 @@ ActiveRecord::Schema.define(version: 20160329000951) do
   create_table "spree_meal_subscriptions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "status",             default: 0,    null: false
-    t.integer  "delivery_day",       default: 0,    null: false
+    t.integer  "delivery_day",       default: 1,    null: false
     t.integer  "delivery_window_id",                null: false
     t.integer  "meal_count",         default: 2,    null: false
     t.boolean  "notification_sms",   default: true, null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.boolean  "notification_email", default: true, null: false
+    t.datetime "start_date"
   end
 
   add_index "spree_meal_subscriptions", ["delivery_window_id"], name: "index_spree_meal_subscriptions_on_delivery_window_id", using: :btree
