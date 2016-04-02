@@ -6,16 +6,24 @@ module Spree
     validate :so_long_thanks_for_all_the_fish
     validate :seafood_and_shellfish
 
+    def self.diets
+      attribute_names.select { |name| name.start_with?("diet_") }
+    end
+
     def self.diet_names
-      attribute_names.select { |name| name.start_with?("diet_") }.map { |attr_name| diet_name(attr_name) }
+      diets.map { |attr_name| diet_name(attr_name) }
     end
 
     def self.diet_name(diet)
       diet.to_s.sub(/^diet_/, '')
     end
 
+    def self.allergens
+      attribute_names.select { |name| name.start_with?("allergen_") }
+    end
+
     def self.allergen_names
-      attribute_names.select { |name| name.start_with?("allergen_") }.map { |attr_name| allergen_name(attr_name) }
+      allergens.map { |attr_name| allergen_name(attr_name) }
     end
 
     def self.allergen_name(allergen)
