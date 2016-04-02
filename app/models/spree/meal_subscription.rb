@@ -18,6 +18,14 @@ module Spree
       self.class.valid_meal_counts
     end
 
+    def self.notification_lead_time_days
+      7
+    end
+
+    def self.order_lead_time_days
+      5
+    end
+
     def valid_notifications
       unless notification_sms || notification_email
         errors.add(:base, "You must select at least one notification method.")
