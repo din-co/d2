@@ -38,6 +38,11 @@
     <%= yield :subscription_details %>
   <% else -%>
     <p>Learn about <a href="#how-it-works">how subscription works</a>.</p>
+    <p class="callout">
+      <strong>Note:</strong>
+      <em>Updating your subscription settings does not affect subscription orders which are in progress.</em>
+      <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
+    </p>
   <% end -%>
 
   <%= form_for @meal_subscription, url: account_meal_subscription_path, method: :post, html: {id: "edit", class: "page-anchor"} do |f| %>
