@@ -27,7 +27,7 @@
   <% first_start_date = true %>
   <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
     <div class="radio">
-      <label class="delivery-day-label">
+      <label class="<%= "delivery-day-label" if new_or_nonstarted_subscription %>">
         <%= f.radio_button :delivery_day, day, class: "delivery-day" %>
         <%= day.to_s.pluralize.humanize %>
       </label>
