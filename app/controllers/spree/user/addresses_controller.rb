@@ -24,6 +24,12 @@ module Spree
 
       @address = spree_current_user.save_in_address_book(@address.attributes, true)
       if @address.persisted?
+        if delivery_window = @user.meal_subscription.try(:delivery_window)
+          zone = Spree::Zone.match(@address)
+          unless zone.delivery_windows.where(id: delivery_window.id).exists?
+            @user.meal_subscription.update_attributes(delivery_window: zone.delivery_windows.first)
+          end
+        end
         flash[:success] = "Delivery address updated."
         redirect_to(session.delete(:return_to) || spree.account_path)
       else
