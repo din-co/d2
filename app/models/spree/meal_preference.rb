@@ -40,6 +40,10 @@ module Spree
       diets.map { |d| diet_name(d) }
     end
 
+    def display_diet_names
+      (diet_names << "vegetables").to_sentence
+    end
+
     def diet_count
       diets.size
     end
