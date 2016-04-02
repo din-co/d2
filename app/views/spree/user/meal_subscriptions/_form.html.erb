@@ -16,9 +16,9 @@
 
 <h5>Delivery Day</h5>
 <div class="radio-group">
-  <% earliest_start_day = 7.days.from_now %>
-  <% first_checked = true %>
-  <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > 7.days.from_now %>
+  <% lead_time = Spree::MealSubscription.notification_lead_time_days.days.from_now %>
+  <% earliest_start_day = lead_time %>
+  <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > lead_time %>
   <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
     <div class="radio">
       <label class="<%= "delivery-day-label" if new_or_nonstarted_subscription %>">
@@ -31,9 +31,8 @@
           <% next_start_date = earliest_start_day.next_week(day.to_sym) %>
           <% 3.times do |n| %>
             <label class="start-date">
-              <% if @user.meal_subscription.start_date.blank? %>
-                <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date", checked: first_checked %>
-                <% first_checked = false %>
+              <% if n == 0 && day == Spree::MealSubscription.delivery_days.first.first %>
+                <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date", checked: true %>
               <% else -%>
                 <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date" %>
               <% end -%>
@@ -43,9 +42,7 @@
           <% end -%>
         </div>
       <% else -%>
-        <% if f.object.delivery_day == day %>
-          <em><%= Time.now.next_week(day.to_sym).to_s(:ordinal_month_day) %> is your next delivery.</em>
-        <% else -%>
+        <% unless f.object.delivery_day == day %>
           <span style="display: none" id="<%= "#{day}-effective-date" %>" class="effective-date">beginning on: <%= earliest_start_day.next_week(day.to_sym).to_s(:ordinal_month_day) %></span>
         <% end -%>
       <% end -%>
@@ -78,7 +75,7 @@
 <% end -%>
 
 <h3>Notifications</h3>
-<p>Four days before your delivery we will send your menu via:</p>
+<p>We will send your menu <%= Spree::MealSubscription.notification_lead_time_days %> days before delivery via:</p>
 <div class="checkbox-group">
   <div class="checkbox">
     <label>
