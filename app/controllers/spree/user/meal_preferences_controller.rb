@@ -7,6 +7,7 @@ module Spree
 
     def create
       if @meal_preference.update_attributes(meal_preference_params)
+        UserAccountMailer.meal_preferences_changed_email(@meal_preference).deliver_later
         redirect_to spree.account_path
       else
         flash.now[:error] = @meal_preference.errors.full_messages.join(" ")
