@@ -4,13 +4,17 @@ require 'rails_helper'
 #   of testing concerns
 
 RSpec.shared_examples_for "spree address concerns" do
+  before :all do
+    require Rails.root.join('db/seeds')
+  end
+
   # the class that includes the concern
   let(:model)   { described_class }
   let(:address) { FactoryGirl.build(:ship_address, zipcode: "94110", postal_code: nil) }
 
   describe 'factory' do
     let(:address) { FactoryGirl.build(:address) }
-    it 'does something' do
+    it 'builds a valid address, including state and postal code' do
       expect(address).to be_valid
       expect(address.postal_code).to be_present, address.inspect
       expect(address.state).to be_present, address.inspect
