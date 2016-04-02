@@ -6,15 +6,19 @@ module Spree
     validate :so_long_thanks_for_all_the_fish
     validate :seafood_and_shellfish
 
-    def allergen_none
-      self.class.allergens.none? { |allergen| send(allergen) }
+    def self.diet_names
+      attribute_names.select { |name| name.start_with?("diet_") }.map { |attr_name| diet_name(attr_name) }
     end
 
-    def diet_name(diet)
+    def self.diet_name(diet)
       diet.to_s.sub(/^diet_/, '')
     end
 
-    def allergen_name(allergen)
+    def self.allergen_names
+      attribute_names.select { |name| name.start_with?("allergen_") }.map { |attr_name| allergen_name(attr_name) }
+    end
+
+    def self.allergen_name(allergen)
       allergen = allergen.to_s
       case allergen
       when "allergen_wheat_gluten"
@@ -26,12 +30,45 @@ module Spree
       end
     end
 
-    def self.diets
-      attribute_names.select { |name| name.start_with?("diet_") }.map(&:to_sym)
+    delegate :diet_name, :allergen_name, to: :class
+
+    def diets
+      attributes.select { |name, value| value && name.start_with?("diet_") }.keys
     end
 
-    def self.allergens
-      attribute_names.select { |name| name.start_with?("allergen_") }.map(&:to_sym)
+    def diet_names
+      diets.map { |d| diet_name(d) }
+    end
+
+    def diet_count
+      diets.size
+    end
+
+    def allergens
+      attributes.select { |name, value| value && name.start_with?("allergen_") }.keys
+    end
+
+    def allergen_names
+      allergens.map { |d| allergen_name(d) }
+    end
+
+    def allergen_count
+      allergens.size
+    end
+
+    def allergen_none
+      allergens.blank?
+    end
+
+    # Determines if a meal preference permits a meal to be included as a selection.
+    def allowed?(meal)
+      conflicting_allergens = meal.contains_allergens(allergen_names)
+      return false if conflicting_allergens.present?
+
+      proteins_present = meal.proteins.pluck(:name)
+      conflicting_proteins = proteins_present - diet_names
+
+      conflicting_proteins.blank?
     end
 
   private

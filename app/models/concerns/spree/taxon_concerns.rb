@@ -10,6 +10,7 @@ module Spree
       scope :chefs,       -> { non_root.where(taxonomy: Spree::Taxonomy.chef) }
       scope :diets,       -> { non_root.where(taxonomy: Spree::Taxonomy.diets) }
       scope :allergens,   -> { non_root.where(taxonomy: Spree::Taxonomy.allergens) }
+      scope :proteins,    -> { non_root.where(taxonomy: Spree::Taxonomy.proteins) }
       scope :pantry,      -> { non_root.where(taxonomy: Spree::Taxonomy.pantry) }
       scope :equipment,   -> { non_root.where(taxonomy: Spree::Taxonomy.equipment) }
       scope :pages,       -> { non_root.where(taxonomy: Spree::Taxonomy.pages) }
