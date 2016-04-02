@@ -16,15 +16,17 @@
 
 <h5>Delivery Day</h5>
 <div class="radio-group">
-  <% earliest_start_day = 7.days.from_now %>
+  <% lead_time = Spree::MealSubscription.notification_lead_time_days.days.from_now %>
+  <% earliest_start_day = lead_time %>
   <% first_start_date = true %>
+  <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > lead_time %>
   <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
     <div class="radio">
-      <label class="delivery-day-label">
+      <label class="<% "delivery-day-label" if new_or_nonstarted_subscription %>">
         <%= f.radio_button :delivery_day, day, class: "delivery-day" %>
         <%= day.to_s.pluralize.humanize %>
       </label>
-      <% if @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > 7.days.from_now %>
+      <% if new_or_nonstarted_subscription %>
         <div style="<%= "display: none" unless f.object.delivery_day == day %>" id="<%= "#{day}-start-dates" %>" class="start-dates"
           ><div class="start-dates__prefix">Beginning on</div>
           <% next_start_date = earliest_start_day.next_week(day.to_sym) %>
@@ -38,9 +40,7 @@
           <% end -%>
         </div>
       <% else -%>
-        <% if f.object.delivery_day == day %>
-          <em><%= Time.now.next_week(day.to_sym).to_s(:ordinal_month_day) %> is your next delivery.</em>
-        <% else -%>
+        <% unless f.object.delivery_day == day %>
           <span style="display: none" id="<%= "#{day}-effective-date" %>" class="effective-date">beginning on: <%= earliest_start_day.next_week(day.to_sym).to_s(:ordinal_month_day) %></span>
         <% end -%>
       <% end -%>
@@ -73,7 +73,7 @@
 <% end -%>
 
 <h3>Notifications</h3>
-<p>Four days before your delivery we will send your menu via:</p>
+<p>We will send your menu <%= Spree::MealSubscription.notification_lead_time_days %> days before delivery via:</p>
 <div class="checkbox-group">
   <div class="checkbox">
     <label>

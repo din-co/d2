@@ -81,19 +81,22 @@
     </h4>
     <p>
       <% if meal_subscription %>
-        <% if meal_subscription.status == "disabled" %>
-          Subscription is disabled.
+        <% if meal_subscription.status == "paused" %>
+          Subscription is paused.
         <% else -%>
           <%
             notification = []
-            notification.push(@user.email) if meal_subscription.notification_sms
-            notification.push("<span class=\"text-nowrap\">#{format_phone_number(delivery_address.phone)}</span>") if meal_subscription.notification_email
+            notification.push("via text message to <span class=\"text-nowrap\">#{format_phone_number(delivery_address.phone)}</span>") if meal_subscription.notification_sms
+            notification.push("via email to #{@user.email}") if meal_subscription.notification_email
           %>
-          <%= meal_subscription.meal_count %> meals, delivered on
-          <%= meal_subscription.delivery_day.titleize.pluralize %>
-          between <%= meal_subscription.delivery_window %>.
+          <strong>
+            <%= meal_subscription.meal_count %> meals delivered each
+            <%= meal_subscription.delivery_day.titleize %>
+            between <%= meal_subscription.delivery_window %>
+          </strong>
           <br>
-          On [insert day here] your menu will be sent to <%= notification.to_sentence.html_safe %>.
+          Each week, <%= Spree::MealSubscription.notification_lead_time_days %> days before your scheduled delivery, we’ll send you a new menu <%= notification.to_sentence.html_safe %>.
+          You’ll have <%= Spree::MealSubscription.notification_lead_time_days - Spree::MealSubscription.order_lead_time_days %> days to change meals or cancel your delivery.
         <% end -%>
         <br>
         <%= link_to "edit", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
