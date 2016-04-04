@@ -12,6 +12,12 @@ module Spree
       mail(to: @meal_preference.user.email, from: from_address(@store), subject: subject)
     end
 
+    def delivery_address_changed_email(address)
+      @address = address
+      subject = build_subject("Delivery Address Updated")
+      mail(to: @address.user.email, from: from_address(@store), subject: subject)
+    end
+
     private
 
       def build_subject(subject)
