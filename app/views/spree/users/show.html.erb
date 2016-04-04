@@ -96,7 +96,7 @@
         <% if meal_preference && delivery_address && credit_card %>
           Become a Din subscriber.
           <br>
-          <%= link_to "setup a subscription", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
+          <%= link_to "create a subscription", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
         <% else
           todo = []
           todo.push(link_to "add meal preferences", account_meal_preference_path) unless meal_preference

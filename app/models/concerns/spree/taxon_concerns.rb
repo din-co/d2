@@ -20,6 +20,9 @@ module Spree
       def homepage
         pages.find_by!(name: "Home")
       end
+      def subscription_menu
+        pages.find_by!(name: "Subscription Menu")
+      end
     end
   end
 end

@@ -3,14 +3,23 @@ module Spree
     extend ActiveSupport::Concern
 
     included do
+      include ControllerHelpers::UserAuth
       prepend(InstanceMethods)
-      helper_method :cache_key_for_products
 
+      helper_method :cache_key_for_products
       before_filter :sort_by_taxon, only: :index
+      before_action :authorize_user, only: :subscription_menu
     end
 
     module InstanceMethods
-      private
+
+      def subscription_menu
+        params[:taxon] = Spree::Taxon.subscription_menu.id
+        @searcher = build_searcher(params.merge(include_images: true))
+        @products = @searcher.retrieve_products
+      end
+
+    private
 
       # @return [String] a cache invalidation key for products (overrides Spree::ProductHelper#cache_key_for_products)
       def cache_key_for_products
