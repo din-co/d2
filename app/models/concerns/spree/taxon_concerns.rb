@@ -18,7 +18,7 @@ module Spree
 
     class_methods do
       def homepage
-        pages.find_by(name: "Home")
+        pages.find_by!(name: "Home")
       end
     end
   end
