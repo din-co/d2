@@ -12,10 +12,18 @@ module Spree
     validate :valid_notifications
 
     enum status: [:active, :paused]
-    enum delivery_day: [:monday, :tuesday, :wednesday]
+    enum delivery_day: {monday: 1, tuesday: 2, wednesday: 3}
 
     def valid_meal_counts
       self.class.valid_meal_counts
+    end
+
+    def self.notification_lead_time_days
+      7
+    end
+
+    def self.order_lead_time_days
+      5
     end
 
     def valid_notifications
