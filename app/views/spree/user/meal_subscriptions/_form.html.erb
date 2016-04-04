@@ -30,7 +30,7 @@
           <% next_start_date = earliest_start_day.next_week(day.to_sym) %>
           <% 3.times do |n| %>
             <label class="start-date">
-              <% if n == 0 && day == Spree::MealSubscription.delivery_days.first.first %>
+              <% if n == 0 && day == Spree::MealSubscription.delivery_days.first.first && @user.meal_subscription.start_date.blank? %>
                 <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date", checked: true %>
               <% else -%>
                 <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date" %>
