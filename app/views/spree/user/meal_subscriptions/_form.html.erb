@@ -25,13 +25,14 @@
 <div class="radio-group">
   <% earliest_start_day = 7.days.from_now %>
   <% first_start_date = true %>
+  <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > 7.days.from_now %>
   <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
     <div class="radio">
       <label class="<%= "delivery-day-label" if new_or_nonstarted_subscription %>">
         <%= f.radio_button :delivery_day, day, class: "delivery-day" %>
         <%= day.to_s.pluralize.humanize %>
       </label>
-      <% if @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > 7.days.from_now %>
+      <% if new_or_nonstarted_subscription %>
         <div style="<%= "display: none" unless f.object.delivery_day == day %>" id="<%= "#{day}-start-dates" %>" class="start-dates"
           ><div class="start-dates__prefix">Beginning on</div>
           <% next_start_date = earliest_start_day.next_week(day.to_sym) %>
