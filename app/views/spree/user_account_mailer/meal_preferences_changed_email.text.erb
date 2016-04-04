@@ -1,12 +1,12 @@
-  Meal Preferences Updated
+Meal Preferences Updated
 
-  This email confirms your new meal preferences. Thanks for telling us what you like to eat.
+This email confirms your new meal preferences. Thanks for telling us what you like to eat.
 
-  Your diet includes <%= @meal_preference.display_diet_names %>.
-  <% if allergen_names = @meal_preference.allergen_names.presence %>
-  You are allergic to <%= allergen_names.to_sentence %>.
-  <% end -%>
+Your diet includes <%= @meal_preference.display_diet_names %>.
+<% if allergen_names = @meal_preference.allergen_names.presence %>
+You are allergic to <%= allergen_names.to_sentence %>.
+<% end -%>
 
 
-  To make any further changes, visit your account page:
-  <%= spree.account_url %>
+To make any further changes, visit your account page:
+<%= spree.account_url %>
