@@ -1,4 +1,4 @@
-<% unless @user.meal_subscription.new_record? %>
+<% unless meal_subscription.new_record? %>
   <h5>Subscription Status</h5>
   <% Spree::MealSubscription.statuses.each do |status, _| %>
     <div class="radio-inline"><label style="font-weight: normal"><%= f.radio_button :status, status %> <%= status.to_s.humanize %></label></div>
@@ -17,7 +17,7 @@
 <h5>Delivery Day</h5>
 <div class="radio-group">
   <% earliest_start_day = Spree::MealSubscription.notification_lead_time_days.days.from_now %>
-  <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > earliest_start_day %>
+  <% new_or_nonstarted_subscription = meal_subscription.start_date.blank? || meal_subscription.start_date > earliest_start_day %>
   <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
     <div class="radio">
       <label class="<%= "delivery-day-label" if new_or_nonstarted_subscription %>">
@@ -30,7 +30,7 @@
           <% next_start_date = earliest_start_day.next_week(day.to_sym) %>
           <% 3.times do |n| %>
             <label class="start-date">
-              <% if n == 0 && day == Spree::MealSubscription.delivery_days.first.first && @user.meal_subscription.start_date.blank? %>
+              <% if meal_subscription.new_record? && n == 0 && day == Spree::MealSubscription.delivery_days.first.first %>
                 <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date", checked: true %>
               <% else -%>
                 <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date" %>
@@ -93,7 +93,7 @@
 </div>
 
 <div class="form-group form-footer">
-  <%= f.submit @user.meal_subscription.new_record? ? "Create Subscription" : "Update Subscription", :class => 'btn btn-primary' %>
+  <%= f.submit meal_subscription.new_record? ? "Create Subscription" : "Update Subscription", :class => 'btn btn-primary' %>
 </div>
 
 <script>

@@ -36,7 +36,7 @@
     </p>
   <% end -%>
 
-  <% if @user.meal_subscription.new_record? %>
+  <% if @meal_subscription.new_record? %>
     <%= yield :subscription_details %>
   <% else -%>
     <p>Learn about <a href="#how-it-works">how subscription works</a>.</p>
@@ -48,10 +48,10 @@
   <% end -%>
 
   <%= form_for @meal_subscription, url: account_meal_subscription_path, method: :post, html: {id: "edit", class: "page-anchor"} do |f| %>
-    <%= render partial: 'form', locals: {f: f} %>
+    <%= render partial: 'form', locals: {f: f, meal_subscription: @meal_subscription} %>
   <% end %>
 
-  <% if !@user.meal_subscription.new_record? %>
+  <% if !@meal_subscription.new_record? %>
     <div id="how-it-works" class="how-subscription-works">
       <h2>How Subscription Works</h2>
       <%= yield :subscription_details %>
