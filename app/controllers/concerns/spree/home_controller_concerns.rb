@@ -7,6 +7,7 @@ module Spree
       prepend(InstanceMethods)
 
       helper_method :cache_key_for_products
+      helper_method :cache_key_for_subscription_products
       before_filter :sort_by_taxon, only: :index
       before_action :authorize_user, only: :subscription_menu
     end
@@ -26,6 +27,10 @@ module Spree
         count = @products.count
         max_updated_at = (@products.maximum(:updated_at) || Date.today).to_s(:number)
         "#{I18n.locale}/#{current_currency}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}-#{KITCHEN.status}"
+      end
+
+      def cache_key_for_subscription_products
+        "#{cache_key_for_products}-subscription"
       end
 
       def sort_by_taxon

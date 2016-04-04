@@ -17,7 +17,7 @@
       <% end -%>
     </p>
   </div>
-  <% cache(cache_key_for_products) do %>
+  <% cache(cache_key_for_subscription_products) do %>
     <%= render partial: 'spree/shared/products', locals: { products: @products, subscription_menu: true } %>
   <% end %>
 </div>
