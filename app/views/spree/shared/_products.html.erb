@@ -41,7 +41,8 @@
           </span>
 
           <% if subscription_menu %>
-            <p class="text-center"><em><%= support_email_link("Update subscription meals", "Contact support") %> to change your subscription meals.</em></p>
+            <p class="text-center"><%= link_to "View Recipe", spree.product_path(product, taxon_id: @taxon.try(:id)), class: "btn btn-primary"%></p>
+            <p class="text-center"><em> To change your subscription meals, <%= support_email_link("Update subscription meals", "contact support") %>.</em></p>
           <% else -%>
             <%= render partial: 'spree/shared/order_form', locals: { product: product, button_type: "product-list" } %>
           <% end -%>
