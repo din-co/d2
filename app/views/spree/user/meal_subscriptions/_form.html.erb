@@ -16,9 +16,8 @@
 
 <h5>Delivery Day</h5>
 <div class="radio-group">
-  <% lead_time = Spree::MealSubscription.notification_lead_time_days.days.from_now %>
-  <% earliest_start_day = lead_time %>
-  <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > lead_time %>
+  <% earliest_start_day = Spree::MealSubscription.notification_lead_time_days.days.from_now %>
+  <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > earliest_start_day %>
   <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
     <div class="radio">
       <label class="<%= "delivery-day-label" if new_or_nonstarted_subscription %>">
