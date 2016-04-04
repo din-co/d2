@@ -78,17 +78,20 @@
         <% else -%>
           <%
             notification = []
-            notification.push("via text message to <span class=\"text-nowrap\">#{format_phone_number(delivery_address.phone)}</span>") if meal_subscription.notification_sms
-            notification.push("via email to #{@user.email}") if meal_subscription.notification_email
+            notification.push("text message") if meal_subscription.notification_sms
+            notification.push("email") if meal_subscription.notification_email
+            order_open_days = Spree::MealSubscription.notification_lead_time_days - Spree::MealSubscription.order_lead_time_days
+            notification_sent_weekday = meal_subscription.delivery_day.titleize
+            order_submitted_weekday = Time.now.next_week(meal_subscription.delivery_day.to_sym).advance(days: order_open_days).strftime("%A")
           %>
           <strong>
-            <%= meal_subscription.meal_count %> meals delivered each
-            <%= meal_subscription.delivery_day.titleize %>
-            between <%= meal_subscription.delivery_window %>
+            Each <%= meal_subscription.delivery_day.titleize %>
+            we’ll deliver <%= meal_subscription.meal_count %> meals
+            between <%= meal_subscription.delivery_window %>.
           </strong>
           <br>
-          Each week, <%= Spree::MealSubscription.notification_lead_time_days %> days before your scheduled delivery, we’ll send you a new menu <%= notification.to_sentence.html_safe %>.
-          You’ll have <%= Spree::MealSubscription.notification_lead_time_days - Spree::MealSubscription.order_lead_time_days %> days to change meals or cancel your delivery.
+          <%= notification_sent_weekday %> evenings at 8pm we’ll suggest <%= meal_subscription.meal_count %> meals from next week’s menu to you via <%= notification.to_sentence.html_safe %>.
+          You’ll have <%= order_open_days %> days to change meals or cancel your delivery; each <%= order_submitted_weekday %> at 10pm we’ll process your subscription order.
         <% end -%>
         <br>
         <%= link_to "edit", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
