@@ -7,23 +7,25 @@
       You <%= link_to "tell us what you like to eat", account_meal_preference_path %>,
       choose the number of two-serving meals you want each week,
       and when you want your meals delivered.
-      You may pause or cancel your subscription at any time.
+      You may pause your subscription at any time.
     </p>
 
     <h4>2. We create your personalized menu.</h4>
     <p>
       <%# Your menu is inspired by seasonal ingredients, partner restaurants, and their talented chefs. %>
-      We choose seasonal restaurant dishes that match what you like.
-      Meal prices are set by restaurants and vary, but average $16/serving.
-      Delivery is free, there’s no additional cost to subscribe.
+      You get first access to new dishes and restaurants on the Din menu.
+      We choose seasonal restaurant dishes matching what you like to eat.
+
+      Meal prices are set by restaurants and vary, but average $16 per serving.
+      Subscribing is free. Delivery fees vary by location.
     </p>
 
     <h4>3. You review your menu.</h4>
     <p>
-      You’ll receive your menu 4 days before your delivery via text and/or email.
-      If the menu looks good, your work is done.
+      We send your menu to you <%= Spree::MealSubscription.notification_lead_time_days %> days before your delivery.
+      If you like the menu, your work is done.
       Want to change your menu?
-      You may select any meals from our weekly menu or cancel a delivery up to 48 hours before your delivery.
+      You have <%= Spree::MealSubscription.notification_lead_time_days - Spree::MealSubscription.order_lead_time_days %> days to select different meals from Din’s full menu for the week, or cancel a delivery.
     </p>
 
     <h4>4. Restaurants prep & pack. We deliver.</h4>
@@ -38,6 +40,11 @@
     <%= yield :subscription_details %>
   <% else -%>
     <p>Learn about <a href="#how-it-works">how subscription works</a>.</p>
+    <p class="callout">
+      <strong>Note:</strong>
+      <em>Updating your subscription settings does not affect subscription orders which are in progress.</em>
+      <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
+    </p>
   <% end -%>
 
   <%= form_for @meal_subscription, url: account_meal_subscription_path, method: :post, html: {id: "edit", class: "page-anchor"} do |f| %>

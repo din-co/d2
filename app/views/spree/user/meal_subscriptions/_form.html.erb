@@ -1,30 +1,50 @@
-
 <% unless @user.meal_subscription.new_record? %>
   <h5>Subscription Status</h5>
-  <% f.object.class.statuses.each do |status, _| %>
+  <% Spree::MealSubscription.statuses.each do |status, _| %>
     <div class="radio-inline"><label style="font-weight: normal"><%= f.radio_button :status, status %> <%= status.to_s.humanize %></label></div>
   <% end -%>
-  <p id="pause-warning" style="display:none">
-    <small>
-      <em>Updates to subscription settings do not affect subscription orders which are in progress.</em>
-      <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
-    </small>
-  </p>
 <% end -%>
 
 <h3>Your Delivery</h3>
 <% delivery_address_formatted = render :partial => 'spree/shared/address', :locals => { :address => spree_current_user.default_address } %>
 <div class="form-inline">
   <p>
-    <%= f.select :meal_count, f.object.valid_meal_counts.map { |n| [pluralize(n, 'meal'), n] }, {}, class: "form-control input-sm" %>
+    <%= f.select :meal_count, f.object.valid_meal_counts.map { |n| [pluralize(n, 'meal'), n] }, {}, class: "form-control form-control--inline input-sm" %>
     to <strong><%= delivery_address_formatted %></strong> <small>(<%= link_to "change", account_address_path %>)</small> on:
   </p>
 </div>
 
 <h5>Delivery Day</h5>
 <div class="radio-group">
-  <% f.object.class.delivery_days.each do |day, _| %>
-    <div class="radio"><label><%= f.radio_button :delivery_day, day %> <%= day.to_s.pluralize.humanize %></label></div>
+  <% lead_time = Spree::MealSubscription.notification_lead_time_days.days.from_now %>
+  <% earliest_start_day = lead_time %>
+  <% first_start_date = true %>
+  <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > lead_time %>
+  <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
+    <div class="radio">
+      <label class="<% "delivery-day-label" if new_or_nonstarted_subscription %>">
+        <%= f.radio_button :delivery_day, day, class: "delivery-day" %>
+        <%= day.to_s.pluralize.humanize %>
+      </label>
+      <% if new_or_nonstarted_subscription %>
+        <div style="<%= "display: none" unless f.object.delivery_day == day %>" id="<%= "#{day}-start-dates" %>" class="start-dates"
+          ><div class="start-dates__prefix">Beginning on</div>
+          <% next_start_date = earliest_start_day.next_week(day.to_sym) %>
+          <% 3.times do |n| %>
+            <label class="start-date">
+              <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date", checked: first_start_date %>
+              <% first_start_date = false %>
+              <%= next_start_date.to_s(:ordinal_month_day) %>
+            </label>
+            <% next_start_date = next_start_date.next_week(day.to_sym) %>
+          <% end -%>
+        </div>
+      <% else -%>
+        <% unless f.object.delivery_day == day %>
+          <span style="display: none" id="<%= "#{day}-effective-date" %>" class="effective-date">beginning on: <%= earliest_start_day.next_week(day.to_sym).to_s(:ordinal_month_day) %></span>
+        <% end -%>
+      <% end -%>
+    </div>
   <% end -%>
 </div>
 
@@ -53,7 +73,7 @@
 <% end -%>
 
 <h3>Notifications</h3>
-<p>Four days before your delivery we will send your menu via:</p>
+<p>We will send your menu <%= Spree::MealSubscription.notification_lead_time_days %> days before delivery via:</p>
 <div class="checkbox-group">
   <div class="checkbox">
     <label>
@@ -77,19 +97,17 @@
 
 <script>
   $(function(){
-    $("[name='meal_subscription[status]']").click(function(){
-      if ($(this).val() == "paused") {
-        $("#pause-warning").show()
-      } else {
-        $("#pause-warning").hide()
-      }
-    })
     var $notificationTypes = $("#meal_subscription_notification_sms, #meal_subscription_notification_email")
     $notificationTypes.change(function(){
       if (!$(this).prop("checked")) {
         $notificationTypes.not($(this)).prop({checked: true});
       }
     })
-
+    $(".delivery-day").click(function(){
+      var day = $(this).val();
+      $(".start-dates, .effective-date").hide();
+      $("#" + day + "-start-dates, #" + day + "-effective-date").show();
+      $("." + day + "-start-date").first().prop({checked: true});
+    })
   })
 </script>
