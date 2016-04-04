@@ -17,6 +17,7 @@
       <% end -%>
     </p>
   </div>
+  <% puts "view.cache_key_for_subscription_products: #{cache_key_for_subscription_products}" %>
   <% cache(cache_key_for_subscription_products) do %>
     <%= render partial: 'spree/shared/products', locals: { products: @products, subscription_menu: true } %>
   <% end %>

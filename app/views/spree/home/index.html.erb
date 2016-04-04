@@ -52,6 +52,7 @@
       </div>
     <% end -%>
   </div>
+  <% puts "view.cache_key_for_products: #{cache_key_for_products}" %>
   <% cache(cache_key_for_products) do %>
     <%= render :partial => 'spree/shared/products', :locals => { :products => @products } %>
   <% end %>
