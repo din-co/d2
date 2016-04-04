@@ -24,7 +24,7 @@
 <h5>Delivery Day</h5>
 <div class="radio-group">
   <% earliest_start_day = 7.days.from_now %>
-  <% first_start_date = true %>
+  <% first_checked = true %>
   <% new_or_nonstarted_subscription = @user.meal_subscription.start_date.blank? || @user.meal_subscription.start_date > 7.days.from_now %>
   <% Spree::MealSubscription.delivery_days.each do |day, wday| %>
     <div class="radio">
@@ -38,8 +38,12 @@
           <% next_start_date = earliest_start_day.next_week(day.to_sym) %>
           <% 3.times do |n| %>
             <label class="start-date">
-              <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date", checked: first_start_date %>
-              <% first_start_date = false %>
+              <% if @user.meal_subscription.start_date.blank? %>
+                <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date", checked: first_checked %>
+                <% first_checked = false %>
+              <% else -%>
+                <%= f.radio_button :start_date, next_start_date, class: "#{day}-start-date" %>
+              <% end -%>
               <%= next_start_date.to_s(:ordinal_month_day) %>
             </label>
             <% next_start_date = next_start_date.next_week(day.to_sym) %>
