@@ -18,7 +18,10 @@ module Spree
 
     class_methods do
       def homepage
-        pages.find_by(name: "Home")
+        pages.find_by!(name: "Home")
+      end
+      def subscription_menu
+        pages.find_by!(name: "Subscription Menu")
       end
     end
   end

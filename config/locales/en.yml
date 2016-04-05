@@ -37,6 +37,8 @@ en:
     add_dish: "Add to Cart"
     two_servings: "Serves 2"
     next_available: Available on %{date}
+    subscription_summary: "Each %{day} we’ll deliver %{meal_count} meals between %{delivery_window}."
+    subscription_notification_summary: "%{notification_weekday} evenings at 8pm we’ll suggest %{meal_count} meals from next week’s menu to you via %{notification_channels}. You’ll have %{open_days} days to change meals or cancel your delivery; each %{order_processed_weekday} at 10pm we’ll process your subscription order."
     not_currently_available: "Not currently available to order"
     forgot: "Forgot?"
     account_settings: "Account Settings"

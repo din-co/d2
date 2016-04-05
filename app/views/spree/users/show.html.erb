@@ -66,29 +66,20 @@
   </div>
 
 <% if cookies[:subscription_preview].present? # hide subscription unless we tell people about it %>
-  <% meal_subscription = @user.meal_subscription %>
   <div class="page-section">
     <h4>
       Subscription
     </h4>
     <p>
-      <% if meal_subscription %>
-        <% if meal_subscription.status == "paused" %>
+      <% if sub = @user.meal_subscription %>
+        <% if sub.status == "paused" %>
           Subscription is paused.
         <% else -%>
-          <%
-            notification = []
-            notification.push("via text message to <span class=\"text-nowrap\">#{format_phone_number(delivery_address.phone)}</span>") if meal_subscription.notification_sms
-            notification.push("via email to #{@user.email}") if meal_subscription.notification_email
-          %>
           <strong>
-            <%= meal_subscription.meal_count %> meals delivered each
-            <%= meal_subscription.delivery_day.titleize %>
-            between <%= meal_subscription.delivery_window %>
+            <%= Spree.t(:subscription_summary, day: sub.delivery_day.titleize, meal_count: sub.meal_count, delivery_window: sub.delivery_window) %>
           </strong>
           <br>
-          Each week, <%= Spree::MealSubscription.notification_lead_time_days %> days before your scheduled delivery, we’ll send you a new menu <%= notification.to_sentence.html_safe %>.
-          You’ll have <%= Spree::MealSubscription.notification_lead_time_days - Spree::MealSubscription.order_lead_time_days %> days to change meals or cancel your delivery.
+          <%= Spree.t(:subscription_notification_summary, notification_weekday: sub.delivery_day.titleize, meal_count: sub.meal_count, notification_channels: sub.notification_channels.to_sentence, open_days: Spree::MealSubscription.order_open_days, order_processed_weekday: sub.order_processed_weekday) %>
         <% end -%>
         <br>
         <%= link_to "edit", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
@@ -96,7 +87,7 @@
         <% if meal_preference && delivery_address && credit_card %>
           Become a Din subscriber.
           <br>
-          <%= link_to "setup a subscription", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
+          <%= link_to "create a subscription", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
         <% else
           todo = []
           todo.push(link_to "add meal preferences", account_meal_preference_path) unless meal_preference

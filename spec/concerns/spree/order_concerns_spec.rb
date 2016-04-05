@@ -4,6 +4,10 @@ require 'rails_helper'
 #   of testing concerns
 
 RSpec.shared_examples_for "spree order concerns" do
+  before(:all) do
+    require Rails.root.join('db/seeds')
+  end
+
   # the class that includes the concern
   let(:model) { described_class }
   let(:address) { FactoryGirl.build(:address) }

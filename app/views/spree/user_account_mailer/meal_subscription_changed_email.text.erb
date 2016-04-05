@@ -1,0 +1,22 @@
+<%= @subject_text %>
+
+<%- if @sub.status == "paused" -%>
+This email confirms your subscription has been paused.
+
+Note: Updating your subscription settings does not affect subscription orders which are in progress.
+
+Contact support and we’ll do our best to accommodate your needs: <%= support_email_address %>
+
+To restart your subscription, visit your account page:
+<%= spree.account_url %>
+
+<% else -%>
+This email confirms your subscription details:
+
+<%= Spree.t(:subscription_summary, day: @sub.delivery_day.titleize, meal_count: @sub.meal_count, delivery_window: @sub.delivery_window) %></strong>
+
+<%= Spree.t(:subscription_notification_summary, notification_weekday: @sub.delivery_day.titleize, meal_count: @sub.meal_count, notification_channels: @sub.notification_channels.to_sentence, open_days: Spree::MealSubscription.order_open_days, order_processed_weekday: @sub.order_processed_weekday) %>
+
+To make any further changes, visit your account page:
+<%= spree.account_url %>
+<% end -%>

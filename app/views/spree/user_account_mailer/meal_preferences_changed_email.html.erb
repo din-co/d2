@@ -1,0 +1,16 @@
+<p class="lede">
+  Meal Preferences Updated
+</p>
+<p>
+  This email confirms your new meal preferences. Thanks for telling us what you like to eat.
+</p>
+<p>
+  Your diet includes <strong><%= @meal_preference.display_diet_names %></strong>.
+  <% if allergen_names = @meal_preference.allergen_names.presence %>
+    <br>
+    You are allergic to <strong><%= allergen_names.to_sentence %></strong>.
+  <% end -%>
+</p>
+<p>
+  To make any further changes, visit your <%= link_to "account page", spree.account_url %>.
+</p>

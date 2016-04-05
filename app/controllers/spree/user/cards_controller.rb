@@ -33,6 +33,7 @@ module Spree
       @credit_card = @user.credit_cards.create(cc_params)
       if @credit_card.persisted?
         flash[:success] = "New payment card added."
+        UserAccountMailer.credit_card_changed_email(@credit_card).deliver_later
         redirect_to spree.account_path
       else
         flash.now[:error] = "#{@credit_card.errors.full_messages.to_sentence}."
