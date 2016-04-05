@@ -21,7 +21,7 @@
     <% products.each do |product| %>
       <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
       <div class="product product--list-item" itemscope itemtype="http://schema.org/Product">
-        <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product] : [I18n.locale, current_currency, product]) do %>
+        <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product, subscription_menu] : [I18n.locale, current_currency, product, subscription_menu]) do %>
 
           <%= link_to url, class: "product__link" do %>
             <%= image_tag(product.display_image.attachment(:detail), itemprop: "image", class: "product__image") %>
