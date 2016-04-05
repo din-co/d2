@@ -11,6 +11,7 @@ Spree::Config[:default_country_id] = Spree::Country.find_by!(iso: "US").id
 taxonomy_pages = Spree::Taxonomy.find_or_create_by!(name: 'Pages')
 taxon_pages = Spree::Taxon.find_or_create_by!(name: 'Pages', taxonomy_id: taxonomy_pages.id)
 Spree::Taxon.find_or_create_by!(name: "Home", parent_id: taxon_pages.id, taxonomy_id: taxonomy_pages.id)
+Spree::Taxon.find_or_create_by!(name: "Subscription Menu", parent_id: taxon_pages.id, taxonomy_id: taxonomy_pages.id)
 
 taxonomy_restaurants = Spree::Taxonomy.find_or_create_by!(name: 'Restaurants')
 taxon_restaurants = Spree::Taxon.find_or_create_by!(name: 'Restaurants', taxonomy_id: taxonomy_restaurants.id)
