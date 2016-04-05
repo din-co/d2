@@ -64,12 +64,11 @@ Rails.application.configure do
     canonical_domain = "#{ENV['HEROKU_APP_NAME']}.herokuapp.com"
   end
   config.x.canonical_domain = canonical_domain || 'din.co'
+  ::TRUE_PRODUCTION_INSTANCE = (canonical_domain == 'din.co' && ENV['EMAIL_HOST'] == 'din.co')
 
   # Do not raise email delivery errors, since emails are processed by a background queue.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = ! ::TRUE_PRODUCTION_INSTANCE
   config.action_mailer.default_url_options = { protocol: 'https', host: ENV['EMAIL_HOST'] || config.x.canonical_domain }
-
-  ::TRUE_PRODUCTION_INSTANCE = (canonical_domain == 'din.co' && ENV['EMAIL_HOST'] == 'din.co')
 
   # Show full error reports in staging environments to aid debugging.
   config.consider_all_requests_local = ! ::TRUE_PRODUCTION_INSTANCE
