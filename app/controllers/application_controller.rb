@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   # We include intercom on our own
   skip_after_filter :intercom_rails_auto_include
 
+  before_filter :masquerade_spree_user!
+
   private
 
   # Add extra information to log events for lograge.

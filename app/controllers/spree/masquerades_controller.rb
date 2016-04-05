@@ -1,0 +1,1 @@
+Spree::MasqueradesController = Devise::MasqueradesController

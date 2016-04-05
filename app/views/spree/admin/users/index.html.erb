@@ -24,8 +24,11 @@
   <tbody>
     <% @users.each do |user|%>
       <tr id="<%= spree_dom_id user %>" data-hook="admin_users_index_rows" class="<%= cycle('odd', 'even')%>">
-        <td class='user_email'><%=link_to user.email, edit_admin_user_url(user) %></td>
+        <td class='user_email'><%= link_to user.email, edit_admin_user_url(user) %></td>
         <td data-hook="admin_users_index_row_actions" class="actions">
+          <% if can?(:login_as, user) && user != spree_current_user %>
+            <%= link_to_with_icon 'user', "Impersonate", spree_user_masquerade_path(user), :no_text => true %>
+          <% end %>
           <% if can?(:edit, user) %>
             <%= link_to_edit user, :no_text => true %>
           <% end %>
