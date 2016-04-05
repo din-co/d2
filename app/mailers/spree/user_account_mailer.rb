@@ -1,5 +1,8 @@
 module Spree
   class UserAccountMailer < BaseMailer
+
+    helper 'application'
+
     def credit_card_changed_email(credit_card)
       @credit_card = credit_card
       subject = build_subject("Credit Card Updated")
@@ -12,10 +15,17 @@ module Spree
       mail(to: @meal_preference.user.email, from: from_address(@store), subject: subject)
     end
 
-    def delivery_address_changed_email(address)
+    def delivery_address_changed_email(address, user)
       @address = address
       subject = build_subject("Delivery Address Updated")
-      mail(to: @address.user.email, from: from_address(@store), subject: subject)
+      mail(to: user.email, from: from_address(@store), subject: subject)
+    end
+
+    def meal_subscription_changed_email(meal_subscription)
+      @sub = meal_subscription
+      @subject_text = (@sub.status == "paused") ? "Subscription Paused" : "Subscription Updated"
+      subject = build_subject(@subject_text)
+      mail(to: @sub.user.email, from: from_address(@store), subject: subject)
     end
 
     private

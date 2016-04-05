@@ -66,32 +66,20 @@
   </div>
 
 <% if cookies[:subscription_preview].present? # hide subscription unless we tell people about it %>
-  <% meal_subscription = @user.meal_subscription %>
   <div class="page-section">
     <h4>
       Subscription
     </h4>
     <p>
-      <% if meal_subscription %>
-        <% if meal_subscription.status == "paused" %>
+      <% if sub = @user.meal_subscription %>
+        <% if sub.status == "paused" %>
           Subscription is paused.
         <% else -%>
-          <%
-            notification = []
-            notification.push("text message") if meal_subscription.notification_sms
-            notification.push("email") if meal_subscription.notification_email
-            order_open_days = Spree::MealSubscription.notification_lead_time_days - Spree::MealSubscription.order_lead_time_days
-            notification_sent_weekday = meal_subscription.delivery_day.titleize
-            order_submitted_weekday = Time.now.next_week(meal_subscription.delivery_day.to_sym).advance(days: order_open_days).strftime("%A")
-          %>
           <strong>
-            Each <%= meal_subscription.delivery_day.titleize %>
-            we’ll deliver <%= meal_subscription.meal_count %> meals
-            between <%= meal_subscription.delivery_window %>.
+            <%= Spree.t(:subscription_summary, day: sub.delivery_day.titleize, meal_count: sub.meal_count, delivery_window: sub.delivery_window) %>
           </strong>
           <br>
-          <%= notification_sent_weekday %> evenings at 8pm we’ll suggest <%= meal_subscription.meal_count %> meals from next week’s menu to you via <%= notification.to_sentence.html_safe %>.
-          You’ll have <%= order_open_days %> days to change meals or cancel your delivery; each <%= order_submitted_weekday %> at 10pm we’ll process your subscription order.
+          <%= Spree.t(:subscription_notification_summary, notification_weekday: sub.delivery_day.titleize, meal_count: sub.meal_count, notification_channels: sub.notification_channels.to_sentence, open_days: Spree::MealSubscription.order_open_days, order_processed_weekday: sub.order_processed_weekday) %>
         <% end -%>
         <br>
         <%= link_to "edit", account_meal_subscription_path, class: "btn btn-xs btn-info" %>

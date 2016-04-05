@@ -26,6 +26,21 @@ module Spree
       5
     end
 
+    def self.order_open_days
+      notification_lead_time_days - order_lead_time_days
+    end
+
+    def order_processed_weekday
+      Time.now.next_week(delivery_day.to_sym).advance(days: self.class.order_open_days).strftime("%A")
+    end
+
+    def notification_channels
+      channels = []
+      channels.push("text message") if notification_sms
+      channels.push("email") if notification_email
+      channels
+    end
+
     def valid_notifications
       unless notification_sms || notification_email
         errors.add(:base, "You must select at least one notification method.")
