@@ -1,4 +1,9 @@
 <% content_for :page_actions do %>
+  <% if can?(:login_as, @user) && @user != spree_current_user %>
+    <li>
+      <%= button_link_to "Impersonate", spree_user_masquerade_path(@user), icon: 'user' %>
+    </li>
+  <% end %>
   <li>
     <%= button_link_to Spree.t(:back_to_users_list), spree.admin_users_path, :icon => 'arrow-left' %>
   </li>
