@@ -1,3 +1,8 @@
+<%
+  delivery_address = @user.default_address
+  meal_preference = @user.meal_preference
+  credit_card = @user.default_credit_card
+%>
 <div class="container container--main">
   <h1>
     <%= "Your Account" || Spree.t(:account) %>
@@ -10,62 +15,13 @@
     <%= link_to "edit", spree.edit_account_path, class: "btn btn-xs btn-info" %>
   </p>
 
-  <div class="page-section">
-    <h4>
-      Meal Preferences
-    </h4>
-    <p>
-      <% if meal_preference = @user.meal_preference %>
-        My diet includes <strong><%= meal_preference.display_diet_names %></strong>.
-        <% if allergen_names = meal_preference.allergen_names.presence %>
-          <br>
-          I am allergic to <strong><%= allergen_names.to_sentence %></strong>.
-        <% end -%>
-      <% else -%>
-        What foods do you enjoy?
-      <% end -%>
-      <br>
-      <%= link_to meal_preference ? "edit" : "add meal preferences", account_meal_preference_path, class: "btn btn-xs btn-info" %>
-    </p>
-  </div>
+  <% if @personal_referral_promo %>
+    <div class="page-section">
+      <h4>Share the Din Love</h4>
+      <p>Give a friend <strong><%= @personal_referral_promo.description.sub(/your/, 'their') %></strong>. Send them your referral link: <%= link_to(nil, main_app.personal_promo_url(@personal_referral_promo.path)) %></p>
+    </div>
+  <% end %>
 
-  <% delivery_address = @user.default_address %>
-  <div class="page-section">
-    <h4>
-      Delivery Address
-    </h4>
-    <p>
-      <% if delivery_address %>
-        <%= render :partial => 'spree/shared/vcard', :locals => { :address => @user.default_address } %>
-        <% if delivery_instructions = @user.default_address.delivery_instructions.presence %>
-          <span class="delivery-instructions"><%= delivery_instructions %></span>
-        <% end -%>
-      <% else -%>
-        Where would you like your meals delivered?
-        <br>
-      <% end -%>
-      <%= link_to delivery_address ? "edit" : "add delivery address", account_address_path, class: "btn btn-xs btn-info" %>
-    </p>
-  </div>
-
-  <% credit_card = @user.default_credit_card %>
-  <div class="page-section">
-    <h4>
-      Payment Card
-    </h4>
-    <p>
-      <% if credit_card %>
-        <%= Spree.t(credit_card.cc_type) %>
-        <small><%= credit_card.last_digits %> <%= "#{credit_card.month}/#{credit_card.year}" %></small>
-      <% else -%>
-        How would you like to be billed?
-      <% end -%>
-      <br>
-      <%= link_to credit_card ? "edit" : "add payment card", account_cards_path, class: "btn btn-xs btn-info" %>
-    </p>
-  </div>
-
-<% if cookies[:subscription_preview].present? # hide subscription unless we tell people about it %>
   <div class="page-section">
     <h4>
       Subscription
@@ -84,28 +40,73 @@
         <br>
         <%= link_to "edit", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
       <% else -%>
-        <% if meal_preference && delivery_address && credit_card %>
+        <% if @user.meal_preference && delivery_address && credit_card %>
           Become a Din subscriber.
           <br>
           <%= link_to "create a subscription", account_meal_subscription_path, class: "btn btn-xs btn-info" %>
         <% else
           todo = []
-          todo.push(link_to "add meal preferences", account_meal_preference_path) unless meal_preference
-          todo.push(link_to "add delivery address", account_address_path) unless delivery_address
-          todo.push(link_to "add payment method", account_cards_path) unless credit_card
+          todo.push(link_to "meal preferences", account_meal_preference_path) unless meal_preference
+          todo.push(link_to "delivery address", account_address_path) unless delivery_address
+          todo.push(link_to "payment method", account_cards_path) unless credit_card
         -%>
-          In order to subscribe, <%= todo.to_sentence.html_safe %>.
+          In order to setup a subscription, add your <%= todo.to_sentence.html_safe %>.
         <% end -%>
       <% end -%>
     </p>
   </div>
-<% end %>
 
   <div class="page-section">
-    <% if @personal_referral_promo %>
-      <h2>Share the Din Love</h2>
-      <p>Give a friend <strong><%= @personal_referral_promo.description.sub(/your/, 'their') %></strong> by having them visit your personal referral link: <%= link_to(nil, main_app.personal_promo_url(@personal_referral_promo.path)) %></p>
-    <% end %>
+    <h4>
+      Meal Preferences
+    </h4>
+    <p>
+      <% if meal_preference %>
+        My diet includes <strong><%= meal_preference.display_diet_names %></strong>.
+        <% if allergen_names = meal_preference.allergen_names.presence %>
+          <br>
+          I am allergic to <strong><%= allergen_names.to_sentence %></strong>.
+        <% end -%>
+      <% else -%>
+        What foods do you enjoy?
+      <% end -%>
+      <br>
+      <%= link_to meal_preference ? "edit" : "add meal preferences", account_meal_preference_path, class: "btn btn-xs btn-info" %>
+    </p>
+  </div>
+
+  <div class="page-section">
+    <h4>
+      Delivery Address
+    </h4>
+    <p>
+      <% if delivery_address %>
+        <%= render :partial => 'spree/shared/vcard', :locals => { :address => @user.default_address } %>
+        <% if delivery_instructions = @user.default_address.delivery_instructions.presence %>
+          <span class="delivery-instructions"><%= delivery_instructions %></span>
+        <% end -%>
+      <% else -%>
+        Where would you like your meals delivered?
+        <br>
+      <% end -%>
+      <%= link_to delivery_address ? "edit" : "add delivery address", account_address_path, class: "btn btn-xs btn-info" %>
+    </p>
+  </div>
+
+  <div class="page-section">
+    <h4>
+      Payment Card
+    </h4>
+    <p>
+      <% if credit_card %>
+        <%= Spree.t(credit_card.cc_type) %>
+        <small><%= credit_card.last_digits %> <%= "#{credit_card.month}/#{credit_card.year}" %></small>
+      <% else -%>
+        How would you like to be billed?
+      <% end -%>
+      <br>
+      <%= link_to credit_card ? "edit" : "add payment card", account_cards_path, class: "btn btn-xs btn-info" %>
+    </p>
   </div>
 
   <h3><%= Spree.t(:orders) %></h3>

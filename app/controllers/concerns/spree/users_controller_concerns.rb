@@ -13,7 +13,6 @@ module Spree
         if @orders.any?(&:complete?) && @personal_referral_promo.blank?
           @personal_referral_promo = @user.ensure_personal_referral_promo
         end
-        cookies[:subscription_preview] = "true" if params[:subscription_preview].present?
       end
     end
   end
