@@ -91,3 +91,8 @@
 <p>
   <%= Spree.t('order_mailer.confirm_email.thanks') %>
 </p>
+
+<% if @order.user.personal_referral_promo %>
+  <h4>Share the Din Love</h4>
+  <p>Give a friend <strong><%= @order.user.personal_referral_promo.description.sub(/your/, 'their') %></strong>. Send them your referral link: <%= link_to(nil, main_app.personal_promo_url(@order.user.personal_referral_promo.path)) %></p>
+<% end %>
