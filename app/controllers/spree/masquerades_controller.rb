@@ -1,18 +1,17 @@
 module Spree
   class MasqueradesController < Devise::MasqueradesController
 
-    # Prevents any non-admin from masquerading
-    def show
-      unless spree_current_user.try(:admin?)
-        reset_session
-        redirect_to new_user_session_path
-        return
-      end
-
-      super
-    end
+    before_action :allow_only_admins, only: :show
 
   protected
+
+    # Prevents any non-admin from masquerading
+    def allow_only_admins
+      unless spree_current_user.try(:admin?)
+        reset_session
+        redirect_to spree.login_path
+      end
+    end
 
     def after_masquerade_path_for(resource)
       spree.account_path
