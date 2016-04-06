@@ -13,7 +13,9 @@
 <% end -%>
 
 <h1><%= Spree.t(:confirm) %></h1>
-<%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
 
 <%= submit_tag Spree.t(:place_order), :class => 'continue btn btn-primary' %>
+<%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
+<%= submit_tag Spree.t(:place_order), :class => 'continue btn btn-primary' %>
+
 <script>Spree.disableSaveOnClick();</script>
