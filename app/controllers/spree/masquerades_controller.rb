@@ -11,5 +11,15 @@ module Spree
 
       super
     end
+
+  protected
+
+    def after_masquerade_path_for(resource)
+      spree.account_path
+    end
+
+    def after_back_masquerade_path_for(resource)
+      spree.admin_users_path
+    end
   end
 end
