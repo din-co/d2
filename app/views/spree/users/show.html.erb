@@ -99,8 +99,7 @@
     </h4>
     <p>
       <% if credit_card %>
-        <%= Spree.t(credit_card.cc_type) %>
-        <small><%= credit_card.last_digits %> <%= "#{credit_card.month}/#{credit_card.year}" %></small>
+        <%= render :partial => 'spree/shared/credit_card', :locals => { :card => credit_card } %>
       <% else -%>
         How would you like to be billed?
       <% end -%>

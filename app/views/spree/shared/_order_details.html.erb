@@ -6,9 +6,7 @@
       <%= link_to Spree.t(:change), checkout_state_path(:address), class: "edit-link" unless order.completed? %>
     </p>
     <p>
-      <% payment = order.payments.valid.first %>
-      <span class="card-type-<%= payment.source.cc_type %>"></span>
-      <%= Spree.t(:cc_display, :cc_type => Spree.t(payment.source.cc_type), :cc_last_4 => payment.source.last_digits) %>
+      <%= render :partial => 'spree/shared/credit_card', :locals => { :card => order.payments.valid.first.source } %>
       <%= link_to Spree.t(:change), checkout_state_path(:payment), class: "edit-link" unless order.completed? %>
     </p>
   </div>
