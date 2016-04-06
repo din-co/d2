@@ -13,8 +13,8 @@
     <h4>2. We create your personalized menu.</h4>
     <p>
       <%# Your menu is inspired by seasonal ingredients, partner restaurants, and their talented chefs. %>
-      You get first access to new dishes and restaurants on the Din menu.
-      We choose seasonal restaurant dishes matching what you like to eat.
+      You get first access to new meals and restaurants on the Din menu.
+      We choose seasonal restaurant meals matching what you like to eat.
 
       Meal prices are set by restaurants and vary, but average $16 per serving.
       Subscribing is free. Delivery fees vary by location.
@@ -23,12 +23,12 @@
     <h4>3. You review your menu.</h4>
     <p>
       We send your menu to you <%= Spree::MealSubscription.notification_lead_time_days %> days before your delivery.
-      If you like the menu, your work is done.
-      Want to change your menu?
-      You have <%= Spree::MealSubscription.notification_lead_time_days - Spree::MealSubscription.order_lead_time_days %> days to select different meals from Din’s full menu for the week, or cancel a delivery.
+      If you like the meals, your work is done.
+      Want to change meals?
+      You have <%= Spree::MealSubscription.order_open_days %> days to select different meals from Din’s full menu for the week, or cancel a delivery.
     </p>
 
-    <h4>4. Restaurants prep & pack. We deliver.</h4>
+    <h4>4. Restaurants prep &amp; pack. We deliver.</h4>
     <p>
       Restaurant chefs source and prep ingredients, and pack meals in their kitchens.
       We deliver meals in an insulated tote with dry ice to keep your meals cool for up to 4 hours.
