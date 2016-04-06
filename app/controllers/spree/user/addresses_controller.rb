@@ -32,7 +32,7 @@ module Spree
         end
         flash[:success] = "Delivery address updated."
         UserAccountMailer.delivery_address_changed_email(@address, @user).deliver_later
-        redirect_to(session.delete(:return_to) || spree.account_path)
+        redirect_to(session.delete(:return_to) || spree.account_url)
       else
         flash.now[:error] = "#{@address.errors.full_messages.to_sentence}."
         render 'show'

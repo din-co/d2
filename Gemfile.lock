@@ -127,6 +127,9 @@ GEM
       warden (~> 1.2.3)
     devise-encryptable (0.1.2)
       devise (>= 2.1.0)
+    devise_masquerade (0.1.7)
+      devise (>= 2.1.0)
+      railties (>= 3.0)
     diff-lcs (1.2.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -438,6 +441,7 @@ DEPENDENCIES
   capybara-screenshot
   coffee-rails (~> 4.1.0)
   database_cleaner
+  devise_masquerade
   factory_girl
   ffaker
   font_assets

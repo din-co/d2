@@ -50,6 +50,7 @@ gem 'twitter_cldr'
 
 gem 'aws-sdk', '< 2.0'
 gem 'intercom-rails'
+gem 'devise_masquerade'
 
 gem 'rails_12factor', group: [:development, :production]
 gem 'lograge'
