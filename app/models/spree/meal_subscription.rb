@@ -14,6 +14,14 @@ module Spree
     enum status: [:active, :paused]
     enum delivery_day: {monday: 1, tuesday: 2, wednesday: 3}
 
+    statuses.each do |status, status_id|
+      scope status.to_sym, -> { where(status: status_id) }
+    end
+
+    delivery_days.each do |delivery_day, day_id|
+      scope delivery_day.to_sym, -> { where(delivery_day: day_id).active }
+    end
+
     def valid_meal_counts
       self.class.valid_meal_counts
     end
