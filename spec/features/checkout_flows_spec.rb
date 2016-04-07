@@ -84,7 +84,7 @@ RSpec.feature "Checkout flow:" do
       end
       expect(page).to have_text(product.name)
       # TODO: verify that important information is present
-      click_on "Place Order"
+      find_button("Place Order", match: :first).click
 
       # Order summary page
       user = Spree::User.last
@@ -132,7 +132,7 @@ RSpec.feature "Checkout flow:" do
       end
       expect(page).to have_text(product.name)
       # TODO: verify that important information is present
-      click_on "Place Order"
+      find_button("Place Order", match: :first).click
 
       # Order summary page
       user = Spree::User.last
