@@ -1,1 +1,0 @@
-Spree::OrderMailer.helper 'application'
