@@ -3,6 +3,18 @@
   meal_preference = @user.meal_preference
   credit_card = @user.default_credit_card
 %>
+<% content_for :head do %>
+  <script>
+    $(function() {
+      var identify = new amplitude.Identify()
+      identify.setOnce('sign_up_date', '<%= j @user.created_at.to_date.to_s(:db) %>');
+      <% if delivery_address.try(:postal_code) %>
+        identify.set('delivery_zip', '<%= j delivery_address.postal_code.to_s %>');
+      <% end %>
+      amplitude.identify(identify);
+    });
+  </script>
+<% end %>
 <div class="container container--main">
   <h1>
     <%= "Your Account" || Spree.t(:account) %>
