@@ -1,98 +1,236 @@
+<%# @custom_email_styles = "spree/backend/email/menu" %>
+<%# @email_title ||= "Email Title" %>
+<%# @email_preheader ||= "email preheader" %>
+<%# @email_date = "Monday, February 15th" %>
 <%
   address = @order.ship_address
   shipment = @order.shipments.first
 -%>
-<p class="lede">
-  <%= Spree.t('order_mailer.confirm_email.dear_customer', name: address.firstname) %>
-</p>
-<p>
-  <%= Spree.t('order_mailer.confirm_email.thanks_for_placing_order') %>
-</p>
-<p>
-  <%= Spree.t('order_mailer.confirm_email.delivery_info', delivery_window: shipment.selected_delivery_window.to_s) %>
-</p>
-<p>
-  <%= Spree.t('order_mailer.confirm_email.delivery_sms', phone: address.phone) %>
-</p>
-<p>
-  <%= Spree.t('order_mailer.confirm_email.pantry_check_text') %> <%= link_to main_app.static_page_url(:faq), main_app.static_page_url(:faq) %>
-</p>
-<p>
-  <%= Spree.t('order_mailer.confirm_email.order_summary') %>
-  <%= link_to @order.number, spree.order_url(@order) %>
-</p>
+<% @email_title = "Your Din Order" %>
+<% @email_preheader = "[what do we want here? day and time? ]" %>
+<% @email_date = "#{l Time.current.to_date, format: :delivery_window_date}, #{shipment.selected_delivery_window.to_s}" %>
 
-<table>
-  <% @order.line_items.each do |item| %>
-    <tr>
-      <td><%= item.variant.sku %></td>
-      <td>
-        <%= raw(item.variant.product.name) %>
-        <%= raw(item.variant.options_text) -%>
-      </td>
-      <td>(<%=item.quantity%>) @ <%= item.single_money %> = <%= item.display_amount %></td>
-    </tr>
-  <% end %>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+
+  <!-- Header -->
   <tr>
-    <td></td>
-    <td>
-      <%= Spree.t('order_mailer.confirm_email.subtotal') %>
-    </td>
-    <td>
-      <%= @order.display_item_total %>
-    </td>
-  </tr>
-  <% if @order.line_item_adjustments.exists? %>
-    <% if @order.all_adjustments.promotion.eligible.exists? %>
-      <% @order.all_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
-        <tr>
-          <td></td>
-          <td><%= Spree.t(:promotion) %> <%= label %>:</td>
-          <td><%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %></td>
-        </tr>
-      <% end %>
-    <% end %>
-  <% end %>
-  <% @order.shipments.group_by { |s| s.selected_shipping_rate.try(:name) }.each do |name, shipments| %>
-    <tr>
-      <td></td>
-      <td><%= Spree.t(:shipping) %> <%= name %>:</td>
-      <td><%= Spree::Money.new(shipments.sum(&:discounted_cost), currency: @order.currency) %></td>
-    </tr>
-  <% end %>
-  <% if @order.all_adjustments.eligible.tax.exists? %>
-    <% @order.all_adjustments.eligible.tax.group_by(&:label).each do |label, adjustments| %>
+    <td bgcolor="#ffffff" align="center">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="640">
       <tr>
-        <td></td>
-        <td><%= Spree.t(:tax) %> <%= label %>:</td>
-        <td><%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %></td>
+      <td align="center" valign="top" width="640">
+      <![endif]-->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="content-container">
+        <tr>
+          <td align="center" class="header__logo-container">
+            <%= link_to image_tag('logo/din.png', width: 64, height: 64, border: 0, alt: "Din logo", class: "header__logo-img"), spree.root_url, target: "_blank", class: "header__logo-link" %>
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
       </tr>
-    <% end %>
-  <% end %>
-  <% @order.adjustments.eligible.each do |adjustment| %>
-    <% next if (adjustment.source_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
-    <tr>
-      <td></td>
-      <td><%= adjustment.label %>:</td>
-      <td><%= adjustment.display_amount %></td>
-    </tr>
-  <% end %>
-  <tr>
-    <td></td>
-    <td>
-      <%= Spree.t('order_mailer.confirm_email.total') %>
-    </td>
-    <td>
-      <%= @order.display_total %>
+      </table>
+      <![endif]-->
     </td>
   </tr>
+
+
+  <!-- Menu Title -->
+  <tr>
+    <td align="center" bgcolor="#ffffff" class="email-title">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="640">
+      <tr>
+      <td align="center" valign="top" width="640">
+      <![endif]-->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="content-container">
+        <tr>
+          <td align="center" class="heading-hr"><%= image_tag 'black.png', width: 55, height: 4, class: "heading-hr__img" %></td>
+        </tr>
+        <tr>
+          <td align="center" class="menu-title"><%= @email_title.upcase %></td>
+        </tr>
+        <tr>
+          <td align="center" class="heading-hr"><%= image_tag 'black.png', width: 55, height: 4, class: "heading-hr__img" %></td>
+        </tr>
+        <tr>
+          <td align="center" class="menu-date"><%= @email_date %></td>
+        </tr>
+        <tr>
+          <td align="center" class="product__button-container">
+            <table border="0" cellspacing="0" cellpadding="0" class="button-table">
+              <tr>
+                <td align="center" bgcolor="#5fd375" class="button-cell"><%= link_to "View Order Details", order_url(@order), target: "_blank", class: "button-link", foo: "bar" %></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+
+
+  <!-- Menu Content -->
+  <tr>
+    <td align="center" bgcolor="#ffffff">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="640">
+      <tr>
+      <td align="center" valign="top" width="640">
+      <![endif]-->
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="content-container">
+        <tr>
+          <td>
+
+
+
+
+            <p class="lede">
+              <%= Spree.t('order_mailer.confirm_email.dear_customer', name: address.firstname) %>
+            </p>
+            <p>
+              <%= Spree.t('order_mailer.confirm_email.thanks_for_placing_order') %>
+            </p>
+            <p>
+              <%= Spree.t('order_mailer.confirm_email.delivery_info', delivery_window: shipment.selected_delivery_window.to_s).html_safe %>
+            </p>
+            <p>
+              <%= Spree.t('order_mailer.confirm_email.delivery_sms', phone: format_phone_number(address.phone)) %>
+            </p>
+            <p>
+              <%= Spree.t('order_mailer.confirm_email.pantry_check_text') %>
+              <%= link_to main_app.static_page_url(:faq), main_app.static_page_url(:faq), class: "green-link" %>
+            </p>
+            <% if @order.user.personal_referral_promo %>
+              <p>
+                <strong>Share the Din Love:</strong>
+                Give a friend <strong><%= @order.user.personal_referral_promo.description.sub(/your/, 'their') %></strong>.
+                Send them your referral link: <%= link_to(nil, main_app.personal_promo_url(@order.user.personal_referral_promo.path), class: "green-link") %>
+              </p>
+            <% end %>
+            <p>
+              <%= Spree.t('order_mailer.confirm_email.salutation') %>
+            </p>
+
+
+            <h2><%= Spree.t('order_mailer.confirm_email.order_summary') %></h2>
+            <p>
+              Order number: <%= link_to @order.number, spree.order_url(@order), class: "green-link" %>
+            </p>
+
+            <table class="order-table">
+              <tr>
+                <th>Item</th>
+                <th class="order-table__price">Price</th>
+                <th class="order-table__quantity">Qty</th>
+                <th class="order-table__total">Total</th>
+              </tr>
+              <% @order.line_items.each do |item| %>
+                <tr>
+                  <td class="order-table__name">
+                    <strong><%= raw(item.variant.product.name) %></strong>
+                    <%= link_to "view recipe", spree.product_path(item.variant.product), class: "green-link" %>
+                  </td>
+                  <td class="order-table__price"><%= item.single_money %></td>
+                  <td class="order-table__quantity"><%=item.quantity%></td>
+                  <td class="order-table__total"><%= item.display_amount %></td>
+                </tr>
+              <% end %>
+              <tr class="order-table_subtotal-row">
+                <td colspan="3">
+                  <%= Spree.t('order_mailer.confirm_email.subtotal') %>
+                </td>
+                <td class="order-table__total">
+                  <%= @order.display_item_total %>
+                </td>
+              </tr>
+              <% if @order.line_item_adjustments.exists? %>
+                <% if @order.all_adjustments.promotion.eligible.exists? %>
+                  <% @order.all_adjustments.promotion.eligible.group_by(&:label).each do |label, adjustments| %>
+                    <tr>
+                      <td colspan="3"><%= Spree.t(:promotion) %> <%= label %>:</td>
+                      <td class="order-table__total"><%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %></td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <% @order.shipments.group_by { |s| s.selected_shipping_rate.try(:name) }.each do |name, shipments| %>
+                <tr>
+                  <td colspan="3"><%= Spree.t(:shipping) %> <%= name %>:</td>
+                  <td class="order-table__total"><%= Spree::Money.new(shipments.sum(&:discounted_cost), currency: @order.currency) %></td>
+                </tr>
+              <% end %>
+              <% if @order.all_adjustments.eligible.tax.exists? %>
+                <% @order.all_adjustments.eligible.tax.group_by(&:label).each do |label, adjustments| %>
+                  <tr>
+                    <td colspan="3"><%= Spree.t(:tax) %> <%= label %>:</td>
+                    <td class="order-table__total"><%= Spree::Money.new(adjustments.sum(&:amount), currency: @order.currency) %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+              <% @order.adjustments.eligible.each do |adjustment| %>
+                <% next if (adjustment.source_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
+                <tr>
+                  <td colspan="3"><%= adjustment.label %>:</td>
+                  <td class="order-table__total"><%= adjustment.display_amount %></td>
+                </tr>
+              <% end %>
+              <tr class="order-table_total-row">
+                <td colspan="3">
+                  <%= Spree.t('order_mailer.confirm_email.total') %>
+                </td>
+                <td class="order-table__total">
+                  <%= @order.display_total %>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+
+
+  <!-- Footer -->
+  <tr>
+    <td bgcolor="#ffffff" align="center" class="email-footer">
+      <!--[if (gte mso 9)|(IE)]>
+      <table align="center" border="0" cellspacing="0" cellpadding="0" width="640">
+      <tr>
+      <td align="center" valign="top" width="640">
+      <![endif]-->
+      <table border="0" cellspacing="0" cellpadding="0" width="100%" class="content-container">
+        <tr>
+          <td align="center" class="footer-text-content">
+            Need help with this order?
+            <%= support_email_link("Help with order #{@order.number}", support_email_address, "green-link") %>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" class="fine-print">
+            <b>Din</b> 3171 21st St, SF CA 94110
+          </td>
+        </tr>
+      </table>
+      <!--[if (gte mso 9)|(IE)]>
+      </td>
+      </tr>
+      </table>
+      <![endif]-->
+    </td>
+  </tr>
+
 </table>
-
-<p>
-  <%= Spree.t('order_mailer.confirm_email.thanks') %>
-</p>
-
-<% if @order.user.personal_referral_promo %>
-  <h4>Share the Din Love</h4>
-  <p>Give a friend <strong><%= @order.user.personal_referral_promo.description.sub(/your/, 'their') %></strong>. Send them your referral link: <%= link_to(nil, main_app.personal_promo_url(@order.user.personal_referral_promo.path)) %></p>
-<% end %>
