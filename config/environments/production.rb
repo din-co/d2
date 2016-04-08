@@ -70,6 +70,8 @@ Rails.application.configure do
   # Do not raise email delivery errors, since emails are processed by a background queue.
   config.action_mailer.raise_delivery_errors = ! ::TRUE_PRODUCTION_INSTANCE
   config.action_mailer.default_url_options = { protocol: 'https', host: config.x.canonical_domain }
+  config.action_mailer.default_asset_host_protocol = 'https'
+
 
   # Show full error reports in staging environments to aid debugging.
   config.consider_all_requests_local = ! ::TRUE_PRODUCTION_INSTANCE
