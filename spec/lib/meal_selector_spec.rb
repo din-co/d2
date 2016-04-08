@@ -26,7 +26,14 @@ RSpec.describe MealSelector, subscription_data: true do
   end
 
   describe 'with subscriptions' do
-    let(:subscriptions) { meal_preferences_in_order.map { |mp| FactoryGirl.create(:meal_subscription, user: mp.user) } }
+    let(:delivery_days) { Spree::MealSubscription.delivery_days.keys }
+    let(:subscriptions) {
+      subscriptions = []
+      meal_preferences_in_order.each_with_index { |mp, i|
+        subscriptions << FactoryGirl.create(:meal_subscription, user: mp.user, delivery_day: delivery_days[i % delivery_days.size])
+      }
+      subscriptions
+    }
     let(:available_meals) {
       n = meal_preferences.size
       {
@@ -50,12 +57,14 @@ RSpec.describe MealSelector, subscription_data: true do
     end
 
     describe 'and restricted stock' do
-      let(:available_meals) { {
+      let(:available_meals) {
+        {
           braised_veg => 3,
           sauteed_fish => 3,
           breakfast_sandwich => 1,
           tofu_fried_rice => 1,
-      } }
+        }
+      }
 
       it "returns selections matching the subscribers' meal preferences" do
         expect(meal_selector.selections[subscriptions[0]]).to eql([braised_veg, nil])
@@ -66,6 +75,17 @@ RSpec.describe MealSelector, subscription_data: true do
         expect(meal_selector.selections[subscriptions[5]]).to eql([nil, nil])
         expect(meal_selector.selections[subscriptions[6]]).to eql([sauteed_fish, breakfast_sandwich])
         expect(meal_selector.selections[subscriptions[7]]).to eql([nil, nil])
+      end
+
+      Spree::MealSubscription.delivery_days.keys.each do |day|
+        describe "for #{day} subscribers" do
+          it "returns selections matching the subscribers' meal preferences" do
+            expect(subscriptions).to_not be_empty
+            subs_for_day = Spree::MealSubscription.send(day)
+            expect(subs_for_day).to_not be_empty
+            expect(meal_selector.selections).to_not be_empty
+          end
+        end
       end
     end
   end

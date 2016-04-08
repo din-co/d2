@@ -32,6 +32,15 @@ module Spree
       def default_credit_card
         credit_cards.default.where(payment_method: Spree::PaymentMethod.find_by!(name: "Stripe")).first
       end
+
+      def recently_ordered_products(within_last=3)
+        orders.complete.order(completed_at: :desc).take(within_last).flat_map { |order| order.products }
+      end
+
+      def recently_ordered?(product, within_last=3)
+        recently_ordered_products(within_last).include?(product)
+      end
+
       def ensure_personal_referral_promo
         return personal_referral_promo if personal_referral_promo.present?
         transaction do
