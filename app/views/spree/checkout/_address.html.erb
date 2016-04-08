@@ -11,6 +11,7 @@
       metadata.signed_in_during_checkout = true;
     <% end -%>
     track({name: "visited checkout step address", metadata: metadata});
+    trackAmplitude({name: 'Checkout - Address', metadata: metadata});
   </script>
 <% end -%>
 

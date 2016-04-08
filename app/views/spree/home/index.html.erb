@@ -9,12 +9,15 @@
           chef: $(this).data("chef")
         }
         track({name: 'added product', metadata: metadata});
+        trackAmplitude({name: 'Purchase Intent - Added product'});
       })
       $(".js_learn_more_button").click(function(){
         track({name: 'clicked learn more button', metadata: {location: 'jumbotron'}});
+        trackAmplitude({name: 'Purchase Intent - Learn more'});
       })
       $(".js_view_menu_button").click(function(){
         track({name: 'clicked view menu button', metadata: {location: 'how din works'}});
+        trackAmplitude({name: 'Purchase Intent - View menu'});
       })
     });
   </script>

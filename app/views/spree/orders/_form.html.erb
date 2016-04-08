@@ -32,7 +32,8 @@
         var metadata = {
           authenticated: <%= spree_current_user.present? %>
         }
-        track({name: 'started checkout', metadata: metadata})
+        track({name: 'started checkout', metadata: metadata});
+        trackAmplitude({name: 'Checkout - Started checkout', metadata: metadata});
       })
     });
   </script>

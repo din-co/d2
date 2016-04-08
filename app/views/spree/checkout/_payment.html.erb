@@ -1,16 +1,16 @@
 <% content_for :head do %>
   <script type="text/javascript">
     var metadata = {
+      item_count: <%= @order.item_count %>,
+      cart_total: <%= @order.total.to_f %>,
       delivery_window: "<%= j @order.delivery_window.to_s %>"
     }
     track({name: "visited checkout step payment", metadata: metadata});
+    trackAmplitude({name: 'Checkout - Payment', metadata: metadata});
     <% if payment_error_message.present? %>
-      var metadata = {
-        item_count: <%= @order.item_count %>,
-        cart_total: <%= @order.total.to_f %>,
-        error: '<%= j payment_error_message %>'
-      }
+      metadata.error = '<%= j payment_error_message %>';
       track({name: "experienced payment error", metadata: metadata});
+      trackAmplitude({name: 'Checkout - Payment error', metadata: metadata});
     <% end %>
   </script>
 <% end -%>

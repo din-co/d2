@@ -5,6 +5,7 @@
       item_count: <%= @order.item_count %>
     }
     track({name: "visited checkout step sign up", metadata: metadata});
+    trackAmplitude({name: 'Checkout - Visited Registration', metadata: metadata});
   </script>
 <% end -%>
 

@@ -5,6 +5,7 @@
       postal_code: "<%= j @order.ship_address.zipcode %>"
     }
     track({name: "visited checkout step delivery", metadata: metadata});
+    trackAmplitude({name: 'Checkout - Delivery', metadata: metadata});
   </script>
 <% end -%>
 

@@ -1,14 +1,20 @@
 <% content_for :head do %>
   <script type="text/javascript">
     $(function() {
+      var productMetadata = function(elem) {
+        var $elem = $(elem);
+        return {
+          product_id: $elem.data("id"),
+          name: $elem.data("name"),
+          restaurant: $elem.data("restaurant"),
+          chef: $elem.data("chef")
+        };
+      }
+      trackAmplitude({name: 'Purchase Intent - Viewed product page', metadata: productMetadata($(".add-product-form"))});
       $(".add-product-form").submit(function() {
-        var metadata = {
-          product_id: $(this).data("id"),
-          name: $(this).data("name"),
-          restaurant: $(this).data("restaurant"),
-          chef: $(this).data("chef")
-        }
+        var metadata = productMetadata(this);
         track({name: 'added product', metadata: metadata});
+        trackAmplitude({name: 'Purchase Intent - Added product', metadata: metadata});
       })
     });
   </script>
