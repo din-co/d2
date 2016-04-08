@@ -86,12 +86,13 @@ en:
         total: ! 'Total:'
         salutation_thanks: Thanks,
         thanks_for_placing_order: "Thank you for placing an order with Din!"
-        delivery_info: "You can expect delivery of your order between %{delivery_window} this evening in an insulated tote, which will keep your meal(s) cold until 8pm. Our couriers will gladly take the tote bag back upon delivery or with your next order, you may leave the tote out or give it directly to the driver."
+        delivery_info: "You can expect delivery of your order between <strong>%{delivery_window}</strong> this evening in an insulated tote, which will keep your order cold until 8pm. Our couriers will gladly take the tote bag back upon delivery or with your next order, you may leave the tote out or give it directly to the driver."
         delivery_sms: "Our courier will send a text message to %{phone} when your delivery is getting close, usually 10-15 minutes before they’ll arrive."
-        pantry_check_text: "Don’t forget to check out the kitchen tools and pantry items you’ll need to complete your meal, which you can find on our FAQ:"
+        pantry_check_text: "Check out the kitchen tools and pantry items needed to cook Din meals:"
         delivery_address: "Delivery address"
         questions_contact: "If you have any questions, reply to this email or call/text 415-365-0533, we’ve got your back!"
         check_the_faq: "You can also check out our frequently asked questions here for more information:"
+        salutation: "Enjoy!"
   devise:
     failure:
       invalid: "Invalid email or password. If you cooked with us in 2015, you will need to create a new password."

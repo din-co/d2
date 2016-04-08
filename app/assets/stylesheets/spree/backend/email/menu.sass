@@ -1,17 +1,36 @@
+// Din Email Styles
+// These styles expect to be included in the head and inlined.
+
 // Theme
 $body-font: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
 $heading-font: "HelveticaNeue-CondensedBold", "HelveticaNeueBoldCondensed", "HelveticaNeue-Bold-Condensed", "Helvetica Neue Bold Condensed", "HelveticaNeueBold", "HelveticaNeue-Bold", "Helvetica Neue Bold", "HelveticaNeue", "Helvetica Neue", "TeXGyreHerosCnBold", "Helvetica", "Tahoma", "Geneva", "Arial Narrow", "Arial", sans-serif
+$din-text-color: #333333
 $din-color-tan: #f6f2ec
+$din-color-green: #5fd375
 
-// CLIENT-SPECIFIC STYLES
+//--------------------------------------
+// EMAIL CLIENT BUG FIXES
 
-// Remove spacing between tables in Outlook 2007 and up
-table,
-td
-  mso-table-lspace: 0pt
-  mso-table-rspace: 0pt
+.ExternalClass
+  width: 100%
+  // Forces Outlook.com to display emails at full width
+  &,
+  & p,
+  & span,
+  & font,
+  & td,
+  & div
+    line-height: 100%
+    // Forces Outlook.com to display normal line spacing, here is more on that: http://www.emailonacid.com/forum/viewthread/43/
 
-// Prevent WebKit and Windows mobile changing default text sizes
+body
+  margin: 0
+  padding: 0
+  // Resets all body margins and padding to 0
+  // Separate "body" declaration as to
+  height: 100% !important // reference?
+  width:  100% !important // reference?
+
 body,
 table,
 td,
@@ -19,35 +38,24 @@ a
   -webkit-text-size-adjust: 100%
   -ms-text-size-adjust: 100%
   -webkit-font-smoothing: antialiased
-
-// Allow smoother rendering of resized image in Internet Explorer
-img
-  -ms-interpolation-mode: bicubic
-
-// --------------------------------
-// RESET STYLES
-
-img
-  border: 0
-  height: auto
-  line-height: 100%
-  outline: none
-  text-decoration: none
+  // Prevent WebKit and Windows mobile changing default text sizes
 
 table
-  border-collapse: collapse !important
+  border-collapse: collapse
+  // This resolves the Outlook 07, 10, and Gmail td padding issue.  Here's more info:
+  // http://www.ianhoar.com/2008/04/29/outlook-2007-borders-and-1px-padding-on-table-cells
+  // http://www.campaignmonitor.com/blog/post/3392/1px-borders-padding-on-table-cells-in-outlook-07
 
-body
-  height: 100% !important
-  margin: 0 !important
-  padding: 0 !important
-  width: 100% !important
+table,
+td
+  mso-table-lspace: 0pt
+  mso-table-rspace: 0pt
+  // Remove spacing between tables in Outlook 2007 and up
 
-// ANDROID CENTER FIX // https://blog.jmwhite.co.uk/2015/09/19/revealing-why-emails-appear-off-centre-in-android-4-4-kitkat/
 div[style*="margin: 16px 0;"]
   margin: 0 !important
+  // Android center fix: https://blog.jmwhite.co.uk/2015/09/19/revealing-why-emails-appear-off-centre-in-android-4-4-kitkat/
 
-// iOS BLUE LINKS
 a[x-apple-data-detectors]
   color: inherit !important
   text-decoration: none !important
@@ -55,27 +63,13 @@ a[x-apple-data-detectors]
   font-family: inherit !important
   font-weight: inherit !important
   line-height: inherit !important
+  // iOS BLUE LINKS
 
-a
-  text-decoration: none
-  color: inherit
 
-// --------------------------------
-// Utilities
-.fine-print
-  font-size: 12px
-  line-height: 18px
-  font-family: Helvetica, Arial, sans-serif
-  color: #666666
 
-.green-link
-  color: #5fd375
-
-.text-nowrap
-  white-space: nowrap
-
-// --------------------------------
+//--------------------------------------
 // Template Styles
+
 .email-prehead
   display: none
   font-size: 1px
@@ -86,19 +80,115 @@ a
   overflow: hidden
 
 
-// --------------------------------
-// Table Styles
-.content-container
-  max-width: 640px
+
+//--------------------------------------
+// Din Styles
 
 
-// --------------------------------
+// Typography Styles
+
+body,
+table,
+th,
+td,
+p
+  color: $din-text-color
+  font-size: 16px
+  line-height: 22px
+  font-family: $body-font
+
+p
+  margin: 0
+  padding: 0 // Padding on paragraphs is not supported by Outlook 2007/2010
+  // margin-top: 0 // Outlook.com does not support "margin" or "margin-top" so don’t use them.
+  // margin-right: 0
+  margin-bottom: 16px
+  // margin-left: 0
+  // Stick to "margin-bottom", "margin-left", "margin-right" to control spacing
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+  color: black
+  line-height: 100%
+  // This CSS will overwrite Outlook.com/Outlook.com's default CSS and make your headings appear consistent with Gmail.
+  font-family: $heading-font
+  margin-bottom: 5px // Outlook.com default
+
+.fine-print
+  font-size: 12px
+  line-height: 18px
+  font-family: Helvetica, Arial, sans-serif
+  color: #666666
+
+
+// Links
+
+a,
+a:link
+  color: inherit
+  text-decoration: none
+  // Always apply a class to specify the link color inline.
+
+a.green-link
+  color: $din-color-green
+
+
+// Images
+
+img
+  -ms-interpolation-mode: bicubic
+  // Allow smoother rendering of resized image in Internet Explorer
+  border: 0
+  height: auto
+  line-height: 100%
+  outline: none
+  text-decoration: none
+
+
+// Tables
+
+.order-table
+  width: 100%
+  th,
+  td
+    vertical-align: middle
+    padding: 5px
+    text-align: left
+  th
+    border-bottom: 2px solid #ddd
+  td
+    border-top: 1px solid #ddd
+
+  .order-table__image
+    width: 15%
+    min-width: 50px
+  .order-table__name
+    width: 70%
+  .order-table__quantity
+    width: 5%
+    text-align: center
+  .order-table__price,
+  .order-table__total
+    width: 5%
+    text-align: right
+
+.order-table_subtotal-row
+  background-color: #f9f9f9
+.order-table_total-row
+  @extend .order-table_subtotal-row
+  font-weight: bold
+
 // Buttons
+
 .button-cell
   border-radius: 3px
   background-color: #5fd375
 
-.button-link
+a.button-link
   display: inline-block
   padding: 15px 25px
   border: 1px solid #5fd375
@@ -108,16 +198,28 @@ a
   color: #ffffff
   text-decoration: none
 
-// -----------
+
+// Utilities
+
+.text-nowrap
+  white-space: nowrap
+
+.text-right
+  text-align: right
+
+.text-center
+  text-align: center
+
+
+//--------------------------------------
 // Layout
-.email-header
-  padding: 20px 10px 60px
 
-.email-footer
-  padding: 0px 10px 20px
+.content-container
+  max-width: 640px
 
-// --------------------------------
-// Header
+
+// Email Header
+
 .header__logo-container
   padding: 15px 0
 .header__logo-link
@@ -127,8 +229,11 @@ a
   margin: 0 auto !important
 
 
-// --------------------------------
-// Header
+// Email Title
+
+.email-title
+  padding: 20px 10px 60px
+
 .menu-title
   text-transform: uppercase
   color: #000000
@@ -144,8 +249,11 @@ a
   font-family: $body-font
   color: #808080
 
-// --------------------------------
-// Footer
+
+// Email Footer
+
+.email-footer
+  padding: 0px 10px 20px
 
 .footer-text-content
   font-size: 16px
@@ -153,7 +261,9 @@ a
   font-family: $body-font
   color: #808080
   font-weight: bold
+  padding-top: 30px
   padding-bottom: 40px
+
 
 // --------------------------------
 // Product
