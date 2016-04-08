@@ -1,15 +1,15 @@
-// track is the preferred way to send events to both KM and Intercom.
+// track is the preferred way to send funnel events to our analytics platforms.
 function track(args) {
   <% unless TRUE_PRODUCTION_INSTANCE %>
     console.log('Track: ' + JSON.stringify(args));
   <% end %>
-  trackAmplitude(args);
+  // trackAmplitude(args);
   trackKissmetrics(args);
   trackIntercom(args);
 }
 
 function trackAmplitude(args) {
-  amplitude.getInstance().logEvent(args.name, args.metadata);
+  return amplitude.logEvent(args.name, args.metadata);
 }
 
 function trackKissmetrics(args) {

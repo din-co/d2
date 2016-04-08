@@ -6,6 +6,7 @@
       authenticated: <%= spree_current_user.present? %>
     }
     track({name: "visited cart", metadata: metadata});
+    trackAmplitude({name: 'Purchase Intent - Visited cart', metadata: metadata});
   </script>
 <% end -%>
 

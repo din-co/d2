@@ -9,6 +9,7 @@
         order_total: <%= @order.total.to_f %>
       }
       track({name: "completed checkout", metadata: metadata});
+      trackAmplitude({name: 'Checkout - Completed checkout'});
       <% @order.line_items.each do |item| %>
         metadata = {
           name: "<%= j item.product.name %>",

@@ -6,6 +6,7 @@
       metadata.cart_total = <%= simple_current_order.total.to_f %>
     <% end -%>
     track({name: "visited sign up", metadata: metadata});
+    trackAmplitude({name: 'Onboarding - Visited Signup', metadata: metadata});
   </script>
 <% end -%>
 
