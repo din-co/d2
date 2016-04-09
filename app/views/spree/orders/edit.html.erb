@@ -1,12 +1,16 @@
 <% content_for :head do %>
   <script type="text/javascript">
-    var metadata = {
-      cart_total: <%= @order.total.to_f %>,
-      item_count: <%= @order.item_count %>,
-      authenticated: <%= spree_current_user.present? %>
-    }
-    track({name: "visited cart", metadata: metadata});
-    trackAmplitude({name: 'Purchase Intent - Visited cart', metadata: metadata});
+    $(function() {
+      var metadata = {
+        kitchen_open: <%= KITCHEN.open? %>,
+        authenticated: <%= spree_current_user.present? %>,
+        item_count: <%= @order.item_count %>,
+        cart_total: <%= @order.total.to_f %>,
+        items_sold_out: $(".js_product_sold_out").length
+      }
+      track({name: "visited cart", metadata: metadata});
+      trackAmplitude({name: 'Purchase Intent - Visited cart', metadata: metadata});
+    });
   </script>
 <% end -%>
 
