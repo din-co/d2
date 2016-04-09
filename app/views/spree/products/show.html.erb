@@ -7,7 +7,8 @@
           product_id: $elem.data("id"),
           name: $elem.data("name"),
           restaurant: $elem.data("restaurant"),
-          chef: $elem.data("chef")
+          chef: $elem.data("chef"),
+          purchaseable: $elem.find('button:disabled').length == 0
         };
       }
       trackAmplitude({name: 'Purchase Intent - Viewed product page', metadata: productMetadata($(".add-product-form"))});

@@ -9,6 +9,9 @@ function track(args) {
 }
 
 function trackAmplitude(args) {
+  <% unless TRUE_PRODUCTION_INSTANCE %>
+    console.log('Amplitude: ' + JSON.stringify(args));
+  <% end %>
   return amplitude.logEvent(args.name, args.metadata);
 }
 
