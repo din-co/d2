@@ -12,11 +12,9 @@
         trackAmplitude({name: 'Purchase Intent - Added product'});
       })
       $(".js_learn_more_button").click(function(){
-        track({name: 'clicked learn more button', metadata: {location: 'jumbotron'}});
         trackAmplitude({name: 'Purchase Intent - Learn more'});
       })
       $(".js_view_menu_button").click(function(){
-        track({name: 'clicked view menu button', metadata: {location: 'how din works'}});
         trackAmplitude({name: 'Purchase Intent - View menu'});
       })
     });
@@ -29,7 +27,7 @@
       <h1 class="hr-header home-heading">Recreate Restaurant Dishes at Home</h1>
       <p class="sub-header text-center type-serif">in about 20 minutes</p>
       <div class="text-center">
-        <a class="btn btn-default learn-more-button" href="#how-din-works">Learn how Din works</a>
+        <a class="btn btn-default learn-more-button js_learn_more_button" href="#how-din-works">Learn how Din works</a>
       </div>
     </div>
   </div>
@@ -151,7 +149,7 @@
       <div class="how-din-works__description">
         <p>Gather around the table with your loved ones to share stories of your day.</p>
         <p>
-          <a class="btn btn-primary" href="#menu">View the Din menu</a>
+          <a class="btn btn-primary js_view_menu_button" href="#menu">View the Din menu</a>
         </p>
       </div>
     </div>

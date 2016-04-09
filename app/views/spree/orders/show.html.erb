@@ -3,13 +3,13 @@
     <script type="text/javascript">
       var metadata = {
         item_count: <%= @order.item_count %>,
-        item_total: <%= @order.amount.to_f %>,
-        tax_total: <%= @order.tax_total.to_f %>,
-        total_applicable_store_credit: <%= @order.total_applicable_store_credit.to_f %>,
+        item_total: <%= @order.item_total.to_f %>,
+        ship_total: <%= @order.ship_total.to_f %>,
+        store_credit: <%= @order.total_applicable_store_credit.to_f %>,
         order_total: <%= @order.total.to_f %>
       }
       track({name: "completed checkout", metadata: metadata});
-      trackAmplitude({name: 'Checkout - Completed checkout'});
+      trackAmplitude({name: 'Checkout - Completed checkout', metadata: metadata});
       <% @order.line_items.each do |item| %>
         metadata = {
           name: "<%= j item.product.name %>",
@@ -19,9 +19,11 @@
           <% if item.product.chef %>
             chef: "<%= j item.product.chef.name %>",
           <% end -%>
-          product_id: <%= item.product.id %>
+          product_id: '<%= item.product.id %>'
         }
         track({name: "purchased product", metadata: metadata});
+        trackAmplitude({name: 'Checkout - Purchased product', metadata: metadata})
+        amplitude.logRevenue(<%= item.price %>, <%= item.quantity %>, metadata.product_id);
       <% end %>
     </script>
   <% end -%>
