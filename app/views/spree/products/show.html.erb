@@ -1,24 +1,10 @@
 <% content_for :head do %>
   <script type="text/javascript">
     $(function() {
-      var productMetadata = function(elem) {
-        var $elem = $(elem);
-        return {
-          product_id: $elem.data("id"),
-          name: $elem.data("name"),
-          restaurant: $elem.data("restaurant"),
-          chef: $elem.data("chef"),
-          purchaseable: $elem.find('button:disabled').length == 0
-        };
-      }
       trackAmplitude({name: 'Purchase Intent - Viewed product page', metadata: productMetadata($(".add-product-form"))});
-      $(".add-product-form").submit(function() {
-        var metadata = productMetadata(this);
-        track({name: 'added product', metadata: metadata});
-        trackAmplitude({name: 'Purchase Intent - Added product', metadata: metadata});
-      })
     });
   </script>
+  <%= render partial: 'shared/purchase_funnel_tracking' %>
 <% end -%>
 <% @body_id = 'product-details' %>
 <% @show_kitchen_status = true %>
