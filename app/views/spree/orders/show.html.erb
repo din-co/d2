@@ -22,7 +22,7 @@
           product_id: '<%= item.product.id %>'
         }
         track({name: "purchased product", metadata: metadata});
-        trackAmplitude({name: 'Checkout - Purchased product', metadata: metadata})
+        trackAmplitude({name: 'Checkout - Purchased product', metadata: metadata});
         amplitude.logRevenue(<%= item.price %>, <%= item.quantity %>, metadata.product_id);
       <% end %>
     </script>
