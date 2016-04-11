@@ -68,6 +68,16 @@ module Spree
         delivery_window.present?
       end
 
+      def delivery_day_and_window
+        # Needs to be updated with "delivery_at" date.
+        "#{completed_at.to_s(:weekday_month_day_short)}, #{delivery_window}"
+      end
+
+      def delivery_summary
+        item_names = line_items.map { |line_item| "#{line_item.quantity} × #{line_item.name}" }
+        "#{delivery_day_and_window}: #{item_names.to_sentence}."
+      end
+
       def shipping_promotion_difference
         if amt = shipping_promotion_minimal_amount
           Spree::Money.new(amt - display_item_total.money)
