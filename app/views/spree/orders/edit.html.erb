@@ -7,7 +7,7 @@
         item_count: <%= @order.item_count %>,
         cart_total: <%= @order.total.to_f %>,
         items_sold_out: $(".js_product_sold_out").length
-      }
+      };
       track({name: "visited cart", metadata: metadata});
       trackAmplitude({name: 'Purchase Intent - Visited cart', metadata: metadata});
     });

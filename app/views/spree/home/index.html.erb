@@ -4,9 +4,16 @@
       var metadata = {
         kitchen_open: <%= KITCHEN.open? %>,
         authenticated: <%= spree_current_user.present? %>,
-        add_product_buttons: $(".add-product-form button").length,
-        disabled_add_product_buttons: $(".add-product-form button:disabled").length
+        product_ids: [],
+        product_names: [],
+        products_purchasable: []
       };
+      $(".add-product-form").each(function(i) {
+        var productData = productMetadata(this);
+        metadata.product_ids.push(productData.product_id);
+        metadata.product_names.push(productData.name);
+        metadata.products_purchasable.push(productData.purchasable);
+      });
       trackAmplitude({name: 'Visited Homepage', metadata: metadata});
       $(".js_learn_more_button").click(function(){
         trackAmplitude({name: 'Purchase Intent - Learn more'});
@@ -14,6 +21,18 @@
       $(".js_view_menu_button").click(function(){
         trackAmplitude({name: 'Purchase Intent - View menu'});
       });
+
+      $("#how-din-works").waypoint({
+        <%# This waypoint prevents recording product purchase button %>
+        offset: '40%',
+        continuous: false,
+        handler: function(direction) {
+          if (direction == "down") {
+            trackAmplitude({name: 'Purchase Intent - Viewed learn more'});
+          }
+        }
+      });
+
     });
   </script>
   <%= render partial: 'shared/purchase_funnel_tracking' %>
