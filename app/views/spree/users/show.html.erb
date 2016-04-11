@@ -17,8 +17,8 @@
 
   <% if @personal_referral_promo %>
     <div class="page-section">
-      <h4>Share the Din Love</h4>
-      <p>Give a friend <strong><%= @personal_referral_promo.description.sub(/your/, 'their') %></strong>. Send them your referral link: <%= link_to(nil, main_app.personal_promo_url(@personal_referral_promo.path)) %></p>
+      <h4><%= Spree.t(:promo_share_the_love_title) %></h4>
+      <p><%= Spree.t(:promo_share_the_love_body, description: "<strong>#{@personal_referral_promo.description.sub(/your/, 'their')}</strong>", link: link_to(nil, main_app.personal_promo_url(@personal_referral_promo.path))).html_safe %></p>
     </div>
   <% end %>
 
