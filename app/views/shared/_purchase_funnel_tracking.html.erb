@@ -1,0 +1,22 @@
+<script>
+  $(function() {
+    $(".add-product-form").waypoint({
+      offset: '80%',
+      handler: function(direction) {
+        if (direction == "down") {
+          var metadata = productMetadata($(this.element));
+          trackAmplitude({name: "Purchase Intent - Scrolled to purchase button", metadata: metadata});
+        }
+      }
+    });
+    $(".add-product-form button").mouseenter(function() {
+      var metadata = productMetadata($(this).parents(".add-product-form"));
+      trackAmplitude({name: "Purchase Intent - Moused over purchase button", metadata: metadata});
+    });
+    $(".add-product-form").submit(function() {
+      var metadata = productMetadata($(this));
+      track({name: 'added product', metadata: metadata});
+      trackAmplitude({name: 'Purchase Intent - Added product', metadata: metadata});
+    });
+  });
+</script>

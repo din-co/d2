@@ -11,16 +11,17 @@
       track({name: "completed checkout", metadata: metadata});
       trackAmplitude({name: 'Checkout - Completed checkout', metadata: metadata});
       <% @order.line_items.each do |item| %>
-        metadata = {
+        var metadata = {
           name: "<%= j item.product.name %>",
-          <% if item.product.restaurant %>
-            restaurant: "<%= j item.product.restaurant.name %>",
-          <% end -%>
-          <% if item.product.chef %>
-            chef: "<%= j item.product.chef.name %>",
-          <% end -%>
-          product_id: '<%= item.product.id %>'
-        }
+          product_id: "<%= j item.product.id.to_s %>",
+          quantity: "<%= j item.quantity.to_s %>"
+        };
+        <% if item.product.restaurant %>
+          metadata.restaurant = "<%= j item.product.restaurant.name %>";
+        <% end -%>
+        <% if item.product.chef %>
+          metadata.chef = "<%= j item.product.chef.name %>";
+        <% end -%>
         track({name: "purchased product", metadata: metadata});
         trackAmplitude({name: 'Checkout - Purchased product', metadata: metadata});
         amplitude.logRevenue(<%= item.price %>, <%= item.quantity %>, metadata.product_id);

@@ -5,4 +5,5 @@
 //= require spree/frontend/cart
 //= require spree/frontend/nav
 //= require spree/frontend/track
+//= require spree/frontend/jquery.waypoints
 //= require bootstrap-sprockets

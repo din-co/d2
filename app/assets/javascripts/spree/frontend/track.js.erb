@@ -15,6 +15,18 @@ function trackAmplitude(args) {
   return amplitude.logEvent(args.name, args.metadata);
 }
 
+// Pass in a product purchase form with a button inside, returns metadata for the product.
+function productMetadata(elem) {
+  var $elem = $(elem);
+  return {
+    product_id: $elem.data("id"),
+    name: $elem.data("name"),
+    restaurant: $elem.data("restaurant"),
+    chef: $elem.data("chef"),
+    purchaseable: $elem.find('button:disabled').length == 0
+  };
+}
+
 function trackKissmetrics(args) {
   _kmq.push(['record', args.name, args.metadata]);
 }

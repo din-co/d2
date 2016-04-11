@@ -2,14 +2,16 @@
   <script type="text/javascript">
     <% payment_method = @order.credit_cards.with_payment_profile.first %>
     var metadata = {
-      stripe_customer: "<%= j payment_method.try(:gateway_customer_profile_id) %>"
-    }
+      stripe_customer: "<%= j payment_method.try(:gateway_customer_profile_id) %>",
+      item_count: <%= @order.item_count %>,
+      cart_total: <%= @order.total.to_f %>
+    };
     track({name: "visited checkout step confirm", metadata: metadata});
-    trackAmplitude({name: 'Checkout - Confirm'});
+    trackAmplitude({name: 'Checkout - Confirm', metadata: metadata});
     <% if payment_method.payments.completed.count == 0 %>
       metadata.added_card = true;
       track({name: "added payment method", metadata: metadata});
-      trackAmplitude({name: 'Checkout - Payment method added'});
+      trackAmplitude({name: 'Checkout - Payment method added', metadata: metadata});
     <% end -%>
   </script>
 <% end -%>
