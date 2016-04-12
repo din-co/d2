@@ -12,6 +12,10 @@ module Spree
         end
       end
 
+      state_machine.after_transition to: :complete do |order|
+        order.user.ensure_personal_referral_promo
+      end
+
       validate :validate_ship_address
 
       state_machine.before_transition to: :delivery do |order|
