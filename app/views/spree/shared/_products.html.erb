@@ -19,7 +19,7 @@
 <% if products.any? %>
   <div class="container product-list">
     <% products.each do |product| %>
-      <% url = spree.product_path(product, taxon_id: @taxon.try(:id)) %>
+      <% url = subscription_menu ? spree.subscription_product_path(product) : spree.product_path(product, taxon_id: @taxon.try(:id)) %>
       <div class="product product--list-item" itemscope itemtype="http://schema.org/Product">
         <% cache(@taxon.present? ? [I18n.locale, current_currency, @taxon, product, subscription_menu.to_s] : [I18n.locale, current_currency, product, subscription_menu.to_s]) do %>
 
