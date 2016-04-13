@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   Spree::Core::Engine.add_routes do
 
     get 'subscription/menu', to: 'home#subscription_menu'
+    get 'subscription/:id', to: 'products#show', as: :subscription_product, defaults: { subscription_menu: true }
 
     namespace :account, module: :user do
       resource :meal_subscription, path: "subscription", only: [:show, :create]
