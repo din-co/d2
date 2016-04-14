@@ -88,7 +88,7 @@ en:
         total: Total
         salutation_thanks: Thanks,
         thanks_for_placing_order: "Thank you for placing an order with Din!"
-        delivery_info: "You can expect delivery of your order today between %{delivery_window} this evening in an insulated tote, which will keep your order cold until 8pm. Our couriers will gladly take the tote bag back upon delivery or with your next order, you may leave the tote out or give it directly to the driver."
+        delivery_info: "You can expect delivery of your order %{delivery_day_and_window} in an insulated tote, which will keep your order cold until %{delivery_cold_until}. Our couriers will gladly take the tote bag back upon delivery or with your next order, you may leave the tote out or give it directly to the driver."
         delivery_sms: "Our courier will send a text message to %{phone} when your delivery is getting close, usually 10-15 minutes before they’ll arrive."
         pantry_check_text: "Check out the kitchen tools and pantry items needed to cook Din meals:"
         delivery_address: "Delivery address"

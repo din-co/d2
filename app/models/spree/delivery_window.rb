@@ -18,6 +18,10 @@ module Spree
       Time.zone.now.midnight.advance(hours: start_hour - lead_time_duration)
     end
 
+    def cold_until
+      Time.zone.now.midnight.advance(hours: start_hour + duration + 3) # 3 hours from end of delivery window
+    end
+
     def to_s
       "#{format_offset(start_hour, false)}–#{format_offset(start_hour + duration)}"
     end
