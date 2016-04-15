@@ -5,7 +5,9 @@ module Spree
 
     def credit_card_changed_email(credit_card)
       @credit_card = credit_card
-      subject = build_subject("Credit Card Updated")
+      @email_preheader = "#{Spree.t(@credit_card.cc_type)}, #{@credit_card.last_digits} #{@credit_card.month}/#{@credit_card.year}"
+      @title = "Credit Card Updated"
+      subject = build_subject(@title)
       mail(to: @credit_card.user.email, from: from_address(@store), subject: subject)
     end
 
