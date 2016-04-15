@@ -1,16 +1,14 @@
-<%= render layout: 'spree/shared/mailer_layout', locals: {title: @title} do %>
-  <p>
-    This email confirms your new payment information. We will automatically charge future payments to:
-  </p>
-  <p>
-    <%= Spree.t(@credit_card.cc_type) %>
-    <%= @credit_card.last_digits %>
-    <br>
-    <%= @credit_card.address.full_name %>
-    <br>
-    <%= @credit_card.address.one_line %>
-  </p>
-  <p>
-    To make any further changes, visit your <%= link_to "account page", spree.account_url %>.
-  </p>
-<% end %>
+<p>
+  This email confirms your new payment information. We will automatically charge future payments to:
+</p>
+<p>
+  <%= Spree.t(@credit_card.cc_type) %>
+  <%= @credit_card.last_digits %>
+  <br>
+  <%= @credit_card.address.full_name %>
+  <br>
+  <%= @credit_card.address.one_line %>
+</p>
+<p>
+  To make any further changes, visit your <%= link_to "account page", spree.account_url %>.
+</p>

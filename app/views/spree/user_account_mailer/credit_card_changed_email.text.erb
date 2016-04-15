@@ -1,5 +1,3 @@
-<%- title = "Credit Card Updated" -%>
-<%= render layout: 'spree/shared/mailer_layout', locals: {title: title} do %>
 This email confirms your new payment information. We will automatically charge future payments to:
 
 <%= Spree.t(@credit_card.cc_type) %> <%= @credit_card.last_digits %>
@@ -8,4 +6,3 @@ This email confirms your new payment information. We will automatically charge f
 
 To make any further changes, visit your account page:
 <%= spree.account_url %>
-<% end %>

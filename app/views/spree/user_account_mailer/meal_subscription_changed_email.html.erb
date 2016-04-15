@@ -1,27 +1,25 @@
-<%= render layout: 'spree/shared/mailer_layout', locals: {title: @title} do %>
-  <% if @meal_subscription.status == "paused" -%>
-    <p>
-      This email confirms your subscription has been paused.
-    </p>
-    <p>
-      <strong>Note:</strong>
-      <em>Updating your subscription settings does not affect subscription orders which are in progress.</em>
-      <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
-    </p>
-    <p>
-      To restart your subscription, visit your <%= link_to "account page", spree.account_url %>.
-    </p>
-  <% else -%>
-    <p>
-      This email confirms your subscription details:
-    </p>
-    <p>
-      <strong><%= Spree.t(:subscription_summary, day: @meal_subscription.delivery_day.titleize, meal_count: @meal_subscription.meal_count, delivery_window: @meal_subscription.delivery_window) %></strong>
-      <br>
-      <%= Spree.t(:subscription_notification_summary, notification_weekday: @meal_subscription.delivery_day.titleize, meal_count: @meal_subscription.meal_count, notification_channels: @meal_subscription.notification_channels.to_sentence, open_days: Spree::MealSubscription.order_open_days, order_processed_weekday: @meal_subscription.order_processed_weekday) %>
-    </p>
-    <p>
-      To make any further changes, visit your <%= link_to "account page", spree.account_url, class: "green-link" %>.
-    </p>
-  <% end -%>
-<% end %>
+<% if @meal_subscription.status == "paused" -%>
+  <p>
+    This email confirms your subscription has been paused.
+  </p>
+  <p>
+    <strong>Note:</strong>
+    <em>Updating your subscription settings does not affect subscription orders which are in progress.</em>
+    <%= support_email_link("Help with my subscription", "Contact support") %> and we’ll do our best to accommodate your needs.
+  </p>
+  <p>
+    To restart your subscription, visit your <%= link_to "account page", spree.account_url %>.
+  </p>
+<% else -%>
+  <p>
+    This email confirms your subscription details:
+  </p>
+  <p>
+    <strong><%= Spree.t(:subscription_summary, day: @meal_subscription.delivery_day.titleize, meal_count: @meal_subscription.meal_count, delivery_window: @meal_subscription.delivery_window) %></strong>
+    <br>
+    <%= Spree.t(:subscription_notification_summary, notification_weekday: @meal_subscription.delivery_day.titleize, meal_count: @meal_subscription.meal_count, notification_channels: @meal_subscription.notification_channels.to_sentence, open_days: Spree::MealSubscription.order_open_days, order_processed_weekday: @meal_subscription.order_processed_weekday) %>
+  </p>
+  <p>
+    To make any further changes, visit your <%= link_to "account page", spree.account_url, class: "green-link" %>.
+  </p>
+<% end -%>
