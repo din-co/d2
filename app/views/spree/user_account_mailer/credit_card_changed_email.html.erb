@@ -1,17 +1,23 @@
-<p class="lede">
-  Credit Card Updated
-</p>
-<p>
-  This email confirms your new payment information. We will automatically charge future payments to:
-</p>
-<p>
-  <%= Spree.t(@credit_card.cc_type) %>
-  <%= @credit_card.last_digits %>
-  <%= @credit_card.month %>/<%= @credit_card.year %>
-</p>
-<p>
-  <%= render partial: 'spree/shared/vcard', locals: {address: @credit_card.address} %>
-</p>
-<p>
-  To make any further changes, visit your <%= link_to "account page", spree.account_url %>.
-</p>
+<%
+  title = "Credit Card Updated"
+  @email_preheader = "#{Spree.t(@credit_card.cc_type)}, #{@credit_card.last_digits} #{@credit_card.month}/#{@credit_card.year}"
+%>
+<% content_for :footer_text do %><% end -%>
+
+<%= render layout: 'spree/shared/mailer_layout', locals: {title: title} do %>
+  <p>
+    This email confirms your new payment information. We will automatically charge future payments to:
+  </p>
+  <p>
+    <%= Spree.t(@credit_card.cc_type) %>
+    <%= @credit_card.last_digits %>
+    <%= @credit_card.month %>/<%= @credit_card.year %>
+    <br>
+    <%= @credit_card.address.full_name %>
+    <br>
+    <%= render partial: 'spree/shared/address.text', locals: { address: @credit_card.address } %>
+  </p>
+  <p>
+    To make any further changes, visit your <%= link_to "account page", spree.account_url %>.
+  </p>
+<% end %>

@@ -1,14 +1,13 @@
 <%- address = @credit_card.address -%>
-Credit Card Updated
+<%- text_address = render partial: 'spree/shared/address.text', locals: { address: @credit_card.address } -%>
+<%- title = "Credit Card Updated" -%>
+<%= render layout: 'spree/shared/mailer_layout', locals: {title: title} do %>
+  This email confirms your new payment information. We will automatically charge future payments to:
 
-This email confirms your new payment information. We will automatically charge future payments to:
+  <%= Spree.t(@credit_card.cc_type) %> <%= @credit_card.last_digits %> <%= @credit_card.month %>/<%= @credit_card.year %>
+  <%= @credit_card.address.full_name %>
+  <%= text_address.strip %>
 
-<%= Spree.t(@credit_card.cc_type) %> <%= @credit_card.last_digits %> <%= @credit_card.month %>/<%= @credit_card.year %>
-
-<%= address.full_name %>
-<%= address.address1 %>
-<%= address.address2.presence %>
-<%= address.city %>, <%= address.state_text %> <%= address.zipcode %>
-
-To make any further changes, visit your account page:
-<%= spree.account_url %>
+  To make any further changes, visit your account page:
+  <%= spree.account_url %>
+<% end %>

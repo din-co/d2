@@ -1,12 +1,21 @@
-<p class="lede">
-  Delivery Address Updated
-</p>
-<p>
-  This email confirms your new delivery address. We will send future deliveries to:
-</p>
-<p>
-  <%= render partial: 'spree/shared/vcard', locals: {address: @address} %>
-</p>
-<p>
-  To make any further changes, visit your <%= link_to "account page", spree.account_url %>.
-</p>
+<%
+  title = "Delivery Address Updated"
+  text_address = render :partial => 'spree/shared/address.text', :locals => { :address => @address }
+  @email_preheader = "#{@address.full_name}, #{text_address.strip}, #{@address.phone}"
+%>
+<% content_for :footer_text do %><% end -%>
+
+<%= render layout: 'spree/shared/mailer_layout', locals: {title: title} do %>
+  <p>
+    This email confirms your new delivery address. We will send future deliveries to:
+  </p>
+  <p>
+    <%= render partial: 'spree/shared/vcard', locals: {address: @address} %>
+    <% if @address.delivery_instructions.present? %>
+      <em><%= @address.delivery_instructions %></em>
+    <% end %>
+  </p>
+  <p>
+    To make any further changes, visit your <%= link_to "account page", spree.account_url, class: "green-link" %>.
+  </p>
+<% end %>

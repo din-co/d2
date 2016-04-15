@@ -55,7 +55,7 @@
         <tr>
           <td align="center" class="heading-hr"><%= image_tag 'black.png', width: 55, height: 4, class: "heading-hr__img" %></td>
         </tr>
-<!--
+        <!--
         <tr>
           <td align="center" class="menu-date"><%= @email_date %></td>
         </tr>
@@ -67,7 +67,8 @@
               </tr>
             </table>
           </td>
-        </tr> -->
+        </tr>
+        -->
       </table>
       <!--[if (gte mso 9)|(IE)]>
       </td>
@@ -91,9 +92,7 @@
           <td>
 
 
-
-
-            <p class="lede">
+            <p>
               <%= Spree.t('order_mailer.confirm_email.dear_customer', name: address.firstname) %>
             </p>
             <p>
@@ -197,6 +196,7 @@
                 </td>
               </tr>
             </table>
+
 
           </td>
         </tr>
