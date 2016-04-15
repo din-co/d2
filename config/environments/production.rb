@@ -55,9 +55,6 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_controller.asset_host = ENV['CLOUDFRONT_DISTRIBUTION'].presence
-
   # Define the default canonical domain name, and redirect to it if accessed via another domain.
   canonical_domain = ENV['CANONICAL_DOMAIN']
   if ENV['HEROKU_APP_NAME'].to_s.include?('-pr-')
@@ -66,9 +63,15 @@ Rails.application.configure do
   config.x.canonical_domain = canonical_domain || 'din.co'
   ::TRUE_PRODUCTION_INSTANCE = (canonical_domain == 'din.co' && ENV['EMAIL_HOST'] == 'din.co')
 
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  config.action_controller.asset_host = ENV['CLOUDFRONT_DISTRIBUTION'].presence || canonical_domain
+  config.action_mailer.asset_host = config.action_controller.asset_host
+
   # Do not raise email delivery errors, since emails are processed by a background queue.
   config.action_mailer.raise_delivery_errors = ! ::TRUE_PRODUCTION_INSTANCE
-  config.action_mailer.default_url_options = { protocol: 'https', host: ENV['EMAIL_HOST'] || config.x.canonical_domain }
+  config.action_mailer.default_url_options = { protocol: 'https', host: config.x.canonical_domain }
+  config.action_mailer.default_asset_host_protocol = 'https'
+
 
   # Show full error reports in staging environments to aid debugging.
   config.consider_all_requests_local = ! ::TRUE_PRODUCTION_INSTANCE

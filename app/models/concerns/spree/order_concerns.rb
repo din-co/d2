@@ -60,12 +60,31 @@ module Spree
     end
 
     module InstanceMethods
+      def finalize!
+        user.ensure_personal_referral_promo
+        super
+      end
+
       def delivery_window
         shipments.first.try!(:selected_delivery_window)
       end
 
       def delivery_window_selected?
         delivery_window.present?
+      end
+
+      def delivery_day_and_window
+        # Needs to be updated with "delivery_at" date.
+        "#{completed_at.to_s(:weekday_month_short_day)}, #{delivery_window}"
+      end
+
+      def delivery_cold_until
+        delivery_window.cold_until.to_s(:short_time)
+      end
+
+      def delivery_summary
+        item_names = line_items.map { |line_item| "#{line_item.quantity} × #{line_item.name}" }
+        "#{delivery_day_and_window}: #{item_names.to_sentence}."
       end
 
       def shipping_promotion_difference

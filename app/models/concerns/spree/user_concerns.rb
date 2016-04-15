@@ -42,8 +42,9 @@ module Spree
       end
 
       def ensure_personal_referral_promo
-        return personal_referral_promo if personal_referral_promo.present?
         transaction do
+          return personal_referral_promo if personal_referral_promo.present?
+
           from = default_address.try(:firstname) || email
           begin
             promo = create_personal_referral_promo!({

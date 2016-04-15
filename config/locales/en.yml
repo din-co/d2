@@ -24,6 +24,7 @@ en:
     formats:
       delivery_window_date: "%A, %b %d"
   spree:
+    din_mailing_address: 3171 21st St, SF CA 94110
     allergen_warning: "Food Allergy Notice: Our meals are prepared in restaurant kitchens that may contain tree nuts, peanuts, fish, shellfish, dairy, soy, eggs, and wheat. Though best practices are used when preparing the meal, inadvertent cross-contamination may occur. We cannot guarantee the complete absence of allergens."
     delivery_window: "Delivery Window"
     delivery_window_required: "A valid delivery window must be selected"
@@ -78,21 +79,24 @@ en:
     out_of_stock: Sold Out
     sold_out: Sold Out
     inventory_error_flash_for_insufficient_quantity: "Sorry, a meal in your cart has sold out. Please remove it and select another dish."
+    promo_share_the_love_title: "Share the Din Love"
+    promo_share_the_love_body: "Give a friend %{description}. Send them your referral link: %{link}"
     order_mailer:
       confirm_email:
         subject: Order Confirmation
         dear_customer: "Hi %{name},"
         order_summary: Order Summary
-        subtotal: ! 'Subtotal:'
-        total: ! 'Total:'
+        subtotal: Subtotal
+        total: Total
         salutation_thanks: Thanks,
         thanks_for_placing_order: "Thank you for placing an order with Din!"
-        delivery_info: "You can expect delivery of your order between %{delivery_window} this evening in an insulated tote, which will keep your meal(s) cold until 8pm. Our couriers will gladly take the tote bag back upon delivery or with your next order, you may leave the tote out or give it directly to the driver."
+        delivery_info: "You can expect delivery of your order %{delivery_day_and_window} in an insulated tote, which will keep your order cold until %{delivery_cold_until}. Our couriers will gladly take the tote bag back upon delivery or with your next order, you may leave the tote out or give it directly to the driver."
         delivery_sms: "Our courier will send a text message to %{phone} when your delivery is getting close, usually 10-15 minutes before they’ll arrive."
-        pantry_check_text: "Don’t forget to check out the kitchen tools and pantry items you’ll need to complete your meal, which you can find on our FAQ:"
-        delivery_address: "Delivery address"
-        questions_contact: "If you have any questions, reply to this email or call/text 415-365-0533, we’ve got your back!"
+        pantry_check_text: "Check out the kitchen tools and pantry items needed to cook Din meals:"
+        delivery_address: "Delivery Address"
+        questions_contact: "If you have any questions, reply to this email, or call/text 415-365-0533."
         check_the_faq: "You can also check out our frequently asked questions here for more information:"
+        salutation: "Enjoy!"
   devise:
     failure:
       invalid: "Invalid email or password. If you cooked with us in 2015, you will need to create a new password."
