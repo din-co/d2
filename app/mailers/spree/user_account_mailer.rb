@@ -11,7 +11,11 @@ module Spree
 
     def meal_preferences_changed_email(meal_preference)
       @meal_preference = meal_preference
-      subject = build_subject("Meal Preferences Updated")
+      @proteins_sentence = Spree.t(:diet_suggestions, display_diet_names: @meal_preference.display_diet_names)
+      @allergen_sentence = (@meal_preference.allergen_names.present?) ? Spree.t(:allergen_suggestions, display_allergen_names: @meal_preference.display_allergen_names) : ""
+      @email_preheader = "#{ActionView::Base.full_sanitizer.sanitize(@proteins_sentence)} #{ActionView::Base.full_sanitizer.sanitize(@allergen_sentence)}"
+      @title = "Meal Preferences Updated"
+      subject = build_subject(@title)
       mail(to: @meal_preference.user.email, from: from_address(@store), subject: subject)
     end
 
