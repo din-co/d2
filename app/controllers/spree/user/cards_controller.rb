@@ -30,6 +30,8 @@ module Spree
         address_attributes: address_params.merge(country_id: Spree::Config[:default_country_id]),
       })
 
+      @user.bill_address_attributes = cc_params[:address_attributes]
+
       @credit_card = @user.credit_cards.create(cc_params)
       if @credit_card.persisted?
         flash[:success] = "New payment card added."
