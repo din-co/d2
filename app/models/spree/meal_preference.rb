@@ -64,6 +64,10 @@ module Spree
       allergens.map { |d| allergen_name(d) }
     end
 
+    def display_allergen_names
+      allergen_names.to_sentence(last_word_connector: " or ")
+    end
+
     def allergen_count
       allergens.size
     end

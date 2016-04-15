@@ -15,6 +15,9 @@ module Spree
       def require_phone?
         false
       end
+      def one_line
+        [address1, address2.presence, city, state].compact.join(", ") + " #{zipcode}"
+      end
     end
 
     private

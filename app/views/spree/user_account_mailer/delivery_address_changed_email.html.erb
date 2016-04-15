@@ -1,12 +1,12 @@
-<p class="lede">
-  Delivery Address Updated
-</p>
 <p>
   This email confirms your new delivery address. We will send future deliveries to:
 </p>
 <p>
   <%= render partial: 'spree/shared/vcard', locals: {address: @address} %>
+  <% if @address.delivery_instructions.present? %>
+    <em><%= @address.delivery_instructions %></em>
+  <% end %>
 </p>
 <p>
-  To make any further changes, visit your <%= link_to "account page", spree.account_url %>.
+  To make any further changes, visit your <%= link_to "account page", spree.account_url, class: "green-link" %>.
 </p>

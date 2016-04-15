@@ -1,12 +1,11 @@
-Delivery Address Updated
-
 This email confirms your new delivery address. We will send future deliveries to:
 
 <%= @address.full_name %>
-<%= @address.address1 %>
-<%= @address.address2.presence %>
-<%= @address.city %>, <%= @address.state_text %> <%= @address.zipcode %>
+<%= @text_address %>
 <%= @address.phone %>
+<%- if @address.delivery_instructions.present? %>
+  Delivery instructions: <%= @address.delivery_instructions %>
+<% end -%>
 
 To make any further changes, visit your account page:
 <%= spree.account_url %>
