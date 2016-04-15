@@ -94,7 +94,7 @@
         </tr>
         <tr>
           <td align="center" class="fine-print">
-            <b>Need help?</b> <%= support_email_address %> or <%= support_phone_number %>
+            <b>Need help?</b> <%= support_email_link("Re: \"#{@title}\" email", nil, "green-link") %> or <%= support_phone_number %>
             &nbsp; | &nbsp;
             <b>Din</b> <%= Spree.t(:din_mailing_address) %>
           </td>
