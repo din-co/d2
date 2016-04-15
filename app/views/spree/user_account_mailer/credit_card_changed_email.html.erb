@@ -9,7 +9,7 @@
     <br>
     <%= @credit_card.address.full_name %>
     <br>
-    <%= render partial: 'spree/shared/address.text', locals: { address: @credit_card.address } %>
+    <%= @credit_card.address.one_line %>
   </p>
   <p>
     To make any further changes, visit your <%= link_to "account page", spree.account_url %>.

@@ -1,10 +1,8 @@
-<%- text_address = render :partial => 'spree/shared/address.text', :locals => { :address => @address } -%>
-<%- title = "Delivery Address Updated" -%>
-<%= render layout: 'spree/shared/mailer_layout', locals: {title: title} do %>
+<%= render layout: 'spree/shared/mailer_layout', locals: {title: @title} do %>
 This email confirms your new delivery address. We will send future deliveries to:
 
 <%= @address.full_name %>
-<%= text_address.strip %>
+<%= @text_address %>
 <%= @address.phone %>
 <%- if @address.delivery_instructions.present? %>
   Delivery instructions: <%= @address.delivery_instructions %>

@@ -23,15 +23,18 @@ module Spree
 
     def delivery_address_changed_email(address, user)
       @address = address
-      subject = build_subject("Delivery Address Updated")
+      @text_address = @address.one_line
+      @email_preheader = "#{@address.full_name}, #{@text_address}, #{@address.phone}"
+      @title = "Delivery Address Updated"
+      subject = build_subject(@title)
       mail(to: user.email, from: from_address(@store), subject: subject)
     end
 
     def meal_subscription_changed_email(meal_subscription)
-      @sub = meal_subscription
-      @subject_text = (@sub.status == "paused") ? "Subscription Paused" : "Subscription Updated"
-      subject = build_subject(@subject_text)
-      mail(to: @sub.user.email, from: from_address(@store), subject: subject)
+      @meal_subscription = meal_subscription
+      @title = (@meal_subscription.status == "paused") ? "Subscription Paused" : "Subscription Updated"
+      subject = build_subject(@title)
+      mail(to: @meal_subscription.user.email, from: from_address(@store), subject: subject)
     end
 
     private

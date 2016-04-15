@@ -4,7 +4,7 @@ This email confirms your new payment information. We will automatically charge f
 
 <%= Spree.t(@credit_card.cc_type) %> <%= @credit_card.last_digits %> <%= @credit_card.month %>/<%= @credit_card.year %>
 <%= @credit_card.address.full_name %>
-<%= (render partial: 'spree/shared/address.text', locals: { address: @credit_card.address }).strip %>
+<%= @credit_card.address.one_line %>
 
 To make any further changes, visit your account page:
 <%= spree.account_url %>
