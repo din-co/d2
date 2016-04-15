@@ -5,7 +5,7 @@ module Spree
 
     def credit_card_changed_email(credit_card)
       @credit_card = credit_card
-      @email_preheader = "#{Spree.t(@credit_card.cc_type)}, #{@credit_card.last_digits} #{@credit_card.month}/#{@credit_card.year}"
+      @email_preheader = "#{Spree.t(@credit_card.cc_type)}, #{@credit_card.last_digits}"
       @title = "Credit Card Updated"
       subject = build_subject(@title)
       mail(to: @credit_card.user.email, from: from_address(@store), subject: subject)
@@ -15,7 +15,7 @@ module Spree
       @meal_preference = meal_preference
       @proteins_sentence = Spree.t(:diet_suggestions, display_diet_names: @meal_preference.display_diet_names)
       @allergen_sentence = (@meal_preference.allergen_names.present?) ? Spree.t(:allergen_suggestions, display_allergen_names: @meal_preference.display_allergen_names) : ""
-      @email_preheader = "#{ActionView::Base.full_sanitizer.sanitize(@proteins_sentence)} #{ActionView::Base.full_sanitizer.sanitize(@allergen_sentence)}"
+      @email_preheader = ActionView::Base.full_sanitizer.sanitize("#{@proteins_sentence} #{@allergen_sentence}")
       @title = "Meal Preferences Updated"
       subject = build_subject(@title)
       mail(to: @meal_preference.user.email, from: from_address(@store), subject: subject)
