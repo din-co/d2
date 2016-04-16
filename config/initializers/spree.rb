@@ -24,6 +24,9 @@ Spree.config do |config|
   # any inventory changes.
   # config.inventory_cache_threshold = 3
 
+  # Calculate any taxes based on the shipping address
+  config.tax_using_ship_address = true
+
 
   # Frontend:
 
