@@ -25,6 +25,12 @@ module Spree
         redirect_to checkout_state_path('delivery')
       end
 
+      # Overrides existing method to avoid creating bill_address
+      def before_address
+        default = {country_id: Country.default.id}
+        @order.build_ship_address(default) if @order.checkout_steps.include?('delivery') && !@order.ship_address
+      end
+
       def assign_shipping_rate_of_delivery_window
         delivery_window_id = params['order']['shipments_attributes']['0']['delivery_window_id']
         return unless delivery_window_id

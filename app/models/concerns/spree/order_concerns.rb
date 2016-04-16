@@ -65,6 +65,10 @@ module Spree
         super
       end
 
+      def assign_billing_to_shipping_address
+        true
+      end
+
       def delivery_window
         shipments.first.try!(:selected_delivery_window)
       end
