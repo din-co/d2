@@ -174,6 +174,13 @@ module Spree
           ]
         end
       end
+
+      def persist_user_address!
+        if self.user && self.user.respond_to?(:persist_order_address)
+          self.user.persist_order_address(self)
+        end
+      end
+
       private
 
       def validate_ship_address
