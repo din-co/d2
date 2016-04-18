@@ -51,7 +51,7 @@ RSpec.feature "Checkout flow:" do
       Timecop.return
     end
 
-    scenario "a customer orders a product for delivery to their billing address", js: true do
+    scenario "a customer orders a product for delivery to their shipping address", js: true do
       # Address entry
       expect(page).to have_current_path(spree.checkout_state_path(:address))
       address.zipcode = "94110"
