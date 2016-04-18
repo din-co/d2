@@ -88,52 +88,5 @@ RSpec.feature "Checkout flow:" do
       expect(page).to have_text(product.name)
     end
 
-    scenario "a customer orders a product for delivery with a billing address outside, but a shipping address inside the service area", js: true do
-      # Address entry
-      expect(page).to have_current_path(spree.checkout_state_path(:address))
-      within("#billing") do
-        fill_in "First Name", with: address.firstname
-        fill_in "Last Name", with: address.lastname
-        fill_in "Street Address", with: address.address1
-        fill_in "City", with: "Beverly Hills"
-        select address.state.name
-        fill_in "Zip", with: "90210"
-        fill_in "Phone", with: address.phone
-      end
-      within("#shipping") do
-        uncheck "Same as billing address"
-        fill_in "First Name", with: address.firstname
-        fill_in "Last Name", with: address.lastname
-        fill_in "Street Address", with: address.address1
-        fill_in "City", with: address.city
-        select address.state.name
-        fill_in "Zip", with: address.zipcode
-        fill_in "Phone", with: address.phone
-      end
-      click_on "Save and Continue"
-
-      # Delivery options
-      expect(page).to have_current_path(spree.checkout_state_path(:delivery))
-      delivery_window = Spree::DeliveryWindow.available.first
-      choose("#{delivery_window.to_s} #{delivery_window.display_cost}")
-      fill_in "Delivery Instructions", with: "Ring the doorbell and then huck the package onto the roof"
-      click_on "Save and Continue"
-
-      # Payment page -> Order confirmation page
-      fill_in_credit_card_payment_fields
-      click_on "Save and Continue"
-      using_wait_time(5) do # give Stripe more time...
-        expect(page).to have_current_path(spree.checkout_state_path(:confirm))
-      end
-      expect(page).to have_text(product.name)
-      # TODO: verify that important information is present
-      find_button("Place Order", match: :first).click
-
-      # Order summary page
-      user = Spree::User.last
-      expect(page).to have_current_path(spree.order_path(user.orders.first.number))
-      # TODO: verify that important information is present
-      expect(page).to have_text(product.name)
-    end
   end
 end
