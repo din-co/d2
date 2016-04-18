@@ -174,6 +174,36 @@ module Spree
           ]
         end
       end
+      private
+
+      def validate_ship_address
+        if ship_address.present?
+          unless ship_address.valid?
+            ship_address.errors.each { |attr, err| errors.add :ship_address, err }
+            return
+          end
+          unless ship_address.valid?(:shipping)
+            ship_address.errors.each { |attr, err| errors.add :ship_address, err }
+            return
+          end
+        end
+      end
+
+      def shipping_promotion_minimal_amount
+        if calc = shipping_promotion_minimal_calculator
+          Spree::Money.new(shipping_promotion_minimal_calculator.preferred_minimal_amount).money
+        end
+      end
+
+      def shipping_promotion_minimal_calculator
+        return @shipping_promotion_calculator if defined?(@shipping_promotion_calculator)
+        shipment = shipments.first
+        return nil unless shipment.try(:shipping_rates).present?
+        valid_shipping_rates = shipment.shipping_rates.select { |rate| rate.shipping_method.delivery_windows.any?(&:currently_available?) }
+        calculators = valid_shipping_rates.map { |rate| rate.shipping_method.calculator }
+        calculators = calculators.select { |calc| calc.respond_to?(:preferred_minimal_amount) }
+        @shipping_promotion_calculator = calculators.min_by { |calc| calc.preferred_minimal_amount }
+      end
     end
 
     ToteTag = ImmutableStruct.new(
@@ -192,36 +222,5 @@ module Spree
       [:packing_list]
     )
     TagLineItem = ImmutableStruct.new(:name, :quantity, :restaurant, :chef)
-
-    private
-
-    def validate_ship_address
-      if ship_address.present?
-        unless ship_address.valid?
-          ship_address.errors.each { |attr, err| errors.add :ship_address, err }
-          return
-        end
-        unless ship_address.valid?(:shipping)
-          ship_address.errors.each { |attr, err| errors.add :ship_address, err }
-          return
-        end
-      end
-    end
-
-    def shipping_promotion_minimal_amount
-      if calc = shipping_promotion_minimal_calculator
-        Spree::Money.new(shipping_promotion_minimal_calculator.preferred_minimal_amount).money
-      end
-    end
-
-    def shipping_promotion_minimal_calculator
-      return @shipping_promotion_calculator if defined?(@shipping_promotion_calculator)
-      shipment = shipments.first
-      return nil unless shipment.try(:shipping_rates).present?
-      valid_shipping_rates = shipment.shipping_rates.select { |rate| rate.shipping_method.delivery_windows.any?(&:currently_available?) }
-      calculators = valid_shipping_rates.map { |rate| rate.shipping_method.calculator }
-      calculators = calculators.select { |calc| calc.respond_to?(:preferred_minimal_amount) }
-      @shipping_promotion_calculator = calculators.min_by { |calc| calc.preferred_minimal_amount }
-    end
   end
 end
