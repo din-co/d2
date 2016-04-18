@@ -1,31 +1,25 @@
 <div class="row">
   <div class="col-sm-6">
-    <h3><%= Spree.t(:billing) %></h3>
+    <h3><%= Spree.t(:delivery) %></h3>
     <p>
-      <%= render :partial => 'spree/shared/vcard', :locals => { :address => order.bill_address } %>
+      <%= render :partial => 'spree/shared/vcard', :locals => { :address => order.ship_address } %>
       <%= link_to Spree.t(:change), checkout_state_path(:address), class: "edit-link" unless order.completed? %>
     </p>
+    <% if order.special_instructions.present? %>
+      <p>
+        <%= order.special_instructions %>
+        <%= link_to Spree.t(:change), checkout_state_path(:delivery), class: "edit-link" unless order.completed? %>
+      </p>
+    <% end -%>
+  </div>
+
+  <div class="col-sm-6">
+    <h3><%= Spree.t(:billing) %></h3>
     <p>
       <%= render :partial => 'spree/shared/credit_card', :locals => { :card => order.payments.valid.first.source } %>
       <%= link_to Spree.t(:change), checkout_state_path(:payment), class: "edit-link" unless order.completed? %>
     </p>
   </div>
-
-  <% if order.has_step?("delivery") %>
-    <div class="col-sm-6">
-      <h3><%= Spree.t(:delivery) %></h3>
-      <p>
-        <%= render :partial => 'spree/shared/vcard', :locals => { :address => order.ship_address } %>
-        <%= link_to Spree.t(:change), checkout_state_path(:address), class: "edit-link" unless order.completed? %>
-      </p>
-      <% if order.special_instructions.present? %>
-        <p>
-          <%= order.special_instructions %>
-          <%= link_to Spree.t(:change), checkout_state_path(:delivery), class: "edit-link" unless order.completed? %>
-        </p>
-      <% end -%>
-    </div>
-  <% end %>
 </div>
 
 <h3><%= Spree.t(:your_order) %></h3>
