@@ -69,9 +69,8 @@
         $("#address_lastname").val(customer_name.join(" ") || "(not provided)");
         $("#address_address1").val(token.card.address_line1);
         $("#address_city").val(token.card.address_city);
-        $("#address_state_name").val(token.card.address_state);
+        $("#address_state_name").val(token.card.address_state || "CA");
         $("#address_zipcode").val(token.card.address_zip);
-        console.log($("#new_credit_card").parents("form"))
         $("#new_credit_card").closest("form").submit();
       }
     });
@@ -87,7 +86,6 @@
     function disableLoading() {
       $("#change-payment-card").show();
       $("#change-payment-card-loading").hide();
-      console.log("disableLoading")
     }
     function stripeOpened() {
       $("#change-payment-card").hide();

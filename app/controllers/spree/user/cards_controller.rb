@@ -1,6 +1,6 @@
 require 'stripe'
 Stripe.api_version = "2016-03-07"
-Stripe.api_key = Spree::PaymentMethod.find_by!(name: "Stripe").preferred_secret_key
+Stripe.api_key = Spree.default_payment_method.preferred_secret_key
 
 module Spree
   class User::CardsController < Spree::StoreController
@@ -50,7 +50,7 @@ module Spree
     private
 
       def set_payment_method
-        @payment_method = Spree::PaymentMethod.find_by!(name: "Stripe")
+        @payment_method = Spree.default_payment_method
       end
 
       def credit_card_params

@@ -30,7 +30,7 @@ module Spree
 
     module InstanceMethods
       def default_credit_card
-        credit_cards.default.where(payment_method: Spree::PaymentMethod.find_by!(name: "Stripe")).first
+        credit_cards.default.where(payment_method: Spree.default_payment_method).first
       end
 
       def recently_ordered_products(within_last=3)

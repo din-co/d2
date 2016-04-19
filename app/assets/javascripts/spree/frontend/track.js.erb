@@ -1,6 +1,6 @@
 // track is the preferred way to send funnel events to our analytics platforms.
 function track(args) {
-  <% unless TRUE_PRODUCTION_INSTANCE %>
+  <% if Rails.env.development? %>
     console.log('Track: ' + JSON.stringify(args));
   <% end %>
   // trackAmplitude(args);
@@ -9,7 +9,7 @@ function track(args) {
 }
 
 function trackAmplitude(args) {
-  <% unless TRUE_PRODUCTION_INSTANCE %>
+  <% if Rails.env.development? %>
     console.log('Amplitude: ' + JSON.stringify(args));
   <% end %>
   return amplitude.logEvent(args.name, args.metadata);

@@ -66,11 +66,20 @@ rescue ActiveRecord::StatementInvalid => e
   1
 end
 
-Spree::DEFAULT_PAYMENT_METHOD = begin
-  Spree::PaymentMethod.find_by!(name: "Stripe")
-rescue ActiveRecord::StatementInvalid => e
-  Rails.logger.error e.message
-  nil
+module Spree
+  def self.default_payment_method
+    Spree::Gateway::StripeGateway.find_or_create_by!({
+      name: "Stripe",
+      active: true,
+    }) do |g|
+      g.auto_capture = true
+      g.description = "Credit card payments via Stripe"
+      g.preferred_server = TRUE_PRODUCTION_INSTANCE ? 'production' : 'test'
+      g.preferred_test_mode = !TRUE_PRODUCTION_INSTANCE
+      g.preferred_secret_key = ENV['STRIPE_SECRET_KEY'] || "sk_test_0wqvetWX3zDayzZc8KSggjhO"
+      g.preferred_publishable_key = ENV['STRIPE_PUBLISHABLE_KEY'] || "pk_test_RtnEyAHZVnP5lTdheh6UuR9W"
+    end
+  end
 end
 
 # Uploaded image assets

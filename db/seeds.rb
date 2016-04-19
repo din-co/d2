@@ -214,19 +214,6 @@ delivery_windows.each do |d|
   Spree::DeliveryWindow.create!(d[:window].merge(shipping_method: shipping_method))
 end
 
-# Stripe Payment Gateway
-Spree::Gateway::StripeGateway.find_or_create_by({
-  name: "Stripe",
-  description: "Credit card payments via Stripe",
-  active: true,
-  auto_capture: true,
-}) do |g|
-  g.preferred_server = "test"
-  g.preferred_test_mode = true
-  g.preferred_secret_key = "sk_test_0wqvetWX3zDayzZc8KSggjhO"
-  g.preferred_publishable_key = "pk_test_RtnEyAHZVnP5lTdheh6UuR9W"
-end
-
 if ENV['INCLUDE_SAMPLES']
   load Rails.root.join('db/samples.rb')
 end

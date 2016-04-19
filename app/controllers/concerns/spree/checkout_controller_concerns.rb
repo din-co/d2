@@ -21,11 +21,17 @@ module Spree
     module InstanceMethods
       private
 
+      def update_params
+        p = super
+        return p if p.blank?
+        p['payments_attributes'].try(:[], 0).try(:[], 'source_attributes').try(:[]=, 'default', true)
+        p
+      end
+
       def replace_gateway_profile_id_with_token
         if token = params['gateway_token_id'].presence
-          params['payment_source'][Spree::DEFAULT_PAYMENT_METHOD.id.to_s]['gateway_payment_profile_id'] = token
+          params['payment_source'][Spree.default_payment_method.id.to_s]['gateway_payment_profile_id'] = token
         end
-        params['payment_source'][Spree::DEFAULT_PAYMENT_METHOD.id.to_s]['default'] = true
       end
 
       def ensure_order_valid

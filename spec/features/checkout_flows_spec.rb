@@ -12,16 +12,40 @@ RSpec.feature "Checkout flow:" do
     fill_in "Confirm Password", with: "password"
   end
 
-  def fill_in_credit_card_payment_fields
-    expect(page).to have_current_path(spree.checkout_state_path(:payment))
+  def fill_in_credit_card_payment_fields(new_card=true)
     expect(page).to have_text("Stripe")
-    within("#payment-methods") do
-      fill_in "Name on card", with: "#{address.firstname} #{address.lastname}"
-      # TODO: make this use stripe.js!!
-      fill_in "Card Number", with: "4242424242424242"
-      fill_in "Expiration", with: 6.months.from_now.strftime("%-l/%y") # e.g. 12/17
-      fill_in "CVC", with: "123"
+    click_on(new_card ? "Add Card" : "Change Card")
+    using_wait_time(6) do # give Stripe more time…
+      within_frame(find('.stripe_checkout_app')) do
+        fill_in "billing-name", with: "#{address.firstname} #{address.lastname}"
+        fill_in "billing-street", with: address.address1
+        fill_in "billing-zip", with: address.zipcode
+        fill_in "billing-city", with: address.city
+        click_on "submitButton"
+
+        fill_in "card_number", with: "4242424242424242"
+        fill_in "cc-exp", with: 6.months.from_now.strftime("%-l%y") # e.g. 1217
+        fill_in "cc-csc", with: "123"
+        click_on "submitButton"
+      end
     end
+  end
+
+  def has_order_details(order)
+    expect(page).to have_text(order.ship_address.firstname)
+    expect(page).to have_text(order.ship_address.lastname)
+    expect(page).to have_text(order.ship_address.address1)
+    expect(page).to have_text(order.ship_address.city)
+    expect(page).to have_text(order.ship_address.state.abbr)
+    expect(page).to have_text(order.ship_address.zipcode)
+    expect(page).to have_text(order.ship_address.phone)
+    expect(page).to have_text(order.ship_address.delivery_instructions)
+    expect(page).to have_text(order.delivery_window.to_s)
+    order.products.each do |product|
+      expect(page).to have_text(product.name)
+    end
+    expect(page).to have_text(Spree.t(order.user.default_credit_card.cc_type))
+    expect(page).to have_text(order.user.default_credit_card.last_digits)
   end
 
   describe "when the kitchen is open" do
@@ -62,30 +86,28 @@ RSpec.feature "Checkout flow:" do
       select address.state.name
       fill_in "Zip", with: address.zipcode
       fill_in "Phone", with: address.phone
+      fill_in "Delivery Instructions", with: "Ring the doorbell and then huck the package onto the roof"
       click_on "Save and Continue"
 
       # Delivery options
       expect(page).to have_current_path(spree.checkout_state_path(:delivery))
       delivery_window = Spree::DeliveryWindow.available.first
       choose("#{delivery_window.to_s} #{delivery_window.display_cost}")
-      fill_in "Delivery Instructions", with: "Ring the doorbell and then huck the package onto the roof"
       click_on "Save and Continue"
 
       # Payment page -> Order confirmation page
       fill_in_credit_card_payment_fields
-      click_on "Save and Continue"
-      using_wait_time(5) do # give Stripe more time...
-        expect(page).to have_current_path(spree.checkout_state_path(:confirm))
-      end
-      expect(page).to have_text(product.name)
-      # TODO: verify that important information is present
+
+      # Confirm page (make time for Stripe call)
+      using_wait_time(10) { expect(page).to have_current_path(spree.checkout_state_path(:confirm)) }
+      order = Spree::Order.last
+      has_order_details(order)
       find_button("Place Order", match: :first).click
 
       # Order summary page
-      user = Spree::User.last
-      expect(page).to have_current_path(spree.order_path(user.orders.first.number))
-      # TODO: verify that important information is present
-      expect(page).to have_text(product.name)
+      expect(page).to have_current_path(spree.order_path(order.number))
+      expect(page).to have_text(order.number)
+      has_order_details(order)
     end
 
   end
