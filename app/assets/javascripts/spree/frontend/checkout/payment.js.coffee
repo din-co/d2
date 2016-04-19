@@ -7,8 +7,11 @@ Spree.ready ($) ->
         $('.existing-card').click ->
           $('#payment-methods').hide()
           $(this).find("input").prop("checked", true)
+          $('#order_existing_card_no').prop("disabled", false)
         $('#order_existing_card_no').click ->
           $('#payment-methods').show()
+          $(this).prop("disabled", true)
+
 
       $(".cardNumber").payment('formatCardNumber')
       $(".cardExpiry").payment('formatCardExpiry')
@@ -34,9 +37,6 @@ Spree.ready ($) ->
       ($ 'input[type="radio"]:checked').click()
 
       $('#checkout_form_payment').submit ->
-
-        # Disable radio for selecting existing card.
-        $('#order_existing_card_no').prop("disabled", true)
 
         # Coupon code application may take a number of seconds.
         # Informing the user that this is happening is a good way to indicate some progress to them.
@@ -72,5 +72,5 @@ Spree.ready ($) ->
               $('.continue').attr('disabled', false)
               return false
           })
-
+      return
   Spree.onPayment()
