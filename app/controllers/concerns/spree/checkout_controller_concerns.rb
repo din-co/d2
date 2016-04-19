@@ -11,6 +11,8 @@ module Spree
       before_filter :assign_shipping_rate_of_delivery_window, only: :update, if: Proc.new { params['state'] == 'delivery' }
       before_filter :ensure_order_valid, only: :update, if: Proc.new { params['state'] == 'delivery' }
 
+      before_action :replace_gateway_profile_id_with_token, only: :update, if: Proc.new { params['state'] == 'payment' }
+
       before_action :apply_page_promotion, only: [:edit, :update]
 
       rescue_from Spree::Core::GatewayError, :with => :rescue_from_spree_gateway_error
@@ -18,6 +20,13 @@ module Spree
 
     module InstanceMethods
       private
+
+      def replace_gateway_profile_id_with_token
+        if token = params['gateway_token_id'].presence
+          params['payment_source'][Spree::DEFAULT_PAYMENT_METHOD.id.to_s]['gateway_payment_profile_id'] = token
+        end
+        params['payment_source'][Spree::DEFAULT_PAYMENT_METHOD.id.to_s]['default'] = true
+      end
 
       def ensure_order_valid
         return if @order.valid?

@@ -66,6 +66,13 @@ rescue ActiveRecord::StatementInvalid => e
   1
 end
 
+Spree::DEFAULT_PAYMENT_METHOD = begin
+  Spree::PaymentMethod.find_by!(name: "Stripe")
+rescue ActiveRecord::StatementInvalid => e
+  Rails.logger.error e.message
+  nil
+end
+
 # Uploaded image assets
 paperclip_config = {
   preserve_files: "true",

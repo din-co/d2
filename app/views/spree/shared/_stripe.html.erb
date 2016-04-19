@@ -1,0 +1,104 @@
+<% if credit_card %>
+  <h4>Current Card</h4>
+  <p>
+    <span id="cc-type"><%= Spree.t(credit_card.cc_type) %></span>
+    <small>
+      <span id="cc-last4"><%= credit_card.last_digits %></span>
+      <span id="cc-month"><%= credit_card.month %></span>/<span id="cc-year"><%= credit_card.year %></span>
+    </small>
+  </p>
+<% end -%>
+<p>
+  <button id="change-payment-card" style="display: none" class="btn btn-info"><%= credit_card ? "Change Card" : "Add Card" %></button>
+  <span id="change-payment-card-loading"><span class="loader-quart"> Loading…</span></span>
+</p>
+<p><small>Card payments powered by <strong>Stripe</strong>.</small></p>
+
+<script type="text/javascript" src="https://checkout.stripe.com/checkout.js"></script>
+<%= hidden_field_tag :gateway_token_id %>
+<%- field_prefix ||= "credit_card" -%>
+<%- address_field_prefix = field_prefix == "credit_card" ? "address" : "#{field_prefix}[address_attributes]" -%>
+<%= fields_for field_prefix, Spree::CreditCard.new do |f| %>
+  <%= f.hidden_field :existing_card_id, value: credit_card.try(:id), id: "credit_card_existing_card_id" %>
+  <%= f.hidden_field :gateway_payment_profile_id, id: "credit_card_gateway_payment_profile_id" %>
+  <%= f.hidden_field :name, id: "credit_card_name" %>
+  <%= f.hidden_field :month, id: "credit_card_month" %>
+  <%= f.hidden_field :year, id: "credit_card_year" %>
+  <%= f.hidden_field :cc_type, id: "credit_card_cc_type" %>
+  <%= f.hidden_field :last_digits, id: "credit_card_last_digits" %>
+  <%= fields_for address_field_prefix, Spree::Address.new do |a| %>
+    <%= a.hidden_field :firstname, id: "address_firstname" %>
+    <%= a.hidden_field :lastname, id: "address_lastname" %>
+    <%= a.hidden_field :address1, id: "address_address1" %>
+    <%= a.hidden_field :city, id: "address_city" %>
+    <%= a.hidden_field :zipcode, id: "address_zipcode" %>
+    <%= a.hidden_field :state_name, id: "address_state_name" %>
+    <%= a.hidden_field :country_id, value: Spree::Config[:default_country_id] %>
+  <% end -%>
+<% end -%>
+
+<script>
+  $(function(){
+    disableLoading();
+    var formSubmitted = false;
+    var stripeAddCard = StripeCheckout.configure({
+      key: '<%= payment_method.preferred_publishable_key %>',
+      locale: 'auto',
+      name: 'Din, Inc.',
+      image: '<%= image_path('logo/din.png') %>',
+      panelLabel: "Add Card",
+      description: 'New Payment Card',
+      email: "<%= email %>",
+      allowRememberMe: false,
+      billingAddress: true,
+      zipCode: true,
+      closed: stripeClosed,
+      opened: stripeOpened,
+      token: function(token) {
+        formSubmitted = true;
+        $("#credit_card_existing_card_id").prop("disabled", true);
+        $("#gateway_token_id").val(token.id);
+        $("#credit_card_gateway_payment_profile_id").val(token.card.id);
+        $("#credit_card_name").val(token.card.name);
+        $("#credit_card_month").val(token.card.exp_month);
+        $("#credit_card_year").val(token.card.exp_year);
+        $("#credit_card_cc_type").val(token.card.type);
+        $("#credit_card_last_digits").val(token.card.last4);
+        var customer_name = token.card.name.split(" ");
+        $("#address_firstname").val(customer_name.shift());
+        $("#address_lastname").val(customer_name.join(" ") || "(not provided)");
+        $("#address_address1").val(token.card.address_line1);
+        $("#address_city").val(token.card.address_city);
+        $("#address_state_name").val(token.card.address_state);
+        $("#address_zipcode").val(token.card.address_zip);
+        console.log($("#new_credit_card").parents("form"))
+        $("#new_credit_card").closest("form").submit();
+      }
+    });
+    $('#change-payment-card').on('click', function(event) {
+      event.preventDefault();
+      enableLoading(); // trigger ui change sooner.
+      stripeAddCard.open();
+    });
+    function enableLoading() {
+      $("#change-payment-card").hide();
+      $("#change-payment-card-loading").show();
+    }
+    function disableLoading() {
+      $("#change-payment-card").show();
+      $("#change-payment-card-loading").hide();
+      console.log("disableLoading")
+    }
+    function stripeOpened() {
+      $("#change-payment-card").hide();
+      $("#change-payment-card-loading").hide();
+    }
+    function stripeClosed() {
+      if (formSubmitted) {
+        enableLoading();
+      } else {
+        disableLoading();
+      }
+    }
+  })
+</script>
