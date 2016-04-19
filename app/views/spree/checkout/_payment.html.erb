@@ -57,5 +57,7 @@
   <%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
 </div>
 
-<%= submit_tag Spree.t(:save_and_continue), :class => 'continue btn btn-primary', :tabindex => 20 %>
+<%= submit_tag Spree.t(:save_and_continue), :class => 'continue btn btn-primary', :tabindex => 20, "data-hook": "buttons" %>
+<div id="payment_method_<%= method.id %>"></div>
+
 <script>Spree.disableSaveOnClick();</script>
