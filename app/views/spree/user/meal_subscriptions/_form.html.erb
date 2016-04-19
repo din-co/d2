@@ -78,14 +78,14 @@
 <div class="checkbox-group">
   <div class="checkbox">
     <label>
-      <%= f.check_box :notification_email %>
+      <%= f.check_box :notification_sms %>
       <strong>text message</strong> to
       <%= format_phone_number(spree_current_user.default_address.phone) %> <small>(<%= link_to "change", account_address_path %>)</small>
     </label>
   </div>
   <div class="checkbox">
     <label>
-      <%= f.check_box :notification_sms %>
+      <%= f.check_box :notification_email %>
       <strong>email</strong> to
       <%= spree_current_user.email %> <small>(<%= link_to "change", edit_account_path %>)</small>
     </label>
