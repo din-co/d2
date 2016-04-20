@@ -41,11 +41,11 @@ module Spree
         recently_ordered_products(within_last).include?(product)
       end
 
-      def ensure_personal_referral_promo
+      def ensure_personal_referral_promo(name=nil)
         transaction do
           return personal_referral_promo if personal_referral_promo.present?
 
-          from = default_address.try(:firstname) || email
+          from = name || default_address.try(:firstname) || email
           begin
             promo = create_personal_referral_promo!({
               name: "courtesy of #{from}",
