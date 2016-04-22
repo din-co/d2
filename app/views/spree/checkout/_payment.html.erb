@@ -17,47 +17,10 @@
 
 <h1><%= Spree.t(:payment) %></h1>
 
-<p>Card payments powered by Stripe.</p>
+<% payment_method = Spree.default_payment_method %>
+<%= hidden_field_tag "order[payments_attributes][][payment_method_id]", payment_method.id %>
+<% credit_card = @payment_sources.first %>
+<%= render partial: "spree/shared/stripe", locals: { payment_method: payment_method, email: @order.user.email, credit_card: credit_card, form: form, field_prefix: "payment_source[#{payment_method.id}]" } %>
 
-<% if @payment_sources.present? %>
-  <div id="existing_cards">
-    <p class="field" data-hook="existing_cards">
-      <table class="table existing-credit-card-list">
-        <tbody>
-          <% @payment_sources.each do |card| %>
-            <tr id="<%= dom_id(card,'spree')%>" class="existing-card">
-              <td>
-                <%= radio_button_tag "order[existing_card]", card.id, (card == @payment_sources.first), { class: "existing-cc-radio" }  %>
-              </td>
-              <td><%= card.name %></td>
-              <td><%= Spree.t(card.cc_type) %></td>
-              <td>*<%= card.last_digits %></td>
-              <td><%= card.month %>/<%= card.year.split(//).last(2).join %></td>
-            </tr>
-          <% end %>
-          <tr>
-            <td>
-              <%= radio_button_tag "order[existing_card]", 'no', false, { class: "existing-cc-radio", id: "order_existing_card_no" }  %>
-            </td>
-            <td colspan="4">
-              <label for="order_existing_card_no">
-                <%= Spree.t(:use_a_new_card) %>
-              </label>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </p>
-  </div>
-<% end %>
-
-<% method = @order.available_payment_methods.first %>
-<div id="payment_method_<%= method.id %>"></div>
-<div id="payment-methods">
-  <%= hidden_field_tag "order[payments_attributes][][payment_method_id]", method.id %>
-  <%= render :partial => "spree/checkout/payment/#{method.method_type}", :locals => { :payment_method => method } %>
-</div>
-
-<%= submit_tag Spree.t(:save_and_continue), :class => 'continue btn btn-primary', :tabindex => 20, "data-hook": "buttons" %>
-
+<%= submit_tag credit_card ? Spree.t('actions.continue') : Spree.t(:save_and_continue), class: 'continue btn btn-primary', tabindex: 20, id: "new_credit_card" %>
 <script>Spree.disableSaveOnClick();</script>

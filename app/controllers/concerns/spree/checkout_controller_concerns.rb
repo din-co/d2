@@ -11,6 +11,8 @@ module Spree
       before_filter :assign_shipping_rate_of_delivery_window, only: :update, if: Proc.new { params['state'] == 'delivery' }
       before_filter :ensure_order_valid, only: :update, if: Proc.new { params['state'] == 'delivery' }
 
+      before_action :replace_gateway_profile_id_with_token, only: :update, if: Proc.new { params['state'] == 'payment' }
+
       before_action :apply_page_promotion, only: [:edit, :update]
 
       rescue_from Spree::Core::GatewayError, :with => :rescue_from_spree_gateway_error
@@ -19,10 +21,29 @@ module Spree
     module InstanceMethods
       private
 
+      def update_params
+        p = super
+        return p if p.blank?
+        p['payments_attributes'].try(:[], 0).try(:[], 'source_attributes').try(:[]=, 'default', true)
+        p
+      end
+
+      def replace_gateway_profile_id_with_token
+        if token = params['gateway_token_id'].presence
+          params['payment_source'][Spree.default_payment_method.id.to_s]['gateway_payment_profile_id'] = token
+        end
+      end
+
       def ensure_order_valid
         return if @order.valid?
         flash[:error] = @order.errors.full_messages
         redirect_to checkout_state_path('delivery')
+      end
+
+      # Overrides existing method to avoid creating bill_address
+      def before_address
+        default = {country_id: Country.default.id}
+        @order.build_ship_address(default) if @order.checkout_steps.include?('delivery') && !@order.ship_address
       end
 
       def assign_shipping_rate_of_delivery_window

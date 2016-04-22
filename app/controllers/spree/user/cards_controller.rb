@@ -1,6 +1,6 @@
 require 'stripe'
 Stripe.api_version = "2016-03-07"
-Stripe.api_key = Spree::PaymentMethod.find_by!(name: "Stripe").preferred_secret_key
+Stripe.api_key = Spree.default_payment_method.preferred_secret_key
 
 module Spree
   class User::CardsController < Spree::StoreController
@@ -27,8 +27,10 @@ module Spree
         cc_type: credit_card_params[:cc_type].downcase,
         payment_method_id: @payment_method.id,
         default: true,
-        address_attributes: address_params.merge(country_id: Spree::Config[:default_country_id]),
+        address_attributes: address_params,
       })
+
+      @user.bill_address_attributes = cc_params[:address_attributes]
 
       @credit_card = @user.credit_cards.create(cc_params)
       if @credit_card.persisted?
@@ -48,7 +50,7 @@ module Spree
     private
 
       def set_payment_method
-        @payment_method = Spree::PaymentMethod.find_by!(name: "Stripe")
+        @payment_method = Spree.default_payment_method
       end
 
       def credit_card_params
@@ -56,7 +58,7 @@ module Spree
       end
 
       def address_params
-        params.require(:address).permit(:firstname, :lastname, :address1, :city, :zipcode, :state_name)
+        params.require(:address).permit(:firstname, :lastname, :address1, :city, :zipcode, :state_name, :country_id)
       end
 
   end

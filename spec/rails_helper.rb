@@ -46,7 +46,7 @@ if ENV['CIRCLE_ARTIFACTS'].present?
   Capybara.save_and_open_page_path = ENV['CIRCLE_ARTIFACTS']
   Capybara::Screenshot::RSpec.add_link_to_screenshot_for_failed_examples = false
 end
-Capybara::Screenshot.webkit_options = { width: 1024, height: 768 }
+Capybara::Screenshot.webkit_options = { width: 1440, height: 900 }
 Capybara::Screenshot.prune_strategy = { keep: 100 }
 ## END Custom additions
 
@@ -85,6 +85,10 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:all, with: :seeds) do
+    require Rails.root.join('db/seeds')
   end
 
   config.before(:each, type: :feature) do

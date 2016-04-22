@@ -53,11 +53,4 @@
   <% end %>
 <% end %>
 
-<% if Spree::Config[:shipping_instructions] %>
-  <div class="form-group">
-    <%= form.label :special_instructions, Spree.t(:delivery_instructions) %>
-    <%= form.text_area :special_instructions, class: "form-control resize-vertical-only", placeholder: Spree.t(:delivery_instructions_placeholder) %>
-  </div>
-<% end %>
-
 <%= submit_tag Spree.t(:save_and_continue), :class => 'continue btn btn-primary' %>

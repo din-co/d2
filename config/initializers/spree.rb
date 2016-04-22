@@ -24,6 +24,9 @@ Spree.config do |config|
   # any inventory changes.
   # config.inventory_cache_threshold = 3
 
+  # Calculate any taxes based on the shipping address
+  config.tax_using_ship_address = true
+
 
   # Frontend:
 
@@ -61,6 +64,22 @@ Spree::Config[:default_country_id] = begin
 rescue ActiveRecord::StatementInvalid => e
   Rails.logger.error e.message
   1
+end
+
+module Spree
+  def self.default_payment_method
+    Spree::Gateway::StripeGateway.find_or_create_by!({
+      name: "Stripe",
+      active: true,
+    }) do |g|
+      g.auto_capture = true
+      g.description = "Credit card payments via Stripe"
+      g.preferred_server = TRUE_PRODUCTION_INSTANCE ? 'production' : 'test'
+      g.preferred_test_mode = !TRUE_PRODUCTION_INSTANCE
+      g.preferred_secret_key = ENV['STRIPE_SECRET_KEY'] || "sk_test_0wqvetWX3zDayzZc8KSggjhO"
+      g.preferred_publishable_key = ENV['STRIPE_PUBLISHABLE_KEY'] || "pk_test_RtnEyAHZVnP5lTdheh6UuR9W"
+    end
+  end
 end
 
 # Uploaded image assets
@@ -120,6 +139,7 @@ end
 
 
 Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
+Spree::PermittedAttributes.address_attributes << :delivery_instructions
 
 # The name is strange, but this is the default Spree implementation of User.
 # This class is intended to be modified by extensions (ex. spree_auth_devise)
