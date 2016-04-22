@@ -22,9 +22,9 @@ RSpec.feature "Checkout flow:" do
     fill_in "Delivery Instructions", with: "Ring the doorbell and then huck the package onto the roof"
   end
 
-  def fill_in_credit_card_payment_fields(address)
+  def fill_in_credit_card_payment_fields(address, number=nil)
     expect(page).to have_text("Stripe")
-    using_wait_time(6) do # give Stripe more time…
+    using_wait_time(8) do # give Stripe more time…
       within_frame(find('.stripe_checkout_app')) do
         fill_in "billing-name", with: "#{address.firstname} #{address.lastname}"
         fill_in "billing-street", with: address.address1
@@ -32,7 +32,7 @@ RSpec.feature "Checkout flow:" do
         fill_in "billing-city", with: address.city
         click_on "submitButton"
 
-        fill_in "card_number", with: "4242424242424242"
+        fill_in "card_number", with: number || "4242424242424242"
         fill_in "cc-exp", with: 6.months.from_now.strftime("%-l%y") # e.g. 1217
         fill_in "cc-csc", with: "123"
         click_on "submitButton"
@@ -104,7 +104,7 @@ RSpec.feature "Checkout flow:" do
         fill_in_credit_card_payment_fields(address)
 
         # Confirm page (make time for Stripe call)
-        using_wait_time(6) { expect(page).to have_current_path(spree.checkout_state_path(:confirm)) }
+        using_wait_time(8) { expect(page).to have_current_path(spree.checkout_state_path(:confirm)) }
         order = Spree::Order.last
         has_order_details(order)
         find_button("Place Order", match: :first).click
@@ -154,7 +154,7 @@ RSpec.feature "Checkout flow:" do
         fill_in_credit_card_payment_fields(outside_address)
 
         # Confirm page (make time for Stripe call)
-        using_wait_time(6) { expect(page).to have_current_path(spree.checkout_state_path(:confirm)) }
+        using_wait_time(8) { expect(page).to have_current_path(spree.checkout_state_path(:confirm)) }
         order = Spree::Order.last
         has_order_details(order)
         find_button("Place Order", match: :first).click
@@ -165,6 +165,35 @@ RSpec.feature "Checkout flow:" do
         has_order_details(order)
       end
 
+      scenario "going back through the checkout process after entering a different credit card preserves the newer card" do
+        # Start with a card
+        visit spree.account_cards_path
+        fill_in_credit_card_payment_fields(address, "4111111111111111")
+        using_wait_time(8) { expect(page).to have_current_path(spree.account_path) }
+
+        visit spree.cart_path
+        click_on "Checkout"
+        fill_in_shipping_address_fields(address)
+        click_on "Save and Continue"
+
+        delivery_window = Spree::DeliveryWindow.available.first
+        choose("#{delivery_window.to_s} #{delivery_window.display_cost}")
+        click_on "Save and Continue"
+
+        # Enter a different card during checkout
+        click_on "Change Card"
+        fill_in_credit_card_payment_fields(address, "4242424242424242")
+        using_wait_time(8) { click_on "Continue" }
+        has_order_details(Spree::Order.last)
+
+        visit spree.cart_path
+        click_on "Checkout" # cart
+        click_on "Save and Continue" # address
+        click_on "Save and Continue" # delivery window
+
+        expect(page).to     have_text("4242")
+        expect(page).not_to have_text("1111")
+      end
     end
   end
 end
