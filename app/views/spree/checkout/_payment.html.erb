@@ -19,7 +19,8 @@
 
 <% payment_method = Spree.default_payment_method %>
 <%= hidden_field_tag "order[payments_attributes][][payment_method_id]", payment_method.id %>
-<%= render partial: "spree/shared/stripe", locals: { payment_method: payment_method, email: @order.user.email, credit_card: @payment_sources.first, form: form, field_prefix: "payment_source[#{payment_method.id}]" } %>
+<% credit_card = @payment_sources.first %>
+<%= render partial: "spree/shared/stripe", locals: { payment_method: payment_method, email: @order.user.email, credit_card: credit_card, form: form, field_prefix: "payment_source[#{payment_method.id}]" } %>
 
-<%= submit_tag Spree.t(:save_and_continue), class: 'continue btn btn-primary', tabindex: 20, id: "new_credit_card" %>
+<%= submit_tag credit_card ? Spree.t('actions.continue') : Spree.t(:save_and_continue), class: 'continue btn btn-primary', tabindex: 20, id: "new_credit_card" %>
 <script>Spree.disableSaveOnClick();</script>
