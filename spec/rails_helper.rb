@@ -114,6 +114,7 @@ RSpec.configure do |config|
         spree_shipping_categories
         spree_delivery_windows
         spree_stock_locations
+        spree_stores
 
         spree_calculators
         spree_payment_methods

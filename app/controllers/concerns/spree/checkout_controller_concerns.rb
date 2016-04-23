@@ -48,7 +48,9 @@ module Spree
 
       def before_payment
         super
-        @payment_sources.default
+        if @payment_sources.present?
+          @payment_sources = @payment_sources.default
+        end
       end
 
       def assign_shipping_rate_of_delivery_window

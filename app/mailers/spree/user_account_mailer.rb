@@ -7,7 +7,8 @@ module Spree
       @credit_card = credit_card
       @email_preheader = "#{Spree.t(@credit_card.cc_type)}, #{@credit_card.last_digits}"
       @title = "Credit Card Updated"
-      mail(to: @credit_card.user.email, from: from_address(@store), subject: build_subject(@title))
+      subj = build_subject(@title)
+      mail(to: @credit_card.user.email, from: from_address(@store), subject: subj)
     end
 
     def meal_preferences_changed_email(meal_preference)
@@ -16,7 +17,8 @@ module Spree
       @allergen_sentence = (@meal_preference.allergen_names.present?) ? Spree.t(:allergen_suggestions, display_allergen_names: @meal_preference.display_allergen_names) : ""
       @email_preheader = ActionView::Base.full_sanitizer.sanitize("#{@proteins_sentence} #{@allergen_sentence}")
       @title = "Meal Preferences Updated"
-      mail(to: @meal_preference.user.email, from: from_address(@store), subject: build_subject(@title))
+      subj = build_subject(@title)
+      mail(to: @meal_preference.user.email, from: from_address(@store), subject: subj)
     end
 
     def delivery_address_changed_email(address, user)
@@ -24,13 +26,15 @@ module Spree
       @text_address = @address.one_line
       @email_preheader = "#{@address.full_name}, #{@text_address}, #{@address.phone}"
       @title = "Delivery Address Updated"
-      mail(to: user.email, from: from_address(@store), subject: build_subject(@title))
+      subj = build_subject(@title)
+      mail(to: user.email, from: from_address(@store), subject: subj)
     end
 
     def meal_subscription_changed_email(meal_subscription)
       @meal_subscription = meal_subscription
       @title = (@meal_subscription.status == "paused") ? "Subscription Paused" : "Subscription Updated"
-      mail(to: @meal_subscription.user.email, from: from_address(@store), subject: build_subject(@title))
+      subj = build_subject(@title)
+      mail(to: @meal_subscription.user.email, from: from_address(@store), subject: subj)
     end
 
     private

@@ -9,11 +9,7 @@ module Spree
     before_action :set_payment_method
 
     def show
-      @credit_card = @user
-        .credit_cards
-        .default
-        .where(payment_method: @payment_method)
-        .first
+      @credit_card = @user.credit_cards.where(payment_method: @payment_method).default.first
     end
 
     def create
