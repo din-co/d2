@@ -58,16 +58,16 @@
 <% if @collection.any? %>
   <table class="index" id="listing_products">
     <colgroup>
-       <col style="width: 15%;">
-       <col style="width: 10%;">
-       <col style="width: 48%;">
-       <col style="width: 10%;">
+       <col style="width: 1%;">
+       <col style="width: 75%;">
+       <col style="width: 5%;">
+       <col style="width: 5%;">
        <col style="width: 17%;">
     </colgroup>
     <thead>
       <tr data-hook="admin_products_index_headers">
-        <th><%= Spree.t(:sku) %></th>
         <th colspan="2"><%= sort_link @search,:name, Spree.t(:name), { :default_order => "desc" }, {:title => 'admin_products_listing_name_title'} %></th>
+        <th>labels</th>
         <th><%= sort_link @search,:master_default_price_amount, Spree.t(:master_price), {}, {:title => 'admin_products_listing_price_title'} %></th>
         <th data-hook="admin_products_index_header_actions" class="actions"></th>
       </tr>
@@ -75,9 +75,17 @@
     <tbody>
       <% @collection.each do |product| %>
           <tr <%== "style='color: red;'" if product.deleted? %> id="<%= spree_dom_id product %>" data-hook="admin_products_index_rows" class="<%= cycle('odd', 'even') %>">
-            <td class="align-center"><%= product.sku %></td>
             <td class="align-center"><%= image_tag product.display_image.attachment(:mini) %></td>
-            <td><%= link_to product.try(:name), edit_admin_product_path(product) %></td>
+            <td>
+              <%= link_to product.try(:name), edit_admin_product_path(product) %>
+              <% if product.restaurant.present? %>
+                (<%= product.restaurant.name %>)
+              <% end -%>
+            </td>
+            <td class="align-center">
+              <%= link_to "meal", main_app.admin_meal_label_print_path(product) %>
+              <%= link_to "ingredients", main_app.admin_labels_ingredient_path(large_labels: strip_tags(product.property('components')).strip) %>
+            </td>
             <td class="align-center"><%= product.display_price.to_html %></td>
             <td class="actions" data-hook="admin_products_index_row_actions">
               <%= link_to_edit product, :no_text => true, :class => 'edit' if can?(:edit, product) && !product.deleted? %>
