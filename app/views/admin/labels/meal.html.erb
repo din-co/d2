@@ -14,7 +14,7 @@
             <% end -%>
             <% if product.chef.present? %>
               <br>
-              <span class="type-nowrap"><%= product.chef.name %></span>
+              <%= product.chef.name %>
             <% end -%>
           </p>
           <% if product.restaurant.present? %>
@@ -42,14 +42,14 @@
             <% if product.restaurant.present? %>
               at
               <br>
-              <strong class="type-nowrap"><%= product.restaurant.name %></strong>.
+              <strong class="type-nowrap"><%= product.restaurant.name %></strong>
             <% end -%>
             <% if product.chef.present? %>
               by
               <% unless product.restaurant.present? %>
                 <br>
               <% end -%>
-              <strong class="type-nowrap"><%= product.chef.name %></strong>.
+              <strong><%= product.chef.name %></strong>.
             <% end -%>
           </p>
           <p class="small type-center"><em>Perishable. Keep refrigerated.</em></p>
