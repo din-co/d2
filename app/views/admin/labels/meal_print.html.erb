@@ -1,0 +1,74 @@
+<div class="sheet ol1159wx-sheet">
+
+  <% 5.times do %>
+    <div class="label meal-label">
+      <div class="printable-area meal-label__front">
+        <h1 class="type-center meal-name"><%= @product.name %></h1>
+        <% if @product.property('tagline').present? %>
+          <p class="type-center meal-tagline"><%= @product.property('tagline') %></p>
+        <% end -%>
+        <p class="type-center">
+          <% if @product.restaurant.present? %>
+            <strong class="type-nowrap"><%= @product.restaurant.name %></strong>
+          <% end -%>
+          <% if @product.chef.present? %>
+            <br>
+            <%= @product.chef.name %>
+          <% end -%>
+        </p>
+        <% if @product.restaurant.present? %>
+          <div class="restaurant-logo" style="background-image: url(<%= image_path @product.restaurant.icon(:original) %>)"></div>
+        <% end %>
+        <p class="type-center tiny">
+          <span class="servings">
+            Serves 2.
+          </span>
+          <% if @product.property('time-minutes').present? %>
+            <span class="prep-time">
+              Ready in <%= @product.property('time-minutes') %> minutes.
+            </span>
+          <% end -%>
+          <% if @product.diets.present? %>
+            <br>
+            <span class="type-nowrap"><%= @product.diets.map(&:name).join(", ") %></span>
+          <% end -%>
+        </p>
+      </div>
+
+      <div class="printable-area">
+        <p class="small type-center">
+          Prepped &amp; packed with ♥
+          <% if @product.restaurant.present? %>
+            at
+            <br>
+            <strong class="type-nowrap"><%= @product.restaurant.name %></strong>
+          <% end -%>
+          <% if @product.chef.present? %>
+            by
+            <% unless @product.restaurant.present? %>
+              <br>
+            <% end -%>
+            <strong><%= @product.chef.name %></strong>.
+          <% end -%>
+        </p>
+        <p class="small type-center"><em>Perishable. Keep refrigerated.</em></p>
+        <p class="best-by small">Cook by:</p>
+        <p class="ingredients tiny">
+          <strong>Ingredients:</strong>
+          <%= @product.property('ingredients').to_s.html_safe %>
+          <br>
+          <strong>Contains:</strong>
+          <%= @product.allergens.map(&:name).join(", ") %>.
+          <em>Made in a facility on shared equipment that produces dairy, wheat, soy and nut products.</em>
+        </p>
+        <p class="small type-center">
+          More delicious nom at <strong>din.co</strong>
+          <br>
+          <span>Share <strong>#DinLove</strong> at <strong>@din</strong></span>
+        </p>
+      </div>
+
+    </div>
+  <% end -%>
+
+</div>

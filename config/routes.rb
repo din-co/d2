@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     get 'labels/tote'
     get 'labels/tote/print', to: 'labels#tote_print'
     get 'labels/meal'
+    get 'labels/meal/print/:id', to: 'labels#meal_print', as: 'meal_label_print'
     get 'labels/ingredient'
     get 'labels/ingredient/print', to: 'labels#ingredient_print'
 
