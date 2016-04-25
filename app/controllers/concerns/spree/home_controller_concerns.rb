@@ -33,9 +33,7 @@ module Spree
       def cache_key_for_products
         count = @products.count
         max_updated_at = [Time.current.midnight, @products.maximum(:updated_at), @taxon.try(:updated_at)].compact.max.to_s(:number)
-        key = "#{I18n.locale}/#{current_currency}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}-#{KITCHEN.status}"
-        puts "HomeControllerConcerns.cache_key_for_products: #{key}"
-        key
+        "#{I18n.locale}/#{current_currency}/spree/products/all-#{params[:page]}-#{max_updated_at}-#{count}-#{KITCHEN.status}"
       end
 
       def cache_key_for_subscription_products

@@ -26,6 +26,10 @@ class Admin::LabelsController < Spree::Admin::BaseController
     @products = Spree::Product.all
   end
 
+  def meal_print
+    @product = Spree::Product.friendly.find(params[:id])
+  end
+
   def ingredient
     @title = "Ingredient Labels"
     @large_labels = large_labels
