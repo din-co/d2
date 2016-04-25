@@ -10,6 +10,18 @@
 <% @show_kitchen_status = true %>
 <% cache [I18n.locale, current_currency, @product, params[:subscription_menu]] do %>
 <%= render partial: 'spree/shared/shipping_promo', locals: { type: "flash" } %>
+<% components = @product.property('components') %>
+
+<% if spree_current_user.try(:admin?) %>
+  <div class="admin-nav bg-danger">
+    <div class="container text-center">
+      <strong>Admin:</strong>
+      <%= link_to "print ingredient labels", main_app.admin_labels_ingredient_path(large_labels: strip_tags(components).strip) %>
+      |
+      <%= link_to "print meal bag label", main_app.admin_meal_label_print_path(@product) %>
+    </div>
+  </div>
+<% end -%>
 
   <div itemscope itemtype="http://schema.org/Product">
     <div class="container">
@@ -66,7 +78,7 @@
           <div class="col-sm-6">
             <h2>In the Bag</h2>
             <ul>
-              <%= @product.property('components').html_safe %>
+              <%= components.html_safe %>
             </ul>
           </div>
         <% end -%>
