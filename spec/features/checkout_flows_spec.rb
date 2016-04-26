@@ -101,6 +101,7 @@ RSpec.feature "Checkout flow:" do
         click_on "Save and Continue"
 
         # Payment page
+        click_on "Add Card"
         fill_in_credit_card_payment_fields(address)
 
         # Confirm page (make time for Stripe call)
@@ -151,6 +152,7 @@ RSpec.feature "Checkout flow:" do
         click_on "Save and Continue"
 
         # Payment page
+        click_on "Add Card"
         fill_in_credit_card_payment_fields(outside_address)
 
         # Confirm page (make time for Stripe call)
@@ -168,6 +170,7 @@ RSpec.feature "Checkout flow:" do
       scenario "going back through the checkout process after entering a different credit card preserves the newer card" do
         # Start with a card
         visit spree.account_cards_path
+        click_on "Add Card"
         fill_in_credit_card_payment_fields(address, "4111111111111111")
         using_wait_time(8) { expect(page).to have_current_path(spree.account_path) }
 
