@@ -9,6 +9,8 @@ module Spree
       before_validation :associate_postal_code, if: Proc.new { |addr| addr.postal_code_id.blank? || addr.zipcode_changed? }
 
       validate :shipping_validate, on: :shipping
+      validates :phone, presence: true, on: :shipping
+      validate :phone_validate, if: 'phone.present?', on: :shipping
     end
 
     module InstanceMethods
@@ -25,6 +27,12 @@ module Spree
     def shipping_validate
       if postal_code.blank? || Spree::Zone.match(self).blank?
         errors.add :base, Spree.t(:unsupported_delivery_location, locations: Spree::Zone.pluck(:name).to_sentence)
+      end
+    end
+
+    def phone_validate
+      unless phone.gsub(/\D/, '') =~ /^1?\d{10}$/
+        errors.add :phone, Spree.t(:invalid_phone_number)
       end
     end
 

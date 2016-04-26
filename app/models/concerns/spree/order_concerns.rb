@@ -12,9 +12,7 @@ module Spree
         end
       end
 
-      validate :validate_ship_address
-
-      state_machine.before_transition to: :delivery do |order|
+      state_machine.before_transition from: :address do |order|
         order.send(:validate_ship_address)
         return false if order.errors[:ship_address].present?
       end
