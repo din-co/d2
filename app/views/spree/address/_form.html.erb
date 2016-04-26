@@ -10,7 +10,7 @@
   </div>
   <div class="form-group col-sm-4" id=<%="#{address_id}phone" %>>
     <%= form.label :phone, Spree.t(:phone) %>
-    <%= form.phone_field :phone, class: "form-control" %>
+    <%= form.phone_field :phone, class: "form-control", placeholder: "000-000-0000" %>
   </div>
   <% if Spree::Config[:company] %>
     <div class="form-group col-sm-12" id=<%="#{address_id}company" %>>
