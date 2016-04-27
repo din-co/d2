@@ -58,6 +58,9 @@ Spree.config do |config|
   #   test: !Rails.env.production?
   # )
 end
+Rails.application.config.to_prepare do
+  Spree::Order.whitelisted_ransackable_attributes |= ['shipment_date']
+end
 
 Spree::Config[:default_country_id] = begin
   (Spree::Country.find_by(iso: "US") || Spree::Country.first).try!(:id)
@@ -137,7 +140,7 @@ taxon_icon_config.each do |key, value|
   Spree::Taxon.attachment_definitions[:icon][key.to_sym] = value
 end
 
-
+# Permit delivery attributes to be set via forms.
 Spree::PermittedAttributes.shipment_attributes << :delivery_window_id
 Spree::PermittedAttributes.address_attributes << :delivery_instructions
 
