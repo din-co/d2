@@ -83,6 +83,19 @@
           <%= label_tag :q_line_items_variant_id_in, Spree.t(:variant) %>
           <%= f.text_field :line_items_variant_id_in, class: "variant_autocomplete fullwidth" %>
         </div>
+
+        <div class="date-range-filter field">
+          <%= label_tag :q_shipment_date_gt, Spree.t(:shipment_date_range) %>
+          <div class="date-range-fields">
+            <%= f.text_field :shipment_date_gt, :class => 'datepicker datepicker-from', :value => params[:q][:shipment_date_gt], :placeholder => Spree.t(:start) %>
+
+            <span class="range-divider">
+              <i class="fa fa-arrow-right"></i>
+            </span>
+
+            <%= f.text_field :shipment_date_lt, :class => 'datepicker datepicker-to', :value => params[:q][:shipment_date_lt], :placeholder => Spree.t(:stop) %>
+          </div>
+        </div>
       </div>
 
       <div class="clearfix"></div>
@@ -119,6 +132,7 @@
         <% else %>
           <th><%= sort_link @search, :created_at,     I18n.t(:created_at, :scope => 'activerecord.attributes.spree/order') %></th>
         <% end %>
+        <th><%= sort_link @search, :shipment_date,    I18n.t(:shipment_date, :scope => 'activerecord.attributes.spree/order') %></th>
         <th><%= sort_link @search, :number,           I18n.t(:number, :scope => 'activerecord.attributes.spree/order') %></th>
         <th><%= sort_link @search, :state,            I18n.t(:state, :scope => 'activerecord.attributes.spree/order') %></th>
         <th><%= sort_link @search, :payment_state,    I18n.t(:payment_state, :scope => 'activerecord.attributes.spree/order') %></th>
@@ -134,6 +148,7 @@
     <% @orders.each do |order| %>
       <tr data-hook="admin_orders_index_rows" class="state-<%= order.state.downcase %> <%= cycle('odd', 'even') %>">
         <td class="align-center"><%= l (@show_only_completed ? order.completed_at : order.created_at).to_date %></td>
+        <td class="align-center"><%= l (order.shipment_date || order.completed_at).try(:to_date) %></td>
         <td class="align-center"><%= link_to order.number, edit_admin_order_path(order) %></td>
         <td class="align-center"><span class="state <%= order.state.downcase %>"><%= Spree.t("order_state.#{order.state.downcase}") %></span></td>
         <td class="align-center"><span class="state <%= order.payment_state %>"><%= link_to Spree.t("payment_states.#{order.payment_state}"), admin_order_payments_path(order) if order.payment_state %></span></td>
