@@ -41,6 +41,7 @@ RSpec.feature "Checkout flow:" do
   end
 
   def has_order_details(order)
+    order.reload
     expect(page).to have_text(order.ship_address.firstname)
     expect(page).to have_text(order.ship_address.lastname)
     expect(page).to have_text(order.ship_address.address1)
@@ -55,6 +56,8 @@ RSpec.feature "Checkout flow:" do
     end
     expect(page).to have_text(Spree.t(order.user.default_credit_card.cc_type))
     expect(page).to have_text(order.user.default_credit_card.last_digits)
+
+    expect(order.shipment_date).to eq(order.completed_at)
   end
 
   describe "when the kitchen is open", js: true do
