@@ -14,8 +14,16 @@ RSpec.describe MealSelector, subscription_data: true do
     no_shellfish_mp,
     default_mp,
   ]}
+  let(:delivery_days) { Spree::MealSubscription.delivery_days.keys }
+  let(:subscriptions) {
+    subscriptions = []
+    meal_preferences_in_order.each_with_index { |mp, i|
+      subscriptions << FactoryGirl.create(:meal_subscription, user: mp.user, delivery_day: delivery_days[i % delivery_days.size])
+    }
+    subscriptions
+  }
 
-  let(:meal_selector) { described_class.new(meal_preferences) }
+  let(:meal_selector) { described_class.new(subscriptions.shuffle) }
 
   it 'orders meal preferences from most to least constrained' do
     # Verify preconditions
@@ -26,14 +34,6 @@ RSpec.describe MealSelector, subscription_data: true do
   end
 
   describe 'with subscriptions' do
-    let(:delivery_days) { Spree::MealSubscription.delivery_days.keys }
-    let(:subscriptions) {
-      subscriptions = []
-      meal_preferences_in_order.each_with_index { |mp, i|
-        subscriptions << FactoryGirl.create(:meal_subscription, user: mp.user, delivery_day: delivery_days[i % delivery_days.size])
-      }
-      subscriptions
-    }
     let(:available_meals) {
       n = meal_preferences.size
       {
@@ -43,7 +43,7 @@ RSpec.describe MealSelector, subscription_data: true do
         braised_veg => n,
       }
     }
-    let(:meal_selector) { described_class.new(meal_preferences, subscriptions, available_meals) }
+    let(:meal_selector) { described_class.new(subscriptions, available_meals) }
 
     it "returns selections matching the subscribers' meal preferences" do
       expect(meal_selector.selections[subscriptions[0]]).to eql([braised_veg, nil])

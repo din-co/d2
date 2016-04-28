@@ -4,10 +4,13 @@ class MealSelector
   # Initializes a meal selector to create a set of selections matching all preferences and
   # subscriptions from available meals. It relates subscriptions to meal preferences by
   # the user_id field of each. Available meals must be a hash of meal => available stock.
-  def initialize(meal_preferences, subscriptions=[], available_meals={})
-    @meal_preferences = meal_preferences.sort_by { |mp| mp.diet_count - mp.allergen_count }
+  def initialize(subscriptions=[], available_meals={})
     @subscriptions = subscriptions.index_by(&:user_id)
     @available_meals = available_meals
+  end
+
+  def meal_preferences
+    Spree::MealPreference.where(user_id: @subscriptions.keys).sort_by { |mp| mp.diet_count - mp.allergen_count }
   end
 
   def selections(no_repeats_last_n_orders=3)
@@ -19,7 +22,7 @@ class MealSelector
     def generate_selections(last_n)
       selections = {}
 
-      @meal_preferences.each do |meal_preference|
+      meal_preferences.each do |meal_preference|
         # Verify subscription is active
         subscription = @subscriptions[meal_preference.user_id]
         next unless subscription.present?

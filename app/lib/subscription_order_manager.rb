@@ -28,11 +28,7 @@ class SubscriptionOrderManager
 
   private
 
-  def meal_preferences(subscriptions)
-    Spree::MealPreference.where(user_id: subscriptions.pluck(:user_id))
-  end
-
   def selections(subscriptions)
-    MealSelector.new(meal_preferences(subscriptions), subscriptions, @available_meals).selections
+    MealSelector.new(subscriptions, @available_meals).selections
   end
 end
