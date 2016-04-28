@@ -12,6 +12,8 @@ module Spree
         end
       end
 
+      validate :validate_ship_address, if: 'passed_checkout_step?("address")'
+
       state_machine.before_transition from: :address do |order|
         order.send(:validate_ship_address)
         return false if order.errors[:ship_address].present?
