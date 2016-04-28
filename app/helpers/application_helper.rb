@@ -46,7 +46,7 @@ module ApplicationHelper
   end
 
   def format_phone_number(phone_number)
-    number_to_phone(phone_number.gsub(/\D/, ''), delimiter: "-")
+    number_to_phone(phone_number.gsub(/\D/, '').sub(/^1/, ''), delimiter: "-")
   end
 
   def aria_label(label, suffix="-aria-label")

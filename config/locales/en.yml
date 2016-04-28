@@ -83,6 +83,7 @@ en:
     inventory_error_flash_for_insufficient_quantity: "Sorry, a meal in your cart has sold out. Please remove it and select another dish."
     promo_share_the_love_title: "Share the Din Love"
     promo_share_the_love_body: "Give a friend %{description}. Send them your referral link: %{link}"
+    invalid_phone_number: "Please enter a 10-digit phone number with area code"
     order_mailer:
       confirm_email:
         subject: Order Confirmation
