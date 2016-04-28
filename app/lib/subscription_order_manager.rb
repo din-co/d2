@@ -15,7 +15,11 @@ class SubscriptionOrderManager
   def print_selections(subscriptions)
     selections(subscriptions).each do |sub, products|
       products.each do |product|
-        notifications = [sub.user.default_address.firstname, sub.notification_email ? "(email)" : "(no email)", sub.notification_sms && sub.user.default_address.phone].compact
+        notifications = [
+          sub.user.default_address.firstname,
+          sub.notification_email ? "(email)" : "(no email)",
+          sub.notification_sms ? sub.user.default_address.phone : "(no SMS)"
+        ].compact
         puts [ sub.user.email, product.try(:name) || "(missing)", notifications ].flatten.join("\t")
       end
     end
