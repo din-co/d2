@@ -39,6 +39,7 @@ en:
     checkout_disabled: "Checkout is unavailable while the kitchen is closed."
     add_dish: "Add to Cart"
     two_servings: "Serves 2"
+    half_price_x_2: "%{half_price}/serving × 2"
     next_available: Available on %{date}
     subscription_summary: "Each %{day} we’ll deliver %{meal_count} meals between %{delivery_window}."
     subscription_notification_summary: "%{notification_weekday} mornings we’ll suggest %{meal_count} meals from next week’s menu to you via %{notification_channels}. You’ll have %{open_days} days to change meals or cancel your delivery."

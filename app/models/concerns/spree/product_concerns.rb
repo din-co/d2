@@ -28,6 +28,10 @@ module Spree
       def contains_proteins(protein_names)
         proteins.where(name: protein_names).pluck(:name)
       end
+
+      def half_price
+        Spree::Money.new(price / 2.0, currency: currency)
+      end
     end
   end
 end
