@@ -67,7 +67,7 @@ RSpec.feature "Checkout flow:" do
 
       # Product page
       expect(page).to have_current_path(spree.product_path(product))
-      click_on "Add to Cart (Serves 2) #{product.display_price}"
+      click_on "Add to Cart #{product.half_price}/serving × 2"
 
       # Cart page
       expect(page).to have_current_path(spree.cart_path)
@@ -118,7 +118,7 @@ RSpec.feature "Checkout flow:" do
         # Order again (quicker!)
         visit spree.root_path
         click_on product.name
-        click_on "Add to Cart (Serves 2) #{product.display_price}"
+        click_on "Add to Cart #{product.half_price}/serving × 2"
         expect(page).to have_current_path(spree.cart_path)
         click_on "Checkout"
         expect(page).to have_current_path(spree.checkout_state_path(:address))

@@ -42,7 +42,7 @@
 
           <% if subscription_menu %>
             <p class="text-center">
-              <span class="text-nowrap"><%= display_price(product) %> (<%= Spree.t(:two_servings) %>)</span>
+              <span class="text-nowrap"><%= Spree.t(:half_price_x_2, half_price: product.half_price) %></span>
               <span class="list-button text-nowrap"><%= link_to "View Recipe", spree.product_path(product) %></span>
             </p>
             <p class="text-center"><em> To change your subscription meals, <%= support_email_link("Update subscription meals", "contact support") %>.</em></p>

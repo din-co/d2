@@ -1,7 +1,7 @@
 module ProductHelper
   def add_to_cart_button(product, options={})
     options = options.reverse_merge(button_class: nil, disabled: false, display_price: true, display_servings: true)
-    label = options[:display_servings] ? "#{Spree.t(:add_dish)} (#{Spree.t(:two_servings)})" : Spree.t(:add_dish)
+    label = Spree.t(:add_dish)
     button_class = ("btn btn-primary #{options[:button_class]}").strip
     if KITCHEN.open?
       if !product.master.can_supply?
@@ -22,7 +22,8 @@ module ProductHelper
       concat label
       if options[:display_price]
         concat ' '
-        concat content_tag :span, display_price(product), class: 'list-button', itemprop: 'price'
+        concat content_tag :span, Spree.t(:half_price_x_2, half_price: product.half_price), class: 'list-button'
+        concat content_tag :span, nil, itemprop: "price", content: display_price(product)
       end
     end
   end
