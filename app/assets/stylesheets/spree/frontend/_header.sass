@@ -1,7 +1,8 @@
 $base-line-height: 20px
 
-$din-logo-size: 52px
-$link-v-padding: 10px
+$din-logo-size: 46px
+$din-logo-size--wide: 52px
+$link-v-padding: 8px
 $logo-v-offset: 4px
 $nav-height: $base-line-height + $link-v-padding * 2
 $nav-height--wide: 16px * $line-height-base + $link-v-padding * 2
@@ -35,9 +36,9 @@ $nav-height--wide: 16px * $line-height-base + $link-v-padding * 2
   text-decoration: none
   &:hover
     color: rgb(28,28,28)
-  @media (min-width: 768px)
+  @media (min-width: 500px)
     padding: $link-v-padding 15px
-  @media (max-width: 500px)
+  @media (max-width: 500px - 1)
     font-size: 14px
 
 .main-nav__badge
@@ -69,12 +70,12 @@ $nav-height--wide: 16px * $line-height-base + $link-v-padding * 2
 
 .main-nav_logo
   width: $din-logo-size
-
+  @media (min-width: 500px)
+    width: $din-logo-size--wide
 
 .nav-logo
   position: absolute
-  // top: $logo-v-offset
-  top: 12px
+  top: $nav-height - $din-logo-size/2
   display: inline-block
   width: $din-logo-size
   height: $din-logo-size
@@ -82,3 +83,11 @@ $nav-height--wide: 16px * $line-height-base + $link-v-padding * 2
   box-shadow: 0 1px 1px rgba(82,82,82,0.3)
   .main-nav--hidden &
     box-shadow: none
+  @media (min-width: 500px)
+    top: $nav-height--wide - $din-logo-size--wide/2
+    width: $din-logo-size--wide
+    height: $din-logo-size--wide
+
+.hidden-subscription-item-long
+  @media (max-width: 530px)
+    display: none

@@ -1,13 +1,16 @@
 <div id="menu" class="container--main">
   <div class="menu-header">
-    <h2 class="hr-header">Menu Preview</h2>
+    <h2 class="hr-header"><%= Spree.t(:subscription_menu) %></h2>
     <div class="sub-header text-center bottom30">
       <%= Time.current.next_week(:monday).to_s(:ordinal_weekday_month_day) %>
       thru
       <%= Time.current.next_week(:wednesday).to_s(:ordinal_weekday_month_day) %>
     </div>
     <p class="text-center">
-      Pre-order only available to Din subscribers.
+      Pre-order available to Din subscribers.
+      <% unless spree_current_user.meal_subscription %>
+        <%= link_to Spree.t(:set_up_a_subscription), spree.account_path %>
+      <% end -%>
     </p>
     <p class="text-center">
       <% if @user.meal_subscription %>

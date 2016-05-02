@@ -5,6 +5,9 @@
 
       <div class="main-nav__menu">
         <%= link_to Spree.t(:menu), spree.root_path(anchor: "menu"), class: "main-nav__link" %>
+        <% if spree_current_user.meal_subscription %>
+          <%= link_to "Subscription <span class=\"hidden-subscription-item-long\">Menu</span>".html_safe, spree.subscription_menu_path, class: "main-nav__link" %>
+        <% end -%>
         <% if spree_user_masquerade? -%>
           <%= link_to "Stop Impersonating #{spree_current_user.email}", back_masquerade_path(spree_current_user), class: "btn btn-sm btn-warning" %>
         <% end -%>
