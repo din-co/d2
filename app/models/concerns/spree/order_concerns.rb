@@ -16,7 +16,7 @@ module Spree
 
       state_machine.before_transition from: :address do |order|
         order.send(:validate_ship_address)
-        return false if order.errors[:ship_address].present?
+        order.errors[:ship_address].blank? # result needs to be false when errors are present
       end
 
       scope :day_of, ->(t) { completed_between(t.midnight, t.end_of_day) }
