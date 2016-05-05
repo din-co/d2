@@ -23,7 +23,7 @@ RSpec.shared_examples_for "spree order concerns" do
       expect(order).to be_valid
       order.ship_address = order.bill_address
       expect(order).to_not be_valid
-      expect(order.errors[:ship_address]).to eql([Spree.t(:unsupported_delivery_location, locations: Spree::Zone.pluck(:name).to_sentence)])
+      expect(order.errors[:base]).to eql(["Shipping address error: #{Spree.t(:unsupported_delivery_location, locations: Spree::Zone.pluck(:name).to_sentence)}"])
     end
 
     it 'allows a valid bill_address without an assigned postal_code' do
