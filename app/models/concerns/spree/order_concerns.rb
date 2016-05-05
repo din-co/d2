@@ -186,11 +186,11 @@ module Spree
       def validate_ship_address
         if ship_address.present?
           unless ship_address.valid?
-            ship_address.errors.each { |attr, err| errors.add :ship_address, err }
+            ship_address.errors.full_messages.each { |msg| errors.add(:base, "Shipping address error: #{msg}") }
             return
           end
           unless ship_address.valid?(:shipping)
-            ship_address.errors.each { |attr, err| errors.add :ship_address, err }
+            ship_address.errors.full_messages.each { |msg| errors.add(:base, "Shipping address error: #{msg}") }
             return
           end
         end
