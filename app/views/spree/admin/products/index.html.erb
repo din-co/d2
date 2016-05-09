@@ -84,7 +84,7 @@
             </td>
             <td class="align-center">
               <%= link_to "meal", main_app.admin_meal_label_print_path(product) %>
-              <%= link_to "ingredients", main_app.admin_labels_ingredient_path(large_labels: strip_tags(product.property('components')).strip) %>
+              <%= link_to "ingredients", main_app.admin_labels_ingredient_path(large_labels: strip_tags(product.property('components') || '').strip) %>
             </td>
             <td class="align-center"><%= product.display_price.to_html %></td>
             <td class="actions" data-hook="admin_products_index_row_actions">
