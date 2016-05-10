@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/subscription_data'
 
 RSpec.describe MealSelector, subscription_data: true do
   let(:meals) { [braised_veg, breakfast_sandwich, sauteed_fish, tofu_fried_rice] }

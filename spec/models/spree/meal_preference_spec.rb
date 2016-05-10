@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/subscription_data'
 
 RSpec.describe Spree::MealPreference, type: :model, subscription_data: true do
   describe 'highly restricted' do
