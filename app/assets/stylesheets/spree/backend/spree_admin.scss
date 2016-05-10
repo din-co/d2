@@ -50,31 +50,5 @@
 @import 'spree/backend/sections/stock_transfers';
 @import 'spree/backend/sections/style_guide';
 
-#subscription_products {
-  .fa-sort {
-    padding-right: 1em;
-  }
-}
-.sort_item {
-  cursor: ns-resize;
-}
-
-.remove-action {
-  font-size: 120%;
-  background-color: #f3f8fc;
-  border: 1px solid #cee1f4;
-  border-radius: 15px;
-  width: 29px;
-  height: 29px;
-  display: inline-block;
-  padding-top: 6px;
-  text-align: center;
-  &.fa:before {
-    padding: 0;
-  }
-  &:hover {
-    background-color: #C60F13;
-    color: #FFFFFF;
-    border-color: transparent;
-  }
-}
+// Din Custom
+@import 'spree/backend/subscriptions';

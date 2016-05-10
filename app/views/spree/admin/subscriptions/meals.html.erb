@@ -10,30 +10,24 @@
         <label for="subscription_delivery_date">Delivery Date</label>
         <input class="datepicker fullwidth" type="text" id="subscription_delivery_date">
       </div>
-    </div>
-    <div class="omega twelve columns">
       <div class="field">
-        <label for="subscription_delivery_date">Add Product</label>
-        <select name="asdf" class="select2 fullwidth">
-          <% @products.each do |product| %>
-            <option value="<%= product.id %>"><%= product.name %> (<%= product.restaurant.try(:name) %>)</option>
-          <% end -%>
-        </select>
+        <p>Sort meals into the order which we recommend meals, after filtering for user meal preferences and order history.</p>
       </div>
     </div>
-  </div>
-
-  <div id="subscription_products" class="list-group ui-sortable field">
-    <% @products.each do |product| %>
-      <div id="<%= "product_#{product.id}" %>" data-product-id="<%= product.id %>" class="sort_item list-group-item">
-        <i class="fa fa-sort"></i>
-        <input class="align-right" maxlength="3" size="3" type="text" value="0">
-        <span class="product_name"><%= product.name %> (<%= product.restaurant.try(:name) %>) <b><%= product.price %></b></span>
-        <span class="right">
-          <a class="fa fa-trash remove-action" data-action="remove" href="#"></a>
-        </span>
+    <div class="alpha twelve columns">
+      <div class="field">
+        <label>Subscription Menu</label>
+        <div id="subscription_products" class="list-group ui-sortable">
+          <% @products.each do |product| %>
+            <div id="<%= "product_#{product.id}" %>" data-product-id="<%= product.id %>" class="sort_item list-group-item">
+              <i class="fa fa-sort sort-handle"></i>
+              <input class="align-right" maxlength="3" size="3" type="text" value="0">
+              <span class="product_name"><%= product.name %> (<%= product.restaurant.try(:name) %>) <b><%= product.price %></b></span>
+            </div>
+          <% end -%>
+        </div>
       </div>
-    <% end -%>
+    </div>
   </div>
 
   <div class="actions filter-actions">
