@@ -54,6 +54,10 @@ Rails.application.routes.draw do
       resource :address, only: [:show, :create]
       resource :cards, only: [:show, :create]
     end
+
+    namespace :admin do
+      get 'subscriptions/meals'
+    end
   end
 
   get '/p/:personal_promo', to: 'personal_promos#show', as: 'personal_promo', constraints: lambda { |req|

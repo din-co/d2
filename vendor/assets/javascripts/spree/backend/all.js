@@ -7,5 +7,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require spree/backend
+//= require spree/backend/subscriptions.js.coffee
 
 //= require_tree .
