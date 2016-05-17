@@ -35,6 +35,8 @@
       <dd id='payment_status'><span class="state <%= @order.payment_state %>"><%= Spree.t(@order.payment_state, :scope => :payment_states, :default => [:missing, "none"]) %></span></dd>
       <dt data-hook='admin_order_tab_date_completed_title'><%= Spree.t(:date_completed) %>:</dt>
       <dd id='date_complete'><%= pretty_time(@order.completed_at) %></dd>
+      <dt data-hook='admin_order_tab_shipment_date_title'><%= Spree.t(:shipment_date) %>:</dt>
+      <dd id='date_complete'><%= l @order.shipment_date.to_date %></dd>
     <% end %>
 
     <% if @order.approved? %>
