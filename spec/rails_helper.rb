@@ -28,7 +28,7 @@ require 'spree/testing_support/factories'
 require 'support/factories'
 
 require 'support/devise'
-
+require 'support/subscription_data'
 
 require 'capybara/poltergeist'
 

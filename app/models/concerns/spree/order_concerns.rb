@@ -18,10 +18,13 @@ module Spree
         order.send(:validate_ship_address)
         order.errors[:base].blank? # result needs to be false when errors are present
       end
+      state_machine.after_transition to: :complete do |order|
+        order.send :ensure_shipment_date
+        order.save!
+      end
 
-      scope :day_of, ->(t) { completed_between(t.midnight, t.end_of_day) }
       scope :not_canceled, -> { where(canceled_at: nil) }
-      scope :shippable_day_of, ->(t) { day_of(t).not_canceled }
+      scope :shippable_day_of, -> (t) { not_canceled.where(shipment_date: t.midnight..t.end_of_day).where(['completed_at <= ?', Time.now]) }
       scope :with_delivery_window, ->(id) { joins(:shipments).where("spree_shipments.delivery_window_id" => id) }
       scope :including_tote_data, -> {
         includes(:ship_address, {shipments: :selected_delivery_window})
@@ -182,6 +185,10 @@ module Spree
       end
 
       private
+
+      def ensure_shipment_date
+        self.shipment_date ||= completed_at
+      end
 
       def validate_ship_address
         return unless ship_address.present?

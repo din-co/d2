@@ -34,45 +34,39 @@ RSpec.shared_examples_for "spree order concerns" do
     end
   end
 
-  describe "tote tags for completed orders" do
+  describe "shippable_day_of" do
+    let(:yesterday) { 1.day.ago }
+    let!(:shippable_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship) }
+    let!(:yesterday_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship).tap {|o| o.update_attributes(completed_at: yesterday, shipment_date: yesterday) } }
+
+    let!(:shippable_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 5.days.ago, shipment_date: Time.current) } }
+    let!(:yesterday_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 6.days.ago, shipment_date: yesterday) } }
+
+    it 'selects both on-demand and subscription orders shipping on the passed date' do
+      expect(described_class.shippable_day_of(Time.now)).to contain_exactly(shippable_on_demand_order, shippable_subscription_order)
+      expect(described_class.shippable_day_of(1.day.ago)).to contain_exactly(yesterday_on_demand_order, yesterday_subscription_order)
+    end
+  end
+
+  describe "completed orders" do
     let(:order) { FactoryGirl.create(:order_ready_to_ship) }
 
-    it 'generates a single tag with complete information' do
-      expect(order.quantity).to be <= 3
-
-      tote_tags = order.tote_tags
-      expect(tote_tags.size).to eq(1)
-
-      tag = tote_tags.first
-      expect(tag.order_number).to    eq(order.number)
-      expect(tag.tag_number).to      eq(1)
-      expect(tag.name).to            eq(order.name)
-      expect(tag.address1).to        eq(order.ship_address.address1)
-      expect(tag.address2).to        eq(order.ship_address.address2)
-      expect(tag.city).to            eq(order.ship_address.city)
-      expect(tag.state).to           eq(order.ship_address.state.abbr)
-      expect(tag.zipcode).to         eq(order.ship_address.zipcode)
-      expect(tag.phone).to           eq(order.ship_address.phone)
-      expect(tag.instructions).to    eq(order.special_instructions)
-      expect(tag.delivery_window).to eq(order.shipments.first.selected_delivery_window)
-
-      expect(tag.packing_list.size).to eq(1)
+    it "has a shipment_date equal to completed_at" do
+      expect(order.state).to eq("complete")
+      expect(order.shipment_date).to eq(order.completed_at)
     end
 
-    it 'generates additional tags without line items for orders with many items' do
-      7.times { |n| FactoryGirl.create(:line_item, order: order) }
-      order.line_items.reload
-      order.update!
+    describe "tote tags" do
 
-      expect(order.quantity).to eq(8) # original item, plus 7
+      it 'generates a single tag with complete information' do
+        expect(order.quantity).to be <= 3
 
-      tote_tags = order.tote_tags
-      expect(tote_tags.size).to eq(3) # 3 items per tag, the last may not be full
+        tote_tags = order.tote_tags
+        expect(tote_tags.size).to eq(1)
 
-      # All tags should contain delivery information
-      tote_tags.each_with_index do |tag, i|
+        tag = tote_tags.first
         expect(tag.order_number).to    eq(order.number)
-        expect(tag.tag_number).to      eq(i + 1)
+        expect(tag.tag_number).to      eq(1)
         expect(tag.name).to            eq(order.name)
         expect(tag.address1).to        eq(order.ship_address.address1)
         expect(tag.address2).to        eq(order.ship_address.address2)
@@ -82,13 +76,41 @@ RSpec.shared_examples_for "spree order concerns" do
         expect(tag.phone).to           eq(order.ship_address.phone)
         expect(tag.instructions).to    eq(order.special_instructions)
         expect(tag.delivery_window).to eq(order.shipments.first.selected_delivery_window)
+
+        expect(tag.packing_list.size).to eq(1)
       end
 
-      # Only first tag should include packing list
-      first_tag = tote_tags.shift
-      expect(first_tag.packing_list.size).to eq(8) # number of unique line items
-      tote_tags.each do |tag|
-        expect(tag.packing_list).to be_empty
+      it 'generates additional tags without line items for orders with many items' do
+        7.times { |n| FactoryGirl.create(:line_item, order: order) }
+        order.line_items.reload
+        order.update!
+
+        expect(order.quantity).to eq(8) # original item, plus 7
+
+        tote_tags = order.tote_tags
+        expect(tote_tags.size).to eq(3) # 3 items per tag, the last may not be full
+
+        # All tags should contain delivery information
+        tote_tags.each_with_index do |tag, i|
+          expect(tag.order_number).to    eq(order.number)
+          expect(tag.tag_number).to      eq(i + 1)
+          expect(tag.name).to            eq(order.name)
+          expect(tag.address1).to        eq(order.ship_address.address1)
+          expect(tag.address2).to        eq(order.ship_address.address2)
+          expect(tag.city).to            eq(order.ship_address.city)
+          expect(tag.state).to           eq(order.ship_address.state.abbr)
+          expect(tag.zipcode).to         eq(order.ship_address.zipcode)
+          expect(tag.phone).to           eq(order.ship_address.phone)
+          expect(tag.instructions).to    eq(order.special_instructions)
+          expect(tag.delivery_window).to eq(order.shipments.first.selected_delivery_window)
+        end
+
+        # Only first tag should include packing list
+        first_tag = tote_tags.shift
+        expect(first_tag.packing_list.size).to eq(8) # number of unique line items
+        tote_tags.each do |tag|
+          expect(tag.packing_list).to be_empty
+        end
       end
     end
   end
