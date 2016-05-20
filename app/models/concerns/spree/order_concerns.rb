@@ -190,6 +190,12 @@ module Spree
         self.shipment_date ||= completed_at
       end
 
+      def validate_shipment_date
+        if shipment_date.present? && !KITCHEN.shipment_dates_available.include? shipment_date 
+          errors.add(:shipment_date, "Invalid shipment date")
+        end
+      end
+
       def validate_ship_address
         return unless ship_address.present?
         unless ship_address.valid?
