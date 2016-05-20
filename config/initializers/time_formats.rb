@@ -7,3 +7,4 @@ Time::DATE_FORMATS[:ordinal_month_day] = lambda { |time| time.strftime("%B #{tim
 Time::DATE_FORMATS[:short_time] = lambda { |time| time.min == 0 ? time.strftime("%-I%P") : time.strftime("%-I:%M%P") }
 
 Date::DATE_FORMATS[:ordinal_weekday_month_day] = Time::DATE_FORMATS[:ordinal_weekday_month_day]
+Date::DATE_FORMATS[:ordinal_month_day] = Time::DATE_FORMATS[:ordinal_month_day]
