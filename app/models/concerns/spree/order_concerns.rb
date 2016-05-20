@@ -13,13 +13,15 @@ module Spree
       end
 
       validate :validate_ship_address, if: 'passed_checkout_step?("address")'
+      validates :shipment_date, presence: true, if: 'passed_checkout_step?("delivery")'
+      validates :shipment_date, minimum: :completed_at, if: :completed?
 
       state_machine.before_transition from: :address do |order|
         order.send(:validate_ship_address)
         order.errors[:base].blank? # result needs to be false when errors are present
       end
       state_machine.after_transition to: :complete do |order|
-        order.send :ensure_shipment_date :validate_shipment_date
+        order.send :ensure_shipment_date
         order.save!
       end
 
@@ -188,12 +190,6 @@ module Spree
 
       def ensure_shipment_date
         self.shipment_date ||= completed_at
-      end
-
-      def validate_shipment_date
-        if shipment_date.present? && !KITCHEN.shipment_dates_available.include? shipment_date 
-          errors.add(:shipment_date, "Invalid shipment date")
-        end
       end
 
       def validate_ship_address
