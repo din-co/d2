@@ -19,7 +19,7 @@ module Spree
         order.errors[:base].blank? # result needs to be false when errors are present
       end
       state_machine.after_transition to: :complete do |order|
-        order.send :ensure_shipment_date
+        order.send :ensure_shipment_date :validate_shipment_date
         order.save!
       end
 
