@@ -29,9 +29,14 @@
     <% else %>
       <% difference = @order.shipping_promotion_difference.money %>
       <% if difference > 0.to_money %>
+
+      <% 
+=begin This removes the free shipping promo CTA in checkout. %>
         <p>
           To get <strong><%= @order.discounted_shipping_cost %> Shipping</strong>, add <strong><%= Spree::Money.new(difference) %></strong> to your order.
         </p>
+      <% 
+=end %>
       <% elsif @order.shipping_promotion_calculator.present? %>
         <p>
           <span class="delivery-window--delivery-discount">Congratulations! Your order qualifies for <strong><%= @order.discounted_shipping_cost %> delivery</strong>!</span>
