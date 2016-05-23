@@ -36,14 +36,7 @@ Spree.config do |config|
   # Template to use when rendering layout
   # config.layout = "spree/layouts/spree_application"
 
-  # Whitelist shipment_date in checkout
-  Rails.application.config.to_prepare do
-    Spree::Order.whitelisted_ransackable_attributes |= ['shipment_date']
-  end
-
   # Show shipping instructions in checkout
-
-
   config.shipping_instructions = true
   config.company = true
 

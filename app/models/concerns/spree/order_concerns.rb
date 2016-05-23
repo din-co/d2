@@ -13,8 +13,6 @@ module Spree
       end
 
       validate :validate_ship_address, if: 'passed_checkout_step?("address")'
-      validates :shipment_date, presence: true, if: 'passed_checkout_step?("delivery")'
-      validates :shipment_date, minimum: :completed_at, if: :completed?
 
       state_machine.before_transition from: :address do |order|
         order.send(:validate_ship_address)

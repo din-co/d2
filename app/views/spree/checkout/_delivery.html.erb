@@ -11,13 +11,13 @@
 
 <h1><%= Spree.t(:delivery) %></h1>
 <label>Delivery Date</label>
-<% ([Time.current.to_date] + KITCHEN.shipment_dates_available).each do |date| %>
+<% ([Time.current.to_date] + KITCHEN.shipment_dates_available).each do |date| %></span>
   <% disabled = date == Time.current.to_date %>
   <div class="radio <%= 'disabled' if disabled %>">
     <label>
       <%= form.radio_button :shipment_date, date.to_s(:db), disabled: disabled %>
-      <%= Kronic.format date %>, <%= date.to_s(:ordinal_month_day) %>
-      <%= "— Sold Out" if disabled %>
+      <span class="shipment-date__name"><%= Kronic.format date %>, <%= date.to_s(:ordinal_month_day) %></span>
+      <span class="shipment-date__name"><%= "— Sold Out" if disabled %></span>
     </label>
   </div>
 <% end %>

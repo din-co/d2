@@ -10,8 +10,10 @@ module Spree
     extend DisplayMoney
     money_methods :cost
 
+    # FIXME: Set value to TRUE and comment out the delivery window availability logic so that all windows are always available.
     def currently_available?
-      Time.zone.now < available_until
+      TRUE
+      #Time.zone.now < available_until
     end
 
     def available_until
