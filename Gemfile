@@ -60,6 +60,8 @@ gem 'font_assets' # for CORS
 gem 'immutable-struct'
 gem 'rack-rewrite'
 
+gem 'kronic'
+
 gem 'timecop'
 
 group :test do

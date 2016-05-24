@@ -172,6 +172,7 @@ GEM
     kaminari (0.16.3)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    kronic (1.1.3)
     launchy (2.4.3)
       addressable (~> 2.3)
     lograge (0.3.5)
@@ -449,6 +450,7 @@ DEPENDENCIES
   intercom-rails
   jbuilder (~> 2.0)
   jquery-rails
+  kronic
   launchy
   lograge
   mysql2 (~> 0.3.20)

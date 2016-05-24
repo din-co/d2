@@ -57,7 +57,7 @@ RSpec.feature "Checkout flow:" do
     expect(page).to have_text(Spree.t(order.user.default_credit_card.cc_type))
     expect(page).to have_text(order.user.default_credit_card.last_digits)
 
-    expect(order.shipment_date).to eq(order.completed_at)
+    expect(order.shipment_date).to be >= order.completed_at if order.completed?
   end
 
   describe "when the kitchen is open", js: true do

@@ -36,24 +36,48 @@ RSpec.shared_examples_for "spree order concerns" do
 
   describe "shippable_day_of" do
     let(:yesterday) { 1.day.ago }
-    let!(:shippable_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship) }
-    let!(:yesterday_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship).tap {|o| o.update_attributes(completed_at: yesterday, shipment_date: yesterday) } }
+    let!(:yesterday_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship).tap {|o| o.update_attributes(completed_at: 2.days.ago, shipment_date: yesterday.to_date) } }
+    let!(:shippable_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship).tap {|o| o.update_attributes(completed_at: yesterday, shipment_date: Time.current.to_date) } }
+    let!(:tomorrow_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship) }
 
-    let!(:shippable_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 5.days.ago, shipment_date: Time.current) } }
     let!(:yesterday_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 6.days.ago, shipment_date: yesterday) } }
+    let!(:shippable_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 5.days.ago, shipment_date: Time.current) } }
+    let!(:tomorrow_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 4.days.ago, shipment_date: 1.day.from_now) } }
 
     it 'selects both on-demand and subscription orders shipping on the passed date' do
-      expect(described_class.shippable_day_of(Time.now)).to contain_exactly(shippable_on_demand_order, shippable_subscription_order)
       expect(described_class.shippable_day_of(1.day.ago)).to contain_exactly(yesterday_on_demand_order, yesterday_subscription_order)
+      expect(described_class.shippable_day_of(Time.current)).to contain_exactly(shippable_on_demand_order, shippable_subscription_order)
+      expect(described_class.shippable_day_of(1.day.from_now)).to contain_exactly(tomorrow_on_demand_order, tomorrow_subscription_order)
+    end
+  end
+
+  describe "shipment_date" do
+    let(:order_with_address) { FactoryGirl.create(:order_with_line_items, state: :delivery) }
+    let(:completed_order) { FactoryGirl.create(:order_ready_to_ship) }
+
+    it 'is required after the "delivery" state' do
+      expect(order_with_address).to be_valid
+      order_with_address.shipments.first.selected_delivery_window = Spree::DeliveryWindow.first
+      order_with_address.shipment_date = 1.day.from_now.midnight
+      order_with_address.next!
+      expect(order_with_address.state).to eq("payment")
+      order_with_address.shipment_date = nil
+      expect(order_with_address).to_not be_valid
+    end
+
+    it 'must be at or after completed_at when complete' do
+      expect(completed_order).to be_valid
+      completed_order.shipment_date = completed_order.completed_at.advance(days: -1)
+      expect(completed_order).to_not be_valid
     end
   end
 
   describe "completed orders" do
     let(:order) { FactoryGirl.create(:order_ready_to_ship) }
 
-    it "has a shipment_date equal to completed_at" do
+    it "has a shipment_date the day after completed_at" do
       expect(order.state).to eq("complete")
-      expect(order.shipment_date).to eq(order.completed_at)
+      expect(order.shipment_date).to eq(order.completed_at.tomorrow.midnight)
     end
 
     describe "tote tags" do

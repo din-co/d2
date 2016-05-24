@@ -14,10 +14,25 @@ module Spree
 
       validate :validate_ship_address, if: 'passed_checkout_step?("address")'
 
+      validates :shipment_date, presence: true, if: 'passed_checkout_step?("delivery")'
+      validates :shipment_date, inclusion: { in: lambda { |record| record.completed_at..record.completed_at.advance(days: 7) } }, if: :completed?
+
       state_machine.before_transition from: :address do |order|
         order.send(:validate_ship_address)
         order.errors[:base].blank? # result needs to be false when errors are present
       end
+
+      state_machine.before_transition to: :delivery do |order|
+        order.shipment_date ||= KITCHEN.shipment_dates_available.first
+      end
+
+      state_machine.before_transition to: [:payment, :complete] do |order|
+        unless KITCHEN.shipment_dates_available.include?(order.shipment_date.to_date)
+          order.errors.add(:shipment_date, :invalid)
+        end
+        order.errors[:shipment_date].blank?
+      end
+
       state_machine.after_transition to: :complete do |order|
         order.send :ensure_shipment_date
         order.save!
