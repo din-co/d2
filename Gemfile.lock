@@ -157,6 +157,10 @@ GEM
       domain_name (~> 0.5)
     i18n (0.7.0)
     immutable-struct (2.2.0)
+    inline_svg (0.6.4)
+      activesupport (>= 4.0.4)
+      loofah (>= 2.0)
+      nokogiri (~> 1.6)
     intercom-rails (0.2.29)
       activesupport (> 3.0)
     jbuilder (2.3.2)
@@ -447,6 +451,7 @@ DEPENDENCIES
   ffaker
   font_assets
   immutable-struct
+  inline_svg
   intercom-rails
   jbuilder (~> 2.0)
   jquery-rails
