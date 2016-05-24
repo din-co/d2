@@ -26,6 +26,13 @@ module Spree
         order.shipment_date ||= KITCHEN.shipment_dates_available.first
       end
 
+      state_machine.before_transition to: [:payment, :complete] do |order|
+        unless KITCHEN.shipment_dates_available.include?(order.shipment_date)
+          order.errors.add(:shipment_date, :invalid)
+        end
+        order.errors[:shipment_date].blank?
+      end
+
       state_machine.after_transition to: :complete do |order|
         order.send :ensure_shipment_date
         order.save!
