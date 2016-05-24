@@ -62,9 +62,11 @@
         <%= next_open.to_s(:ordinal_weekday_month_day) %>
       </div>
     <% else %>
-      <h2 class="hr-header">Today’s Menu</h2>
+      <h2 class="hr-header">Menu</h2>
       <div class="sub-header text-center bottom30">
-        <%= Time.current.to_s(:ordinal_weekday_month_day) %>
+        <%= Time.current.advance(:days => - 7).next_week(:monday).to_s(:ordinal_weekday_month_day) %>
+      thru
+      <%= Time.current.advance(:days => - 7).next_week(:wednesday).to_s(:ordinal_weekday_month_day) %>
       </div>
     <% end -%>
   </div>
@@ -91,9 +93,7 @@
       <h4 class="how-din-works__header">You select from our menu.</h4>
       <div class="how-din-works__description">
         <p>
-          We’re currently open Mon, Tue, and Wed <em>and expanding weekly!</em>
-          Daily ordering opens at midnight.
-          Inventory is based upon meal popularity.
+          Menu options are based upon availability from our restaurant partners.
         </p>
       </div>
     </div>
@@ -101,7 +101,7 @@
     <div class="how-din-works__step">
       <h4 class="how-din-works__header">You select a delivery window.</h4>
       <div class="how-din-works__description">
-        <p>Get <strong>$5 off delivery</strong> on orders over $60.</p>
+        We currently deliver Monday thru Wednesday.</br></br>
       </div>
       <table class="table small table-striped how-din-works__table">
         <thead>
@@ -152,7 +152,6 @@
       <div class="how-din-works__description">
         <p>
           You will receive a text message when your delivery is en route.
-          <em>SF delivery notifications have a live delivery map.</em>
         </p>
 
       </div>
@@ -168,5 +167,21 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+
+<div class="bg-tan">
+  <div id="press" class="container press-coverage">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= inline_svg("press/wall-street-journal.svg", class: "press-logo") %>
+        <%= inline_svg("press/eater.svg", class: "press-logo") %>
+        <%= inline_svg("press/techcrunch.svg", class: "press-logo") %>
+        <%= inline_svg("press/food-and-wine.svg", class: "press-logo") %>
+        <%= inline_svg("press/new-york-times.svg", class: "press-logo") %>
+        <%= inline_svg("press/thekitchn.svg", class: "press-logo") %>
+      </div>
+    </div>
   </div>
 </div>
