@@ -62,9 +62,11 @@
         <%= next_open.to_s(:ordinal_weekday_month_day) %>
       </div>
     <% else %>
-      <h2 class="hr-header">Today’s Menu</h2>
+      <h2 class="hr-header">Menu</h2>
       <div class="sub-header text-center bottom30">
-        <%= Time.current.to_s(:ordinal_weekday_month_day) %>
+        <%= Time.current.advance(:days => - 7).next_week(:monday).to_s(:ordinal_weekday_month_day) %>
+      thru
+      <%= Time.current.advance(:days => - 7).next_week(:wednesday).to_s(:ordinal_weekday_month_day) %>
       </div>
     <% end -%>
   </div>
