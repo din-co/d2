@@ -48,6 +48,24 @@ RSpec.shared_examples_for "spree order concerns" do
     end
   end
 
+  describe "shipment_date" do
+    let(:order_with_address) { FactoryGirl.create(:order_with_line_items, state: :delivery) }
+    let(:completed_order) { FactoryGirl.create(:order_ready_to_ship) }
+
+    it 'is required after the "delivery" state' do
+      expect(order_with_address).to be_valid
+      order_with_address.next!
+      expect(order_with_address.state).to eq("confirm")
+      expect(order_with_address).to_not be_valid
+    end
+
+    it 'must be at or after completed_at when complete' do
+      expect(completed_order).to be_valid
+      completed_order.shipment_date = completed_order.completed_at.advance(days: -1)
+      expect(completed_order).to_not be_valid
+    end
+  end
+
   describe "completed orders" do
     let(:order) { FactoryGirl.create(:order_ready_to_ship) }
 

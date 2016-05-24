@@ -4,68 +4,113 @@ RSpec.describe KitchenStatus do
   describe 'time calculation' do
     examples = [
       {
-        current_time: Time.zone.parse('2016-01-18 00:00:00'),
-        opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time: Time.zone.parse('2016-01-20 17:00:00'),
-        next_opens:   Time.zone.parse('2016-01-25 00:00:00'),
+        current_time:          Time.zone.parse('2016-01-17 00:00:00'),
+        
+        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
+        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
+        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
+        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
+
+        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
+        shipment_dates_available: 3,
       },
+      
       {
-        current_time: Time.zone.parse('2016-01-19 00:00:00'),
-        opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time: Time.zone.parse('2016-01-20 17:00:00'),
-        next_opens:   Time.zone.parse('2016-01-25 00:00:00'),
+        current_time:          Time.zone.parse('2016-01-18 00:00:00'),
+
+        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
+        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
+        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
+        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
+        
+        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
+        shipment_dates_available: 2,
       },
+      
       {
-        current_time: Time.zone.parse('2016-01-20 00:00:00'),
-        opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time: Time.zone.parse('2016-01-20 17:00:00'),
-        next_opens:   Time.zone.parse('2016-01-25 00:00:00'),
+        # last second ordering is still open
+        current_time:          Time.zone.parse('2016-01-19 20:59:59'),
+      
+        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
+        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
+        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
+        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
+      
+        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
+        shipment_dates_available: 0,
       },
+      
       {
-        current_time: Time.zone.parse('2016-01-21 00:00:00'),
-        opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time: Time.zone.parse('2016-01-20 17:00:00'),
-        next_opens:   Time.zone.parse('2016-01-25 00:00:00'),
+        current_time:          Time.zone.parse('2016-01-20 00:00:00'),
+      
+        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
+        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
+        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
+        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
+      
+        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
+        shipment_dates_available: 0,
       },
+
       {
-        current_time: Time.zone.parse('2016-01-22 00:00:00'),
-        opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time: Time.zone.parse('2016-01-20 17:00:00'),
-        next_opens:   Time.zone.parse('2016-01-25 00:00:00'),
+        current_time:          Time.zone.parse('2016-01-23 00:00:00'),
+        
+        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
+        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
+        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
+        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
+
+        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
       },
+
       {
-        current_time: Time.zone.parse('2016-01-23 00:00:00'),
-        opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time: Time.zone.parse('2016-01-20 17:00:00'),
-        next_opens:   Time.zone.parse('2016-01-25 00:00:00'),
+        current_time:          Time.zone.parse('2016-01-24 00:00:00'),
+      
+        opening_time:          Time.zone.parse('2016-01-24 00:00:00'),
+        shipment_opening_time: Time.zone.parse('2016-01-25 00:00:00'),
+        closing_time:          Time.zone.parse('2016-01-26 21:00:00'),
+        shipment_closing_time: Time.zone.parse('2016-01-27 21:00:00'),
+
+        next_opens:            Time.zone.parse('2016-01-31 00:00:00'),
       },
+      
       {
-        current_time: Time.zone.parse('2016-01-24 00:00:00'),
-        opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time: Time.zone.parse('2016-01-20 17:00:00'),
-        next_opens:   Time.zone.parse('2016-01-25 00:00:00'),
-      },
-      {
-        current_time: Time.zone.parse('2016-01-25 00:00:00'),
-        opening_time: Time.zone.parse('2016-01-25 00:00:00'),
-        closing_time: Time.zone.parse('2016-01-27 17:00:00'),
-        next_opens:   Time.zone.parse('2016-02-01 00:00:00'),
+        current_time:          Time.zone.parse('2016-01-25 00:00:00'),
+      
+        opening_time:          Time.zone.parse('2016-01-24 00:00:00'),
+        shipment_opening_time: Time.zone.parse('2016-01-25 00:00:00'),
+        closing_time:          Time.zone.parse('2016-01-26 21:00:00'),
+        shipment_closing_time: Time.zone.parse('2016-01-27 21:00:00'),
+      
+        next_opens:            Time.zone.parse('2016-01-31 00:00:00'),
       },
     ]
     examples.each do |ex|
-      it 'indicates correct opening time when current time is #{ex[:current_time]}' do
+      it "indicates correct opening time when current time is #{ex[:current_time]}" do
         ks = described_class.new
         Timecop.travel(ex[:current_time]) do
           expect(ks.opening_time).to eql(ex[:opening_time])
         end
       end
-      it 'indicates correct closing time when current time is #{ex[:current_time]}' do
+      it "indicates correct closing time when current time is #{ex[:current_time]}" do
         ks = described_class.new
         Timecop.travel(ex[:current_time]) do
           expect(ks.closing_time).to eql(ex[:closing_time])
         end
       end
-      it 'indicates correct next opening time when current time is #{ex[:current_time]}' do
+      it "indicates correct next opening time when current time is #{ex[:current_time]}" do
+        ks = described_class.new
+        Timecop.travel(ex[:current_time]) do
+          expect(ks.next_opens).to eql(ex[:next_opens])
+        end
+      end
+      it "indicates correct shipment opening time when current time is #{ex[:current_time]}" do
+        ks = described_class.new
+        Timecop.travel(ex[:current_time]) do
+          expect(ks.next_opens).to eql(ex[:next_opens])
+        end
+      end
+      it "indicates correct shipment closing time when current time is #{ex[:current_time]}" do
         ks = described_class.new
         Timecop.travel(ex[:current_time]) do
           expect(ks.next_opens).to eql(ex[:next_opens])

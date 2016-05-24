@@ -9,8 +9,23 @@
   </script>
 <% end -%>
 
+<h1><%= Spree.t(:delivery) %></h1>
+<label>Delivery Date</label>
+<% ([Time.current.to_date] + KITCHEN.shipment_dates_available).each do |date| %></span>
+  <% disabled = date == Time.current.to_date %>
+  <div class="radio <%= 'disabled' if disabled %>">
+    <label>
+      <%= form.radio_button :shipment_date, date.to_s(:db), disabled: disabled %>
+      <span class="shipment-date__name"><%= Kronic.format date %>, <%= date.to_s(:ordinal_month_day) %></span>
+      <span class="shipment-date__name"><%= "— Sold Out" if disabled %></span>
+    </label>
+  </div>
+<% end %>
+
 <%= form.fields_for :shipments do |ship_form| %>
-  <h1><%= Spree.t(:delivery) %></h1>
+  
+<%
+=begin Remove shipping promotion CTA's. %>
 
   <div class="form-group">
     <% if ship_form.object.delivery_windows.available.count == 0 %>
@@ -28,6 +43,9 @@
       <% end %>
     <% end -%>
   </div>
+
+<%
+=end %>
 
   <label><%= Spree.t(:delivery_window) %></label>
   <% ship_form.object.shipping_rates.each do |shipping_rate| %>
