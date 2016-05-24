@@ -45,8 +45,9 @@ RSpec.shared_examples_for "spree order concerns" do
     let!(:tomorrow_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 4.days.ago, shipment_date: 1.day.from_now) } }
 
     it 'selects both on-demand and subscription orders shipping on the passed date' do
-      expect(described_class.shippable_day_of(1.day.from_now)).to contain_exactly(shippable_on_demand_order, shippable_subscription_order)
-      expect(described_class.shippable_day_of(1.day.ago)).to contain_exactly(tomorrow_on_demand_order, yesterday_subscription_order)
+      expect(described_class.shippable_day_of(1.day.ago)).to contain_exactly(yesterday_on_demand_order, yesterday_subscription_order)
+      expect(described_class.shippable_day_of(Time.current)).to contain_exactly(shippable_on_demand_order, shippable_subscription_order)
+      expect(described_class.shippable_day_of(1.day.from_now)).to contain_exactly(tomorrow_on_demand_order, tomorrow_subscription_order)
     end
   end
 
