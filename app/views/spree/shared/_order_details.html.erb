@@ -70,7 +70,7 @@
         <td colspan="4">
           <b><%= Spree.t(:delivery) %></b>
           <em>
-            <%= l (order.completed_at || Time.current).to_date, format: :delivery_window_date %>,
+            <%= l(order.shipment_date.to_date, format: :delivery_window_date) %>,
             <%= shipments.first.selected_delivery_window.to_s %>
           </em>
           <%= link_to Spree.t(:change), checkout_state_path(:delivery) unless order.completed? %>
