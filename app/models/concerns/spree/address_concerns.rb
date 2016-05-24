@@ -1,3 +1,4 @@
+
 module Spree
   module AddressConcerns
     extend ActiveSupport::Concern

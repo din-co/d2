@@ -23,20 +23,19 @@
 <% end %>
 
 <%= form.fields_for :shipments do |ship_form| %>
+  
+<%
+=begin Remove shipping promotion CTA's. %>
+
   <div class="form-group">
     <% if ship_form.object.delivery_windows.available.count == 0 %>
       <p><%= Spree.t(:no_available_delivery_windows) %></p>
     <% else %>
       <% difference = @order.shipping_promotion_difference.money %>
       <% if difference > 0.to_money %>
-
-      <% 
-=begin This removes the free shipping promo CTA in checkout. %>
         <p>
           To get <strong><%= @order.discounted_shipping_cost %> Shipping</strong>, add <strong><%= Spree::Money.new(difference) %></strong> to your order.
         </p>
-      <% 
-=end %>
       <% elsif @order.shipping_promotion_calculator.present? %>
         <p>
           <span class="delivery-window--delivery-discount">Congratulations! Your order qualifies for <strong><%= @order.discounted_shipping_cost %> delivery</strong>!</span>
@@ -44,6 +43,9 @@
       <% end %>
     <% end -%>
   </div>
+
+<%
+=end %>
 
   <label><%= Spree.t(:delivery_window) %></label>
   <% ship_form.object.shipping_rates.each do |shipping_rate| %>
