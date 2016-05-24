@@ -20,18 +20,40 @@ class KitchenStatus
   end
 
   # Relative time methods describing a kitchen that is open part of the week and closed the other part
-  #         Open |---------------------------------\ 5pm Close
-  # |------------|------------|------------|------------|------------|------------|------------|
-  # S            M            Tu           W            Th           F            S            S
+  # Open |-----------------------------------\ 9pm Close
+  #      |------------|------------|------------|------------|------------|------------|------------|
+  #      S            M            Tu           W            Th           F            S            S
 
-  # First second of Monday
+  # First second of Sunday
   def opening_time
-    Time.current.monday
+    Time.current.beginning_of_week(:sunday)
   end
 
-  # 5pm on Wednesday
+  # 9pm on Wednesday
   def closing_time
-    opening_time.advance(days: 2, hours: 17)
+    opening_time.advance(days: 2, hours: 21)
+  end
+
+  def shipment_opening_time
+    opening_time.advance(days: 1).midnight
+  end
+
+  def shipment_closing_time
+    closing_time.advance(days: 1).midnight
+  end
+
+  def shipment_dates_available
+    t = shipment_opening_time
+    dates = []
+    ordering_days.to_i.times do
+      dates << t.to_date if Time.current.midnight < t && t <= shipment_closing_time
+      t = t.advance(days: 1)
+    end
+    if overridden_status == :open # FIXME: should this be the *only* day we show when the kitchen is forced open?
+      tomorrow = 1.day.from_now.to_date
+      dates.unshift(tomorrow) unless dates.include?(tomorrow)
+    end
+    dates
   end
 
   # First second of next Monday
@@ -45,5 +67,9 @@ class KitchenStatus
     if @override
       @override.downcase.to_sym
     end
+  end
+
+  def ordering_days
+    ((closing_time - opening_time) / 60 / 60 / 24).round
   end
 end

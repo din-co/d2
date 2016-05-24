@@ -10,8 +10,10 @@ module Spree
     extend DisplayMoney
     money_methods :cost
 
+    # All delivery windows are always available when ordering for the next day or after.
     def currently_available?
-      Time.zone.now < available_until
+      #Time.zone.now < available_until
+      true
     end
 
     def available_until
