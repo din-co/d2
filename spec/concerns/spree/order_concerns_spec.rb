@@ -36,15 +36,17 @@ RSpec.shared_examples_for "spree order concerns" do
 
   describe "shippable_day_of" do
     let(:yesterday) { 1.day.ago }
-    let!(:shippable_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship) }
-    let!(:yesterday_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship).tap {|o| o.update_attributes(completed_at: yesterday, shipment_date: yesterday) } }
+    let!(:yesterday_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship).tap {|o| o.update_attributes(completed_at: 2.days.ago, shipment_date: yesterday.to_date) } }
+    let!(:shippable_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship).tap {|o| o.update_attributes(completed_at: yesterday, shipment_date: Time.current.to_date) } }
+    let!(:tomorrow_on_demand_order)    { FactoryGirl.create(:order_ready_to_ship) }
 
-    let!(:shippable_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 5.days.ago, shipment_date: Time.current) } }
     let!(:yesterday_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 6.days.ago, shipment_date: yesterday) } }
+    let!(:shippable_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 5.days.ago, shipment_date: Time.current) } }
+    let!(:tomorrow_subscription_order) { FactoryGirl.create(:subscription_order).tap {|o| o.update_attributes(completed_at: 4.days.ago, shipment_date: 1.day.from_now) } }
 
     it 'selects both on-demand and subscription orders shipping on the passed date' do
-      expect(described_class.shippable_day_of(Time.now)).to contain_exactly(shippable_on_demand_order, shippable_subscription_order)
-      expect(described_class.shippable_day_of(1.day.ago)).to contain_exactly(yesterday_on_demand_order, yesterday_subscription_order)
+      expect(described_class.shippable_day_of(1.day.from_now)).to contain_exactly(shippable_on_demand_order, shippable_subscription_order)
+      expect(described_class.shippable_day_of(1.day.ago)).to contain_exactly(tomorrow_on_demand_order, yesterday_subscription_order)
     end
   end
 
