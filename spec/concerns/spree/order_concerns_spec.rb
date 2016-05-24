@@ -54,8 +54,11 @@ RSpec.shared_examples_for "spree order concerns" do
 
     it 'is required after the "delivery" state' do
       expect(order_with_address).to be_valid
+      order_with_address.shipments.first.selected_delivery_window = Spree::DeliveryWindow.first
+      order_with_address.shipment_date = 1.day.from_now.midnight
       order_with_address.next!
-      expect(order_with_address.state).to eq("confirm")
+      expect(order_with_address.state).to eq("payment")
+      order_with_address.shipment_date = nil
       expect(order_with_address).to_not be_valid
     end
 
@@ -69,9 +72,9 @@ RSpec.shared_examples_for "spree order concerns" do
   describe "completed orders" do
     let(:order) { FactoryGirl.create(:order_ready_to_ship) }
 
-    it "has a shipment_date equal to completed_at" do
+    it "has a shipment_date the day after completed_at" do
       expect(order.state).to eq("complete")
-      expect(order.shipment_date).to eq(order.completed_at)
+      expect(order.shipment_date).to eq(order.completed_at.tomorrow.midnight)
     end
 
     describe "tote tags" do
