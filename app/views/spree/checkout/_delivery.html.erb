@@ -17,7 +17,7 @@
     <label>
       <%= form.radio_button :shipment_date, date.in_time_zone, disabled: disabled %>
       <span class="shipment-date__name"><%= Kronic.format date %>, <%= date.to_s(:ordinal_month_day) %></span>
-      <span class="shipment-date__name"><%= "- Unavailable" if disabled %></span>
+      <span class="shipment-date__name"><%= "– Unavailable" if disabled %></span>
     </label>
   </div>
 <% end %>
