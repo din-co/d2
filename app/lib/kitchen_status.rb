@@ -26,7 +26,7 @@ class KitchenStatus
 
   # First second of Sunday
   def opening_time
-    Time.current.beginning_of_week(:sunday)
+    Time.current.beginning_of_week(:monday) # FIXME: switch to :sunday after Memorial Day holiday
   end
 
   # 9pm on Wednesday
