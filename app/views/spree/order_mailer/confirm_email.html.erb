@@ -165,7 +165,7 @@
                   <td colspan="3">
                     <b><%= Spree.t(:delivery) %></b>
                     <em>
-                      <%= l @order.completed_at.to_date, format: :delivery_window_date %>,
+                      <%= l @order.shipment_date.to_date, format: :delivery_window_date %>, <%# Stashing original: l @order.completed_at.to_date, format: :delivery_window_date %>
                       <%= shipments.first.selected_delivery_window.to_s %>
                     </em>
                   </td>
