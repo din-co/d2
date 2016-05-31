@@ -4,85 +4,85 @@ RSpec.describe KitchenStatus do
   describe 'time calculation' do
     examples = [
       {
-        current_time:          Time.zone.parse('2016-01-17 00:00:00'),
-        
-        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
-        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
-        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
+        current_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
 
-        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
+        opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
+        shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
+
+        next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_dates_available: 3,
       },
-      
-      {
-        current_time:          Time.zone.parse('2016-01-18 00:00:00'),
 
-        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
-        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
-        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
-        
-        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
+      {
+        current_time:          Time.zone.parse('Mon, 18 Jan 2016 00:00'),
+
+        opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
+        shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
+
+        next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_dates_available: 2,
       },
-      
+
       {
         # last second ordering is still open
-        current_time:          Time.zone.parse('2016-01-19 20:59:59'),
-      
-        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
-        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
-        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
-      
-        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
-        shipment_dates_available: 0,
-      },
-      
-      {
-        current_time:          Time.zone.parse('2016-01-20 00:00:00'),
-      
-        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
-        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
-        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
-      
-        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
+        current_time:          Time.zone.parse('Tue, 19 Jan 2016 20:59:59'),
+
+        opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
+        shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
+
+        next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_dates_available: 0,
       },
 
       {
-        current_time:          Time.zone.parse('2016-01-23 00:00:00'),
-        
-        opening_time:          Time.zone.parse('2016-01-17 00:00:00'),
-        shipment_opening_time: Time.zone.parse('2016-01-18 00:00:00'),
-        closing_time:          Time.zone.parse('2016-01-19 21:00:00'),
-        shipment_closing_time: Time.zone.parse('2016-01-20 21:00:00'),
+        current_time:          Time.zone.parse('Wed, 20 Jan 2016 00:00'),
 
-        next_opens:            Time.zone.parse('2016-01-24 00:00:00'),
+        opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
+        shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
+
+        next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
+        shipment_dates_available: 0,
       },
 
       {
-        current_time:          Time.zone.parse('2016-01-24 00:00:00'),
-      
-        opening_time:          Time.zone.parse('2016-01-24 00:00:00'),
-        shipment_opening_time: Time.zone.parse('2016-01-25 00:00:00'),
-        closing_time:          Time.zone.parse('2016-01-26 21:00:00'),
-        shipment_closing_time: Time.zone.parse('2016-01-27 21:00:00'),
+        current_time:          Time.zone.parse('Sat, 23 Jan 2016 00:00'),
 
-        next_opens:            Time.zone.parse('2016-01-31 00:00:00'),
+        opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
+        shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
+
+        next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
       },
-      
+
       {
-        current_time:          Time.zone.parse('2016-01-25 00:00:00'),
-      
-        opening_time:          Time.zone.parse('2016-01-24 00:00:00'),
-        shipment_opening_time: Time.zone.parse('2016-01-25 00:00:00'),
-        closing_time:          Time.zone.parse('2016-01-26 21:00:00'),
-        shipment_closing_time: Time.zone.parse('2016-01-27 21:00:00'),
-      
-        next_opens:            Time.zone.parse('2016-01-31 00:00:00'),
+        current_time:          Time.zone.parse('Sun, 24 Jan 2016 00:00'),
+
+        opening_time:          Time.zone.parse('Sun, 24 Jan 2016 00:00'),
+        shipment_opening_time: Time.zone.parse('Mon, 25 Jan 2016 00:00'),
+        closing_time:          Time.zone.parse('Tue, 26 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 27 Jan 2016 12:00'),
+
+        next_opens:            Time.zone.parse('Sun, 31 Jan 2016 00:00'),
+      },
+
+      {
+        current_time:          Time.zone.parse('Mon, 25 Jan 2016 00:00'),
+
+        opening_time:          Time.zone.parse('Sun, 24 Jan 2016 00:00'),
+        shipment_opening_time: Time.zone.parse('Mon, 25 Jan 2016 00:00'),
+        closing_time:          Time.zone.parse('Tue, 26 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 27 Jan 2016 12:00'),
+
+        next_opens:            Time.zone.parse('Sun, 31 Jan 2016 00:00'),
       },
     ]
     examples.each do |ex|

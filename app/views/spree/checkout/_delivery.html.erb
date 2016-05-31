@@ -11,7 +11,7 @@
 
 <h1><%= Spree.t(:delivery) %></h1>
 <label>Delivery Date</label>
-<% ([Time.current.to_date] + KITCHEN.shipment_dates_available).each do |date| %>
+<% (KITCHEN.shipment_dates_available).each do |date| %>
   <% disabled = date == Time.current.to_date %>
   <div class="radio <%= 'disabled' if disabled %>">
     <label>
