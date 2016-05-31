@@ -8,8 +8,8 @@ RSpec.describe KitchenStatus do
 
         opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
         shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
-        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 21:00'),
-        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 21:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
 
         next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_dates_available: 3,
@@ -20,8 +20,8 @@ RSpec.describe KitchenStatus do
 
         opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
         shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
-        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 21:00'),
-        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 21:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
 
         next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_dates_available: 2,
@@ -33,8 +33,8 @@ RSpec.describe KitchenStatus do
 
         opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
         shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
-        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 21:00'),
-        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 21:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
 
         next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_dates_available: 0,
@@ -45,8 +45,8 @@ RSpec.describe KitchenStatus do
 
         opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
         shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
-        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 21:00'),
-        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 21:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
 
         next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_dates_available: 0,
@@ -57,8 +57,8 @@ RSpec.describe KitchenStatus do
 
         opening_time:          Time.zone.parse('Sun, 17 Jan 2016 00:00'),
         shipment_opening_time: Time.zone.parse('Mon, 18 Jan 2016 00:00'),
-        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 21:00'),
-        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 21:00'),
+        closing_time:          Time.zone.parse('Tue, 19 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 20 Jan 2016 12:00'),
 
         next_opens:            Time.zone.parse('Sun, 24 Jan 2016 00:00'),
       },
@@ -68,8 +68,8 @@ RSpec.describe KitchenStatus do
 
         opening_time:          Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_opening_time: Time.zone.parse('Mon, 25 Jan 2016 00:00'),
-        closing_time:          Time.zone.parse('Tue, 26 Jan 2016 21:00'),
-        shipment_closing_time: Time.zone.parse('Wed, 27 Jan 2016 21:00'),
+        closing_time:          Time.zone.parse('Tue, 26 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 27 Jan 2016 12:00'),
 
         next_opens:            Time.zone.parse('Sun, 31 Jan 2016 00:00'),
       },
@@ -79,8 +79,8 @@ RSpec.describe KitchenStatus do
 
         opening_time:          Time.zone.parse('Sun, 24 Jan 2016 00:00'),
         shipment_opening_time: Time.zone.parse('Mon, 25 Jan 2016 00:00'),
-        closing_time:          Time.zone.parse('Tue, 26 Jan 2016 21:00'),
-        shipment_closing_time: Time.zone.parse('Wed, 27 Jan 2016 21:00'),
+        closing_time:          Time.zone.parse('Tue, 26 Jan 2016 12:00'),
+        shipment_closing_time: Time.zone.parse('Wed, 27 Jan 2016 12:00'),
 
         next_opens:            Time.zone.parse('Sun, 31 Jan 2016 00:00'),
       },
