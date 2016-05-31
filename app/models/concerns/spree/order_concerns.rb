@@ -97,7 +97,7 @@ module Spree
 
       def delivery_day_and_window
         # Needs to be updated with "delivery_at" date.
-        "#{completed_at.to_s(:weekday_month_short_day)}, #{delivery_window}"
+        "#{shipment_date.to_s(:weekday_month_short_day)}, #{delivery_window}"
       end
 
       def delivery_cold_until
