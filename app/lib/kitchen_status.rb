@@ -26,12 +26,12 @@ class KitchenStatus
 
   # First second of Sunday
   def opening_time
-    Time.current.beginning_of_week(:monday) # FIXME: switch to :sunday after Memorial Day holiday
+    Time.current.beginning_of_week(:sunday)
   end
 
   # 9pm on Wednesday
   def closing_time
-    opening_time.advance(days: 1, hours: 21)
+    opening_time.advance(days: 2, hours: 21)
   end
 
   def shipment_opening_time
@@ -46,7 +46,7 @@ class KitchenStatus
     t = shipment_opening_time
     dates = []
     ordering_days.to_i.times do
-      dates << t.to_date if Time.current.midnight < t && t <= shipment_closing_time
+      dates << t.to_date if Time.current.advance(days: -1).midnight < t && t <= shipment_closing_time
       t = t.advance(days: 1)
     end
     if overridden_status == :open # FIXME: should this be the *only* day we show when the kitchen is forced open?
