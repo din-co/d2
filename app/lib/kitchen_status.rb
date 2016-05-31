@@ -20,26 +20,28 @@ class KitchenStatus
   end
 
   # Relative time methods describing a kitchen that is open part of the week and closed the other part
-  # Open |-----------------------------------\ 9pm Close
-  #      |------------|------------|------------|------------|------------|------------|------------|
-  #      S            M            Tu           W            Th           F            S            S
+  # Orders      |--------------------------------------------| 12pm Close
+  # Deliveries               |--------------------------------------| 12am Close
+  #             |------------|------------|------------|------------|------------|------------|------------|
+  #             S            M            Tu           W            Th           F            S            S
+
 
   # First second of Sunday
   def opening_time
     Time.current.beginning_of_week(:sunday)
   end
 
-  # 9pm on Wednesday
+  # 12pm on Wednesday
   def closing_time
-    opening_time.advance(days: 2, hours: 21)
+    opening_time.advance(days: 3, hours: 12)
   end
 
   def shipment_opening_time
-    opening_time.advance(days: 1).midnight
+    opening_time.advance(days: 1).midnight # First second of Monday
   end
 
   def shipment_closing_time
-    closing_time.advance(days: 1).midnight
+    closing_time.end_of_day # Last second of Wednesday
   end
 
   def shipment_dates_available
