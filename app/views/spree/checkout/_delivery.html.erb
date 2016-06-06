@@ -12,7 +12,7 @@
 <h1><%= Spree.t(:delivery) %></h1>
 <label>Delivery Date</label>
 <% (KITCHEN.shipment_dates_available).each do |date| %>
-  <% disabled = date == Time.current.advance(days:-1).to_date %>
+  <% disabled = date == Time.current.to_date %>
   <div class="radio <%= 'disabled' if disabled %>">
     <label>
       <%= form.radio_button :shipment_date, date.in_time_zone, disabled: disabled %>
