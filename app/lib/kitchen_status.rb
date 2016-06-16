@@ -31,7 +31,7 @@ class KitchenStatus
     Time.current.beginning_of_week(:sunday)
   end
 
-  # 12pm on Wednesday
+  # 2pm on Friday
   def closing_time
     opening_time.advance(days: 5, hours: 14)
   end
@@ -41,7 +41,7 @@ class KitchenStatus
   end
 
   def shipment_closing_time
-    closing_time.end_of_day # Last second of Wednesday
+    closing_time.end_of_day # Last second of Friday
   end
 
   def shipment_dates_available

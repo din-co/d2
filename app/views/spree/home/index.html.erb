@@ -60,14 +60,14 @@
       <h2 class="hr-header">Menu</h2>
       <div class="sub-header text-center bottom30">
         <%= Time.current.next_week(:monday).to_s(:ordinal_weekday_month_day) %>
-      thru
+      through
       <%= Time.current.next_week(:friday).to_s(:ordinal_weekday_month_day) %>
       </div>
     <% else %>
       <h2 class="hr-header">Menu</h2>
       <div class="sub-header text-center bottom30">
         <%= Time.current.advance(:days => - 7).next_week(:monday).to_s(:ordinal_weekday_month_day) %>
-      thru
+      through
       <%= Time.current.advance(:days => - 7).next_week(:friday).to_s(:ordinal_weekday_month_day) %>
       </div>
     <% end -%>
@@ -103,7 +103,7 @@
     <div class="how-din-works__step">
       <h4 class="how-din-works__header">You select a delivery window.</h4>
       <div class="how-din-works__description">
-        We currently deliver Monday thru Wednesday.</br></br>
+        We currently deliver Monday through Friday.</br></br>
       </div>
       <table class="table small table-striped how-din-works__table">
         <thead>
