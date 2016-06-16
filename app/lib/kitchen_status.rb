@@ -33,7 +33,7 @@ class KitchenStatus
 
   # 12pm on Wednesday
   def closing_time
-    opening_time.advance(days: 4, hours: 14)
+    opening_time.advance(days: 5, hours: 14)
   end
 
   def shipment_opening_time
