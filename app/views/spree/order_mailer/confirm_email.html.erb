@@ -135,7 +135,7 @@
                 <tr>
                   <td class="order-table__name">
                     <strong><%= raw(item.variant.product.name) %></strong>
-                    <%= link_to "view recipe", spree.product_path(item.variant.product), class: "green-link" %>
+                    <%= link_to "view recipe", spree.product_url(item.variant.product), class: "green-link" %>
                   </td>
                   <td class="order-table__price"><%= item.single_money %></td>
                   <td class="order-table__quantity"><%=item.quantity%></td>
