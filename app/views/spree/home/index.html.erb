@@ -59,14 +59,14 @@
       <% next_open = KITCHEN.next_opens %>
       <h2 class="hr-header">Menu</h2>
       <div class="sub-header text-center bottom30">
-        <%= Time.current.next_week(:monday).to_s(:ordinal_weekday_month_day) %>
+        <%= Time.current.next_week(:tuesday).to_s(:ordinal_weekday_month_day) %>
       through
       <%= Time.current.next_week(:friday).to_s(:ordinal_weekday_month_day) %>
       </div>
     <% else %>
       <h2 class="hr-header">Menu</h2>
       <div class="sub-header text-center bottom30">
-        <%= Time.current.advance(:days => - 6).next_week(:monday).to_s(:ordinal_weekday_month_day) %>
+        <%= Time.current.advance(:days => - 6).next_week(:tuesday).to_s(:ordinal_weekday_month_day) %>
       through
       <%= Time.current.advance(:days => - 6).next_week(:friday).to_s(:ordinal_weekday_month_day) %>
       </div>
