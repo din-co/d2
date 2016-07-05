@@ -33,11 +33,11 @@ class KitchenStatus
 
   # 2pm on Friday
   def closing_time
-    opening_time.advance(days: 4, hours: 23)
+    opening_time.advance(days: 5, hours: 12)
   end
 
   def shipment_opening_time
-    opening_time.advance(days: 2).midnight # First second of Monday
+    opening_time.advance(days: 1).midnight # First second of Monday
   end
 
   def shipment_closing_time
@@ -60,7 +60,7 @@ class KitchenStatus
 
   # First second of next Monday
   def next_opens
-    opening_time.advance(days: 9)
+    opening_time.advance(weeks: 1)
   end
 
   private
