@@ -25,7 +25,7 @@ module Spree
 
       devise :masqueradable
 
-      PERSONAL_REFERRAL_PROMO_AMOUNT = 30
+      PERSONAL_REFERRAL_PROMO_AMOUNT = 15
     end
 
     module InstanceMethods
