@@ -1,0 +1,4 @@
+Dish                                 <%= @shipment_date.to_s(:weekday_month_day_short) %>
+<% @pickup.each do |dish_name, quantity| %>
+<%= dish_name %>  <%= quantity %>
+<% end %>
