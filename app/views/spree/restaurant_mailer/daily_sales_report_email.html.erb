@@ -1,0 +1,16 @@
+<table>
+  <thead>
+    <tr>
+      <th>Dish</th>
+      <th><%= @shipment_date.to_s(:weekday_month_day_short) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pickup.each do |dish_name, quantity| %>
+      <tr>
+        <td><%= dish_name %></td>
+        <td><%= quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
