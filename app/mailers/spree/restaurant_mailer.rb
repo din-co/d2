@@ -20,8 +20,3 @@ module Spree
     end
   end
 end
-
-class PartnerContact < ActiveRecord::Base
-  belongs_to :taxon
-  validate :email, presence: true
-end

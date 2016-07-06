@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413210541) do
+ActiveRecord::Schema.define(version: 20160705233150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -421,6 +421,13 @@ ActiveRecord::Schema.define(version: 20160413210541) do
 
   add_index "spree_orders_promotions", ["order_id", "promotion_id"], name: "index_spree_orders_promotions_on_order_id_and_promotion_id", using: :btree
   add_index "spree_orders_promotions", ["promotion_code_id"], name: "index_spree_orders_promotions_on_promotion_code_id", using: :btree
+
+  create_table "spree_partner_contacts", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "taxon_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "spree_payment_capture_events", force: :cascade do |t|
     t.decimal  "amount",     precision: 10, scale: 2, default: 0.0
