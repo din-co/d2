@@ -8,7 +8,7 @@ class SalesReporter
     # For each of these, send a sales report
     restaurants.each do |restaurant|
       Rails.logger.info("Sending daily report to #{restaurant.name}")
-      Spree::RestaurantMailer.daily_sales_report_email(restaurant, t).deliver_later
+      Spree::RestaurantMailer.daily_sales_report_email(restaurant, t).deliver_now
     end
   end
 end
