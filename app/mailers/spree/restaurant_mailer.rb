@@ -14,9 +14,13 @@ module Spree
       end
       @pickup["Grand Total"] = grand_total
 
-      subj = "Din - Pickup #{shipment_date.strftime('%Y-%m-%d')}: #{grand_total} items"
-
-      mail(to: recipients, from: ops, bcc: ops, subject: subj)
+      if grand_total < 1
+        subj = "Din - No Pickup #{shipment_date.strftime('%Y-%m-%d')}: #{grand_total} items"
+        mail(to: recipients, from: ops, bcc: ops, subject: subj, body: "No pickup scheduled for #{shipment_date.to_s(:weekday_month_day_short)}.")
+      else
+        subj = "Din - Pickup #{shipment_date.strftime('%Y-%m-%d')}: #{grand_total} #{'item'.pluralize(grand_total)}"
+        mail(to: recipients, from: ops, bcc: ops, subject: subj)
+      end
     end
   end
 end
