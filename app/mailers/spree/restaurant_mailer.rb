@@ -1,5 +1,8 @@
 module Spree
   class RestaurantMailer < BaseMailer
+
+    helper 'application'
+
     def daily_sales_report_email(restaurant_taxon, shipment_date)
       recipients = PartnerContact.where(taxon: restaurant_taxon).pluck(:email)
       ops = Rails.configuration.x.ops_email_address
