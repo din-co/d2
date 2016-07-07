@@ -6,7 +6,7 @@ module Spree
       @shipment_date = shipment_date
       @pickup = Hash.new { |hash, key| hash[key] = 0 }
       grand_total = 0
-      Order.shippable_day_of(shipment_date).each do |order|
+      Order.shippable_day_of(shipment_date).joins(line_items: {product: :taxons}).where(['spree_taxons.id = ?', restaurant_taxon]).each do |order|
         order.line_items.each do |line_item|
           @pickup[line_item.variant.product.name] += line_item.quantity
           grand_total += line_item.quantity
