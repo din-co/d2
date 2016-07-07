@@ -57,7 +57,7 @@
             <td align="center" class="heading-hr"><%= image_tag 'black.png', width: 55, height: 4, class: "heading-hr__img" %></td>
           </tr>
           <tr>
-            <td align="center" class="menu-title"><%= @title.upcase %></td>
+            <td align="center" class="menu-title"><%= Pickup %></td>
           </tr>
           <tr>
             <td align="center" class="heading-hr"><%= image_tag 'black.png', width: 55, height: 4, class: "heading-hr__img" %></td>
@@ -109,7 +109,7 @@
         <table border="0" cellspacing="0" cellpadding="0" width="100%" class="content-container">
           <tr>
             <td align="center" class="fine-print">
-              <b>Need help?</b> <%= support_email_link("Re: \"#{@title}\" email", nil, "green-link") %> or <%= support_phone_number %>
+              <b>Need help?</b> <%= support_email_link("Re: daily sales report", nil, "green-link") %> or <%= support_phone_number %>
               &nbsp; | &nbsp;
               <b>Din</b> <%= Spree.t(:din_mailing_address) %>
             </td>
