@@ -49,7 +49,7 @@ class KitchenStatus
     dates = []
     ordering_days.to_i.times do
       dates << t.to_date if Time.current.midnight < t && t <= shipment_closing_time
-      t = t.advance(days: 1)
+      t = t.advance(days: 2)
     end
     if overridden_status == :open # FIXME: should this be the *only* day we show when the kitchen is forced open?
       tomorrow = 1.day.from_now.to_date
