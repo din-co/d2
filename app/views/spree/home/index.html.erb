@@ -68,7 +68,7 @@
       <div class="sub-header text-center bottom30">
         <%= Time.current.advance(:days => - 6).next_week(:monday).to_s(:ordinal_weekday_month_day) %>
       through
-      <%= Time.current.advance(:days => - 6).next_week(:wednesday).to_s(:ordinal_weekday_month_day) %>
+      <%= Time.current.advance(:days => - 6).next_week(:friday).to_s(:ordinal_weekday_month_day) %>
       </div>
     <% end -%>
   </div>
