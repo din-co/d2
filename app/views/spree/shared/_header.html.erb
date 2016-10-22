@@ -4,10 +4,6 @@
     <div class="container container--nav">
 
       <div class="main-nav__menu">
-        <%= link_to Spree.t(:menu), spree.root_path(anchor: ""), class: "main-nav__link" %>
-        <% if spree_user_masquerade? -%>
-          <%= link_to "Stop Impersonating #{spree_current_user.email}", back_masquerade_path(spree_current_user), class: "btn btn-sm btn-warning" %>
-        <% end -%>
       </div>
 
       <div class="main-nav_logo">
