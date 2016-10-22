@@ -25,12 +25,6 @@
         <% else %>
           <%= link_to Spree.t(:login), spree.login_path, class: "main-nav__link" %>
         <% end %>
-
-        <% unless simple_current_order.nil? or simple_current_order.item_count.zero? %>
-          <%= link_to spree.cart_path, class: "main-nav__link" do %>
-            <%= Spree.t(:cart) %><span class="badge main-nav__badge"><%= simple_current_order.item_count %></span>
-          <% end -%>
-        <% end %>
       </div>
 
     </div>
